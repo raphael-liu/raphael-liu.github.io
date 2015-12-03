@@ -10,7 +10,7 @@ slug = "profile"
 title= "关于"
 +++
 
-<img src="https://raw.githubusercontent.com/mba-hack/images/master/phoenix/phoenix_world.png" height="272" width="272" alt="syui">
+<img src="http://static.family.baidu.com:8679/images/userimages/liurenfei.jpg" height="272" width="272" alt="syui">
 
 ## Profile
 
