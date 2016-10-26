@@ -200,7 +200,7 @@
 <h3 id="Touchable系列组件不能很好的响应"><a href="#Touchable系列组件不能很好的响应" class="headerlink" title="Touchable系列组件不能很好的响应"></a>Touchable系列组件不能很好的响应</h3><p>有些时候，如果我们有一项操作与点击事件所带来的透明度改变或者高亮效果发生在同一帧中，那么有可能在<code>onPress</code>函数结束之前我们都看不到这些效果。比如在<code>onPress</code>执行了一个<code>setState</code>的操作，这个操作需要大量计算工作并且导致了掉帧。对此的一个解决方案是将<code>onPress</code>处理函数中的操作封装到<code>requestAnimationFrame</code>中：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">handleOnPress() &#123;</div><div class="line">  <span class="comment">// 谨记在使用requestAnimationFrame、setTimeout以及setInterval时</span></div><div class="line">  <span class="comment">// 要使用TimerMixin（其作用是在组件unmount时，清除所有定时器）</span></div><div class="line">  <span class="keyword">this</span>.requestAnimationFrame(() =&gt; &#123;</div><div class="line">    <span class="keyword">this</span>.doExpensiveAction();</div><div class="line">  &#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><p>你可以利用内置的分析器来同时获取JavaScript线程和主线程中代码执行情况的详细信息。</p>
-<p>对于iOS来说，Instruments是一个宝贵的工具库，Android的话，你可以使用systrace，参见<a href="/docs/android-ui-performance.html#content">调试Android UI性能</a>。</p>
+<p>对于iOS来说，Instruments是一个宝贵的工具库，Android的话，你可以使用systrace，参见<a href="http://bdapp.org/2016/10/26/react-native-android-ui-performance/">调试Android UI性能</a>。</p>
 
       
 
