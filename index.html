@@ -73,33 +73,33 @@
 <p><em>译注</em>：实际上，AndroidManifest.xml里的应用包名会被<code>app/build.gradle</code>里的<code>applicationId</code>取代。如果二者不一致，应当以<code>app/build.gradle</code>里的为准。</p>
 <p>一旦systrace开始收集数据，你可以操作应用执行你所关心的动画和操作。在收集结束后，systrace会给你提供一个链接，你可以在浏览器中打开这个链接来查看数据收集的结果。</p>
 <h2 id="查看性能数据"><a href="#查看性能数据" class="headerlink" title="查看性能数据"></a>查看性能数据</h2><p>在浏览器中打开数据页面（建议使用Chrome），你应该能看到类似这样的结果：</p>
-<p><img src="img/SystraceExample.png" alt="Example"></p>
+<p><img src="http://reactnative.cn/static/docs/0.35/img/SystraceExample.png" alt="Example"></p>
 <p><strong>提示</strong>: 你可以使用WSAD键来滚动和缩放性能数据图表。</p>
 <h3 id="启用垂直同步高亮"><a href="#启用垂直同步高亮" class="headerlink" title="启用垂直同步高亮"></a>启用垂直同步高亮</h3><p>接下来你首先应该启用16毫秒帧区间的高亮。在屏幕顶端点击对应的复选框：</p>
-<p><img src="img/SystraceHighlightVSync.png" alt="Enable VSync Highlighting"></p>
+<p><img src="http://reactnative.cn/static/docs/0.35/img/SystraceHighlightVSync.png" alt="Enable VSync Highlighting"></p>
 <p>然后你应该能在屏幕上看到类似上图的斑马状条纹。如果你无法看到这样的条纹，可以尝试换一台设备来进行分析：部分三星手机显示垂直同步高亮存在已知问题，而Nexus系列大部分情况都相当可靠。</p>
 <h3 id="找到你的进程"><a href="#找到你的进程" class="headerlink" title="找到你的进程"></a>找到你的进程</h3><p>滚动图表直到你找到你的应用包名。在上面的例子里，我正在分析<code>com.facebook.adsmanager</code>，由于内核的线程名字长度限制，它会显示成<code>book.adsmanager</code>。</p>
 <p>在左侧，你应该能看到一系列线程对应着右边的时间轴。有3到4个线程是我们必须关注的：UI线程(名字可能是<code>UI Thread</code>或者是你的包名), <code>mqt_js</code>和<code>mqt_native_modules</code>。如果你在Android 5.0以上版本运行，我们还需要关注<code>Render</code>（渲染）线程。</p>
 <h3 id="UI-线程"><a href="#UI-线程" class="headerlink" title="UI 线程"></a>UI 线程</h3><p>标准的Android布局和绘制都在UI线程里发生。右侧显示的线程名字会是你的包名(在我的例子里是book.adsmanager)或者UI Thread.你在这个线程里看到的事件可能会是一些<code>Choreographer</code>, <code>traversals</code>或者<code>DispatchUI</code>：</p>
-<p><img src="img/SystraceUIThreadExample.png" alt="UI Thread Example"></p>
+<p><img src="http://reactnative.cn/static/docs/0.35/img/SystraceUIThreadExample.png" alt="UI Thread Example"></p>
 <h3 id="JS线程"><a href="#JS线程" class="headerlink" title="JS线程"></a>JS线程</h3><p>这是用于执行JavaScript代码的线程。根据Android系统版本或者设备的不同，线程名可能是<code>mqt_js</code>或者<code>&lt;...&gt;</code>。如果看不到对应的名字的话，寻找类似<code>JSCall</code>，<code>Bridge.executeJSCall</code>这样的事件。</p>
-<p><img src="img/SystraceJSThreadExample.png" alt="JS Thread Example"></p>
+<p><img src="http://reactnative.cn/static/docs/0.35/img/SystraceJSThreadExample.png" alt="JS Thread Example"></p>
 <h3 id="原生模块线程"><a href="#原生模块线程" class="headerlink" title="原生模块线程"></a>原生模块线程</h3><p>这里是用于原生模块执行代码(譬如<code>UIManager</code>)的线程，线程名可能是<code>mqt_native_modules</code>或<code>&lt;...&gt;</code>。在后一种情况下，寻找类似<code>NativeCall</code>, <code>CallJavaModuleMethod</code>, 还有<code>onBatchComplete</code>这样的事件名：</p>
-<p><img src="img/SystraceNativeModulesThreadExample.png" alt="Native Modules Thread Example"></p>
+<p><img src="http://reactnative.cn/static/docs/0.35/img/SystraceNativeModulesThreadExample.png" alt="Native Modules Thread Example"></p>
 <h3 id="额外的：渲染线程"><a href="#额外的：渲染线程" class="headerlink" title="额外的：渲染线程"></a>额外的：渲染线程</h3><p>如果你在使用Android L(5.0)或者更高版本，你应该还会在你的应用里看到一个渲染线程。这个线程真正生成OpenGL渲染序列来渲染你的UI。这个线程的名字可能为<code>RenderThread</code>或者<code>&lt;...&gt;</code>，在后一种情况下，寻找类似<code>DrawFrame</code>或<code>queueBuffer</code>这样的事件：</p>
-<p><img src="img/SystraceRenderThreadExample.png" alt="Render Thread Example"></p>
+<p><img src="http://reactnative.cn/static/docs/0.35/img/SystraceRenderThreadExample.png" alt="Render Thread Example"></p>
 <h2 id="寻找导致卡顿的罪魁祸首"><a href="#寻找导致卡顿的罪魁祸首" class="headerlink" title="寻找导致卡顿的罪魁祸首"></a>寻找导致卡顿的罪魁祸首</h2><p>一个流畅的动画应该看起来像这样：</p>
-<p><img src="img/SystraceWellBehaved.png" alt="Smooth Animation"></p>
+<p><img src="http://reactnative.cn/static/docs/0.35/img/SystraceWellBehaved.png" alt="Smooth Animation"></p>
 <p>每个背景颜色不同的部分我们称作“一帧”——记住要渲染一个流畅的帧，我们所有的界面工作都需要在16毫秒内完成。注意没有任何一个线程在靠近帧的边界处工作。类似这样的一个应用程序就正在60FPS(帧每秒)的情况下流畅表现。</p>
 <p>如果你发现一些起伏的地方，譬如这样：</p>
-<p><img src="img/SystraceBadJS.png" alt="Choppy Animation from JS"></p>
+<p><img src="http://reactnative.cn/static/docs/0.35/img/SystraceBadJS.png" alt="Choppy Animation from JS"></p>
 <p>注意在上图中JS线程基本上一直在执行，并且超越了帧的边界。这个应用就没法以60FPS渲染了。在这种情况下，<strong>问题出在JS中</strong>。</p>
 <p>你还有可能会看到一些类似这样的东西：</p>
-<p><img src="img/SystraceBadUI.png" alt="Choppy Animation from UI"></p>
+<p><img src="http://reactnative.cn/static/docs/0.35/img/SystraceBadUI.png" alt="Choppy Animation from UI"></p>
 <p>在这种情况下，UI和渲染线程有一些重负荷的工作，以至于超越了帧的边界。这可能是由于我们每帧试图渲染的UI太多了导致的。在这种情况下，<strong>问题出在需要渲染的原生视图上</strong>。</p>
 <p>并且，你还应该能看到一些可以指导接下来优化工作的有用的信息。</p>
 <h2 id="JS的问题"><a href="#JS的问题" class="headerlink" title="JS的问题"></a>JS的问题</h2><p>如果你发现问题出在JS上，在你正在执行的JS代码中寻找线索。在上面的图中，我们会发现<code>RCTEventEmitter</code>每帧被执行了很多次。这是上面的数据统计放大后的内容：</p>
-<p><img src="img/SystraceBadJS2.png" alt="Too much JS"></p>
+<p><img src="http://reactnative.cn/static/docs/0.35/img/SystraceBadJS2.png" alt="Too much JS"></p>
 <p>这看起来不是很正常，为什么事件被调用的如此频繁？它们是不同的事件吗？具体的答案取决于你的产品的代码。在许多情况下，你可能需要看看<a href="https://facebook.github.io/react/docs/component-specs.html#updating-shouldcomponentupdate" target="_blank" rel="external">shouldComponentUpdate</a>的介绍。</p>
 <blockquote>
 <p><strong>TODO</strong>: 我们还在准备更多的JS性能分析的工具，会在将来的版本中加入。</p>
@@ -110,7 +110,7 @@
 <li>你在动画、交互的过程中不断创建新的UI对象（譬如在scroll的过程中加载新的内容）</li>
 </ol>
 <h3 id="GPU负担过重"><a href="#GPU负担过重" class="headerlink" title="GPU负担过重"></a>GPU负担过重</h3><p>在第一种情况下，你应该能看到UI线程的图表类似这样：</p>
-<p><img src="img/SystraceBadUI.png" alt="Overloaded GPU"></p>
+<p><img src="http://reactnative.cn/static/docs/0.35/img/SystraceBadUI.png" alt="Overloaded GPU"></p>
 <p>注意<code>DrawFrame</code>花费了很多时间，超越了帧的边界。这些时间用来等待GPU获取它的操作缓存。</p>
 <p>要缓解这个问题，你应该：</p>
 <ul>
@@ -119,10 +119,10 @@
 </ul>
 <p>如果这还不能帮你解决问题，你可能需要更深入的探索GPU到底在做什么。参见<a href="http://developer.android.com/tools/help/gltracer.html" target="_blank" rel="external">Tracer for OpenGL ES</a>。</p>
 <h3 id="在UI线程创建大量视图"><a href="#在UI线程创建大量视图" class="headerlink" title="在UI线程创建大量视图"></a>在UI线程创建大量视图</h3><p>如果是第二种情况，你可能会看到类似这样的结果：</p>
-<p><img src="img/SystraceBadCreateUI.png" alt="Creating Views"></p>
+<p><img src="http://reactnative.cn/static/docs/0.35/img/SystraceBadCreateUI.png" alt="Creating Views"></p>
 <p>注意一开始JS线程工作了很久，然后你看到原生模块线程干了些事情，最后带来了UI线程的巨大开销。</p>
 <p>这个问题并没有什么简单直接的优化办法，除非你能把创建UI的步骤推迟到交互结束以后去进行，或者你能直接简化你所要创建的UI。React Native小组正在架构层设法提供一个方案，使得新的UI视图可以在主线程之外去创建和配置，这样就可以使得交互变得更加流畅。</p>
-<h2 id="还是没搞定？"><a href="#还是没搞定？" class="headerlink" title="还是没搞定？"></a>还是没搞定？</h2><p>如果你还是很迷惑或者不知如何进展，你可以在<a href="http://stackoverflow.com/tags/react-native" target="_blank" rel="external">Stack Overflow的react-native标签下</a>提交一个问题。如果你在这里得不到响应，或者找到了一个核心组件的问题，你可以<a href="https://github.com/facebook/react-native/issues" target="_blank" rel="external">提交一个Github issue</a>给我们。</p>
+<h2 id="还是没搞定？"><a href="#还是没搞定？" class="headerlink" title="还是没搞定？"></a>还是没搞定？</h2><p>如果你还是很迷惑或者不知如何进展，你可以在<a href="http://stackoverflow.com/tags/react-native" target="_blank" rel="external">Stack Overflow的react-native标签下</a>提交一个问题。如果你在这里得不到响应，或者找到了一个核心组件的问题，你可以<a href="https://github.com/facebook/react-native/issues" target="_blank" rel="external">提交一个Github issue</a>。</p>
 
       
 

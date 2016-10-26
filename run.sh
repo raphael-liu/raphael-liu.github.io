@@ -9,5 +9,5 @@ cp -f run.sh ../raphael-liu.github.io/
 cd ../raphael-liu.github.io
 chmod +x run.sh
 git add .
-git commit -m”update posts”
+git commit -m\”update posts\”
 git push
