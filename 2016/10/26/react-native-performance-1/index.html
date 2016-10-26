@@ -3,17 +3,18 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Raphael’s Blog</title>
+  <title>react-native性能 | Raphael’s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="WTF">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Raphael’s Blog">
-<meta property="og:url" content="http://bdapp.org/index.html">
+  <meta name="description" content="使用React Native替代基于WebView的框架来开发App的一个强有力的理由，就是为了使App可以达到每秒60帧（足够流畅），并且能有类似原生App的外观和手感。因此我们也尽可能地优化React Native去实现这一目标，使开发者能集中精力处理App的业务逻辑，而不用费心考虑性能。但是，总还是有一些地方有所欠缺，以及在某些场合React Native还不能够替你决定如何进行优化（用原生">
+<meta property="og:type" content="article">
+<meta property="og:title" content="react-native性能">
+<meta property="og:url" content="http://bdapp.org/2016/10/26/react-native-performance-1/index.html">
 <meta property="og:site_name" content="Raphael’s Blog">
-<meta property="og:description" content="WTF">
+<meta property="og:description" content="使用React Native替代基于WebView的框架来开发App的一个强有力的理由，就是为了使App可以达到每秒60帧（足够流畅），并且能有类似原生App的外观和手感。因此我们也尽可能地优化React Native去实现这一目标，使开发者能集中精力处理App的业务逻辑，而不用费心考虑性能。但是，总还是有一些地方有所欠缺，以及在某些场合React Native还不能够替你决定如何进行优化（用原生">
+<meta property="og:updated_time" content="2016-10-26T03:03:02.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Raphael’s Blog">
-<meta name="twitter:description" content="WTF">
+<meta name="twitter:title" content="react-native性能">
+<meta name="twitter:description" content="使用React Native替代基于WebView的框架来开发App的一个强有力的理由，就是为了使App可以达到每秒60帧（足够流畅），并且能有类似原生App的外观和手感。因此我们也尽可能地优化React Native去实现这一目标，使开发者能集中精力处理App的业务逻辑，而不用费心考虑性能。但是，总还是有一些地方有所欠缺，以及在某些场合React Native还不能够替你决定如何进行优化（用原生">
   
     <link rel="alternative" href="/atom.xml" title="Raphael’s Blog" type="application/atom+xml">
   
@@ -29,24 +30,22 @@
   <div id="container">
     <div id="wrap">
       <div class="outer">
-        <section id="main">
-  
-    <article id="post-react-native-performance" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-react-native-performance-1" class="article article-type-post" itemscope itemprop="blogPost">
   
   <div class="article-inner">
     
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/10/26/react-native-performance/">react-native性能</a>
+    <h1 class="article-title" itemprop="name">
+      react-native性能
     </h1>
   
 
       </header>
     
     <div class="article-meta">
-      <a href="/2016/10/26/react-native-performance/" class="article-date">
+      <a href="/2016/10/26/react-native-performance-1/" class="article-date">
   <time datetime="2016-10-26T03:02:17.000Z" itemprop="datePublished">2016-10-26</time>
 </a>
       
@@ -105,92 +104,20 @@
     </div>
   </div>
   
-</article>
-
-
-  
-    <article id="post-Dive into React Native performance" class="article article-type-post" itemscope itemprop="blogPost">
-  
-  <div class="article-inner">
     
-      <header class="article-header">
-        
+<nav id="article-nav">
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/10/25/Dive into React Native performance/">Dive into React Native performance</a>
-    </h1>
   
+    <a href="/2016/10/25/Dive into React Native performance/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Dive into React Native performance</div>
+    </a>
+  
+</nav>
 
-      </header>
-    
-    <div class="article-meta">
-      <a href="/2016/10/25/Dive into React Native performance/" class="article-date">
-  <time datetime="2016-10-25T09:47:14.000Z" itemprop="datePublished">2016-10-25</time>
-</a>
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="Dive-into-React-Native-performance"><a href="#Dive-into-React-Native-performance" class="headerlink" title="Dive into React Native performance"></a><a href="https://code.facebook.com/posts/895897210527114/" target="_blank" rel="external">Dive into React Native performance</a></h1><p><a href="https://facebook.github.io/react-native/" target="_blank" rel="external">React Native</a> allows you to build iOS and Android apps in JavaScript using <a href="https://facebook.github.io/react/" target="_blank" rel="external">React</a> and <a href="https://facebook.github.io/relay/" target="_blank" rel="external">Relay</a>‘s declarative programming model. This leads to more concise, easier-to-understand code; fast iteration without a compile cycle; and easy sharing of code across multiple platforms. You can ship faster and focus on details that really matter, making your app look and feel fantastic. Optimizing performance is a big part of this. Here is the story of how we made React Native app startup twice as fast.</p>
-<h2 id="Why-the-hurry"><a href="#Why-the-hurry" class="headerlink" title="Why the hurry?"></a>Why the hurry?</h2><p>With an app that runs faster, content loads quickly, which means people get more time to interact with it, and smooth animations make the app enjoyable to use. In emerging markets, where 2011 class phones on 2G networks are the majority, a focus on performance can make the difference between an app that is usable and one that isn’t.</p>
-<p>Since releasing React Native on iOS and on Android, we have been improving list view scrolling performance, memory efficiency, UI responsiveness, and app startup time. Startup sets the first impression of an app and stresses all parts of the framework, so it is the most rewarding and challenging problem to tackle.</p>
-<h2 id="Always-be-measuring"><a href="#Always-be-measuring" class="headerlink" title="Always be measuring"></a>Always be measuring</h2><p>We converted the Events Dashboard feature in the Facebook for iOS app to React Native (navigate to the More tab in the app and tap Events to see it). This was the perfect candidate for testing performance because the native product was already highly optimized and provided a typical “interactive list of items” experience.<br><img src="https://scontent.xx.fbcdn.net/l/t39.2365-6/12679446_1168726623161282_931282499_n.jpg" alt=""><br>Fig. 1: The Events Dashboard screen</p>
-<p>Next, we set up an automated CT-Scan performance test that helped us navigate to the rightmost tab, which then opens and closes the Events Dashboard 50 times. During each of these iterations, we are able to measure the time it takes from tapping the Events button to events being visible on the screen. We also added more detailed performance markers to give us a good idea of which steps in the startup process were slow and taking up CPU time.</p>
-<p>Here is an overview of some of the steps we are measuring:</p>
-<ul>
-<li>Native Initialization: Initialize the JavaScript virtual machine and all the native modules (disk cache, network, UI manager, etc.).</li>
-<li>JS Init + Require: Read the minified JavaScript bundle file from disk and load it into the JavaScript virtual machine, which will parse it and generate bytecode as it requires the initial modules (mostly React, Relay, and their dependencies).</li>
-<li>Before Fetch: Load and execute the Events Dashboard application code, build the Relay query, and kick off reading from the on-disk cache.</li>
-<li>Fetch: Fetch data from the on-disk cache.</li>
-<li>JS Render: Instantiate all the React components and send them to the native UI manager module for display.</li>
-<li>Native Render: Calculate view sizes by computing the FlexBox layout on the shadow thread; create and position the views on the main thread.<br><img src="https://fbcdn-dragon-a.akamaihd.net/hphotos-ak-xfp1/t39.2365-6/12679489_247741662231959_787037748_n.jpg" alt=""><br>Fig. 2: Events Dashboard startup performance</li>
-</ul>
-<p>Our golden rule from then on: Never regress the test. We run it continuously to track performance improvements and regressions, and developers can run it on a specific commit to get a detailed performance analysis before pushing the change. Other tests have been set up to measure scroll performance and memory usage in the same way.</p>
-<h2 id="What-happens-on-startup"><a href="#What-happens-on-startup" class="headerlink" title="What happens on startup"></a>What happens on startup</h2><p>With automated performance tracking in place, we needed a tool that could give us more details on what exactly needed improvement during startup. We added detailed start/stop performance markers throughout our frameworks, collected the data, and used the catapult viewer to identify hot spots and blocking interactions across threads. You can trigger profiling on your app from the developer menu.</p>
-<p>With React Native, your code is executed on the JavaScript thread. Whenever you want to write data to the disk, make a network request, or access any other native resource (like the camera), your code needs to call a native module. When you render your components with React, they will be forwarded to the UI manager native module, which will then perform layout and create the resulting views on the main thread. The bridge will forward your call to the module and call back to your code, if needed. In React Native, all native calls have to be asynchronous to avoid blocking the main thread or the JS thread.</p>
-<p>In the below Events Dashboard startup visualization, we can see that the app, which is running on the JS queue, triggers a cache read for the events to be displayed, which is triggered on the async local storage queue. Once it gets the cached data back, the app renders the events cells on the JS queue with React, which then passes it on to the shadow queue for layout and finally to the main queue for view creation. This example shows multiple cache reads (using one common read operation may be faster) and a few React render operations on the JS thread that might be consolidated.<br><img src="https://fbcdn-dragon-a.akamaihd.net/hphotos-ak-xpf1/t39.2365-6/12427047_188833171499254_295261012_n.jpg" alt=""><br>Fig. 3: Events Dashboard startup visualization</p>
-<h2 id="Performance-improvements"><a href="#Performance-improvements" class="headerlink" title="Performance improvements"></a>Performance improvements</h2><p>Here are a few of the most significant efficiency and scheduling improvements we have made to reach our results, with links to the relevant commits.</p>
-<h2 id="Doing-less"><a href="#Doing-less" class="headerlink" title="Doing less"></a>Doing less</h2><ul>
-<li><p>Cleanup Require/Babel helpers (high impact): Removes helper code executed during require() that was specific to our website and not needed for React Native.</p>
-</li>
-<li><p>Avoid copying and decoding strings when loading the bundle (medium impact): Passing a UTF-8 string to the JavaScriptCore virtual machine will cause it to trigger a slower conversion to UCS-2 format. Encoding it in ASCII format instead will avoid the conversion. Getting rid of the intermediate NSString representation also improves performance by avoiding one more conversion. We discovered these improvements through extensive benchmarking of the bundle loading step.</p>
-</li>
-<li><p>Stripping DEV-only modules (low impact): Unlike compiled code, JavaScript doesn’t have a preprocessor that can strip debugging features in release mode. Using a Babel transform, we were able to remove code living behind <strong>DEV</strong> statements, effectively reducing bundle size, which improves JavaScript parse time.</p>
-</li>
-<li><p>Generate event descriptions on the server (low impact): Instead of fetching data to generate a sentence describing which friends are coming to an event, generate it on the server, which reduces the data we have to receive and parse, and avoid all the client-side processing to generate the sentence.</p>
-</li>
-</ul>
-<h2 id="Scheduling"><a href="#Scheduling" class="headerlink" title="Scheduling"></a>Scheduling</h2><ul>
-<li><p>Lazy requires (low impact): Instead of executing all JavaScript module require calls up front, trigger a require call only the first time we need it. This optimization effectively avoids requiring modules that are never used, and it has also proved to be successful on the web.</p>
-</li>
-<li><p>Relay incremental cache read (high impact): Relay was initially written for the web and had only an in-memory response cache. The first on-disk response cache was reading the entire cache from the disk. By reading only the content required to fulfill a particular query, we significantly reduced the I/O overhead and native-to-JS bridge traffic.</p>
-</li>
-<li><p>De-batching bridge calls, batch Relay calls (high impact): We initially thought that sending JS calls to native in batches would reduce the overhead of calling over the native-to-JS bridge, but performance analysis showed the overhead of JS calls to native was not a bottleneck: In fact, delaying UI or cache read calls to batch them with later calls also delayed work on the native thread, which harmed performance. In other cases, like the Relay cache read fetching data for multiple keys, batching proved to be a significant improvement.</p>
-</li>
-<li><p>Early UI flushing (low impact): We also batched UI updates to enforce consistency, but sending layout commands as soon as they are ready proved to be more efficient because the native UI manager can work in parallel with the JavaScript thread.</p>
-</li>
-<li><p>Lazy native modules loading (low impact): Initialize a native module only the first time we use it, which avoids initializing the modules we do not need.</p>
-</li>
-<li><p>Lazy touch bindings on text components (low impact): Binding touch event callbacks takes a significant amount of time. Instead of doing all that work up front, we are now only binding the touch down event (when you first touch a target) and bind all the other callbacks only when you start touching the element.</p>
-</li>
-<li><p>Defer popular events query (medium impact): The first screen of information is populated by the events query, and we will then show popular events after these. Deferring that query reduces contention when populating the screen with events.</p>
-</li>
-</ul>
-<h2 id="Prepare-for-light-speed"><a href="#Prepare-for-light-speed" class="headerlink" title="Prepare for light-speed"></a>Prepare for light-speed</h2><p>A few months ago, Events Dashboard startup took two seconds on the iPhone 5. After a lot of work from the React Native Performance, React Native, React, and Relay teams in London, Menlo Park, and New York, Events Dashboard startup is now twice as fast. Most of the improvements we made were done at the framework level, which means your React Native app will automatically benefit when migrating to the latest version of React Native.</p>
-<p>These improvements are just the beginning: We continue to work on making every part of the stack faster, from JavaScript parse time to data-fetching performance. And you can contribute, learn how to make your apps faster, and ask any questions you may have in our community!</p>
-
-      
-
-      
-        
-    </div>
-  </div>
   
 </article>
 
-
-  
-  
 </section>
         <aside id="sidebar">
   <nav class="menus">
