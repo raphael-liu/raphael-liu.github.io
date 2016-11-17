@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Android多个React-Native模块的实现及源码解读 | Raphael’s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="这里我们废话不多说,只围绕主题讲一些技术方面的干货.(本文基于React-Native0.36.0版本)
+我们之所以在native app中引入react-native(以下简称RN)框架,是为了将native app中的一些不确定的UI布局,逻辑,业务,流程等等因素,交由远端来控制.也就是说,RN的bundle文件都是由远端下发,然而我们为了最优化展现RN页面,往往都会提前下载好所需要的bund">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android多个React-Native模块的实现及源码解读">
+<meta property="og:url" content="http://bdapp.org/2016/11/16/React-Native-for-Android-with-multi-RNApp/index.html">
+<meta property="og:site_name" content="Raphael’s Blog">
+<meta property="og:description" content="这里我们废话不多说,只围绕主题讲一些技术方面的干货.(本文基于React-Native0.36.0版本)
+我们之所以在native app中引入react-native(以下简称RN)框架,是为了将native app中的一些不确定的UI布局,逻辑,业务,流程等等因素,交由远端来控制.也就是说,RN的bundle文件都是由远端下发,然而我们为了最优化展现RN页面,往往都会提前下载好所需要的bund">
+<meta property="og:image" content="http://bdapp.org/static/bundleManage.png">
+<meta property="og:updated_time" content="2016-11-17T06:29:04.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android多个React-Native模块的实现及源码解读">
+<meta name="twitter:description" content="这里我们废话不多说,只围绕主题讲一些技术方面的干货.(本文基于React-Native0.36.0版本)
+我们之所以在native app中引入react-native(以下简称RN)框架,是为了将native app中的一些不确定的UI布局,逻辑,业务,流程等等因素,交由远端来控制.也就是说,RN的bundle文件都是由远端下发,然而我们为了最优化展现RN页面,往往都会提前下载好所需要的bund">
+<meta name="twitter:image" content="http://bdapp.org/static/bundleManage.png">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <div class="outer">
+        <section id="main"><article id="post-React-Native-for-Android-with-multi-RNApp" class="article article-type-post" itemscope itemprop="blogPost">
+  
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Android多个React-Native模块的实现及源码解读
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      <a href="/2016/11/16/React-Native-for-Android-with-multi-RNApp/" class="article-date">
+  <time datetime="2016-11-16T07:31:14.000Z" itemprop="datePublished">2016-11-16</time>
+</a>
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>这里我们废话不多说,只围绕主题讲一些技术方面的干货.(本文基于React-Native0.36.0版本)</p>
+<p>我们之所以在native app中引入react-native(以下简称RN)框架,是为了将native app中的一些不确定的UI布局,逻辑,业务,流程等等因素,交由远端来控制.也就是说,RN的bundle文件都是由远端下发,然而我们为了最优化展现RN页面,往往都会提前下载好所需要的bundle文件以节省网络交互时间.所以这篇博客我们是基于RN各模块(ComponentName)所对应的JS bundle文件已经下载到本地目标文件夹的前提下来写的.关于bundle文件的版本管理等我们在文末会详细介绍.</p>
+<h1 id="ReactNativeHost"><a href="#ReactNativeHost" class="headerlink" title="ReactNativeHost"></a>ReactNativeHost</h1><p>我们将RN库引入工程之后,第一件事情就是改造Application类.我们需要在自己的Application中实现一个接口—-ReactApplication</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">public interface ReactApplication &#123;</div><div class="line">    ReactNativeHost getReactNativeHost();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这个接口中只有一个方法,而ReactNativeHost是一个抽象类,其中有两个抽象方法需要实现(一会将提到).这个方法返回ReactNativeHost对象,这个对象里面可以指定RN的调试模式,以及native给JS暴露的一些通信模块,同时还可以指定当前上下文加载的bundle文件路径.为了达到多个RN模块的切换,我们在Application中维护了一个<bundlepath,reactnativehost>的map(为什么这么做?紧接着会介绍):</bundlepath,reactnativehost></p>
+<p><code>private HashMap&lt;String, ReactNativeHost&gt; mReactHostMap = MapBuilder.newHashMap();</code></p>
+<p>来看看我们是怎么实现上面的接口以及如何维护这个map的:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">public String gReactNativeBundlePath = &quot;myBundlePath...&quot;;</div><div class="line"></div><div class="line">@Override</div><div class="line">    public ReactNativeHost getReactNativeHost() &#123;</div><div class="line">        synchronized (gReactNativeBundlePath) &#123;</div><div class="line">            if (!mReactHostMap.containsKey(gReactNativeBundlePath)) &#123;</div><div class="line">                ReactNativeHost host = new ReactNativeHost(this) &#123;</div><div class="line">                    @Override</div><div class="line">                    protected boolean getUseDeveloperSupport() &#123;</div><div class="line">                        return BuildConfig.REACT_DEBUG;</div><div class="line">                    &#125;</div><div class="line"></div><div class="line">                    @Override</div><div class="line">                    protected List&lt;ReactPackage&gt; getPackages() &#123;</div><div class="line">                        return Arrays.asList(new MainReactPackage(), new PatientReactPackage());</div><div class="line">                    &#125;</div><div class="line"></div><div class="line">                    @Override</div><div class="line">                    protected String getJSBundleFile() &#123;</div><div class="line">                        return gReactNativeBundlePath;</div><div class="line">                    &#125;</div><div class="line">                &#125;;</div><div class="line">                mReactHostMap.put(gReactNativeBundlePath, host);</div><div class="line">            &#125;</div><div class="line">            return mReactHostMap.get(gReactNativeBundlePath);</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>先来看看我们创建的ReactNativeHost的实现:</p>
+<ul>
+<li><p>getUseDeveloperSupport </p>
+<p>  抽象方法,用来控制RN调试开关的,一般直接复用BuildConfig.DEBUG开关就行,如果有冲突就自行新建一个buildConfigField(如这里的BuildConfig.REACT_DEBUG).</p>
+</li>
+<li><p>getPackages</p>
+<p>  用于指定JS和native通信的ReactPackage,在ReactPackage中可以指定native和JS通信的一些module.其中MainReactPackage是RN已经封装好一些native module和view manager等.</p>
+</li>
+<li><p>getJSBundleFile</p>
+<p>  用于ReactNativeHost创建ReactInstanceManager时指定对应的本地JS bundle文件路径.如果返回null,则从getBundleAssetName接口取assets中的对应文件(一般仅用于调试).</p>
+</li>
+</ul>
+<p>接下来我们看看为什么要用维护<bundlepath,reactnativehost>映射map的方式来实现多个RN模块的切换.</bundlepath,reactnativehost></p>
+<h1 id="ReactActivity"><a href="#ReactActivity" class="headerlink" title="ReactActivity"></a>ReactActivity</h1><p>当RN页面构建的时候,RN提供了ReactActivity组件来展示页面.值得一提的是,ReactActivity是一个抽象类,但是此类中没有抽象方法,像getMainComponentName这样需要子类中实现的方法却没有加抽象标识,这应该是facebook的RN团队疏忽了.在ReactActivity类中,可以看到以下代码:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">private final ReactActivityDelegate mDelegate = this.createReactActivityDelegate();</div><div class="line"></div><div class="line">protected void onCreate(Bundle savedInstanceState) &#123;</div><div class="line">        super.onCreate(savedInstanceState);</div><div class="line">        this.mDelegate.onCreate(savedInstanceState);</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>这里createReactActivityDelegate时,会将ReactActivity中指定的RN模块名(即getMainComponentName)传入ReactActivityDelegate,紧接着是调用ReactActivityDelegate对应的生命周期onCreate,来看看里面都做了些什么:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">protected void onCreate(Bundle savedInstanceState) &#123;</div><div class="line">        if(this.getReactNativeHost().getUseDeveloperSupport() &amp;&amp; VERSION.SDK_INT &gt;= 23 &amp;&amp; !Settings.canDrawOverlays(this.getContext())) &#123;</div><div class="line">            Intent serviceIntent = new Intent(&quot;android.settings.action.MANAGE_OVERLAY_PERMISSION&quot;);</div><div class="line">            this.getContext().startActivity(serviceIntent);</div><div class="line">            FLog.w(&quot;React&quot;, &quot;Overlay permissions needs to be granted in order for react native apps to run in dev mode&quot;);</div><div class="line">            Toast.makeText(this.getContext(), &quot;Overlay permissions needs to be granted in order for react native apps to run in dev mode&quot;, 1).show();</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        if(this.mMainComponentName != null) &#123;</div><div class="line">            this.loadApp(this.mMainComponentName);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        this.mDoubleTapReloadRecognizer = new DoubleTapReloadRecognizer();</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>–<br>第一个if块中的代码很简单,就是当RN在调试模式下,针对系统在SDK23以上创建RN调试悬浮窗的权限判断,没有权限则请求用户授权.Android官方文档:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Note: If the app targets API level 23 or higher, the app user must explicitly grant this permission to the app through a permission management screen. The app requests</div><div class="line"> the user&apos;s approval by sending an intent with action </div><div class="line">ACTION_MANAGE_OVERLAY_PERMISSION. The app can check whether it has this authorization by calling</div><div class="line"></div><div class="line">Settings.canDrawOverlays().</div></pre></td></tr></table></figure>
+<p>–<br>第二个if块是最关键的.通过ReactActivityDelegate来loadApp,这也是最耗时的操作,展现RN页面慢/白屏的根源.这里主要是创建ReactRootView以及初始化React上下文环境.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">protected void loadApp(String appKey) &#123;</div><div class="line">        if(this.mReactRootView != null) &#123;</div><div class="line">            throw new IllegalStateException(&quot;Cannot loadApp while app is already running.&quot;);</div><div class="line">        &#125; else &#123;</div><div class="line">            this.mReactRootView = this.createRootView();</div><div class="line">            this.mReactRootView.startReactApplication(this.getReactNativeHost().getReactInstanceManager(), appKey, this.getLaunchOptions());</div><div class="line">            this.getPlainActivity().setContentView(this.mReactRootView);</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>如何优化RN的性能和展现效率,主要就是针对这一个耗时方法进行优化即可.可以对ReactRootView进行缓存管理以及将创建React上下文环境提前预处理.<br>我们来看看上面的遗留问题—-为什么要用维护<bundlepath,reactnativehost>映射map的方式来实现多个RN模块的切换.在启动RN应用时startReactApplication需要传入ReactNativeHost中的ReactInstanceManager对象,我们来看看源码(ReactNativeHost.java):</bundlepath,reactnativehost></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">public ReactInstanceManager getReactInstanceManager() &#123;</div><div class="line">        if(this.mReactInstanceManager == null) &#123;</div><div class="line">            this.mReactInstanceManager = this.createReactInstanceManager();</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        return this.mReactInstanceManager;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">protected ReactInstanceManager createReactInstanceManager() &#123;</div><div class="line">        Builder builder = ReactInstanceManager.builder().setApplication(this.mApplication).setJSMainModuleName(this.getJSMainModuleName()).setUseDeveloperSupport(this.getUseDeveloperSupport()).setRedBoxHandler(this.getRedBoxHandler()).setUIImplementationProvider(this.getUIImplementationProvider()).setInitialLifecycleState(LifecycleState.BEFORE_CREATE);</div><div class="line">        Iterator jsBundleFile = this.getPackages().iterator();</div><div class="line"></div><div class="line">        while(jsBundleFile.hasNext()) &#123;</div><div class="line">            ReactPackage reactPackage = (ReactPackage)jsBundleFile.next();</div><div class="line">            builder.addPackage(reactPackage);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        String jsBundleFile1 = this.getJSBundleFile();</div><div class="line">        if(jsBundleFile1 != null) &#123;</div><div class="line">            builder.setJSBundleFile(jsBundleFile1);</div><div class="line">        &#125; else &#123;</div><div class="line">            builder.setBundleAssetName((String)Assertions.assertNotNull(this.getBundleAssetName()));</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        return builder.build();</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>可以发现,ReactNativeHost中的ReactInstanceManager只在创建时读取bundle路径等信息.也就约等于一个ReactNativeHost对应一个bundle入口文件.这就是为什么我们以维护一个<bundlepath,reactnativehost>映射map的方式来实现native app中多个RN模块的切换.</bundlepath,reactnativehost></p>
+<p>继续来看看创建React上下文环境的实现逻辑(XReactInstanceManagerImpl.java):</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line">public void createReactContextInBackground() &#123;</div><div class="line">        Assertions.assertCondition(!this.mHasStartedCreatingInitialContext, &quot;createReactContextInBackground should only be called when creating the react application for the first time. When reloading JS, e.g. from a new file, explicitlyuse recreateReactContextInBackground&quot;);</div><div class="line">        this.mHasStartedCreatingInitialContext = true;</div><div class="line">        this.recreateReactContextInBackgroundInner();</div><div class="line">    &#125;</div><div class="line">private void recreateReactContextInBackgroundInner() &#123;</div><div class="line">        UiThreadUtil.assertOnUiThread();</div><div class="line">        if(this.mUseDeveloperSupport &amp;&amp; this.mJSMainModuleName != null) &#123;</div><div class="line">            final DeveloperSettings devSettings = this.mDevSupportManager.getDevSettings();</div><div class="line">            if(this.mDevSupportManager.hasUpToDateJSBundleInCache() &amp;&amp; !devSettings.isRemoteJSDebugEnabled()) &#123;</div><div class="line">                this.onJSBundleLoadedFromServer();</div><div class="line">            &#125; else if(this.mBundleLoader == null) &#123;</div><div class="line">                this.mDevSupportManager.handleReloadJS();</div><div class="line">            &#125; else &#123;</div><div class="line">                this.mDevSupportManager.isPackagerRunning(new PackagerStatusCallback() &#123;</div><div class="line">                    public void onPackagerStatusFetched(final boolean packagerIsRunning) &#123;</div><div class="line">                        UiThreadUtil.runOnUiThread(new Runnable() &#123;</div><div class="line">                            public void run() &#123;</div><div class="line">                                if(packagerIsRunning) &#123;</div><div class="line">                                    XReactInstanceManagerImpl.this.mDevSupportManager.handleReloadJS();</div><div class="line">                                &#125; else &#123;</div><div class="line">                                    devSettings.setRemoteJSDebugEnabled(false);</div><div class="line">                                    XReactInstanceManagerImpl.this.recreateReactContextInBackgroundFromBundleLoader();</div><div class="line">                                &#125;</div><div class="line"></div><div class="line">                            &#125;</div><div class="line">                        &#125;);</div><div class="line">                    &#125;</div><div class="line">                &#125;);</div><div class="line">            &#125;</div><div class="line"></div><div class="line">        &#125; else &#123;</div><div class="line">            this.recreateReactContextInBackgroundFromBundleLoader();</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>第二个if块的关键代码就分析到这.</p>
+<p>–<br>最后一句是调试模式下,注册一个DoubleTapReloadRecognizer,按两下R键重新加载bundle.处理逻辑是在DevSupportManager(通过DevSupportManagerFactory.create创建)的handleReloadJS方法中处理的.最终实现逻辑(XReactInstanceManagerImpl.java):</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">private void recreateReactContextInBackground(com.facebook.react.cxxbridge.JavaScriptExecutor.Factory jsExecutorFactory, JSBundleLoader jsBundleLoader) &#123;</div><div class="line">        UiThreadUtil.assertOnUiThread();</div><div class="line">        XReactInstanceManagerImpl.ReactContextInitParams initParams = new XReactInstanceManagerImpl.ReactContextInitParams(jsExecutorFactory, jsBundleLoader);</div><div class="line">        if(this.mReactContextInitAsyncTask == null) &#123;</div><div class="line">            this.mReactContextInitAsyncTask = new XReactInstanceManagerImpl.ReactContextInitAsyncTask(null);</div><div class="line">            this.mReactContextInitAsyncTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, new XReactInstanceManagerImpl.ReactContextInitParams[]&#123;initParams&#125;);</div><div class="line">        &#125; else &#123;</div><div class="line">            this.mPendingReactContextInitParams = initParams;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>#bundle管理<br><img src="http://bdapp.org/static/bundleManage.png" alt=""></p>
+<p>主要根据以上流程实现即可,同时要兼具安全性考量.验证文件安全性.</p>
+
+      
+
+      
+        
+    </div>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2016/10/26/react-native-android-ui-performance/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">调试Android UI性能</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        <aside id="sidebar">
+  <nav class="menus">
+  	<ul>
+  		<li><a href="/"><i class="icon icon-home"></i></a></li>
+  		
+			<li><a href="/archives"><i class="icon icon-fenlei"></i></a></li>
+  		
+  		
+			<li><a href="/tags"><i class="icon icon-tag"></i></a></li>
+  		
+  		
+  			<li><a href="https://github.com/raphael-liu" target="_blank"><i class="icon icon-github"></i></a></li>
+  		
+  	</ul>
+  </nav>
+  <a id="go-top" href="#"><i class="icon icon-up"></i></a>
+</aside>
+      </div>
+      <footer id="footer">
+  
+	<div id="footer-info" class="inner">
+	  &copy; 2016 Raphael Liu 
+	</div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tag</a>
+  
+    <a href="https://github.com/raphael-liu" class="mobile-nav-link">Github</a>
+  
+    <a href="/atom.xml" class="mobile-nav-link">rss</a>
+  
+</nav>
+    
+
+<script src="//cdn.bootcss.com/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>
