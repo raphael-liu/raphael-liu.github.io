@@ -14,7 +14,7 @@
 <meta property="og:url" content="http://bdapp.org/2016/10/26/react-native-performance/index.html">
 <meta property="og:site_name" content="Raphael’s Blog">
 <meta property="og:description" content="使用React Native替代基于WebView的框架来开发App的一个强有力的理由，就是为了使App可以达到每秒60帧（足够流畅），并且能有类似原生App的外观和手感。因此我们也尽可能地优化React Native去实现这一目标，使开发者能集中精力处理App的业务逻辑，而不用费心考虑性能。但是，总还是有一些地方有所欠缺，以及在某些场合React Native还不能够替你决定如何进行优化（用原生">
-<meta property="og:updated_time" content="2016-10-26T06:55:45.000Z">
+<meta property="og:updated_time" content="2016-12-28T06:03:28.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="react-native性能">
 <meta name="twitter:description" content="使用React Native替代基于WebView的框架来开发App的一个强有力的理由，就是为了使App可以达到每秒60帧（足够流畅），并且能有类似原生App的外观和手感。因此我们也尽可能地优化React Native去实现这一目标，使开发者能集中精力处理App的业务逻辑，而不用费心考虑性能。但是，总还是有一些地方有所欠缺，以及在某些场合React Native还不能够替你决定如何进行优化（用原生">
@@ -22,7 +22,7 @@
     <link rel="alternative" href="/atom.xml" title="Raphael’s Blog" type="application/atom+xml">
   
   
-    <link rel="icon" href="/favicon.png">
+    <link rel="icon" href="https://media.licdn.com/mpr/mpr/shrinknp_400_400/p/6/000/26a/313/3d13c6e.jpg">
   
   <link rel="stylesheet" href="/main.css?v=4.0.0.css">
   
@@ -70,7 +70,7 @@
 		</hgroup>
 
 		
-		<p class="header-subtitle">WTF</p>
+		<p class="header-subtitle">格物致知</p>
 		
 
 		<nav class="header-menu">
@@ -141,7 +141,7 @@
 			  <h1 class="header-author">Raphael Liu</h1>
 			</hgroup>
 			
-			<p class="header-subtitle">WTF</p>
+			<p class="header-subtitle">格物致知</p>
 			
 			<nav class="header-menu">
 				<ul>
@@ -205,7 +205,8 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>使用React Native替代基于WebView的框架来开发App的一个强有力的理由，就是为了使App可以达到每秒60帧（足够流畅），并且能有类似原生App的外观和手感。因此我们也尽可能地优化React Native去实现这一目标，使开发者能集中精力处理App的业务逻辑，而不用费心考虑性能。但是，总还是有一些地方有所欠缺，以及在某些场合React Native还不能够替你决定如何进行优化（用原生代码写也无法避免），因此人工的干预依然是必要的。<br>本文的目的是教给你一些基本的知识，来帮你排查性能方面的问题，以及探讨这些问题产生的原因和推荐的解决方法。</p>
-<h2 id="关于“帧”你所需要知道的"><a href="#关于“帧”你所需要知道的" class="headerlink" title="关于“帧”你所需要知道的"></a>关于“帧”你所需要知道的</h2><p>老一辈人常常把电影称为“移动的画”，是因为视频中逼真的动态效果其实是一种幻觉，这种幻觉是由一组静态的图片以一个稳定的速度快速变化所产生的。我们把这组图片中的每一张图片叫做一帧，而每秒钟显示的帧数直接的影响了视频（或者说用户界面）的流畅度和真实感。iOS设备提供了每秒60的帧率，这就留给了开发者和UI系统大约16.67ms来完成生成一张静态图片（帧）所需要的所有工作。如果在这分派的16.67ms之内没有能够完成这些工作，就会引发‘丢帧’的后果，使界面表现的不够流畅。</p>
+<h2 id="关于“帧”你所需要知道的"><a href="#关于“帧”你所需要知道的" class="headerlink" title="关于“帧”你所需要知道的"></a>关于“帧”你所需要知道的</h2><a id="more"></a>
+<p>老一辈人常常把电影称为“移动的画”，是因为视频中逼真的动态效果其实是一种幻觉，这种幻觉是由一组静态的图片以一个稳定的速度快速变化所产生的。我们把这组图片中的每一张图片叫做一帧，而每秒钟显示的帧数直接的影响了视频（或者说用户界面）的流畅度和真实感。iOS设备提供了每秒60的帧率，这就留给了开发者和UI系统大约16.67ms来完成生成一张静态图片（帧）所需要的所有工作。如果在这分派的16.67ms之内没有能够完成这些工作，就会引发‘丢帧’的后果，使界面表现的不够流畅。</p>
 <p>下面要讲的事情可能更为复杂：请先调出你应用的开发菜单，打开<code>Show FPS Monitor</code>. 你会注意到有两个不同的帧率.</p>
 <h3 id="JavaScript-帧率"><a href="#JavaScript-帧率" class="headerlink" title="JavaScript 帧率"></a>JavaScript 帧率</h3><p>对大多数React Native应用来说，业务逻辑是运行在JavaScript线程上的。这是React应用所在的线程，也是发生API调用，以及处理触摸事件等操作的线程。更新数据到原生支持的视图是批量进行的，并且在事件循环每进行一次的时候被发送到原生端，这一步通常会在一帧时间结束之前处理完（如果一切顺利的话）。如果JavaScript线程有一帧没有及时响应，就被认为发生了一次丢帧。 例如，你在一个复杂应用的根组件上调用了<code>this.setState</code>，从而导致一次开销很大的子组件树的重绘，可想而知，这可能会花费200ms也就是整整12帧的丢失。此时，任何由JavaScript控制的动画都会卡住。只要卡顿超过100ms，用户就会明显的感觉到。</p>
 <p>这种情况经常发生在Navigator的切换过程中：当你push一个新的路由时，JavaScript需要绘制新场景所需的所有组件，以发送正确的命令给原生端去创建视图。由于切换是由JavaScript线程所控制，因此经常会占用若干帧的时间，引起一些卡顿。有的时候，组件会在<code>componentDidMount</code>函数中做一些额外的事情，这甚至可能会导致页面切换过程中多达一秒的卡顿。</p>
@@ -251,6 +252,37 @@
 
       
 
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢土豪赏赐<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="http://bdapp.org/static/alipay.jpg">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="http://bdapp.org/static/wechatpay.jpg">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
       
     </div>
     <div class="article-info article-info-index">
@@ -378,12 +410,11 @@
     <div id="footer-info">
       <div class="footer-left">
         &copy; 2016 Raphael Liu
-      </div>
-      <div class="footer-right">
+        <span id="divider">&nbsp; &nbsp; |&nbsp; &nbsp; </span>
         
         
         <span id="busuanzi_container_site_pv" style='display: inline;'>
-                <span id="site-visit">uv:
+                <span id="site-visit">SiteVisit:
                     <span id="busuanzi_value_site_uv"></span>
                 </span>
             </span>
@@ -393,13 +424,15 @@
         
         
         <span id="busuanzi_container_page_pv" style='display: inline'>
-                <span id="page-visit">pv:
+                <span id="page-visit">PageVisit:
                     <span id="busuanzi_value_page_pv"></span>
                 </span>
             </span>
         
         
       </div>
+      <!--<div class="footer-right">-->
+      <!--</div>-->
     </div>
   </div>
 </footer>
@@ -503,7 +536,7 @@
     
     	<section class="tools-section tools-section-me" q-show="aboutme">
   	  	
-  	  		<div class="aboutme-wrap" id="js-aboutme">等死混吃矮穷戳</div>
+  	  		<div class="aboutme-wrap" id="js-aboutme">Raphael Liu,生于1987年,金牛座.&lt;br&gt;&lt;br&gt; 现任职于百度,从事移动研发.&lt;br&gt; 曾工作于盛大创新院,华为.&lt;br&gt;&lt;br&gt; 热爱运动,尤爱球类运动.&lt;br&gt; 痴迷游戏,无兄弟不dota.&lt;br&gt;&lt;br&gt; 一枚在逆境中挣扎的矮穷戳少年.</div>
   	  	
     	</section>
     

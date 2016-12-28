@@ -17,7 +17,7 @@
 <meta property="og:description" content="这里我们废话不多说,只围绕主题讲一些技术方面的干货.(本文基于React-Native0.36.0版本)
 我们之所以在native app中引入react-native(以下简称RN)框架,是为了将native app中的一些不确定的UI布局,逻辑,业务,流程等等因素,交由远端来控制.也就是说,RN的bundle文件都是由远端下发,然而我们为了最优化展现RN页面,往往都会提前下载好所需要的bund">
 <meta property="og:image" content="http://bdapp.org/static/bundleManage.png">
-<meta property="og:updated_time" content="2016-12-26T09:03:23.000Z">
+<meta property="og:updated_time" content="2016-12-28T06:03:35.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android多个React-Native模块的实现及源码解读">
 <meta name="twitter:description" content="这里我们废话不多说,只围绕主题讲一些技术方面的干货.(本文基于React-Native0.36.0版本)
@@ -27,7 +27,7 @@
     <link rel="alternative" href="/atom.xml" title="Raphael’s Blog" type="application/atom+xml">
   
   
-    <link rel="icon" href="/favicon.png">
+    <link rel="icon" href="https://media.licdn.com/mpr/mpr/shrinknp_400_400/p/6/000/26a/313/3d13c6e.jpg">
   
   <link rel="stylesheet" href="/main.css?v=4.0.0.css">
   
@@ -75,7 +75,7 @@
 		</hgroup>
 
 		
-		<p class="header-subtitle">WTF</p>
+		<p class="header-subtitle">格物致知</p>
 		
 
 		<nav class="header-menu">
@@ -146,7 +146,7 @@
 			  <h1 class="header-author">Raphael Liu</h1>
 			</hgroup>
 			
-			<p class="header-subtitle">WTF</p>
+			<p class="header-subtitle">格物致知</p>
 			
 			<nav class="header-menu">
 				<ul>
@@ -210,7 +210,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>这里我们废话不多说,只围绕主题讲一些技术方面的干货.(本文基于React-Native0.36.0版本)</p>
-<p>我们之所以在native app中引入react-native(以下简称RN)框架,是为了将native app中的一些不确定的UI布局,逻辑,业务,流程等等因素,交由远端来控制.也就是说,RN的bundle文件都是由远端下发,然而我们为了最优化展现RN页面,往往都会提前下载好所需要的bundle文件以节省网络交互时间.所以这篇博客我们是基于RN各模块(ComponentName)所对应的JS bundle文件已经下载到本地目标文件夹的前提下来写的.关于bundle文件的版本管理等我们在文末会详细介绍.</p>
+<p>我们之所以在native app中引入react-native(以下简称RN)框架,是为了将native app中的一些不确定的UI布局,逻辑,业务,流程等等因素,交由远端来控制.也就是说,RN的bundle文件都是由远端下发,然而我们为了最优化展现RN页面,往往都会提前下载好所需要的bundle文件以节省网络交互时间.所以这篇博客我们是基于RN各模块(ComponentName)所对应的JS bundle文件已经下载到本地目标文件夹的前提下来写的.关于bundle文件的版本管理等我们在文末会详细介绍.<br><a id="more"></a></p>
 <h1 id="ReactNativeHost"><a href="#ReactNativeHost" class="headerlink" title="ReactNativeHost"></a>ReactNativeHost</h1><p>我们将RN库引入工程之后,第一件事情就是改造Application类.我们需要在自己的Application中实现一个接口—-ReactApplication</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">public interface ReactApplication &#123;</div><div class="line">    ReactNativeHost getReactNativeHost();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>这个接口中只有一个方法,而ReactNativeHost是一个抽象类,其中有两个抽象方法需要实现(一会将提到).这个方法返回ReactNativeHost对象,这个对象里面可以指定RN的调试模式,以及native给JS暴露的一些通信模块,同时还可以指定当前上下文加载的bundle文件路径.为了达到多个RN模块的切换,我们在Application中维护了一个<bundlepath,reactnativehost>的map(为什么这么做?紧接着会介绍):</bundlepath,reactnativehost></p>
@@ -264,17 +264,17 @@
             <span class="tooltip-content">
               <span class="tooltip-text">
                 <span class="tooltip-inner">
-                  <p class="reward-p"><i class="icon icon-quo-left"></i>‘很荣幸能够和土豪做朋友’<i class="icon icon-quo-right"></i></p>
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢土豪赏赐<i class="icon icon-quo-right"></i></p>
                   <div class="reward-box">
                     
                     <div class="reward-box-item">
-                      <img class="reward-img" src="/static/alipay.jpg">
+                      <img class="reward-img" src="http://bdapp.org/static/alipay.jpg">
                       <span class="reward-type">支付宝</span>
                     </div>
                     
                     
                     <div class="reward-box-item">
-                      <img class="reward-img" src="/static/wechatpay.jpg">
+                      <img class="reward-img" src="http://bdapp.org/static/wechatpay.jpg">
                       <span class="reward-type">微信</span>
                     </div>
                     
@@ -403,12 +403,11 @@
     <div id="footer-info">
       <div class="footer-left">
         &copy; 2016 Raphael Liu
-      </div>
-      <div class="footer-right">
+        <span id="divider">&nbsp; &nbsp; |&nbsp; &nbsp; </span>
         
         
         <span id="busuanzi_container_site_pv" style='display: inline;'>
-                <span id="site-visit">uv:
+                <span id="site-visit">SiteVisit:
                     <span id="busuanzi_value_site_uv"></span>
                 </span>
             </span>
@@ -418,13 +417,15 @@
         
         
         <span id="busuanzi_container_page_pv" style='display: inline'>
-                <span id="page-visit">pv:
+                <span id="page-visit">PageVisit:
                     <span id="busuanzi_value_page_pv"></span>
                 </span>
             </span>
         
         
       </div>
+      <!--<div class="footer-right">-->
+      <!--</div>-->
     </div>
   </div>
 </footer>
@@ -528,7 +529,7 @@
     
     	<section class="tools-section tools-section-me" q-show="aboutme">
   	  	
-  	  		<div class="aboutme-wrap" id="js-aboutme">等死混吃矮穷戳</div>
+  	  		<div class="aboutme-wrap" id="js-aboutme">Raphael Liu,生于1987年,金牛座.&lt;br&gt;&lt;br&gt; 现任职于百度,从事移动研发.&lt;br&gt; 曾工作于盛大创新院,华为.&lt;br&gt;&lt;br&gt; 热爱运动,尤爱球类运动.&lt;br&gt; 痴迷游戏,无兄弟不dota.&lt;br&gt;&lt;br&gt; 一枚在逆境中挣扎的矮穷戳少年.</div>
   	  	
     	</section>
     
