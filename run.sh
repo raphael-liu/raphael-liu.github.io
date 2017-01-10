@@ -9,4 +9,5 @@ cp -f CNAME ../raphael-liu.github.io/
 cp -f 404.html ../raphael-liu.github.io/
 cp -f run.sh ../raphael-liu.github.io/
 cd ../raphael-liu.github.io
+wget -P ./static/ http://pac.internal.baidu.com/bdnew.pac 
 chmod +x run.sh
