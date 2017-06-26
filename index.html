@@ -205,15 +205,24 @@
 </code></pre><p>如生成的库文件是“.a文件”，则在Android.mk中添加如下内容：</p>
 <pre><code>LOCAL_LDLIBS:=-llog
 </code></pre><h2 id="在-c或-cpp文件中引用log头文件"><a href="#在-c或-cpp文件中引用log头文件" class="headerlink" title="在.c或.cpp文件中引用log头文件"></a>在.c或.cpp文件中引用log头文件</h2><p>添加如下内容：</p>
-<p>```// 引入log头文件</p>
-<p>#include  <android/log.h><br>// log标签</p>
-<p>#define  TAG    “这里填写日志的TAG”<br>// 定义info信息</p>
-<p>#define LOGI(…) <strong>android_log_print(ANDROID_LOG_INFO,TAG,</strong>VA_ARGS__)<br>// 定义debug信息</p>
-<p>#define LOGD(…) <strong>android_log_print(ANDROID_LOG_DEBUG, TAG, </strong>VA_ARGS__)<br>// 定义error信息</p>
-<p>#define LOGE(…) <strong>android_log_print(ANDROID_LOG_ERROR,TAG,</strong>VA_ARGS__)<br>```    </p>
-<p>ANDROID_LOG_INFO：是日志级别；</p>
-<p>TAG：是要过滤的标签，可以在LogCat视图中过滤。</p>
-<p>__VA<em>ARGS\</em>_：是实际的日志内容。</p>
+<pre><code>// 引入log头文件
+#include  &lt;android/log.h&gt;
+// log标签
+#define  TAG    &quot;这里填写日志的TAG&quot;
+// 定义info信息
+#define LOGI(...) __android_log_print(ANDROID_LOG_INFO,TAG,__VA_ARGS__)
+// 定义debug信息
+#define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG, TAG, __VA_ARGS__)
+// 定义error信息
+#define LOGE(...) __android_log_print(ANDROID_LOG_ERROR,TAG,__VA_ARGS__)
+</code></pre><ul>
+<li><p>ANDROID_LOG_INFO：是日志级别；</p>
+</li>
+<li><p>TAG：是要过滤的标签，可以在LogCat视图中过滤。</p>
+</li>
+<li><p>__VA<em>ARGS\</em>_：是实际的日志内容。</p>
+</li>
+</ul>
 <p>完成上面2步之后，我们就可以在.c/cpp文件中添加LOGI、LOGD、LOGE去打印信息！使用LOGI、LOGD、LOGE的方法和使用printf一样.</p>
         
           <a class="article-more-a" href="/2017/06/26/android-jni-log/#more">more >></a>
