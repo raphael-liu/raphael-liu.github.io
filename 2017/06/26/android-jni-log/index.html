@@ -9,21 +9,30 @@
   <title>Android JNI打印log到logcat | Raphael’s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="添加ndk对log支持若需要添加ndk对log的支持，只需要通过以下2步即可实现。
-修改Android.mk如生成的库文件是“.so文件”，则在Android.mk中添加如下内容：LOCAL_LDLIBS:=-L$(SYSROOT)/usr/lib -llog如生成的库文件是“.a文件”，则在Android.mk中添加如下内容：LOCAL_LDLIBS:=-llog
-在.c或.cpp文件中引用lo">
+修改Android.mk如生成的库文件是“.so文件”，则在Android.mk中添加如下内容：
+LOCAL_LDLIBS:=-L$(SYSROOT)/usr/lib -llog
+如生成的库文件是“.a文件”，则在Android.mk中添加如下内容：
+LOCAL_LDLIBS:=-llog
+在.c或.cpp文件中引">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android JNI打印log到logcat">
 <meta property="og:url" content="http://app4u.org/2017/06/26/android-jni-log/index.html">
 <meta property="og:site_name" content="Raphael’s Blog">
 <meta property="og:description" content="添加ndk对log支持若需要添加ndk对log的支持，只需要通过以下2步即可实现。
-修改Android.mk如生成的库文件是“.so文件”，则在Android.mk中添加如下内容：LOCAL_LDLIBS:=-L$(SYSROOT)/usr/lib -llog如生成的库文件是“.a文件”，则在Android.mk中添加如下内容：LOCAL_LDLIBS:=-llog
-在.c或.cpp文件中引用lo">
-<meta property="og:updated_time" content="2017-06-26T06:21:50.000Z">
+修改Android.mk如生成的库文件是“.so文件”，则在Android.mk中添加如下内容：
+LOCAL_LDLIBS:=-L$(SYSROOT)/usr/lib -llog
+如生成的库文件是“.a文件”，则在Android.mk中添加如下内容：
+LOCAL_LDLIBS:=-llog
+在.c或.cpp文件中引">
+<meta property="og:updated_time" content="2017-06-26T06:34:44.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android JNI打印log到logcat">
 <meta name="twitter:description" content="添加ndk对log支持若需要添加ndk对log的支持，只需要通过以下2步即可实现。
-修改Android.mk如生成的库文件是“.so文件”，则在Android.mk中添加如下内容：LOCAL_LDLIBS:=-L$(SYSROOT)/usr/lib -llog如生成的库文件是“.a文件”，则在Android.mk中添加如下内容：LOCAL_LDLIBS:=-llog
-在.c或.cpp文件中引用lo">
+修改Android.mk如生成的库文件是“.so文件”，则在Android.mk中添加如下内容：
+LOCAL_LDLIBS:=-L$(SYSROOT)/usr/lib -llog
+如生成的库文件是“.a文件”，则在Android.mk中添加如下内容：
+LOCAL_LDLIBS:=-llog
+在.c或.cpp文件中引">
   
   
     <link rel="icon" href="https://media.licdn.com/mpr/mpr/shrinknp_400_400/p/6/000/26a/313/3d13c6e.jpg">
@@ -205,11 +214,29 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h1 id="添加ndk对log支持"><a href="#添加ndk对log支持" class="headerlink" title="添加ndk对log支持"></a>添加ndk对log支持</h1><p>若需要添加ndk对log的支持，只需要通过以下2步即可实现。</p>
-<h2 id="修改Android-mk"><a href="#修改Android-mk" class="headerlink" title="修改Android.mk"></a>修改Android.mk</h2><p>如生成的库文件是“.so文件”，则在Android.mk中添加如下内容：<br>LOCAL_LDLIBS:=-L$(SYSROOT)/usr/lib -llog<br>如生成的库文件是“.a文件”，则在Android.mk中添加如下内容：<br>LOCAL_LDLIBS:=-llog</p>
-<h2 id="在-c或-cpp文件中引用log头文件"><a href="#在-c或-cpp文件中引用log头文件" class="headerlink" title="在.c或.cpp文件中引用log头文件"></a>在.c或.cpp文件中引用log头文件</h2><p>添加如下内容：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line">// 引入log头文件</div><div class="line">#include  &lt;android/log.h&gt;</div><div class="line">// log标签</div><div class="line">#define  TAG    &quot;这里填写日志的TAG&quot;</div><div class="line">// 定义info信息</div><div class="line">#define LOGI(...) __android_log_print(ANDROID_LOG_INFO,TAG,__VA_ARGS__)</div><div class="line">// 定义debug信息</div><div class="line">#define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG, TAG, __VA_ARGS__)</div><div class="line">// 定义error信息</div><div class="line">#define LOGE(...) __android_log_print(ANDROID_LOG_ERROR,TAG,__VA_ARGS__)</div><div class="line">```	</div><div class="line"></div><div class="line"></div><div class="line">ANDROID_LOG_INFO：是日志级别；</div><div class="line"></div><div class="line">TAG：是要过滤的标签，可以在LogCat视图中过滤。</div><div class="line"></div><div class="line">\_\_VA_ARGS\_\_：是实际的日志内容。</div><div class="line"></div><div class="line">完成上面2步之后，我们就可以在.c/cpp文件中添加LOGI、LOGD、LOGE去打印信息！使用LOGI、LOGD、LOGE的方法和使用printf一样</div><div class="line"></div><div class="line">&lt;!-- more --&gt;</div><div class="line"></div><div class="line">## 日志类型</div><div class="line">1）Log.v 的调试颜色为黑色的，任何消息都会输出，这里的v代表verbose啰嗦的意思，平时使用就是Log.v(,);</div><div class="line">2）Log.d的输出颜色是蓝色的，仅输出debug调试的意思，但他会输出上层的信息，过滤起来可以通过DDMS的Logcat标签来选择</div><div class="line">3）Log.i的输出为绿色，一般提示性的消息information，它不会输出Log.v和Log.d的信息，但会显示i、w和e的信息</div><div class="line">4）Log.w的意思为橙色，可以看作为warning警告，一般需要我们注意优化Android代码，同时选择它后还会输出Log.e的信息。</div><div class="line">5）Log.e为红色，可以想到error错误，这里仅显示红色的错误信息，这些错误就需要我们认真的分析，查看栈的信息了。</div><div class="line"></div><div class="line"> </div><div class="line"></div><div class="line">## Usage</div></pre></td></tr></table></figure>
-<p>LOGI(“[className@methodName] var: %s”, var);<br>```</p>
-<p>用法如c++中的<code>printf</code>.执行上句代码可以再logcat中打印出相应日志。</p>
+<h2 id="修改Android-mk"><a href="#修改Android-mk" class="headerlink" title="修改Android.mk"></a>修改Android.mk</h2><p>如生成的库文件是“.so文件”，则在Android.mk中添加如下内容：</p>
+<pre><code>LOCAL_LDLIBS:=-L$(SYSROOT)/usr/lib -llog
+</code></pre><p>如生成的库文件是“.a文件”，则在Android.mk中添加如下内容：</p>
+<pre><code>LOCAL_LDLIBS:=-llog
+</code></pre><h2 id="在-c或-cpp文件中引用log头文件"><a href="#在-c或-cpp文件中引用log头文件" class="headerlink" title="在.c或.cpp文件中引用log头文件"></a>在.c或.cpp文件中引用log头文件</h2><p>添加如下内容：</p>
+<p>```// 引入log头文件</p>
+<p>#include  <android log.h=""><br>// log标签</android></p>
+<p>#define  TAG    “这里填写日志的TAG”<br>// 定义info信息</p>
+<p>#define LOGI(…) <strong>android_log_print(ANDROID_LOG_INFO,TAG,</strong>VA_ARGS__)<br>// 定义debug信息</p>
+<p>#define LOGD(…) <strong>android_log_print(ANDROID_LOG_DEBUG, TAG, </strong>VA_ARGS__)<br>// 定义error信息</p>
+<p>#define LOGE(…) <strong>android_log_print(ANDROID_LOG_ERROR,TAG,</strong>VA_ARGS__)<br>```    </p>
+<p>ANDROID_LOG_INFO：是日志级别；</p>
+<p>TAG：是要过滤的标签，可以在LogCat视图中过滤。</p>
+<p>__VA<em>ARGS\</em>_：是实际的日志内容。</p>
+<p>完成上面2步之后，我们就可以在.c/cpp文件中添加LOGI、LOGD、LOGE去打印信息！使用LOGI、LOGD、LOGE的方法和使用printf一样.</p>
+<a id="more"></a>
+<h2 id="日志类型"><a href="#日志类型" class="headerlink" title="日志类型"></a>日志类型</h2><p>1）Log.v 的调试颜色为黑色的，任何消息都会输出，这里的v代表verbose啰嗦的意思，平时使用就是Log.v(,);</p>
+<p>2）Log.d的输出颜色是蓝色的，仅输出debug调试的意思，但他会输出上层的信息，过滤起来可以通过DDMS的Logcat标签来选择</p>
+<p>3）Log.i的输出为绿色，一般提示性的消息information，它不会输出Log.v和Log.d的信息，但会显示i、w和e的信息</p>
+<p>4）Log.w的意思为橙色，可以看作为warning警告，一般需要我们注意优化Android代码，同时选择它后还会输出Log.e的信息。</p>
+<p>5）Log.e为红色，可以想到error错误，这里仅显示红色的错误信息，这些错误就需要我们认真的分析，查看栈的信息了。</p>
+<h2 id="Usage"><a href="#Usage" class="headerlink" title="Usage"></a>Usage</h2><pre><code>LOGI(&quot;[className@methodName] var: %s&quot;, var);
+</code></pre><p>用法如c++中的 <strong>printf</strong> .执行上句代码可以再logcat中打印出相应日志。</p>
 <p>注意：log打印的方法中不能传入jstring，必须将jstring转为c中的字符数组在传入到方法里面打印，否则会报错。</p>
 
       
@@ -522,11 +549,11 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="color3">react-native</a>
+                <a href="javascript:void(0)" class="color4">jni</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="color4">jni</a>
+                <a href="javascript:void(0)" class="color3">react-native</a>
               </li>
             
             <div class="clearfix"></div>
