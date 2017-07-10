@@ -204,17 +204,29 @@
 <pre><code>LOCAL_LDLIBS:=-L$(SYSROOT)/usr/lib -llog
 </code></pre><p>如生成的库文件是“.a文件”，则在Android.mk中添加如下内容：</p>
 <pre><code>LOCAL_LDLIBS:=-llog
-</code></pre><h2 id="在-c或-cpp文件中引用log头文件"><a href="#在-c或-cpp文件中引用log头文件" class="headerlink" title="在.c或.cpp文件中引用log头文件"></a>在.c或.cpp文件中引用log头文件</h2><p>添加如下内容：</p>
-<pre><code>// 引入log头文件
-#include  &lt;android/log.h&gt;
-// log标签
-#define  TAG    &quot;这里填写日志的TAG&quot;
-// 定义info信息
-#define LOGI(...) __android_log_print(ANDROID_LOG_INFO,TAG,__VA_ARGS__)
-// 定义debug信息
-#define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG, TAG, __VA_ARGS__)
-// 定义error信息
-#define LOGE(...) __android_log_print(ANDROID_LOG_ERROR,TAG,__VA_ARGS__)
+</code></pre><h2 id="创建AndroidLog-h文件"><a href="#创建AndroidLog-h文件" class="headerlink" title="创建AndroidLog.h文件"></a>创建AndroidLog.h文件</h2><p>添加如下内容：</p>
+<pre><code>#ifndef _ANDROID_LOG
+#define _ANDROID_LOG
+#ifdef __cplusplus
+extern &quot;C&quot; {
+#endif
+#include &lt;android/log.h&gt;
+#define TAG_RAPHAEL    &quot;Raphael&quot; // 这个是自定义的LOG的标识
+//#undef LOG // 取消默认的LOG
+#define LOGI(...)  __android_log_print(ANDROID_LOG_INFO,TAG_RAPHAEL, __VA_ARGS__)
+
+#define LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,TAG_RAPHAEL, __VA_ARGS__)
+
+#define LOGW(...)  __android_log_print(ANDROID_LOG_WARN,TAG_RAPHAEL, __VA_ARGS__)
+
+#define LOGE(...)  __android_log_print(ANDROID_LOG_ERROR,TAG_RAPHAEL, __VA_ARGS__)
+
+#define LOGF(...)  __android_log_print(ANDROID_LOG_FATAL,TAG_RAPHAEL, __VA_ARGS__)
+
+#ifdef __cplusplus
+}
+#endif
+#endif
 </code></pre><ul>
 <li><p>ANDROID_LOG_INFO：是日志级别；</p>
 </li>
@@ -683,11 +695,11 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="color4">jni</a>
+                <a href="javascript:void(0)" class="color3">react-native</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="color3">react-native</a>
+                <a href="javascript:void(0)" class="color4">jni</a>
               </li>
             
             <div class="clearfix"></div>
