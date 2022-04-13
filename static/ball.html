@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>五百万</title>
+    <title>Win</title>
 </head>
 <style>
     div{
@@ -13,7 +13,7 @@
     };
     ul{
         width:300px;
-        margin:50px auto 30px;
+        margin:30px auto 30px;
     };
     ul::after{
         display: block; 
@@ -23,12 +23,12 @@
     };
     li{
         height:25px;
-        margin:0px 15px;
+        margin:0px 0px;
         text-align:center;
         font-size: 18px;
         line-height: 25px;
         float:left;
-        border: 1px solid #cccccc;
+        border: 5px solid #cccccc;
     };
     p{  
         width:350px;
@@ -43,73 +43,79 @@
         font-size: 18px;
         font-family: "华文行楷","微软雅黑","宋体",serif ;
     };
+
 </style>
 <body>
-    <div>
-        <ul>
-            <li style="width:160px;color:red;"></li>
-            <li style="width:20px;color:blue;"></li>
-        </ul>
-        <p>
-            <button onclick="wubaiwan()">随机选号</button>
-            <button onclick="wubaiwan1()">只选红球</button>
-            <button onclick="wubaiwan2()">只选蓝球</button>
-        </p>
-    </div>
+<div>
+    <ul>
+        <li style="width:500px;color:red;"></li>
+        <li style="width:500px;color:blue;"></li>
+    </ul>
+    <p>
+        <button onclick="win()">随机选号</button>
+<!--        <button onclick="red()">只选红球</button>-->
+<!--        <button onclick="blue()">只选蓝球</button>-->
+    </p>
+</div>
 </body>
 <script>
     var arr = new Array;
     var liObj=document.getElementsByTagName('li')
-    function wubaiwan(){
+
+    function win(){
         num()
         // 对数组内的数进行判断，如果没有重复的则输出，反之重新生成一组随机数，因为数组已经按照从从小到大进行排序，所以只需要比较前后两个数是否相同即可。
-        for(var i=0;i<arr.length;i++){ 
+        for(var i=0;i<arr.length;i++){
             if (arr[i]!=arr[i+1]){
-                liObj[0].innerHTML=''+arr[0]+' '+arr[1]+' '+arr[2]+' '+arr[3]+' '+arr[4]+' '+arr[5];
+                liObj[0].innerHTML=''+arr[0]+'，'+arr[1]+'，'+arr[2]+'，'+arr[3]+'，'+arr[4]+'，'+arr[5];
                 liObj[1].innerHTML=g;
             }else{
-                wubaiwan();
+                win();
             }
         }
     }
-    function wubaiwan1(){
+
+    function red(){
         num()
         for(var i=0;i<arr.length;i++){ 
             if (arr[i]!=arr[i+1]){
-                liObj[0].innerHTML=''+arr[0]+' '+arr[1]+' '+arr[2]+' '+arr[3]+' '+arr[4]+' '+arr[5];
+                liObj[0].innerHTML=''+arr[0]+'，'+arr[1]+'，'+arr[2]+'，'+arr[3]+'，'+arr[4]+'，'+arr[5];
                 liObj[1].innerHTML='';
             }else{
-                wubaiwan1();
+                red();
             }
         }
     }
-    function wubaiwan2(){
-        var g = Math.floor(Math.random()*16+1);
+
+    function blue(){
+<!--        var g = Math.floor(Math.random()*16+1);-->
+        var g = random(1,16);
         liObj[0].innerHTML='';
         liObj[1].innerHTML=g;
     }
+
+    function random(start,end) {
+        const array = new Uint32Array(1);
+        const maxUint = 0xffffffff;
+        const randomNum = crypto.getRandomValues(array)[0] / maxUint;
+        return Math.floor((end - start + 1) * randomNum + start);
+    }
+
     function num(){
         // 生成6个随机数
         for(var s=0;s<6;s++){
-            arr[s]=Math.floor(Math.random()*33+1);
+<!--            arr[s]=Math.floor(Math.random()*33+1);-->
+            arr[s] = random(1,33)
         };
         // 生成1个特殊号码
-        g = Math.floor(Math.random()*16+1);
+<!--        g = Math.floor(Math.random()*16+1);-->
+        g = random(1,16)
         // 对数组内的数按从小到大进行排序
         function sortNumber(a,b){
             return a - b
         }
         arr=arr.sort(sortNumber);
-        // 以下为冒泡排序法，从小到大进行排序
-        // for (var i = 0; i < arr.length; i++){
-        //     for (var j = i; j < arr.length; j++){
-        //         if (arr[i] > arr[j]){
-        //             var temp = arr[i];
-        //             arr[i] = arr[j];
-        //             arr[j] = temp;
-        //         };
-        //      };
-        //  };
     };
+
 </script>
 </html>
