@@ -37,6 +37,7 @@
         font-family: "华文行楷","微软雅黑","宋体",serif;
     };
 
+
 </style>
 <body>
 <div>
@@ -44,6 +45,10 @@
         <li style="width:a;color:red;font-size:58px;margin-left:18px;margin-right:18px;"></li>
         <li style="width:auto;color:blue;font-size:58px;margin-left:18px;margin-right:18px;"></li>
     </ul>
+    <p>
+        <input type="number" name="redMust" value="5" style="margin-left:18px;font-size:58px;color:red;width:200px;background-color:cyan;">
+        <input type="number" name="blueMust" value="12" style="margin-left:18px;font-size:58px;color:blue;width:200px;background-color:cyan;">
+    </p>
     <p>
         <button style="margin-left:18px;font-size:58px;" onclick="win()">Random</button>
         <button style="margin-left:18px;font-size:58px;" onclick="red()">Red</button>
@@ -53,24 +58,41 @@
 </body>
 <script>
     var arr = new Array;
+    var blue = random(1,16);
     var liObj=document.getElementsByTagName('li')
+    var count = 0;
 
     function win(){
         num()
-        // 对数组内的数进行判断，如果没有重复的则输出，反之重新生成一组随机数，因为数组已经按照从从小到大进行排序，所以只需要比较前后两个数是否相同即可。
+
+        var redMust=document.getElementsByName("redMust")[0].value;
+        var blueMust=document.getElementsByName("blueMust")[0].value;
+        console.log('-------------------------\r\n'+redMust+'-'+blueMust);
+        console.log('arr:'+arr);
+        console.log('blue:'+blue);
+
+        var found = false;
         for(var i=0;i<arr.length;i++){
-            if (arr[i]!=arr[i+1]){
-                liObj[0].innerHTML=''+arr[0]+'，'+arr[1]+'，'+arr[2]+'，'+arr[3]+'，'+arr[4]+'，'+arr[5];
-                liObj[1].innerHTML=g;
-            }else{
+            if (arr[i]==arr[i+1]) {
                 win();
+                return;
             }
+            if(arr[i]==redMust) {
+                found = true;
+            }
+        }
+
+        if(found && blue==blueMust){
+            liObj[0].innerHTML=''+arr[0]+'，'+arr[1]+'，'+arr[2]+'，'+arr[3]+'，'+arr[4]+'，'+arr[5];
+            liObj[1].innerHTML=blue;
+        } else {
+            win();
         }
     }
 
     function red(){
         num()
-        for(var i=0;i<arr.length;i++){ 
+        for(var i=0;i<arr.length;i++){
             if (arr[i]!=arr[i+1]){
                 liObj[0].innerHTML=''+arr[0]+'，'+arr[1]+'，'+arr[2]+'，'+arr[3]+'，'+arr[4]+'，'+arr[5];
                 liObj[1].innerHTML='';
@@ -81,10 +103,9 @@
     }
 
     function blue(){
-<!--        var g = Math.floor(Math.random()*16+1);-->
-        var g = random(1,16);
+        blue = random(1,16);
         liObj[0].innerHTML='';
-        liObj[1].innerHTML=g;
+        liObj[1].innerHTML=blue;
     }
 
     function random(start,end) {
@@ -97,18 +118,19 @@
     function num(){
         // 生成6个随机数
         for(var s=0;s<6;s++){
-<!--            arr[s]=Math.floor(Math.random()*33+1);-->
-            arr[s] = random(1,33)
+            arr[s] = random(1,33);
         };
         // 生成1个特殊号码
-<!--        g = Math.floor(Math.random()*16+1);-->
-        g = random(1,16)
+        blue = random(1,16);
+
         // 对数组内的数按从小到大进行排序
         function sortNumber(a,b){
             return a - b
         }
         arr=arr.sort(sortNumber);
+
     };
+
 
 </script>
 </html>
