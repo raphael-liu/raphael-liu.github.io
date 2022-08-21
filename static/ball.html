@@ -2,147 +2,114 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Win</title>
+    <title>五百万</title>
 </head>
 <style>
     div{
-        width:max-content;
-        height:auto;
-        margin:18px;
-        border: 3px solid cyan;
-        background-color:#C7EDCC
+        width:500px;
+        height:200px;
+        margin:200px auto;
+        border: 1px solid #cccccc;
     };
     ul{
-        width:500px;
-        margin:30px;
+        width:300px;
+        margin:50px auto 30px;
     };
-<!--    li{-->
-<!--        height:100px;-->
-<!--        margin:5px;-->
-<!--        text-align:center;-->
-<!--        font-size: 28px;-->
-<!--        line-height:80px;-->
-<!--    };-->
+    ul::after{
+        display: block; 
+        height:0; 
+        clear:both; 
+        visibility: hidden;
+    };
+    li{
+        height:25px;
+        margin:0px 15px;
+        text-align:center;
+        font-size: 18px;
+        line-height: 25px;
+        float:left;
+        border: 1px solid #cccccc;
+    };
     p{  
         width:350px;
-        height:50px;
-        margin:10px 300px;
+        height:30px;
+        margin:10px auto;
     };
     button{
         width:100px;
-        height:50px;
-        line-height: 50px;
+        height:30px;
+        line-height: 30px;
         text-align: center;
-        font-size: 28px;
-        font-family: "华文行楷","微软雅黑","宋体",serif;
+        font-size: 18px;
+        font-family: "华文行楷","微软雅黑","宋体",serif ;
     };
-
-
 </style>
 <body>
-<div>
-    <ul>
-        <li style="width:a;color:red;font-size:68px;margin-left:18px;margin-right:18px;"></li>
-        <li style="width:auto;color:blue;font-size:68px;margin-left:18px;margin-right:18px;"></li>
-    </ul>
-    <p>
-        <input type="number" name="redMust" value="5" style="margin-left:18px;font-size:28px;color:red;width:200px;background-color:cyan;">
-        <input type="number" name="blueMust" value="12" style="margin-left:18px;font-size:28px;color:blue;width:200px;background-color:cyan;">
-    </p>
-    <p>
-        <button style="margin-left:18px;font-size:58px;" onclick="win()">Random</button>
-        <button style="margin-left:18px;font-size:58px;" onclick="red()">Red</button>
-        <button style="margin-left:18px;margin-right:18px;font-size:58px;" onclick="blue()">Blue</button>
-    </p>
-</div>
+    <div>
+        <ul>
+            <li style="width:160px;color:red;"></li>
+            <li style="width:20px;color:blue;"></li>
+        </ul>
+        <p>
+            <button onclick="wubaiwan()">随机选号</button>
+            <button onclick="wubaiwan1()">只选红球</button>
+            <button onclick="wubaiwan2()">只选蓝球</button>
+        </p>
+    </div>
 </body>
 <script>
     var arr = new Array;
-    var blue = random(1,16);
     var liObj=document.getElementsByTagName('li')
-    var count = 0;
-
-    function win(){
+    function wubaiwan(){
         num()
-
-        var redMust=document.getElementsByName("redMust")[0].value;
-        var blueMust=document.getElementsByName("blueMust")[0].value;
-        console.log('-------------------------\r\n'+redMust+'-'+blueMust);
-        console.log('arr:'+arr);
-        console.log('blue:'+blue);
-
-        var redFound = false;
-        var blueFound = false;
-        for(var i=0;i<arr.length;i++){
-            if (arr[i]==arr[i+1]) {
-                win();
-                return;
+        // 对数组内的数进行判断，如果没有重复的则输出，反之重新生成一组随机数，因为数组已经按照从从小到大进行排序，所以只需要比较前后两个数是否相同即可。
+        for(var i=0;i<arr.length;i++){ 
+            if (arr[i]!=arr[i+1]){
+                liObj[0].innerHTML=''+arr[0]+' '+arr[1]+' '+arr[2]+' '+arr[3]+' '+arr[4]+' '+arr[5];
+                liObj[1].innerHTML=g;
+            }else{
+                wubaiwan();
             }
-            if(redMust) {
-                if(arr[i]==redMust) {
-                    redFound = true;
-                }
-            } else {
-                redFound = true;
-            }
-        }
-
-        if(blueMust) {
-            if(blue==blueMust) {
-                blueFound = true;
-            }
-        } else {
-            blueFound = true;
-        }
-        if(redFound && blueFound) {
-            liObj[0].innerHTML=''+arr[0]+'，'+arr[1]+'，'+arr[2]+'，'+arr[3]+'，'+arr[4]+'，'+arr[5];
-            liObj[1].innerHTML=blue;
-        } else {
-            win();
         }
     }
-
-    function red(){
+    function wubaiwan1(){
         num()
-        for(var i=0;i<arr.length;i++){
+        for(var i=0;i<arr.length;i++){ 
             if (arr[i]!=arr[i+1]){
-                liObj[0].innerHTML=''+arr[0]+'，'+arr[1]+'，'+arr[2]+'，'+arr[3]+'，'+arr[4]+'，'+arr[5];
+                liObj[0].innerHTML=''+arr[0]+' '+arr[1]+' '+arr[2]+' '+arr[3]+' '+arr[4]+' '+arr[5];
                 liObj[1].innerHTML='';
             }else{
-                red();
+                wubaiwan1();
             }
         }
     }
-
-    function blue(){
-        blue = random(1,16);
+    function wubaiwan2(){
+        var g = Math.floor(Math.random()*16+1);
         liObj[0].innerHTML='';
-        liObj[1].innerHTML=blue;
+        liObj[1].innerHTML=g;
     }
-
-    function random(start,end) {
-        const array = new Uint32Array(1);
-        const maxUint = 0xffffffff;
-        const randomNum = crypto.getRandomValues(array)[0] / maxUint;
-        return Math.floor((end - start + 1) * randomNum + start);
-    }
-
     function num(){
         // 生成6个随机数
         for(var s=0;s<6;s++){
-            arr[s] = random(1,33);
+            arr[s]=Math.floor(Math.random()*33+1);
         };
         // 生成1个特殊号码
-        blue = random(1,16);
-
+        g = Math.floor(Math.random()*16+1);
         // 对数组内的数按从小到大进行排序
         function sortNumber(a,b){
             return a - b
         }
         arr=arr.sort(sortNumber);
-
+        // 以下为冒泡排序法，从小到大进行排序
+        // for (var i = 0; i < arr.length; i++){
+        //     for (var j = i; j < arr.length; j++){
+        //         if (arr[i] > arr[j]){
+        //             var temp = arr[i];
+        //             arr[i] = arr[j];
+        //             arr[j] = temp;
+        //         };
+        //      };
+        //  };
     };
-
-
 </script>
 </html>
