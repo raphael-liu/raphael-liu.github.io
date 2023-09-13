@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="Raphael Liu">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/2023/09/13/0148-排序链表/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="给你链表的头结点 head ，请将其按 升序 排列并返回 排序后的链表 。 示例 1：  **输入：** head &#x3D; [4,2,1,3] **输出：** [1,2,3,4]  示例 2：  **输入：** head &#x3D; [-1,5,3,4,0] **输出：** [-1,0,3,4,5]  示例 3： **输入：** head &#x3D; [] **输出：** []  提示：  链表中节点的数目在范围 [">
+<meta property="og:type" content="article">
+<meta property="og:title" content="0148-排序链表">
+<meta property="og:url" content="http://example.com/2023/09/13/0148-%E6%8E%92%E5%BA%8F%E9%93%BE%E8%A1%A8/index.html">
+<meta property="og:site_name" content="Raphael&#39;s Blog">
+<meta property="og:description" content="给你链表的头结点 head ，请将其按 升序 排列并返回 排序后的链表 。 示例 1：  **输入：** head &#x3D; [4,2,1,3] **输出：** [1,2,3,4]  示例 2：  **输入：** head &#x3D; [-1,5,3,4,0] **输出：** [-1,0,3,4,5]  示例 3： **输入：** head &#x3D; [] **输出：** []  提示：  链表中节点的数目在范围 [">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://assets.leetcode.com/uploads/2020/09/14/sort_list_1.jpg">
+<meta property="og:image" content="https://assets.leetcode.com/uploads/2020/09/14/sort_list_2.jpg">
+<meta property="article:published_time" content="2023-09-12T16:47:26.000Z">
+<meta property="article:modified_time" content="2023-09-13T02:43:07.000Z">
+<meta property="article:author" content="Raphael Liu">
+<meta property="article:tag" content="algorithm">
+<meta property="article:tag" content="MEDIUM">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://assets.leetcode.com/uploads/2020/09/14/sort_list_1.jpg">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/redefine-favicon.svg" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/redefine-favicon.svg">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/redefine-favicon.svg">
+    <!--- Page Info-->
+    
+    <title>
+        
+            0148-排序链表 -
+        
+        Raphael&#39;s Blog
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/css/build/styles.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/fonts.css">
+
+    
+<link rel="stylesheet" href="/fonts/Satoshi/satoshi.css">
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+
+    <!--- Inject Part-->
+    
+    <script id="hexo-configurations">
+    let Global = window.Global || {};
+    Global.hexo_config = {"hostname":"example.com","root":"/","language":"zh_CN"};
+    Global.theme_config = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":true,"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"open_graph":true,"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-wqery6-light.webp","dark":"/images/wallhaven-wqery6-dark.webp"},"title":"Raphael's Blog","subtitle":{"text":["格物致知","坚持做正确的事情"],"hitokoto":{"enable":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":false,"links":{"github":"https://github.com/raphael-liu","email":"raphael@buaa.edu.cn# your email"},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.4.4","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"links":{"首页":{"path":"/","icon":"fa-regular fa-house"},"文章":{"path":"/archives","icon":"fa-regular fa-archive"},"关于":{"icon":"fa-regular fa-user","submenus":{"我":"/about/me","Github":"https://github.com/raphael-liu"}}},"search":{"enable":true,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"links":null},"article_date_format":"auto","categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}},"footerStart":"2022/8/17 11:45:14"};
+    Global.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    Global.data_config = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="swup-progress-icon">
+            <i class="fa-solid fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container" id="swup">
+
+    
+
+    <div class="main-content-container">
+
+
+        <div class="main-content-header">
+            <header class="navbar-container">
+    
+    <div class="navbar-content">
+        <div class="left">
+            
+            <a class="logo-title" href="http://example.com/">
+                
+                Raphael&#39;s Blog
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/"  >
+                                    
+                                        
+                                            <i class="fa-regular fa-house"></i>
+                                        
+                                        首页
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/archives"  >
+                                    
+                                        
+                                            <i class="fa-regular fa-archive"></i>
+                                        
+                                        文章
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="has-dropdown" 
+                                    href="#" onClick="return false;">
+                                    
+                                        
+                                            <i class="fa-regular fa-user"></i>
+                                        
+                                        关于&nbsp;<i class="fa-solid fa-chevron-down"></i>
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                                    <ul class="sub-menu">
+                                    
+                                        <li>
+                                        <a href="/about/me">我
+                                        </a>
+                                        </li>
+                                    
+                                        <li>
+                                        <a target="_blank" rel="noopener" href="https://github.com/raphael-liu">GITHUB
+                                        </a>
+                                        </li>
+                                    
+                                    </ul>
+                                
+                            </li>
+                    
+                    
+                        <li class="navbar-item search search-popup-trigger">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fa-solid fa-magnifying-glass"></i></div>
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile drawer -->
+    <div class="navbar-drawer w-full absolute top-0 left-0 bg-background-color">
+        <ul class="drawer-navbar-list flex flex-col justify-start items-center">
+            
+                
+                    <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group " 
+                        href="/"  >
+                             
+                                
+                                    <i class="fa-regular fa-house"></i>
+                                
+                                首页
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+                
+                    <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group " 
+                        href="/archives"  >
+                             
+                                
+                                    <i class="fa-regular fa-archive"></i>
+                                
+                                文章
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+                
+                    <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group has-dropdown" 
+                        href="#" onClick="return false;">
+                            
+                                
+                                    <i class="fa-regular fa-user"></i>
+                                
+                                关于&nbsp;<i class="group-hover:rotate-180 transition-transform fa-solid fa-chevron-down"></i>
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                              
+                        
+                            <li class="text-base flex justify-center items-center hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                <a class="py-0.5" href="/about/me">我</a>
+                            </li>
+                        
+                            <li class="text-base flex justify-center items-center hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                <a class="py-0.5" target="_blank" rel="noopener" href="https://github.com/raphael-liu">GITHUB</a>
+                            </li>
+                        
+                    
+            
+
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="post-page-container">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            
+                <h1 class="article-title-regular">0148-排序链表</h1>
+            
+            </div>
+            
+                    
+        
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">Raphael Liu</span>
+                        
+                            <span class="author-label">Lv10</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2023-09-13 00:47:26</span>
+        <span class="mobile">2023-09-13 00:47:26</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2023-09-13 10:43:07</span>
+            <span class="mobile">2023-09-13 10:43:07</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/algorithm/">algorithm</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/MEDIUM/">MEDIUM</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        
+
+
+        <div class="article-content markdown-body">
+            <p>给你链表的头结点 <code>head</code> ，请将其按 <strong>升序</strong> 排列并返回 <strong>排序后的链表</strong> 。</p>
+<p><strong>示例 1：</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://assets.leetcode.com/uploads/2020/09/14/sort_list_1.jpg"
+                     
+                ></p>
+<pre><code>**输入：** head = [4,2,1,3]
+**输出：** [1,2,3,4]
+</code></pre>
+<p><strong>示例 2：</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://assets.leetcode.com/uploads/2020/09/14/sort_list_2.jpg"
+                     
+                ></p>
+<pre><code>**输入：** head = [-1,5,3,4,0]
+**输出：** [-1,0,3,4,5]
+</code></pre>
+<p><strong>示例 3：</strong></p>
+<pre><code>**输入：** head = []
+**输出：** []
+</code></pre>
+<p><strong>提示：</strong></p>
+<ul>
+<li>链表中节点的数目在范围 <code>[0, 5 * 104]</code> 内</li>
+<li><code>-105 &lt;= Node.val &lt;= 105</code></li>
+</ul>
+<p><strong>进阶：</strong> 你可以在 <code>O(n log n)</code> 时间复杂度和常数级空间复杂度下，对链表进行排序吗？</p>
+<h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>「<a class="link"   target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/insertion-sort-list" >147. 对链表进行插入排序 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>」要求使用插入排序的方法对链表进行排序，插入排序的时间复杂度是 $O(n^2)$，其中 $n$ 是链表的长度。这道题考虑时间复杂度更低的排序算法。题目的进阶问题要求达到 $O(n \log n)$ 的时间复杂度和 $O(1)$ 的空间复杂度，时间复杂度是 $O(n \log n)$ 的排序算法包括归并排序、堆排序和快速排序（快速排序的最差时间复杂度是 $O(n^2)$），其中最适合链表的排序算法是归并排序。</p>
+<p>归并排序基于分治算法。最容易想到的实现方式是自顶向下的递归实现，考虑到递归调用的栈空间，自顶向下归并排序的空间复杂度是 $O(\log n)$。如果要达到 $O(1)$ 的空间复杂度，则需要使用自底向上的实现方式。</p>
+<h4 id="方法一：自顶向下归并排序"><a href="#方法一：自顶向下归并排序" class="headerlink" title="方法一：自顶向下归并排序"></a>方法一：自顶向下归并排序</h4><p>对链表自顶向下归并排序的过程如下。</p>
+<ol>
+<li><p>找到链表的中点，以中点为分界，将链表拆分成两个子链表。寻找链表的中点可以使用快慢指针的做法，快指针每次移动 $2$ 步，慢指针每次移动 $1$ 步，当快指针到达链表末尾时，慢指针指向的链表节点即为链表的中点。</p>
+</li>
+<li><p>对两个子链表分别排序。</p>
+</li>
+<li><p>将两个排序后的子链表合并，得到完整的排序后的链表。可以使用「<a class="link"   target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/merge-two-sorted-lists/" >21. 合并两个有序链表 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>」的做法，将两个有序的子链表进行合并。</p>
+</li>
+</ol>
+<p>上述过程可以通过递归实现。递归的终止条件是链表的节点个数小于或等于 $1$，即当链表为空或者链表只包含 $1$ 个节点时，不需要对链表进行拆分和排序。</p>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><figcaption><span>[sol1-Java]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> ListNode <span class="title function_">sortList</span><span class="params">(ListNode head)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> sortList(head, <span class="literal">null</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> ListNode <span class="title function_">sortList</span><span class="params">(ListNode head, ListNode tail)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (head == <span class="literal">null</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> head;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (head.next == tail) &#123;</span><br><span class="line">            head.next = <span class="literal">null</span>;</span><br><span class="line">            <span class="keyword">return</span> head;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">ListNode</span> <span class="variable">slow</span> <span class="operator">=</span> head, fast = head;</span><br><span class="line">        <span class="keyword">while</span> (fast != tail) &#123;</span><br><span class="line">            slow = slow.next;</span><br><span class="line">            fast = fast.next;</span><br><span class="line">            <span class="keyword">if</span> (fast != tail) &#123;</span><br><span class="line">                fast = fast.next;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">ListNode</span> <span class="variable">mid</span> <span class="operator">=</span> slow;</span><br><span class="line">        <span class="type">ListNode</span> <span class="variable">list1</span> <span class="operator">=</span> sortList(head, mid);</span><br><span class="line">        <span class="type">ListNode</span> <span class="variable">list2</span> <span class="operator">=</span> sortList(mid, tail);</span><br><span class="line">        <span class="type">ListNode</span> <span class="variable">sorted</span> <span class="operator">=</span> merge(list1, list2);</span><br><span class="line">        <span class="keyword">return</span> sorted;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> ListNode <span class="title function_">merge</span><span class="params">(ListNode head1, ListNode head2)</span> &#123;</span><br><span class="line">        <span class="type">ListNode</span> <span class="variable">dummyHead</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ListNode</span>(<span class="number">0</span>);</span><br><span class="line">        <span class="type">ListNode</span> <span class="variable">temp</span> <span class="operator">=</span> dummyHead, temp1 = head1, temp2 = head2;</span><br><span class="line">        <span class="keyword">while</span> (temp1 != <span class="literal">null</span> &amp;&amp; temp2 != <span class="literal">null</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (temp1.val &lt;= temp2.val) &#123;</span><br><span class="line">                temp.next = temp1;</span><br><span class="line">                temp1 = temp1.next;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                temp.next = temp2;</span><br><span class="line">                temp2 = temp2.next;</span><br><span class="line">            &#125;</span><br><span class="line">            temp = temp.next;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (temp1 != <span class="literal">null</span>) &#123;</span><br><span class="line">            temp.next = temp1;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (temp2 != <span class="literal">null</span>) &#123;</span><br><span class="line">            temp.next = temp2;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> dummyHead.next;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="C++"><figure class="iseeu highlight c++"><figcaption><span>[sol1-C++]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">ListNode* <span class="title">sortList</span><span class="params">(ListNode* head)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">sortList</span>(head, <span class="literal">nullptr</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function">ListNode* <span class="title">sortList</span><span class="params">(ListNode* head, ListNode* tail)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (head == <span class="literal">nullptr</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> head;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (head-&gt;next == tail) &#123;</span><br><span class="line">            head-&gt;next = <span class="literal">nullptr</span>;</span><br><span class="line">            <span class="keyword">return</span> head;</span><br><span class="line">        &#125;</span><br><span class="line">        ListNode* slow = head, *fast = head;</span><br><span class="line">        <span class="keyword">while</span> (fast != tail) &#123;</span><br><span class="line">            slow = slow-&gt;next;</span><br><span class="line">            fast = fast-&gt;next;</span><br><span class="line">            <span class="keyword">if</span> (fast != tail) &#123;</span><br><span class="line">                fast = fast-&gt;next;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        ListNode* mid = slow;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">merge</span>(<span class="built_in">sortList</span>(head, mid), <span class="built_in">sortList</span>(mid, tail));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function">ListNode* <span class="title">merge</span><span class="params">(ListNode* head1, ListNode* head2)</span> </span>&#123;</span><br><span class="line">        ListNode* dummyHead = <span class="keyword">new</span> <span class="built_in">ListNode</span>(<span class="number">0</span>);</span><br><span class="line">        ListNode* temp = dummyHead, *temp1 = head1, *temp2 = head2;</span><br><span class="line">        <span class="keyword">while</span> (temp1 != <span class="literal">nullptr</span> &amp;&amp; temp2 != <span class="literal">nullptr</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (temp1-&gt;val &lt;= temp2-&gt;val) &#123;</span><br><span class="line">                temp-&gt;next = temp1;</span><br><span class="line">                temp1 = temp1-&gt;next;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                temp-&gt;next = temp2;</span><br><span class="line">                temp2 = temp2-&gt;next;</span><br><span class="line">            &#125;</span><br><span class="line">            temp = temp-&gt;next;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (temp1 != <span class="literal">nullptr</span>) &#123;</span><br><span class="line">            temp-&gt;next = temp1;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (temp2 != <span class="literal">nullptr</span>) &#123;</span><br><span class="line">            temp-&gt;next = temp2;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> dummyHead-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><figcaption><span>[sol1-JavaScript]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">merge</span> = (<span class="params">head1, head2</span>) =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> dummyHead = <span class="keyword">new</span> <span class="title class_">ListNode</span>(<span class="number">0</span>);</span><br><span class="line">    <span class="keyword">let</span> temp = dummyHead, temp1 = head1, temp2 = head2;</span><br><span class="line">    <span class="keyword">while</span> (temp1 !== <span class="literal">null</span> &amp;&amp; temp2 !== <span class="literal">null</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (temp1.<span class="property">val</span> &lt;= temp2.<span class="property">val</span>) &#123;</span><br><span class="line">            temp.<span class="property">next</span> = temp1;</span><br><span class="line">            temp1 = temp1.<span class="property">next</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            temp.<span class="property">next</span> = temp2;</span><br><span class="line">            temp2 = temp2.<span class="property">next</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        temp = temp.<span class="property">next</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (temp1 !== <span class="literal">null</span>) &#123;</span><br><span class="line">        temp.<span class="property">next</span> = temp1;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (temp2 !== <span class="literal">null</span>) &#123;</span><br><span class="line">        temp.<span class="property">next</span> = temp2;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> dummyHead.<span class="property">next</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">toSortList</span> = (<span class="params">head, tail</span>) =&gt; &#123;</span><br><span class="line">    <span class="keyword">if</span> (head === <span class="literal">null</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> head;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (head.<span class="property">next</span> === tail) &#123;</span><br><span class="line">        head.<span class="property">next</span> = <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">return</span> head;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">let</span> slow = head, fast = head;</span><br><span class="line">    <span class="keyword">while</span> (fast !== tail) &#123;</span><br><span class="line">        slow = slow.<span class="property">next</span>;</span><br><span class="line">        fast = fast.<span class="property">next</span>;</span><br><span class="line">        <span class="keyword">if</span> (fast !== tail) &#123;</span><br><span class="line">            fast = fast.<span class="property">next</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">const</span> mid = slow;</span><br><span class="line">    <span class="keyword">return</span> <span class="title function_">merge</span>(<span class="title function_">toSortList</span>(head, mid), <span class="title function_">toSortList</span>(mid, tail));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> sortList = <span class="keyword">function</span>(<span class="params">head</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title function_">toSortList</span>(head, <span class="literal">null</span>);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><figcaption><span>[sol1-Python3]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">sortList</span>(<span class="params">self, head: ListNode</span>) -&gt; ListNode:</span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">sortFunc</span>(<span class="params">head: ListNode, tail: ListNode</span>) -&gt; ListNode:</span><br><span class="line">            <span class="keyword">if</span> <span class="keyword">not</span> head:</span><br><span class="line">                <span class="keyword">return</span> head</span><br><span class="line">            <span class="keyword">if</span> head.<span class="built_in">next</span> == tail:</span><br><span class="line">                head.<span class="built_in">next</span> = <span class="literal">None</span></span><br><span class="line">                <span class="keyword">return</span> head</span><br><span class="line">            slow = fast = head</span><br><span class="line">            <span class="keyword">while</span> fast != tail:</span><br><span class="line">                slow = slow.<span class="built_in">next</span></span><br><span class="line">                fast = fast.<span class="built_in">next</span></span><br><span class="line">                <span class="keyword">if</span> fast != tail:</span><br><span class="line">                    fast = fast.<span class="built_in">next</span></span><br><span class="line">            mid = slow</span><br><span class="line">            <span class="keyword">return</span> merge(sortFunc(head, mid), sortFunc(mid, tail))</span><br><span class="line">            </span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">merge</span>(<span class="params">head1: ListNode, head2: ListNode</span>) -&gt; ListNode:</span><br><span class="line">            dummyHead = ListNode(<span class="number">0</span>)</span><br><span class="line">            temp, temp1, temp2 = dummyHead, head1, head2</span><br><span class="line">            <span class="keyword">while</span> temp1 <span class="keyword">and</span> temp2:</span><br><span class="line">                <span class="keyword">if</span> temp1.val &lt;= temp2.val:</span><br><span class="line">                    temp.<span class="built_in">next</span> = temp1</span><br><span class="line">                    temp1 = temp1.<span class="built_in">next</span></span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    temp.<span class="built_in">next</span> = temp2</span><br><span class="line">                    temp2 = temp2.<span class="built_in">next</span></span><br><span class="line">                temp = temp.<span class="built_in">next</span></span><br><span class="line">            <span class="keyword">if</span> temp1:</span><br><span class="line">                temp.<span class="built_in">next</span> = temp1</span><br><span class="line">            <span class="keyword">elif</span> temp2:</span><br><span class="line">                temp.<span class="built_in">next</span> = temp2</span><br><span class="line">            <span class="keyword">return</span> dummyHead.<span class="built_in">next</span></span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> sortFunc(head, <span class="literal">None</span>)</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Golang"><figure class="iseeu highlight golang"><figcaption><span>[sol1-Golang]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">merge</span><span class="params">(head1, head2 *ListNode)</span></span> *ListNode &#123;</span><br><span class="line">    dummyHead := &amp;ListNode&#123;&#125;</span><br><span class="line">    temp, temp1, temp2 := dummyHead, head1, head2</span><br><span class="line">    <span class="keyword">for</span> temp1 != <span class="literal">nil</span> &amp;&amp; temp2 != <span class="literal">nil</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> temp1.Val &lt;= temp2.Val &#123;</span><br><span class="line">            temp.Next = temp1</span><br><span class="line">            temp1 = temp1.Next</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            temp.Next = temp2</span><br><span class="line">            temp2 = temp2.Next</span><br><span class="line">        &#125;</span><br><span class="line">        temp = temp.Next</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> temp1 != <span class="literal">nil</span> &#123;</span><br><span class="line">        temp.Next = temp1</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> temp2 != <span class="literal">nil</span> &#123;</span><br><span class="line">        temp.Next = temp2</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> dummyHead.Next</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">sort</span><span class="params">(head, tail *ListNode)</span></span> *ListNode &#123;</span><br><span class="line">    <span class="keyword">if</span> head == <span class="literal">nil</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> head</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> head.Next == tail &#123;</span><br><span class="line">        head.Next = <span class="literal">nil</span></span><br><span class="line">        <span class="keyword">return</span> head</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    slow, fast := head, head</span><br><span class="line">    <span class="keyword">for</span> fast != tail &#123;</span><br><span class="line">        slow = slow.Next</span><br><span class="line">        fast = fast.Next</span><br><span class="line">        <span class="keyword">if</span> fast != tail &#123;</span><br><span class="line">            fast = fast.Next</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    mid := slow</span><br><span class="line">    <span class="keyword">return</span> merge(sort(head, mid), sort(mid, tail))</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">sortList</span><span class="params">(head *ListNode)</span></span> *ListNode &#123;</span><br><span class="line">    <span class="keyword">return</span> sort(head, <span class="literal">nil</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="C"><figure class="iseeu highlight c"><figcaption><span>[sol1-C]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> ListNode* <span class="title function_">merge</span><span class="params">(<span class="keyword">struct</span> ListNode* head1, <span class="keyword">struct</span> ListNode* head2)</span> &#123;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span>* <span class="title">dummyHead</span> =</span> <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">struct</span> ListNode));</span><br><span class="line">    dummyHead-&gt;val = <span class="number">0</span>;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span> *<span class="title">temp</span> =</span> dummyHead, *temp1 = head1, *temp2 = head2;</span><br><span class="line">    <span class="keyword">while</span> (temp1 != <span class="literal">NULL</span> &amp;&amp; temp2 != <span class="literal">NULL</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (temp1-&gt;val &lt;= temp2-&gt;val) &#123;</span><br><span class="line">            temp-&gt;next = temp1;</span><br><span class="line">            temp1 = temp1-&gt;next;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            temp-&gt;next = temp2;</span><br><span class="line">            temp2 = temp2-&gt;next;</span><br><span class="line">        &#125;</span><br><span class="line">        temp = temp-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (temp1 != <span class="literal">NULL</span>) &#123;</span><br><span class="line">        temp-&gt;next = temp1;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (temp2 != <span class="literal">NULL</span>) &#123;</span><br><span class="line">        temp-&gt;next = temp2;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> dummyHead-&gt;next;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> ListNode* <span class="title function_">toSortList</span><span class="params">(<span class="keyword">struct</span> ListNode* head, <span class="keyword">struct</span> ListNode* tail)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (head == <span class="literal">NULL</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> head;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (head-&gt;next == tail) &#123;</span><br><span class="line">        head-&gt;next = <span class="literal">NULL</span>;</span><br><span class="line">        <span class="keyword">return</span> head;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span> *<span class="title">slow</span> =</span> head, *fast = head;</span><br><span class="line">    <span class="keyword">while</span> (fast != tail) &#123;</span><br><span class="line">        slow = slow-&gt;next;</span><br><span class="line">        fast = fast-&gt;next;</span><br><span class="line">        <span class="keyword">if</span> (fast != tail) &#123;</span><br><span class="line">            fast = fast-&gt;next;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span>* <span class="title">mid</span> =</span> slow;</span><br><span class="line">    <span class="keyword">return</span> merge(toSortList(head, mid), toSortList(mid, tail));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> ListNode* <span class="title function_">sortList</span><span class="params">(<span class="keyword">struct</span> ListNode* head)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> toSortList(head, <span class="literal">NULL</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>复杂度分析</strong></p>
+<ul>
+<li><p>时间复杂度：$O(n \log n)$，其中 $n$ 是链表的长度。</p>
+</li>
+<li><p>空间复杂度：$O(\log n)$，其中 $n$ 是链表的长度。空间复杂度主要取决于递归调用的栈空间。</p>
+</li>
+</ul>
+<h4 id="方法二：自底向上归并排序"><a href="#方法二：自底向上归并排序" class="headerlink" title="方法二：自底向上归并排序"></a>方法二：自底向上归并排序</h4><p>使用自底向上的方法实现归并排序，则可以达到 $O(1)$ 的空间复杂度。</p>
+<p>首先求得链表的长度 $\textit{length}$，然后将链表拆分成子链表进行合并。</p>
+<p>具体做法如下。</p>
+<ol>
+<li><p>用 $\textit{subLength}$ 表示每次需要排序的子链表的长度，初始时 $\textit{subLength}&#x3D;1$。</p>
+</li>
+<li><p>每次将链表拆分成若干个长度为 $\textit{subLength}$ 的子链表（最后一个子链表的长度可以小于 $\textit{subLength}$），按照每两个子链表一组进行合并，合并后即可得到若干个长度为 $\textit{subLength} \times 2$ 的有序子链表（最后一个子链表的长度可以小于 $\textit{subLength} \times 2$）。合并两个子链表仍然使用「<a class="link"   target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/merge-two-sorted-lists/" >21. 合并两个有序链表 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>」的做法。</p>
+</li>
+<li><p>将 $\textit{subLength}$ 的值加倍，重复第 2 步，对更长的有序子链表进行合并操作，直到有序子链表的长度大于或等于 $\textit{length}$，整个链表排序完毕。</p>
+</li>
+</ol>
+<p>如何保证每次合并之后得到的子链表都是有序的呢？可以通过数学归纳法证明。</p>
+<ol>
+<li><p>初始时 $\textit{subLength}&#x3D;1$，每个长度为 $1$ 的子链表都是有序的。</p>
+</li>
+<li><p>如果每个长度为 $\textit{subLength}$ 的子链表已经有序，合并两个长度为 $\textit{subLength}$ 的有序子链表，得到长度为 $\textit{subLength} \times 2$ 的子链表，一定也是有序的。</p>
+</li>
+<li><p>当最后一个子链表的长度小于 $\textit{subLength}$ 时，该子链表也是有序的，合并两个有序子链表之后得到的子链表一定也是有序的。</p>
+</li>
+</ol>
+<p>因此可以保证最后得到的链表是有序的。</p>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><figcaption><span>[sol2-Java]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> ListNode <span class="title function_">sortList</span><span class="params">(ListNode head)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (head == <span class="literal">null</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> head;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">int</span> <span class="variable">length</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="type">ListNode</span> <span class="variable">node</span> <span class="operator">=</span> head;</span><br><span class="line">        <span class="keyword">while</span> (node != <span class="literal">null</span>) &#123;</span><br><span class="line">            length++;</span><br><span class="line">            node = node.next;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">ListNode</span> <span class="variable">dummyHead</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ListNode</span>(<span class="number">0</span>, head);</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">subLength</span> <span class="operator">=</span> <span class="number">1</span>; subLength &lt; length; subLength &lt;&lt;= <span class="number">1</span>) &#123;</span><br><span class="line">            <span class="type">ListNode</span> <span class="variable">prev</span> <span class="operator">=</span> dummyHead, curr = dummyHead.next;</span><br><span class="line">            <span class="keyword">while</span> (curr != <span class="literal">null</span>) &#123;</span><br><span class="line">                <span class="type">ListNode</span> <span class="variable">head1</span> <span class="operator">=</span> curr;</span><br><span class="line">                <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">1</span>; i &lt; subLength &amp;&amp; curr.next != <span class="literal">null</span>; i++) &#123;</span><br><span class="line">                    curr = curr.next;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="type">ListNode</span> <span class="variable">head2</span> <span class="operator">=</span> curr.next;</span><br><span class="line">                curr.next = <span class="literal">null</span>;</span><br><span class="line">                curr = head2;</span><br><span class="line">                <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">1</span>; i &lt; subLength &amp;&amp; curr != <span class="literal">null</span> &amp;&amp; curr.next != <span class="literal">null</span>; i++) &#123;</span><br><span class="line">                    curr = curr.next;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="type">ListNode</span> <span class="variable">next</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">                <span class="keyword">if</span> (curr != <span class="literal">null</span>) &#123;</span><br><span class="line">                    next = curr.next;</span><br><span class="line">                    curr.next = <span class="literal">null</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="type">ListNode</span> <span class="variable">merged</span> <span class="operator">=</span> merge(head1, head2);</span><br><span class="line">                prev.next = merged;</span><br><span class="line">                <span class="keyword">while</span> (prev.next != <span class="literal">null</span>) &#123;</span><br><span class="line">                    prev = prev.next;</span><br><span class="line">                &#125;</span><br><span class="line">                curr = next;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> dummyHead.next;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> ListNode <span class="title function_">merge</span><span class="params">(ListNode head1, ListNode head2)</span> &#123;</span><br><span class="line">        <span class="type">ListNode</span> <span class="variable">dummyHead</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ListNode</span>(<span class="number">0</span>);</span><br><span class="line">        <span class="type">ListNode</span> <span class="variable">temp</span> <span class="operator">=</span> dummyHead, temp1 = head1, temp2 = head2;</span><br><span class="line">        <span class="keyword">while</span> (temp1 != <span class="literal">null</span> &amp;&amp; temp2 != <span class="literal">null</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (temp1.val &lt;= temp2.val) &#123;</span><br><span class="line">                temp.next = temp1;</span><br><span class="line">                temp1 = temp1.next;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                temp.next = temp2;</span><br><span class="line">                temp2 = temp2.next;</span><br><span class="line">            &#125;</span><br><span class="line">            temp = temp.next;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (temp1 != <span class="literal">null</span>) &#123;</span><br><span class="line">            temp.next = temp1;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (temp2 != <span class="literal">null</span>) &#123;</span><br><span class="line">            temp.next = temp2;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> dummyHead.next;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="C++"><figure class="iseeu highlight c++"><figcaption><span>[sol2-C++]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">ListNode* <span class="title">sortList</span><span class="params">(ListNode* head)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (head == <span class="literal">nullptr</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> head;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">int</span> length = <span class="number">0</span>;</span><br><span class="line">        ListNode* node = head;</span><br><span class="line">        <span class="keyword">while</span> (node != <span class="literal">nullptr</span>) &#123;</span><br><span class="line">            length++;</span><br><span class="line">            node = node-&gt;next;</span><br><span class="line">        &#125;</span><br><span class="line">        ListNode* dummyHead = <span class="keyword">new</span> <span class="built_in">ListNode</span>(<span class="number">0</span>, head);</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> subLength = <span class="number">1</span>; subLength &lt; length; subLength &lt;&lt;= <span class="number">1</span>) &#123;</span><br><span class="line">            ListNode* prev = dummyHead, *curr = dummyHead-&gt;next;</span><br><span class="line">            <span class="keyword">while</span> (curr != <span class="literal">nullptr</span>) &#123;</span><br><span class="line">                ListNode* head1 = curr;</span><br><span class="line">                <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt; subLength &amp;&amp; curr-&gt;next != <span class="literal">nullptr</span>; i++) &#123;</span><br><span class="line">                    curr = curr-&gt;next;</span><br><span class="line">                &#125;</span><br><span class="line">                ListNode* head2 = curr-&gt;next;</span><br><span class="line">                curr-&gt;next = <span class="literal">nullptr</span>;</span><br><span class="line">                curr = head2;</span><br><span class="line">                <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt; subLength &amp;&amp; curr != <span class="literal">nullptr</span> &amp;&amp; curr-&gt;next != <span class="literal">nullptr</span>; i++) &#123;</span><br><span class="line">                    curr = curr-&gt;next;</span><br><span class="line">                &#125;</span><br><span class="line">                ListNode* next = <span class="literal">nullptr</span>;</span><br><span class="line">                <span class="keyword">if</span> (curr != <span class="literal">nullptr</span>) &#123;</span><br><span class="line">                    next = curr-&gt;next;</span><br><span class="line">                    curr-&gt;next = <span class="literal">nullptr</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                ListNode* merged = <span class="built_in">merge</span>(head1, head2);</span><br><span class="line">                prev-&gt;next = merged;</span><br><span class="line">                <span class="keyword">while</span> (prev-&gt;next != <span class="literal">nullptr</span>) &#123;</span><br><span class="line">                    prev = prev-&gt;next;</span><br><span class="line">                &#125;</span><br><span class="line">                curr = next;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> dummyHead-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function">ListNode* <span class="title">merge</span><span class="params">(ListNode* head1, ListNode* head2)</span> </span>&#123;</span><br><span class="line">        ListNode* dummyHead = <span class="keyword">new</span> <span class="built_in">ListNode</span>(<span class="number">0</span>);</span><br><span class="line">        ListNode* temp = dummyHead, *temp1 = head1, *temp2 = head2;</span><br><span class="line">        <span class="keyword">while</span> (temp1 != <span class="literal">nullptr</span> &amp;&amp; temp2 != <span class="literal">nullptr</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (temp1-&gt;val &lt;= temp2-&gt;val) &#123;</span><br><span class="line">                temp-&gt;next = temp1;</span><br><span class="line">                temp1 = temp1-&gt;next;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                temp-&gt;next = temp2;</span><br><span class="line">                temp2 = temp2-&gt;next;</span><br><span class="line">            &#125;</span><br><span class="line">            temp = temp-&gt;next;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (temp1 != <span class="literal">nullptr</span>) &#123;</span><br><span class="line">            temp-&gt;next = temp1;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (temp2 != <span class="literal">nullptr</span>) &#123;</span><br><span class="line">            temp-&gt;next = temp2;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> dummyHead-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><figcaption><span>[sol2-JavaScript]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">merge</span> = (<span class="params">head1, head2</span>) =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> dummyHead = <span class="keyword">new</span> <span class="title class_">ListNode</span>(<span class="number">0</span>);</span><br><span class="line">    <span class="keyword">let</span> temp = dummyHead, temp1 = head1, temp2 = head2;</span><br><span class="line">    <span class="keyword">while</span> (temp1 !== <span class="literal">null</span> &amp;&amp; temp2 !== <span class="literal">null</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (temp1.<span class="property">val</span> &lt;= temp2.<span class="property">val</span>) &#123;</span><br><span class="line">            temp.<span class="property">next</span> = temp1;</span><br><span class="line">            temp1 = temp1.<span class="property">next</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            temp.<span class="property">next</span> = temp2;</span><br><span class="line">            temp2 = temp2.<span class="property">next</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        temp = temp.<span class="property">next</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (temp1 !== <span class="literal">null</span>) &#123;</span><br><span class="line">        temp.<span class="property">next</span> = temp1;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (temp2 !== <span class="literal">null</span>) &#123;</span><br><span class="line">        temp.<span class="property">next</span> = temp2;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> dummyHead.<span class="property">next</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> sortList = <span class="keyword">function</span>(<span class="params">head</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (head === <span class="literal">null</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> head;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">let</span> length = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">let</span> node = head;</span><br><span class="line">    <span class="keyword">while</span> (node !== <span class="literal">null</span>) &#123;</span><br><span class="line">        length++;</span><br><span class="line">        node = node.<span class="property">next</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">const</span> dummyHead = <span class="keyword">new</span> <span class="title class_">ListNode</span>(<span class="number">0</span>, head);</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> subLength = <span class="number">1</span>; subLength &lt; length; subLength &lt;&lt;= <span class="number">1</span>) &#123;</span><br><span class="line">        <span class="keyword">let</span> prev = dummyHead, curr = dummyHead.<span class="property">next</span>;</span><br><span class="line">        <span class="keyword">while</span> (curr !== <span class="literal">null</span>) &#123;</span><br><span class="line">            <span class="keyword">let</span> head1 = curr;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">1</span>; i &lt; subLength &amp;&amp; curr.<span class="property">next</span> !== <span class="literal">null</span>; i++) &#123;</span><br><span class="line">                curr = curr.<span class="property">next</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">let</span> head2 = curr.<span class="property">next</span>;</span><br><span class="line">            curr.<span class="property">next</span> = <span class="literal">null</span>;</span><br><span class="line">            curr = head2;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">1</span>; i &lt; subLength &amp;&amp; curr != <span class="literal">null</span> &amp;&amp; curr.<span class="property">next</span> !== <span class="literal">null</span>; i++) &#123;</span><br><span class="line">                curr = curr.<span class="property">next</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">let</span> next = <span class="literal">null</span>;</span><br><span class="line">            <span class="keyword">if</span> (curr !== <span class="literal">null</span>) &#123;</span><br><span class="line">                next = curr.<span class="property">next</span>;</span><br><span class="line">                curr.<span class="property">next</span> = <span class="literal">null</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">const</span> merged = <span class="title function_">merge</span>(head1, head2);</span><br><span class="line">            prev.<span class="property">next</span> = merged;</span><br><span class="line">            <span class="keyword">while</span> (prev.<span class="property">next</span> !== <span class="literal">null</span>) &#123;</span><br><span class="line">                prev = prev.<span class="property">next</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            curr = next;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> dummyHead.<span class="property">next</span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><figcaption><span>[sol2-Python3]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">sortList</span>(<span class="params">self, head: ListNode</span>) -&gt; ListNode:</span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">merge</span>(<span class="params">head1: ListNode, head2: ListNode</span>) -&gt; ListNode:</span><br><span class="line">            dummyHead = ListNode(<span class="number">0</span>)</span><br><span class="line">            temp, temp1, temp2 = dummyHead, head1, head2</span><br><span class="line">            <span class="keyword">while</span> temp1 <span class="keyword">and</span> temp2:</span><br><span class="line">                <span class="keyword">if</span> temp1.val &lt;= temp2.val:</span><br><span class="line">                    temp.<span class="built_in">next</span> = temp1</span><br><span class="line">                    temp1 = temp1.<span class="built_in">next</span></span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    temp.<span class="built_in">next</span> = temp2</span><br><span class="line">                    temp2 = temp2.<span class="built_in">next</span></span><br><span class="line">                temp = temp.<span class="built_in">next</span></span><br><span class="line">            <span class="keyword">if</span> temp1:</span><br><span class="line">                temp.<span class="built_in">next</span> = temp1</span><br><span class="line">            <span class="keyword">elif</span> temp2:</span><br><span class="line">                temp.<span class="built_in">next</span> = temp2</span><br><span class="line">            <span class="keyword">return</span> dummyHead.<span class="built_in">next</span></span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> head:</span><br><span class="line">            <span class="keyword">return</span> head</span><br><span class="line">        </span><br><span class="line">        length = <span class="number">0</span></span><br><span class="line">        node = head</span><br><span class="line">        <span class="keyword">while</span> node:</span><br><span class="line">            length += <span class="number">1</span></span><br><span class="line">            node = node.<span class="built_in">next</span></span><br><span class="line">        </span><br><span class="line">        dummyHead = ListNode(<span class="number">0</span>, head)</span><br><span class="line">        subLength = <span class="number">1</span></span><br><span class="line">        <span class="keyword">while</span> subLength &lt; length:</span><br><span class="line">            prev, curr = dummyHead, dummyHead.<span class="built_in">next</span></span><br><span class="line">            <span class="keyword">while</span> curr:</span><br><span class="line">                head1 = curr</span><br><span class="line">                <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, subLength):</span><br><span class="line">                    <span class="keyword">if</span> curr.<span class="built_in">next</span>:</span><br><span class="line">                        curr = curr.<span class="built_in">next</span></span><br><span class="line">                    <span class="keyword">else</span>:</span><br><span class="line">                        <span class="keyword">break</span></span><br><span class="line">                head2 = curr.<span class="built_in">next</span></span><br><span class="line">                curr.<span class="built_in">next</span> = <span class="literal">None</span></span><br><span class="line">                curr = head2</span><br><span class="line">                <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, subLength):</span><br><span class="line">                    <span class="keyword">if</span> curr <span class="keyword">and</span> curr.<span class="built_in">next</span>:</span><br><span class="line">                        curr = curr.<span class="built_in">next</span></span><br><span class="line">                    <span class="keyword">else</span>:</span><br><span class="line">                        <span class="keyword">break</span></span><br><span class="line">                </span><br><span class="line">                succ = <span class="literal">None</span></span><br><span class="line">                <span class="keyword">if</span> curr:</span><br><span class="line">                    succ = curr.<span class="built_in">next</span></span><br><span class="line">                    curr.<span class="built_in">next</span> = <span class="literal">None</span></span><br><span class="line">                </span><br><span class="line">                merged = merge(head1, head2)</span><br><span class="line">                prev.<span class="built_in">next</span> = merged</span><br><span class="line">                <span class="keyword">while</span> prev.<span class="built_in">next</span>:</span><br><span class="line">                    prev = prev.<span class="built_in">next</span></span><br><span class="line">                curr = succ</span><br><span class="line">            subLength &lt;&lt;= <span class="number">1</span></span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> dummyHead.<span class="built_in">next</span></span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Golang"><figure class="iseeu highlight golang"><figcaption><span>[sol2-Golang]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">merge</span><span class="params">(head1, head2 *ListNode)</span></span> *ListNode &#123;</span><br><span class="line">    dummyHead := &amp;ListNode&#123;&#125;</span><br><span class="line">    temp, temp1, temp2 := dummyHead, head1, head2</span><br><span class="line">    <span class="keyword">for</span> temp1 != <span class="literal">nil</span> &amp;&amp; temp2 != <span class="literal">nil</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> temp1.Val &lt;= temp2.Val &#123;</span><br><span class="line">            temp.Next = temp1</span><br><span class="line">            temp1 = temp1.Next</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            temp.Next = temp2</span><br><span class="line">            temp2 = temp2.Next</span><br><span class="line">        &#125;</span><br><span class="line">        temp = temp.Next</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> temp1 != <span class="literal">nil</span> &#123;</span><br><span class="line">        temp.Next = temp1</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> temp2 != <span class="literal">nil</span> &#123;</span><br><span class="line">        temp.Next = temp2</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> dummyHead.Next</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">sortList</span><span class="params">(head *ListNode)</span></span> *ListNode &#123;</span><br><span class="line">    <span class="keyword">if</span> head == <span class="literal">nil</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> head</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    length := <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> node := head; node != <span class="literal">nil</span>; node = node.Next &#123;</span><br><span class="line">        length++</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    dummyHead := &amp;ListNode&#123;Next: head&#125;</span><br><span class="line">    <span class="keyword">for</span> subLength := <span class="number">1</span>; subLength &lt; length; subLength &lt;&lt;= <span class="number">1</span> &#123;</span><br><span class="line">        prev, cur := dummyHead, dummyHead.Next</span><br><span class="line">        <span class="keyword">for</span> cur != <span class="literal">nil</span> &#123;</span><br><span class="line">            head1 := cur</span><br><span class="line">            <span class="keyword">for</span> i := <span class="number">1</span>; i &lt; subLength &amp;&amp; cur.Next != <span class="literal">nil</span>; i++ &#123;</span><br><span class="line">                cur = cur.Next</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            head2 := cur.Next</span><br><span class="line">            cur.Next = <span class="literal">nil</span></span><br><span class="line">            cur = head2</span><br><span class="line">            <span class="keyword">for</span> i := <span class="number">1</span>; i &lt; subLength &amp;&amp; cur != <span class="literal">nil</span> &amp;&amp; cur.Next != <span class="literal">nil</span>; i++ &#123;</span><br><span class="line">                cur = cur.Next</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">var</span> next *ListNode</span><br><span class="line">            <span class="keyword">if</span> cur != <span class="literal">nil</span> &#123;</span><br><span class="line">                next = cur.Next</span><br><span class="line">                cur.Next = <span class="literal">nil</span></span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            prev.Next = merge(head1, head2)</span><br><span class="line"></span><br><span class="line">            <span class="keyword">for</span> prev.Next != <span class="literal">nil</span> &#123;</span><br><span class="line">                prev = prev.Next</span><br><span class="line">            &#125;</span><br><span class="line">            cur = next</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> dummyHead.Next</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="C"><figure class="iseeu highlight c"><figcaption><span>[sol2-C]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> ListNode* <span class="title function_">merge</span><span class="params">(<span class="keyword">struct</span> ListNode* head1, <span class="keyword">struct</span> ListNode* head2)</span> &#123;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span>* <span class="title">dummyHead</span> =</span> <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">struct</span> ListNode));</span><br><span class="line">    dummyHead-&gt;val = <span class="number">0</span>;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span> *<span class="title">temp</span> =</span> dummyHead, *temp1 = head1, *temp2 = head2;</span><br><span class="line">    <span class="keyword">while</span> (temp1 != <span class="literal">NULL</span> &amp;&amp; temp2 != <span class="literal">NULL</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (temp1-&gt;val &lt;= temp2-&gt;val) &#123;</span><br><span class="line">            temp-&gt;next = temp1;</span><br><span class="line">            temp1 = temp1-&gt;next;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            temp-&gt;next = temp2;</span><br><span class="line">            temp2 = temp2-&gt;next;</span><br><span class="line">        &#125;</span><br><span class="line">        temp = temp-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (temp1 != <span class="literal">NULL</span>) &#123;</span><br><span class="line">        temp-&gt;next = temp1;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (temp2 != <span class="literal">NULL</span>) &#123;</span><br><span class="line">        temp-&gt;next = temp2;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> dummyHead-&gt;next;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> ListNode* <span class="title function_">sortList</span><span class="params">(<span class="keyword">struct</span> ListNode* head)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (head == <span class="literal">NULL</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> head;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="type">int</span> length = <span class="number">0</span>;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span>* <span class="title">node</span> =</span> head;</span><br><span class="line">    <span class="keyword">while</span> (node != <span class="literal">NULL</span>) &#123;</span><br><span class="line">        length++;</span><br><span class="line">        node = node-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span>* <span class="title">dummyHead</span> =</span> <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">struct</span> ListNode));</span><br><span class="line">    dummyHead-&gt;next = head;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> subLength = <span class="number">1</span>; subLength &lt; length; subLength &lt;&lt;= <span class="number">1</span>) &#123;</span><br><span class="line">        <span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span> *<span class="title">prev</span> =</span> dummyHead, *curr = dummyHead-&gt;next;</span><br><span class="line">        <span class="keyword">while</span> (curr != <span class="literal">NULL</span>) &#123;</span><br><span class="line">            <span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span>* <span class="title">head1</span> =</span> curr;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt; subLength &amp;&amp; curr-&gt;next != <span class="literal">NULL</span>; i++) &#123;</span><br><span class="line">                curr = curr-&gt;next;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span>* <span class="title">head2</span> =</span> curr-&gt;next;</span><br><span class="line">            curr-&gt;next = <span class="literal">NULL</span>;</span><br><span class="line">            curr = head2;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt; subLength &amp;&amp; curr != <span class="literal">NULL</span> &amp;&amp; curr-&gt;next != <span class="literal">NULL</span>;</span><br><span class="line">                 i++) &#123;</span><br><span class="line">                curr = curr-&gt;next;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span>* <span class="title">next</span> =</span> <span class="literal">NULL</span>;</span><br><span class="line">            <span class="keyword">if</span> (curr != <span class="literal">NULL</span>) &#123;</span><br><span class="line">                next = curr-&gt;next;</span><br><span class="line">                curr-&gt;next = <span class="literal">NULL</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span>* <span class="title">merged</span> =</span> merge(head1, head2);</span><br><span class="line">            prev-&gt;next = merged;</span><br><span class="line">            <span class="keyword">while</span> (prev-&gt;next != <span class="literal">NULL</span>) &#123;</span><br><span class="line">                prev = prev-&gt;next;</span><br><span class="line">            &#125;</span><br><span class="line">            curr = next;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> dummyHead-&gt;next;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>复杂度分析</strong></p>
+<ul>
+<li><p>时间复杂度：$O(n \log n)$，其中 $n$ 是链表的长度。</p>
+</li>
+<li><p>空间复杂度：$O(1)$。</p>
+</li>
+</ul>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <!--<div class="article-copyright-info-container">-->
+    <!--&lt;!&ndash;<ul>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><strong>Title:</strong> 0148-排序链表</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><strong>Author:</strong> Raphael Liu</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><strong>Created at&ndash;&gt;-->
+                <!--&lt;!&ndash;:</strong> 2023-09-13 00:47:26</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;&ndash;&gt;-->
+            <!--&lt;!&ndash;<li>&ndash;&gt;-->
+                <!--&lt;!&ndash;<strong>Updated at&ndash;&gt;-->
+                    <!--&lt;!&ndash;:</strong> 2023-09-13 10:43:07&ndash;&gt;-->
+            <!--&lt;!&ndash;</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;<li>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;<strong>Link:</strong> https://fida.ltd/2023/09/13/0148-排序链表/&ndash;&gt;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;</li>&ndash;&gt;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;<li>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;<strong>&ndash;&gt;&ndash;&gt;-->
+                <!--&lt;!&ndash;&lt;!&ndash;License:&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;</strong>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0</a>.&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;&ndash;&gt;&ndash;&gt;-->
+
+        <!--&lt;!&ndash;&lt;!&ndash;</li>&ndash;&gt;&ndash;&gt;-->
+    <!--&lt;!&ndash;</ul>&ndash;&gt;-->
+<!--</div>-->
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box">
+                
+                    <li class="tag-item">
+                        <a href="/tags/algorithm/">#algorithm</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item">
+                        <a href="/tags/MEDIUM/">#MEDIUM</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                        rel="prev"
+                        href="/2023/09/13/0146-LRU%20%E7%BC%93%E5%AD%98/"
+                        >
+                            <span class="left arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">0146-LRU 缓存</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                        rel="next"
+                        href="/2023/09/13/0147-%E5%AF%B9%E9%93%BE%E8%A1%A8%E8%BF%9B%E8%A1%8C%E6%8F%92%E5%85%A5%E6%8E%92%E5%BA%8F/"
+                        >
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">0147-对链表进行插入排序</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+
+        
+            <div class="comment-container">
+                <div class="comments-container pjax">
+    <div id="comment-anchor"></div>
+    <div class="comment-area-title">
+        <i class="fa-solid fa-comments"></i>&nbsp;Comments
+    </div>
+    
+
+        
+            
+ 
+    <div id="waline"></div>
+    <script type="module"  data-swup-reload-script>
+        import { init } from 'https://evan.beee.top/js/waline.mjs';
+
+        function loadWaline() {
+            init({
+                el: '#waline',
+                serverURL: 'https://example.example.com',
+                lang: 'zh-CN',
+                dark: 'body[class~="dark-mode"]',
+                requiredMeta: ['nick','mail'], // cannot customize by theme config, change it yourself
+            });
+        }
+
+        if ('true') {
+            const loadWalineTimeout = setTimeout(() => {
+                loadWaline();
+                clearTimeout(loadWalineTimeout);
+            }, 1000);
+        } else {
+            window.addEventListener('DOMContentLoaded', loadWaline);
+        }
+        
+    </script>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+
+    
+        <div class="toc-content-container">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">On this page</div>
+        <div class="page-title">0148-排序链表</div>
+        
+
+    </div>
+</div>
+        </div>
+    
+</div>
+
+
+
+                
+
+            </div>
+
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2022</span>
+              -
+            
+            2023&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">Raphael Liu</a>
+        </div>
+        
+            <script data-swup-reload-script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">UV:</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">PV:</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <!--<div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">-->
+            <!--<span class="lg:block text-sm">powered_by</span>-->
+            <!--&lt;!&ndash;<span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.4.4</a></span>&ndash;&gt;-->
+        <!--</div>-->
+        
+        <!---->
+            <!--<div>-->
+                <!--runtime <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hours <span class="odometer" id="runtime_minutes"></span> minutes <span class="odometer" id="runtime_seconds"></span> seconds-->
+            <!--</div>-->
+        <!---->
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fa-regular fa-comments"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-expand-width flex justify-center items-center">
+            <i class="fa-regular fa-expand"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fa-solid fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa-solid fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa-solid fa-spinner fa-spin-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+    
+<script src="/js/libs/Swup.min.js"></script>
+
+<script src="/js/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/libs/SwupScrollPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+        ],
+        containers: ["#swup"],
+    });
+
+    swup.hooks.on("page:view", () => {
+        Global.refresh();
+    });
+
+    // if (document.readyState === "complete") {
+    //
+    // } else {
+    //     document.addEventListener("DOMContentLoaded", () => init());
+    // }
+</script>
+
+
+
+
+
+
+<script src="/js/utils.js" type="module"></script>
+
+<script src="/js/main.js" type="module"></script>
+
+<script src="/js/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/layouts/categoryList.js" type="module"></script>
+
+
+
+    
+<script src="/js/tools/localSearch.js"></script>
+
+
+
+
+    
+<script src="/js/tools/codeBlock.js"></script>
+
+
+
+
+    
+<script src="/js/layouts/lazyload.js"></script>
+
+
+
+
+    
+<script src="/js/tools/runtime.js"></script>
+
+    
+<script src="/js/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/libs/Typed.min.js"></script>
+
+  
+<script src="/js/plugins/typed.js"></script>
+
+
+
+
+
+
+
+<div class="post-scripts" data-swup-reload-script>
+    
+        
+<script src="/js/libs/anime.min.js"></script>
+
+        
+<script src="/js/tools/tocToggle.js" type="module"></script>
+
+<script src="/js/layouts/toc.js" type="module"></script>
+
+<script src="/js/plugins/tabs.js" type="module"></script>
+
+    
+</div>
+
+
+</body>
+</html>

@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="Raphael Liu">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/2023/09/13/1617-统计子树中城市之间最大距离/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="给你 n 个城市，编号为从 1 到 n 。同时给你一个大小为 n-1 的数组 edges ，其中 edges[i] &#x3D; [ui, vi] 表示城市 ui 和 vi 之间有一条双向边。题目保证任意城市之间只有唯一的一条路径。换句话说，所有城市形成了一棵 树 。 一棵 子树是城市的一个子集，且子集中任意城市之间可以通过子集中的其他城市和边到达。两个子树被认为不一样的条件是至少有一个城市在其中一棵子树中">
+<meta property="og:type" content="article">
+<meta property="og:title" content="1617-统计子树中城市之间最大距离">
+<meta property="og:url" content="http://example.com/2023/09/13/1617-%E7%BB%9F%E8%AE%A1%E5%AD%90%E6%A0%91%E4%B8%AD%E5%9F%8E%E5%B8%82%E4%B9%8B%E9%97%B4%E6%9C%80%E5%A4%A7%E8%B7%9D%E7%A6%BB/index.html">
+<meta property="og:site_name" content="Raphael&#39;s Blog">
+<meta property="og:description" content="给你 n 个城市，编号为从 1 到 n 。同时给你一个大小为 n-1 的数组 edges ，其中 edges[i] &#x3D; [ui, vi] 表示城市 ui 和 vi 之间有一条双向边。题目保证任意城市之间只有唯一的一条路径。换句话说，所有城市形成了一棵 树 。 一棵 子树是城市的一个子集，且子集中任意城市之间可以通过子集中的其他城市和边到达。两个子树被认为不一样的条件是至少有一个城市在其中一棵子树中">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://assets.leetcode-cn.com/solution-static/1617/1617_1.png">
+<meta property="og:image" content="https://assets.leetcode-cn.com/solution-static/1617/1617_2.png">
+<meta property="og:image" content="https://assets.leetcode-cn.com/solution-static/1617/1617_3.png">
+<meta property="og:image" content="https://assets.leetcode-cn.com/solution-static/1617/1617_4.png">
+<meta property="og:image" content="https://assets.leetcode-cn.com/solution-static/1617/1617_5.png">
+<meta property="og:image" content="https://assets.leetcode-cn.com/solution-static/1617/1617_6.png">
+<meta property="og:image" content="https://assets.leetcode-cn.com/solution-static/1617/1617_7.png">
+<meta property="og:image" content="https://assets.leetcode-cn.com/solution-static/1617/1617_8.png">
+<meta property="article:published_time" content="2023-09-12T16:47:26.000Z">
+<meta property="article:modified_time" content="2023-09-13T08:06:31.134Z">
+<meta property="article:author" content="Raphael Liu">
+<meta property="article:tag" content="algorithm">
+<meta property="article:tag" content="HARD">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://assets.leetcode-cn.com/solution-static/1617/1617_1.png">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/redefine-favicon.svg" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/redefine-favicon.svg">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/redefine-favicon.svg">
+    <!--- Page Info-->
+    
+    <title>
+        
+            1617-统计子树中城市之间最大距离 -
+        
+        Raphael&#39;s Blog
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/css/build/styles.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/fonts.css">
+
+    
+<link rel="stylesheet" href="/fonts/Satoshi/satoshi.css">
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+
+    <!--- Inject Part-->
+    
+    <script id="hexo-configurations">
+    let Global = window.Global || {};
+    Global.hexo_config = {"hostname":"example.com","root":"/","language":"zh_CN"};
+    Global.theme_config = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":true,"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"open_graph":true,"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-wqery6-light.webp","dark":"/images/wallhaven-wqery6-dark.webp"},"title":"Raphael's Blog","subtitle":{"text":["格物致知","坚持做正确的事情"],"hitokoto":{"enable":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":false,"links":{"github":"https://github.com/raphael-liu","email":"raphael@buaa.edu.cn# your email"},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.4.4","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"links":{"首页":{"path":"/","icon":"fa-regular fa-house"},"文章":{"path":"/archives","icon":"fa-regular fa-archive"},"关于":{"icon":"fa-regular fa-user","submenus":{"我":"/about/me","Github":"https://github.com/raphael-liu"}}},"search":{"enable":true,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"links":null},"article_date_format":"auto","categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}},"footerStart":"2022/8/17 11:45:14"};
+    Global.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    Global.data_config = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="swup-progress-icon">
+            <i class="fa-solid fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container" id="swup">
+
+    
+
+    <div class="main-content-container">
+
+
+        <div class="main-content-header">
+            <header class="navbar-container">
+    
+    <div class="navbar-content">
+        <div class="left">
+            
+            <a class="logo-title" href="http://example.com/">
+                
+                Raphael&#39;s Blog
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/"  >
+                                    
+                                        
+                                            <i class="fa-regular fa-house"></i>
+                                        
+                                        首页
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/archives"  >
+                                    
+                                        
+                                            <i class="fa-regular fa-archive"></i>
+                                        
+                                        文章
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="has-dropdown" 
+                                    href="#" onClick="return false;">
+                                    
+                                        
+                                            <i class="fa-regular fa-user"></i>
+                                        
+                                        关于&nbsp;<i class="fa-solid fa-chevron-down"></i>
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                                    <ul class="sub-menu">
+                                    
+                                        <li>
+                                        <a href="/about/me">我
+                                        </a>
+                                        </li>
+                                    
+                                        <li>
+                                        <a target="_blank" rel="noopener" href="https://github.com/raphael-liu">GITHUB
+                                        </a>
+                                        </li>
+                                    
+                                    </ul>
+                                
+                            </li>
+                    
+                    
+                        <li class="navbar-item search search-popup-trigger">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fa-solid fa-magnifying-glass"></i></div>
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile drawer -->
+    <div class="navbar-drawer w-full absolute top-0 left-0 bg-background-color">
+        <ul class="drawer-navbar-list flex flex-col justify-start items-center">
+            
+                
+                    <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group " 
+                        href="/"  >
+                             
+                                
+                                    <i class="fa-regular fa-house"></i>
+                                
+                                首页
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+                
+                    <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group " 
+                        href="/archives"  >
+                             
+                                
+                                    <i class="fa-regular fa-archive"></i>
+                                
+                                文章
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+                
+                    <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group has-dropdown" 
+                        href="#" onClick="return false;">
+                            
+                                
+                                    <i class="fa-regular fa-user"></i>
+                                
+                                关于&nbsp;<i class="group-hover:rotate-180 transition-transform fa-solid fa-chevron-down"></i>
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                              
+                        
+                            <li class="text-base flex justify-center items-center hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                <a class="py-0.5" href="/about/me">我</a>
+                            </li>
+                        
+                            <li class="text-base flex justify-center items-center hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                <a class="py-0.5" target="_blank" rel="noopener" href="https://github.com/raphael-liu">GITHUB</a>
+                            </li>
+                        
+                    
+            
+
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="post-page-container">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            
+                <h1 class="article-title-regular">1617-统计子树中城市之间最大距离</h1>
+            
+            </div>
+            
+                    
+        
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">Raphael Liu</span>
+                        
+                            <span class="author-label">Lv10</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2023-09-13 00:47:26</span>
+        <span class="mobile">2023-09-13 00:47:26</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2023-09-13 16:06:31</span>
+            <span class="mobile">2023-09-13 16:06:31</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/algorithm/">algorithm</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/HARD/">HARD</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        
+
+
+        <div class="article-content markdown-body">
+            <p>给你 <code>n</code> 个城市，编号为从 <code>1</code> 到 <code>n</code> 。同时给你一个大小为 <code>n-1</code> 的数组 <code>edges</code> ，其中 <code>edges[i] = [ui, vi]</code> 表示城市 <code>ui</code> 和 <code>vi</code> 之间有一条双向边。题目保证任意城市之间只有唯一的一条路径。换句话说，所有城市形成了一棵 <strong>树</strong> 。</p>
+<p>一棵 <strong>子树</strong><br>是城市的一个子集，且子集中任意城市之间可以通过子集中的其他城市和边到达。两个子树被认为不一样的条件是至少有一个城市在其中一棵子树中存在，但在另一棵子树中不存在。</p>
+<p>对于 <code>d</code> 从 <code>1</code> 到 <code>n-1</code> ，请你找到城市间 <strong>最大距离</strong> 恰好为 <code>d</code> 的所有子树数目。</p>
+<p>请你返回一个大小为 <code>n-1</code> 的数组，其中第 __<code>d</code> __ 个元素（ <strong>下标从 1 开始</strong> ）是城市间 <strong>最大距离</strong> 恰好等于 <code>d</code><br>的子树数目。</p>
+<p><strong>请注意</strong> ，两个城市间距离定义为它们之间需要经过的边的数目。</p>
+<p><strong>示例 1：</strong></p>
+<p><strong>![](<a class="link"   target="_blank" rel="noopener" href="https://assets.leetcode-cn.com/aliyun-lc-" >https://assets.leetcode-cn.com/aliyun-lc- <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a><br>upload&#x2F;uploads&#x2F;2020&#x2F;10&#x2F;11&#x2F;p1.png)</strong></p>
+<pre><code>**输入：** n = 4, edges = [[1,2],[2,3],[2,4]]
+**输出：** [3,4,0]
+**解释：** 子树 &#123;1,2&#125;, &#123;2,3&#125; 和 &#123;2,4&#125; 最大距离都是 1 。
+子树 &#123;1,2,3&#125;, &#123;1,2,4&#125;, &#123;2,3,4&#125; 和 &#123;1,2,3,4&#125; 最大距离都为 2 。
+不存在城市间最大距离为 3 的子树。
+</code></pre>
+<p><strong>示例 2：</strong></p>
+<pre><code>**输入：** n = 2, edges = [[1,2]]
+**输出：** [1]
+</code></pre>
+<p><strong>示例 3：</strong></p>
+<pre><code>**输入：** n = 3, edges = [[1,2],[2,3]]
+**输出：** [2,1]
+</code></pre>
+<p><strong>提示：</strong></p>
+<ul>
+<li><code>2 &lt;= n &lt;= 15</code></li>
+<li><code>edges.length == n-1</code></li>
+<li><code>edges[i].length == 2</code></li>
+<li><code>1 &lt;= ui, vi &lt;= n</code></li>
+<li>题目保证 <code>(ui, vi)</code> 所表示的边互不相同。</li>
+</ul>
+<h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>树上任意两节点之间最长的简单路径即为树的「直径」，可以参考「<a class="link"   target="_blank" rel="noopener" href="https://oi-wiki.org/graph/tree-diameter/" >树的直径 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>」、「<a class="link"   target="_blank" rel="noopener" href="https://leetcode.cn/problems/diameter-of-binary-tree/solutions/139683/er-cha-shu-de-zhi-jing-by-leetcode-solution/" >二叉树的直径 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>」等相关解法。一颗树可以有多条直径，但直径的长度都是一样的，计算树的直径长度有常见的两种方法:</p>
+<ul>
+<li>动态规划：我们记录当 root 为树的根时，每个节点作为子树的根向下，所能延伸的最远距离 d_1 和次远距离 d_2，那么直径的长度就是所有 d_1 + d_2 的最大值。</li>
+<li>深度优先搜索：首先从任意节点 x 开始进行第一次深度优先搜索，到达距离其最远的节点，记为 y，然后再从 y 开始做第二次深度优先搜索，到达距离 y 最远的节点，记为 z，则 \delta(y,z) 即为树的直径，节点 y 与 节点 z 之间的距离即为直径的长度。</li>
+</ul>
+<h4 id="方法一：动态规划"><a href="#方法一：动态规划" class="headerlink" title="方法一：动态规划"></a>方法一：动态规划</h4><p><strong>思路与算法</strong></p>
+<p>题目要求找到城市间最大距离恰好为 d 的所有子树数目，子树中的任意两个节点的最大距离即为「<a class="link"   target="_blank" rel="noopener" href="https://oi-wiki.org/graph/tree-diameter/" >树的直径 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>」。根据题意可以知道城市是一个含有 n 个节点的无向连通图，且该图中只含有 n-1 条边，最大距离为 d 子树需要满足以下条件：</p>
+<ul>
+<li>该子树为该无向图中的一个连通单元；</li>
+<li>该子树的直径长度为 d；</li>
+</ul>
+<p>根据以上提示，我们只需计算出图中所有连通子树的直径即可。由于图中的节点数 n 的取值范围为 1 \le n \le 16，我们采用状态压缩的思想，用二进制掩码 mask 来表示图中的一个子树，枚举所有可能的子树，并检测该子树的连通性。如果该子树为一个连通单元，则计算该子树的直径即可。对于枚举的子树都需要进行如下计算：</p>
+<ul>
+<li>检测树的连通性：此时可以通过深度优先搜索或者广度优先搜索来检测连通性即可，从任意节点 root 出发，子树中所有的节点均可达；</li>
+<li>计算树的直径：在此方法中我们采用树形动态规划的方式计算树的直径即可。每次计算以当前节点为根节点形成的子树向下延伸的最远距离 first 与次远距离 second，计算所有的 first} + \textit{second 的最大值即可。</li>
+</ul>
+<p>我们统计所有子树的直径的不同计数，并返回结果即可。</p>
+<p><strong>代码</strong></p>
+<div class="highlight-container" data-rel="C++"><figure class="iseeu highlight c++"><figcaption><span>[sol1-C++]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:      </span><br><span class="line">    <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">countSubgraphsForEachDiameter</span><span class="params">(<span class="type">int</span> n, vector&lt;vector&lt;<span class="type">int</span>&gt;&gt;&amp; edges)</span> </span>&#123;</span><br><span class="line">        vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; <span class="built_in">adj</span>(n);        </span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span> &amp;edge : edges) &#123;</span><br><span class="line">            <span class="type">int</span> x = edge[<span class="number">0</span>] - <span class="number">1</span>;</span><br><span class="line">            <span class="type">int</span> y = edge[<span class="number">1</span>] - <span class="number">1</span>;</span><br><span class="line">            adj[x].<span class="built_in">emplace_back</span>(y);</span><br><span class="line">            adj[y].<span class="built_in">emplace_back</span>(x);</span><br><span class="line">        &#125;</span><br><span class="line">        function&lt;<span class="type">int</span>(<span class="type">int</span>, <span class="type">int</span>&amp;, <span class="type">int</span>&amp;)&gt; dfs = [&amp;](<span class="type">int</span> root, <span class="type">int</span>&amp; mask, <span class="type">int</span>&amp; diameter)-&gt;<span class="type">int</span> &#123;</span><br><span class="line">            <span class="type">int</span> first = <span class="number">0</span>, second = <span class="number">0</span>;</span><br><span class="line">            mask &amp;= ~(<span class="number">1</span> &lt;&lt; root);</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> vertex : adj[root]) &#123;</span><br><span class="line">                <span class="keyword">if</span> (mask &amp; (<span class="number">1</span> &lt;&lt; vertex)) &#123;</span><br><span class="line">                    mask &amp;= ~(<span class="number">1</span> &lt;&lt; vertex);</span><br><span class="line">                    <span class="type">int</span> distance = <span class="number">1</span> + <span class="built_in">dfs</span>(vertex, mask, diameter);</span><br><span class="line">                    <span class="keyword">if</span> (distance &gt; first) &#123;</span><br><span class="line">                        second = first;</span><br><span class="line">                        first = distance;</span><br><span class="line">                    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (distance &gt; second) &#123;</span><br><span class="line">                        second = distance;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            diameter = <span class="built_in">max</span>(diameter, first + second);</span><br><span class="line">            <span class="keyword">return</span> first;</span><br><span class="line">        &#125;;</span><br><span class="line"></span><br><span class="line">        <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">ans</span><span class="params">(n - <span class="number">1</span>)</span></span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt; (<span class="number">1</span> &lt;&lt; n); i++) &#123;</span><br><span class="line">            <span class="type">int</span> root = <span class="number">32</span> - __builtin_clz(i) - <span class="number">1</span>;</span><br><span class="line">            <span class="type">int</span> mask = i;</span><br><span class="line">            <span class="type">int</span> diameter = <span class="number">0</span>;</span><br><span class="line">            <span class="built_in">dfs</span>(root, mask, diameter);</span><br><span class="line">            <span class="keyword">if</span> (mask == <span class="number">0</span> &amp;&amp; diameter &gt; <span class="number">0</span>) &#123;</span><br><span class="line">                ans[diameter - <span class="number">1</span>]++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><figcaption><span>[sol1-Java]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="type">int</span> mask;</span><br><span class="line">    <span class="type">int</span> diameter;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span>[] countSubgraphsForEachDiameter(<span class="type">int</span> n, <span class="type">int</span>[][] edges) &#123;</span><br><span class="line">        List&lt;Integer&gt;[] adj = <span class="keyword">new</span> <span class="title class_">List</span>[n];</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">            adj[i] = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;Integer&gt;();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span>[] edge : edges) &#123;</span><br><span class="line">            <span class="type">int</span> <span class="variable">x</span> <span class="operator">=</span> edge[<span class="number">0</span>] - <span class="number">1</span>;</span><br><span class="line">            <span class="type">int</span> <span class="variable">y</span> <span class="operator">=</span> edge[<span class="number">1</span>] - <span class="number">1</span>;</span><br><span class="line">            adj[x].add(y);</span><br><span class="line">            adj[y].add(x);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="type">int</span>[] ans = <span class="keyword">new</span> <span class="title class_">int</span>[n - <span class="number">1</span>];</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">1</span>; i &lt; (<span class="number">1</span> &lt;&lt; n); i++) &#123;</span><br><span class="line">            <span class="type">int</span> <span class="variable">root</span> <span class="operator">=</span> <span class="number">32</span> - Integer.numberOfLeadingZeros(i) - <span class="number">1</span>;</span><br><span class="line">            mask = i;</span><br><span class="line">            diameter = <span class="number">0</span>;</span><br><span class="line">            dfs(root, adj);</span><br><span class="line">            <span class="keyword">if</span> (mask == <span class="number">0</span> &amp;&amp; diameter &gt; <span class="number">0</span>) &#123;</span><br><span class="line">                ans[diameter - <span class="number">1</span>]++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">dfs</span><span class="params">(<span class="type">int</span> root, List&lt;Integer&gt;[] adj)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">first</span> <span class="operator">=</span> <span class="number">0</span>, second = <span class="number">0</span>;</span><br><span class="line">        mask &amp;= ~(<span class="number">1</span> &lt;&lt; root);</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> vertex : adj[root]) &#123;</span><br><span class="line">            <span class="keyword">if</span> ((mask &amp; (<span class="number">1</span> &lt;&lt; vertex)) != <span class="number">0</span>) &#123;</span><br><span class="line">                mask &amp;= ~(<span class="number">1</span> &lt;&lt; vertex);</span><br><span class="line">                <span class="type">int</span> <span class="variable">distance</span> <span class="operator">=</span> <span class="number">1</span> + dfs(vertex, adj);</span><br><span class="line">                <span class="keyword">if</span> (distance &gt; first) &#123;</span><br><span class="line">                    second = first;</span><br><span class="line">                    first = distance;</span><br><span class="line">                &#125; <span class="keyword">else</span> <span class="keyword">if</span> (distance &gt; second) &#123;</span><br><span class="line">                    second = distance;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        diameter = Math.max(diameter, first + second);</span><br><span class="line">        <span class="keyword">return</span> first;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="C"><figure class="iseeu highlight c"><figcaption><span>[sol1-C]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> MAX(a, b) ((a) &gt; (b) ? (a) : (b))</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">dfs</span><span class="params">(<span class="type">int</span> root, <span class="type">int</span>* mask, <span class="type">int</span>* diameter, <span class="type">int</span> **adj, <span class="type">int</span> *adjColSize)</span> &#123;</span><br><span class="line">    <span class="type">int</span> first = <span class="number">0</span>, second = <span class="number">0</span>;</span><br><span class="line">    (*mask) &amp;= ~(<span class="number">1</span> &lt;&lt; root);</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; adjColSize[root]; i++) &#123;</span><br><span class="line">        <span class="type">int</span> vertex = adj[root][i];</span><br><span class="line">        <span class="keyword">if</span> ((*mask) &amp; (<span class="number">1</span> &lt;&lt; vertex)) &#123;</span><br><span class="line">            (*mask) &amp;= ~(<span class="number">1</span> &lt;&lt; vertex);</span><br><span class="line">            <span class="type">int</span> distance = <span class="number">1</span> + dfs(vertex, mask, diameter, adj, adjColSize);</span><br><span class="line">            <span class="keyword">if</span> (distance &gt; first) &#123;</span><br><span class="line">                second = first;</span><br><span class="line">                first = distance;</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (distance &gt; second) &#123;</span><br><span class="line">                second = distance;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    *diameter = MAX(*diameter, first + second);</span><br><span class="line">    <span class="keyword">return</span> first;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span>* <span class="title function_">countSubgraphsForEachDiameter</span><span class="params">(<span class="type">int</span> n, <span class="type">int</span>** edges, <span class="type">int</span> edgesSize, <span class="type">int</span>* edgesColSize, <span class="type">int</span>* returnSize)</span> &#123;</span><br><span class="line">    <span class="type">int</span> *adj[n];</span><br><span class="line">    <span class="type">int</span> adjColSize[n];</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">        adj[i] = (<span class="type">int</span>*)<span class="built_in">calloc</span>(n, <span class="keyword">sizeof</span>(<span class="type">int</span>));;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">memset</span>(adjColSize, <span class="number">0</span>, <span class="keyword">sizeof</span>(adjColSize));</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; edgesSize; i++) &#123;</span><br><span class="line">        <span class="type">int</span> x = edges[i][<span class="number">0</span>] - <span class="number">1</span>;</span><br><span class="line">        <span class="type">int</span> y = edges[i][<span class="number">1</span>] - <span class="number">1</span>;</span><br><span class="line">        adj[x][adjColSize[x]++] = y;</span><br><span class="line">        adj[y][adjColSize[y]++] = x;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="type">int</span> *ans = (<span class="type">int</span> *)<span class="built_in">calloc</span>(n - <span class="number">1</span>, <span class="keyword">sizeof</span>(<span class="type">int</span>));</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt; (<span class="number">1</span> &lt;&lt; n); i++) &#123;</span><br><span class="line">        <span class="type">int</span> root = <span class="number">32</span> - __builtin_clz(i) - <span class="number">1</span>;</span><br><span class="line">        <span class="type">int</span> mask = i;</span><br><span class="line">        <span class="type">int</span> diameter = <span class="number">0</span>;</span><br><span class="line">        dfs(root, &amp;mask, &amp;diameter, adj, adjColSize);</span><br><span class="line">        <span class="keyword">if</span> (mask == <span class="number">0</span> &amp;&amp; diameter &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            ans[diameter - <span class="number">1</span>]++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">        <span class="built_in">free</span>(adj[i]);</span><br><span class="line">    &#125;</span><br><span class="line">    *returnSize = n - <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><figcaption><span>[sol1-JavaScript]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> countSubgraphsForEachDiameter = <span class="keyword">function</span>(<span class="params">n, edges</span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> adj = <span class="keyword">new</span> <span class="title class_">Array</span>(n).<span class="title function_">fill</span>(<span class="number">0</span>);</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">        adj[i] = [];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">const</span> edge <span class="keyword">of</span> edges) &#123;</span><br><span class="line">        <span class="keyword">const</span> x = edge[<span class="number">0</span>] - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">const</span> y = edge[<span class="number">1</span>] - <span class="number">1</span>;</span><br><span class="line">        adj[x].<span class="title function_">push</span>(y);</span><br><span class="line">        adj[y].<span class="title function_">push</span>(x);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> ans = <span class="keyword">new</span> <span class="title class_">Array</span>(n - <span class="number">1</span>).<span class="title function_">fill</span>(<span class="number">0</span>);</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">1</span>; i &lt; (<span class="number">1</span> &lt;&lt; n); i++) &#123;</span><br><span class="line">        <span class="keyword">const</span> root = <span class="number">32</span> - <span class="title function_">numberOfLeadingZeros</span>(i) - <span class="number">1</span>;</span><br><span class="line">        mask = i;</span><br><span class="line">        diameter = <span class="number">0</span>;</span><br><span class="line">        <span class="title function_">dfs</span>(root, adj);</span><br><span class="line">        <span class="keyword">if</span> (mask === <span class="number">0</span> &amp;&amp; diameter &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            ans[diameter - <span class="number">1</span>]++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">dfs</span> = (<span class="params">root, adj</span>) =&gt; &#123;</span><br><span class="line">    <span class="keyword">let</span> first = <span class="number">0</span>, second = <span class="number">0</span>;</span><br><span class="line">    mask &amp;= ~(<span class="number">1</span> &lt;&lt; root);</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">const</span> vertex <span class="keyword">of</span> adj[root]) &#123;</span><br><span class="line">        <span class="keyword">if</span> ((mask &amp; (<span class="number">1</span> &lt;&lt; vertex)) !== <span class="number">0</span>) &#123;</span><br><span class="line">            mask &amp;= ~(<span class="number">1</span> &lt;&lt; vertex);</span><br><span class="line">            <span class="keyword">const</span> distance = <span class="number">1</span> + <span class="title function_">dfs</span>(vertex, adj);</span><br><span class="line">            <span class="keyword">if</span> (distance &gt; first) &#123;</span><br><span class="line">                second = first;</span><br><span class="line">                first = distance;</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (distance &gt; second) &#123;</span><br><span class="line">                second = distance;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    diameter = <span class="title class_">Math</span>.<span class="title function_">max</span>(diameter, first + second);</span><br><span class="line">    <span class="keyword">return</span> first;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">numberOfLeadingZeros</span> = (<span class="params">i</span>) =&gt; &#123;</span><br><span class="line">    <span class="keyword">if</span> (i === <span class="number">0</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="number">32</span>;</span><br><span class="line">    <span class="keyword">let</span> n = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">if</span> (i &gt;&gt;&gt; <span class="number">16</span> === <span class="number">0</span>) &#123; n += <span class="number">16</span>; i &lt;&lt;= <span class="number">16</span>; &#125;</span><br><span class="line">    <span class="keyword">if</span> (i &gt;&gt;&gt; <span class="number">24</span> === <span class="number">0</span>) &#123; n +=  <span class="number">8</span>; i &lt;&lt;=  <span class="number">8</span>; &#125;</span><br><span class="line">    <span class="keyword">if</span> (i &gt;&gt;&gt; <span class="number">28</span> === <span class="number">0</span>) &#123; n +=  <span class="number">4</span>; i &lt;&lt;=  <span class="number">4</span>; &#125;</span><br><span class="line">    <span class="keyword">if</span> (i &gt;&gt;&gt; <span class="number">30</span> === <span class="number">0</span>) &#123; n +=  <span class="number">2</span>; i &lt;&lt;=  <span class="number">2</span>; &#125;</span><br><span class="line">    n -= i &gt;&gt;&gt; <span class="number">31</span>;</span><br><span class="line">    <span class="keyword">return</span> n;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>复杂度分析</strong></p>
+<ul>
+<li><p>时间复杂度：O(n \times 2^n)，其中 n 表示给定的城市的数目。我们枚举图中所有可能的子树，一共最多有 2^n 个子树，检测子树的连通性与计算子树的直径需要的时间为 O(n)，因此总的时间复杂度为 O(n \times 2^n)。</p>
+</li>
+<li><p>空间复杂度：O(n)，其中 n 表示给定的城市的数目。我们需要存储图的邻接关系，由于图中只有 n-1 条边，存储图的邻接关系需要的空间为 O(n)，每次递归求树的直径中递归的最大深度为 n，因此总的空间复杂度为 O(n)。</p>
+</li>
+</ul>
+<h4 id="方法二：深度优先搜索"><a href="#方法二：深度优先搜索" class="headerlink" title="方法二：深度优先搜索"></a>方法二：深度优先搜索</h4><p><strong>思路与算法</strong></p>
+<p>方法二与方法一一样通过状态压缩，来枚举子树，并计算连通子树的直径，计算直径的方法采用深度优先搜索。</p>
+<ul>
+<li>首先我们利用广度优先搜索或者深度优先搜索检测子树的连通性，并从任意节点 x 开始找到距离 x 的最远节点 y；</li>
+<li>找到以节点 y 为根节点的子树的最大深度即为该子树的直径。</li>
+</ul>
+<p><strong>代码</strong></p>
+<div class="highlight-container" data-rel="C++"><figure class="iseeu highlight c++"><figcaption><span>[sol2-C++]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:      </span><br><span class="line">    <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">countSubgraphsForEachDiameter</span><span class="params">(<span class="type">int</span> n, vector&lt;vector&lt;<span class="type">int</span>&gt;&gt;&amp; edges)</span> </span>&#123;</span><br><span class="line">        vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; <span class="built_in">adj</span>(n);        </span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span> &amp;edge : edges) &#123;</span><br><span class="line">            <span class="type">int</span> x = edge[<span class="number">0</span>] - <span class="number">1</span>;</span><br><span class="line">            <span class="type">int</span> y = edge[<span class="number">1</span>] - <span class="number">1</span>;</span><br><span class="line">            adj[x].<span class="built_in">emplace_back</span>(y);</span><br><span class="line">            adj[y].<span class="built_in">emplace_back</span>(x);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        function&lt;<span class="type">int</span>(<span class="type">int</span>, <span class="type">int</span>, <span class="type">int</span>)&gt; dfs = [&amp;](<span class="type">int</span> parent, <span class="type">int</span> u, <span class="type">int</span> mask)-&gt;<span class="type">int</span> &#123;</span><br><span class="line">            <span class="type">int</span> depth = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> v : adj[u]) &#123;</span><br><span class="line">                <span class="keyword">if</span> (v != parent &amp;&amp; mask &amp; (<span class="number">1</span> &lt;&lt; v)) &#123;</span><br><span class="line">                    depth = <span class="built_in">max</span>(depth, <span class="number">1</span> + <span class="built_in">dfs</span>(u, v, mask));</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> depth;</span><br><span class="line">        &#125;;</span><br><span class="line"></span><br><span class="line">        <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">ans</span><span class="params">(n - <span class="number">1</span>)</span></span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt; (<span class="number">1</span> &lt;&lt; n); i++) &#123;</span><br><span class="line">            <span class="type">int</span> x = <span class="number">32</span> - __builtin_clz(i) - <span class="number">1</span>;</span><br><span class="line">            <span class="type">int</span> mask = i;</span><br><span class="line">            <span class="type">int</span> y = <span class="number">-1</span>;</span><br><span class="line">            queue&lt;<span class="type">int</span>&gt; qu;</span><br><span class="line">            qu.<span class="built_in">emplace</span>(x);</span><br><span class="line">            mask &amp;= ~(<span class="number">1</span> &lt;&lt; x);</span><br><span class="line">            <span class="keyword">while</span> (!qu.<span class="built_in">empty</span>()) &#123;</span><br><span class="line">                y = qu.<span class="built_in">front</span>();</span><br><span class="line">                qu.<span class="built_in">pop</span>();</span><br><span class="line">                <span class="keyword">for</span> (<span class="type">int</span> vertex : adj[y]) &#123;</span><br><span class="line">                    <span class="keyword">if</span> (mask &amp; (<span class="number">1</span> &lt;&lt; vertex)) &#123;</span><br><span class="line">                        mask &amp;= ~(<span class="number">1</span> &lt;&lt; vertex);</span><br><span class="line">                        qu.<span class="built_in">emplace</span>(vertex);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (mask == <span class="number">0</span>) &#123;</span><br><span class="line">                <span class="type">int</span> diameter = <span class="built_in">dfs</span>(<span class="number">-1</span>, y, i);</span><br><span class="line">                <span class="keyword">if</span> (diameter &gt; <span class="number">0</span>) &#123;</span><br><span class="line">                    ans[diameter - <span class="number">1</span>]++;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><figcaption><span>[sol2-Java]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="type">int</span> mask;</span><br><span class="line">    <span class="type">int</span> diameter;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span>[] countSubgraphsForEachDiameter(<span class="type">int</span> n, <span class="type">int</span>[][] edges) &#123;</span><br><span class="line">        List&lt;Integer&gt;[] adj = <span class="keyword">new</span> <span class="title class_">List</span>[n];</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">            adj[i] = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;Integer&gt;();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span>[] edge : edges) &#123;</span><br><span class="line">            <span class="type">int</span> <span class="variable">x</span> <span class="operator">=</span> edge[<span class="number">0</span>] - <span class="number">1</span>;</span><br><span class="line">            <span class="type">int</span> <span class="variable">y</span> <span class="operator">=</span> edge[<span class="number">1</span>] - <span class="number">1</span>;</span><br><span class="line">            adj[x].add(y);</span><br><span class="line">            adj[y].add(x);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="type">int</span>[] ans = <span class="keyword">new</span> <span class="title class_">int</span>[n - <span class="number">1</span>];</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">1</span>; i &lt; (<span class="number">1</span> &lt;&lt; n); i++) &#123;</span><br><span class="line">            <span class="type">int</span> <span class="variable">x</span> <span class="operator">=</span> <span class="number">32</span> - Integer.numberOfLeadingZeros(i) - <span class="number">1</span>;</span><br><span class="line">            <span class="type">int</span> <span class="variable">mask</span> <span class="operator">=</span> i;</span><br><span class="line">            <span class="type">int</span> <span class="variable">y</span> <span class="operator">=</span> -<span class="number">1</span>;</span><br><span class="line">            Queue&lt;Integer&gt; queue = <span class="keyword">new</span> <span class="title class_">ArrayDeque</span>&lt;Integer&gt;();</span><br><span class="line">            queue.offer(x);</span><br><span class="line">            mask &amp;= ~(<span class="number">1</span> &lt;&lt; x);</span><br><span class="line">            <span class="keyword">while</span> (!queue.isEmpty()) &#123;</span><br><span class="line">                y = queue.poll();</span><br><span class="line">                <span class="keyword">for</span> (<span class="type">int</span> vertex : adj[y]) &#123;</span><br><span class="line">                    <span class="keyword">if</span> ((mask &amp; (<span class="number">1</span> &lt;&lt; vertex)) != <span class="number">0</span>) &#123;</span><br><span class="line">                        mask &amp;= ~(<span class="number">1</span> &lt;&lt; vertex);</span><br><span class="line">                        queue.offer(vertex);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (mask == <span class="number">0</span>) &#123;</span><br><span class="line">                <span class="type">int</span> <span class="variable">diameter</span> <span class="operator">=</span> dfs(adj, -<span class="number">1</span>, y, i);</span><br><span class="line">                <span class="keyword">if</span> (diameter &gt; <span class="number">0</span>) &#123;</span><br><span class="line">                    ans[diameter - <span class="number">1</span>]++;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">dfs</span><span class="params">(List&lt;Integer&gt;[] adj, <span class="type">int</span> parent, <span class="type">int</span> u, <span class="type">int</span> mask)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">depth</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> v : adj[u]) &#123;</span><br><span class="line">            <span class="keyword">if</span> (v != parent &amp;&amp; (mask &amp; (<span class="number">1</span> &lt;&lt; v)) != <span class="number">0</span>) &#123;</span><br><span class="line">                depth = Math.max(depth, <span class="number">1</span> + dfs(adj, u, v, mask));</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> depth;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="C"><figure class="iseeu highlight c"><figcaption><span>[sol2-C]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">static</span> <span class="keyword">inline</span> <span class="type">int</span> <span class="title function_">max</span><span class="params">(<span class="type">int</span> a, <span class="type">int</span> b)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> a &gt; b ? a : b;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">dfs</span><span class="params">(<span class="type">int</span> parent, <span class="type">int</span> u, <span class="type">int</span> mask, <span class="type">int</span> **adj, <span class="type">int</span> *adjColSize)</span> &#123;</span><br><span class="line">    <span class="type">int</span> depth = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; adjColSize[u]; i++) &#123;</span><br><span class="line">        <span class="type">int</span> vertex = adj[u][i];</span><br><span class="line">        <span class="keyword">if</span> (vertex != parent &amp;&amp; mask &amp; (<span class="number">1</span> &lt;&lt; vertex)) &#123;</span><br><span class="line">            depth = max(depth, <span class="number">1</span> + dfs(u, vertex, mask, adj, adjColSize));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> depth;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span>* <span class="title function_">countSubgraphsForEachDiameter</span><span class="params">(<span class="type">int</span> n, <span class="type">int</span>** edges, <span class="type">int</span> edgesSize, <span class="type">int</span>* edgesColSize, <span class="type">int</span>* returnSize)</span> &#123;</span><br><span class="line">    <span class="type">int</span> *adj[n];</span><br><span class="line">    <span class="type">int</span> adjColSize[n];</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">        adj[i] = (<span class="type">int</span>*)<span class="built_in">calloc</span>(n, <span class="keyword">sizeof</span>(<span class="type">int</span>));;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">memset</span>(adjColSize, <span class="number">0</span>, <span class="keyword">sizeof</span>(adjColSize));</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; edgesSize; i++) &#123;</span><br><span class="line">        <span class="type">int</span> x = edges[i][<span class="number">0</span>] - <span class="number">1</span>;</span><br><span class="line">        <span class="type">int</span> y = edges[i][<span class="number">1</span>] - <span class="number">1</span>;</span><br><span class="line">        adj[x][adjColSize[x]++] = y;</span><br><span class="line">        adj[y][adjColSize[y]++] = x;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="type">int</span> *ans = (<span class="type">int</span> *)<span class="built_in">calloc</span>(n - <span class="number">1</span>, <span class="keyword">sizeof</span>(<span class="type">int</span>));</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt; (<span class="number">1</span> &lt;&lt; n); i++) &#123;</span><br><span class="line">        <span class="type">int</span> root = <span class="number">32</span> - __builtin_clz(i) - <span class="number">1</span>, mask = i;</span><br><span class="line">        <span class="type">int</span> <span class="built_in">queue</span>[n];</span><br><span class="line">        <span class="type">int</span> head = <span class="number">0</span>, tail = <span class="number">0</span>;</span><br><span class="line">        <span class="type">int</span> node = <span class="number">-1</span>;</span><br><span class="line">        <span class="built_in">queue</span>[tail++] = root;</span><br><span class="line">        mask &amp;= ~(<span class="number">1</span> &lt;&lt; root);</span><br><span class="line">        <span class="keyword">while</span> (head != tail) &#123;</span><br><span class="line">            node = <span class="built_in">queue</span>[head++];</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt; adjColSize[node]; j++) &#123;</span><br><span class="line">                <span class="type">int</span> vertex = adj[node][j];</span><br><span class="line">                <span class="keyword">if</span> (mask &amp; (<span class="number">1</span> &lt;&lt; vertex)) &#123;</span><br><span class="line">                    mask &amp;= ~(<span class="number">1</span> &lt;&lt; vertex);</span><br><span class="line">                    <span class="built_in">queue</span>[tail++] = vertex;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (mask == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="type">int</span> diameter = dfs(<span class="number">-1</span>, node, i, adj, adjColSize);</span><br><span class="line">            <span class="keyword">if</span> (diameter &gt; <span class="number">0</span>) &#123;</span><br><span class="line">                ans[diameter - <span class="number">1</span>]++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">        <span class="built_in">free</span>(adj[i]);</span><br><span class="line">    &#125;</span><br><span class="line">    *returnSize = n - <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><figcaption><span>[sol2-JavaScript]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> countSubgraphsForEachDiameter = <span class="keyword">function</span>(<span class="params">n, edges</span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> adj = <span class="keyword">new</span> <span class="title class_">Array</span>(n).<span class="title function_">fill</span>(<span class="number">0</span>);</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">        adj[i] = [];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">const</span> edge <span class="keyword">of</span> edges) &#123;</span><br><span class="line">        <span class="keyword">const</span> x = edge[<span class="number">0</span>] - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">const</span> y = edge[<span class="number">1</span>] - <span class="number">1</span>;</span><br><span class="line">        adj[x].<span class="title function_">push</span>(y);</span><br><span class="line">        adj[y].<span class="title function_">push</span>(x);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> ans = <span class="keyword">new</span> <span class="title class_">Array</span>(n - <span class="number">1</span>).<span class="title function_">fill</span>(<span class="number">0</span>);</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">1</span>; i &lt; (<span class="number">1</span> &lt;&lt; n); i++) &#123;</span><br><span class="line">        <span class="keyword">const</span> x = <span class="number">32</span> - <span class="title function_">numberOfLeadingZeros</span>(i) - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">let</span> mask = i;</span><br><span class="line">        <span class="keyword">let</span> y = -<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">const</span> queue = [x];</span><br><span class="line">        mask &amp;= ~(<span class="number">1</span> &lt;&lt; x);</span><br><span class="line">        <span class="keyword">while</span> (queue.<span class="property">length</span>) &#123;</span><br><span class="line">            y = queue.<span class="title function_">shift</span>();</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">const</span> vertex <span class="keyword">of</span> adj[y]) &#123;</span><br><span class="line">                <span class="keyword">if</span> ((mask &amp; (<span class="number">1</span> &lt;&lt; vertex)) !== <span class="number">0</span>) &#123;</span><br><span class="line">                    mask &amp;= ~(<span class="number">1</span> &lt;&lt; vertex);</span><br><span class="line">                    queue.<span class="title function_">push</span>(vertex);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (mask === <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">const</span> diameter = <span class="title function_">dfs</span>(adj, -<span class="number">1</span>, y, i);</span><br><span class="line">            <span class="keyword">if</span> (diameter &gt; <span class="number">0</span>) &#123;</span><br><span class="line">                ans[diameter - <span class="number">1</span>]++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">dfs</span> = (<span class="params">adj, parent, u, mask</span>) =&gt; &#123;</span><br><span class="line">    <span class="keyword">let</span> depth = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">const</span> v <span class="keyword">of</span> adj[u]) &#123;</span><br><span class="line">        <span class="keyword">if</span> (v !== parent &amp;&amp; (mask &amp; (<span class="number">1</span> &lt;&lt; v)) !== <span class="number">0</span>) &#123;</span><br><span class="line">            depth = <span class="title class_">Math</span>.<span class="title function_">max</span>(depth, <span class="number">1</span> + <span class="title function_">dfs</span>(adj, u, v, mask));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> depth;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> <span class="title function_">numberOfLeadingZeros</span> = (<span class="params">i</span>) =&gt; &#123;</span><br><span class="line">    <span class="keyword">if</span> (i === <span class="number">0</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="number">32</span>;</span><br><span class="line">    <span class="keyword">let</span> n = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">if</span> (i &gt;&gt;&gt; <span class="number">16</span> === <span class="number">0</span>) &#123; n += <span class="number">16</span>; i &lt;&lt;= <span class="number">16</span>; &#125;</span><br><span class="line">    <span class="keyword">if</span> (i &gt;&gt;&gt; <span class="number">24</span> === <span class="number">0</span>) &#123; n +=  <span class="number">8</span>; i &lt;&lt;=  <span class="number">8</span>; &#125;</span><br><span class="line">    <span class="keyword">if</span> (i &gt;&gt;&gt; <span class="number">28</span> === <span class="number">0</span>) &#123; n +=  <span class="number">4</span>; i &lt;&lt;=  <span class="number">4</span>; &#125;</span><br><span class="line">    <span class="keyword">if</span> (i &gt;&gt;&gt; <span class="number">30</span> === <span class="number">0</span>) &#123; n +=  <span class="number">2</span>; i &lt;&lt;=  <span class="number">2</span>; &#125;</span><br><span class="line">    n -= i &gt;&gt;&gt; <span class="number">31</span>;</span><br><span class="line">    <span class="keyword">return</span> n;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>复杂度分析</strong></p>
+<ul>
+<li><p>时间复杂度：O(n \times 2^n)，其中 n 表示给定的城市的数目。我们枚举图中所有可能的子树，一共最多有 2^n 个子树，检测子树的连通性与计算子树的直径需要的时间为 O(n)，因此总的时间复杂度为 O(n \times 2^n)。</p>
+</li>
+<li><p>空间复杂度：O(n)，其中 n 表示给定的城市的数目。我们需要存储图的邻接关系，由于图中只有 n-1 条边，存储图的邻接关系需要的空间为 O(n)，每次递归求树的直径中递归的最大深度为 n，因此总的空间复杂度为 O(n)。</p>
+</li>
+</ul>
+<h4 id="方法三：枚举任意两点直径"><a href="#方法三：枚举任意两点直径" class="headerlink" title="方法三：枚举任意两点直径"></a>方法三：枚举任意两点直径</h4><p><strong>思路与算法</strong></p>
+<p>设城市中的任意两个节点为 x,y，它们之间的距离为 dist}[x][y]，如果我们可以求出以 dist}[x][y] 为直径且包含 x,y 的子树数目，就可以求出所有直径的子树数目。该算法的难点在于如何求出以 dist}[x][y] 为直径且包含 x,y 的子树，假设当前已知符合上述要求子树的数目为 c(x,y)，如果子树可以扩展到当前节点 u，则节点 u 是否可以加入到子树中？节点 u 可以加入到子树直径为 dist}[x][y] 的子树中，需要满足以下条件：</p>
+<ul>
+<li>节点 u 到节点 x 与 y 的距离均应小于 dist}[x][y]，即 dist}[u][x] \le \textit{dist}[x][y],\textit{dist}[u][y] \le \textit{dist}[x][y]；</li>
+<li>如果 dist}[x][y] 为包含节点 x,y 的子树的直径，则 x,y 在该子树中一定为叶子节点，且子树中所有直径的两个起始端点均为叶子节点，可以通过反证明法来证明；</li>
+</ul>
+<p>设两个节点 x,y 且满足 x &lt; y，则此时我们以 x 为根节点开始构造直径为 dist}[x][y] 的子树：</p>
+<ul>
+<li>如果以当前相邻的节点 u 满足 dist}[u][x] &lt; \textit{dist}[x][y],\textit{dist}[u][y] &lt; \textit{dist}[x][y]，此时节点 u 一定可以加入到子树中，此时的直径即为 dist}[x][y]，此时我们继续向外延伸到 u 的孩子节点；</li>
+<li>如果以当前相邻的节点 u 满足 dist}[u][x] &#x3D; \textit{dist}[x][y] 或者 dist}[u][y] &#x3D; \textit{dist}[x][y] 时，此时 u 也一定可以加入到子树中，但可能存在重复计算的问题，为了防止重复计算，对于每对 (x,y) 且 x &lt; y，如果加入新的节点 u 后，存在相等的直径 dist}[u][x] 或者 dist}[u][y]，此时我们要求直径的两个端点之和一定要大于等于 x + y：<ul>
+<li>如果 dist}[x][u] &#x3D; \textit{dist}[x][y]，即 u 到较小的节点 x 的距离等于当前的直径，则此时要求 (u + x) \ge (x + y)，即此时需要满足 u \ge y;</li>
+<li>如果 dist}[y][u] &#x3D; \textit{dist}[x][y]，即 u 到较大的节点 y 的距离等于当前的直径，则此时要求 (u + y) \ge (x + y)，即此时需要满足 u \ge x;</li>
+</ul>
+</li>
+<li>如果当前节点 u 可以加入时，如果节点 u 不在 x 到 y 的关键路径上时，此时节点 u 可以不在目标子树中，以节点 u 为根节点的子树为空，即空子树也计数为一种子树。</li>
+</ul>
+<p>&lt;<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://assets.leetcode-cn.com/solution-static/1617/1617_1.png"
+                      alt="update1"
+                >,<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://assets.leetcode-cn.com/solution-static/1617/1617_2.png"
+                      alt="update2"
+                >,<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://assets.leetcode-cn.com/solution-static/1617/1617_3.png"
+                      alt="update3"
+                >,<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://assets.leetcode-cn.com/solution-static/1617/1617_4.png"
+                      alt="update4"
+                >,<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://assets.leetcode-cn.com/solution-static/1617/1617_5.png"
+                      alt="update5"
+                >,<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://assets.leetcode-cn.com/solution-static/1617/1617_6.png"
+                      alt="update6"
+                >,<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://assets.leetcode-cn.com/solution-static/1617/1617_7.png"
+                      alt="update7"
+                >,<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://assets.leetcode-cn.com/solution-static/1617/1617_8.png"
+                      alt="update8"
+                >&gt;</p>
+<p>我们每次计算以 u 为根节点构成满足要求的子树的数目 count}(u)，此时它们之间的关系为相乘。即假设根节点 x 含有 m 个孩子节点分别为 c_0,c_1,\cdots,c_{m-1，每个孩子节点可以构成的子树的数目为 count}(c_0),\textit{count}(c_1),\cdots,\textit{count}(c_{m-1})，则此时构成的子树的总数目为 \prod\limits_{i&#x3D;0}^{m-1}\textit{count}(c_i)。枚举所有的节点对 (x,y) 且满足 x &lt; y，并计算以 dist}[x][y] 为直径的子树数目，即可计算出所有符合要求的子树的数目。</p>
+<p><strong>代码</strong></p>
+<div class="highlight-container" data-rel="C++"><figure class="iseeu highlight c++"><figcaption><span>[sol3-C++]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:      </span><br><span class="line">    <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">countSubgraphsForEachDiameter</span><span class="params">(<span class="type">int</span> n, vector&lt;vector&lt;<span class="type">int</span>&gt;&gt;&amp; edges)</span> </span>&#123;</span><br><span class="line">        vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; <span class="built_in">adj</span>(n);        </span><br><span class="line">        vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; <span class="built_in">dist</span>(n, <span class="built_in">vector</span>&lt;<span class="type">int</span>&gt;(n, INT_MAX));</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span> &amp;edge : edges) &#123;</span><br><span class="line">            <span class="type">int</span> x = edge[<span class="number">0</span>] - <span class="number">1</span>;</span><br><span class="line">            <span class="type">int</span> y = edge[<span class="number">1</span>] - <span class="number">1</span>;</span><br><span class="line">            adj[x].<span class="built_in">emplace_back</span>(y);</span><br><span class="line">            adj[y].<span class="built_in">emplace_back</span>(x);</span><br><span class="line">            dist[x][y] = dist[y][x] = <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">            dist[i][i] = <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt; n; j++) &#123;</span><br><span class="line">                <span class="keyword">for</span> (<span class="type">int</span> k = <span class="number">0</span>; k &lt; n; k++) &#123;</span><br><span class="line">                    <span class="keyword">if</span> (dist[j][i] != INT_MAX &amp;&amp; dist[i][k] != INT_MAX) &#123;</span><br><span class="line">                        dist[j][k] = <span class="built_in">min</span>(dist[j][k], dist[j][i] + dist[i][k]);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        function&lt;<span class="type">int</span>(<span class="type">int</span>, <span class="type">int</span>, <span class="type">int</span>, <span class="type">int</span>)&gt; dfs = [&amp;](<span class="type">int</span> u, <span class="type">int</span> parent, <span class="type">int</span> x, <span class="type">int</span> y) -&gt; <span class="type">int</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (dist[u][x] &gt; dist[x][y] || dist[u][y] &gt; dist[x][y]) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> ((dist[u][y] == dist[x][y] &amp;&amp; u &lt; x) || (dist[u][x] == dist[x][y] &amp;&amp; u &lt; y)) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="type">int</span> ret = <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> v : adj[u]) &#123;</span><br><span class="line">                <span class="keyword">if</span> (v != parent) &#123;</span><br><span class="line">                    ret *= <span class="built_in">dfs</span>(v, u, x, y);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (dist[u][x] + dist[u][y] &gt; dist[x][y]) &#123;</span><br><span class="line">                ret++;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> ret;</span><br><span class="line">        &#125;;</span><br><span class="line">        <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">ans</span><span class="params">(n - <span class="number">1</span>)</span></span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n - <span class="number">1</span>; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> j = i + <span class="number">1</span>; j &lt; n; j++) &#123;</span><br><span class="line">                ans[dist[i][j] - <span class="number">1</span>] += <span class="built_in">dfs</span>(i, <span class="number">-1</span>, i, j);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><figcaption><span>[sol3-Java]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span>[] countSubgraphsForEachDiameter(<span class="type">int</span> n, <span class="type">int</span>[][] edges) &#123;</span><br><span class="line">        List&lt;Integer&gt;[] adj = <span class="keyword">new</span> <span class="title class_">List</span>[n];</span><br><span class="line">        <span class="type">int</span>[][] dist = <span class="keyword">new</span> <span class="title class_">int</span>[n][n];</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">            Arrays.fill(dist[i], Integer.MAX_VALUE);</span><br><span class="line">            dist[i][i] = <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">            adj[i] = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;Integer&gt;();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span>[] edge : edges) &#123;</span><br><span class="line">            <span class="type">int</span> <span class="variable">x</span> <span class="operator">=</span> edge[<span class="number">0</span>] - <span class="number">1</span>;</span><br><span class="line">            <span class="type">int</span> <span class="variable">y</span> <span class="operator">=</span> edge[<span class="number">1</span>] - <span class="number">1</span>;</span><br><span class="line">            adj[x].add(y);</span><br><span class="line">            adj[y].add(x);</span><br><span class="line">            dist[x][y] = dist[y][x] = <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">j</span> <span class="operator">=</span> <span class="number">0</span>; j &lt; n; j++) &#123;</span><br><span class="line">                <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">k</span> <span class="operator">=</span> <span class="number">0</span>; k &lt; n; k++) &#123;</span><br><span class="line">                    <span class="keyword">if</span> (dist[j][i] != Integer.MAX_VALUE &amp;&amp; dist[i][k] != Integer.MAX_VALUE) &#123;</span><br><span class="line">                        dist[j][k] = Math.min(dist[j][k], dist[j][i] + dist[i][k]);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">int</span>[] ans = <span class="keyword">new</span> <span class="title class_">int</span>[n - <span class="number">1</span>];</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; n - <span class="number">1</span>; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">j</span> <span class="operator">=</span> i + <span class="number">1</span>; j &lt; n; j++) &#123;</span><br><span class="line">                ans[dist[i][j] - <span class="number">1</span>] += dfs(adj, dist, i, -<span class="number">1</span>, i, j);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">dfs</span><span class="params">(List&lt;Integer&gt;[] adj, <span class="type">int</span>[][] dist, <span class="type">int</span> u, <span class="type">int</span> parent, <span class="type">int</span> x, <span class="type">int</span> y)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (dist[u][x] &gt; dist[x][y] || dist[u][y] &gt; dist[x][y]) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> ((dist[u][y] == dist[x][y] &amp;&amp; u &lt; x) || (dist[u][x] == dist[x][y] &amp;&amp; u &lt; y)) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">int</span> <span class="variable">ret</span> <span class="operator">=</span> <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> v : adj[u]) &#123;</span><br><span class="line">            <span class="keyword">if</span> (v != parent) &#123;</span><br><span class="line">                ret *= dfs(adj, dist, v, u, x, y);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (dist[u][x] + dist[u][y] &gt; dist[x][y]) &#123;</span><br><span class="line">            ret++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ret;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="C#"><figure class="iseeu highlight c#"><figcaption><span>[sol3-C#]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Solution</span> &#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="built_in">int</span>[] <span class="title">CountSubgraphsForEachDiameter</span>(<span class="params"><span class="built_in">int</span> n, <span class="built_in">int</span>[][] edges</span>)</span> &#123;</span><br><span class="line">        IList&lt;<span class="built_in">int</span>&gt;[] adj = <span class="keyword">new</span> IList&lt;<span class="built_in">int</span>&gt;[n];</span><br><span class="line">        <span class="built_in">int</span>[][] dist = <span class="keyword">new</span> <span class="built_in">int</span>[n][];</span><br><span class="line">        <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">            dist[i] = <span class="keyword">new</span> <span class="built_in">int</span>[n];</span><br><span class="line">            Array.Fill(dist[i], <span class="built_in">int</span>.MaxValue);</span><br><span class="line">            dist[i][i] = <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">            adj[i] = <span class="keyword">new</span> List&lt;<span class="built_in">int</span>&gt;();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">foreach</span> (<span class="built_in">int</span>[] edge <span class="keyword">in</span> edges) &#123;</span><br><span class="line">            <span class="built_in">int</span> x = edge[<span class="number">0</span>] - <span class="number">1</span>;</span><br><span class="line">            <span class="built_in">int</span> y = edge[<span class="number">1</span>] - <span class="number">1</span>;</span><br><span class="line">            adj[x].Add(y);</span><br><span class="line">            adj[y].Add(x);</span><br><span class="line">            dist[x][y] = dist[y][x] = <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="built_in">int</span> j = <span class="number">0</span>; j &lt; n; j++) &#123;</span><br><span class="line">                <span class="keyword">for</span> (<span class="built_in">int</span> k = <span class="number">0</span>; k &lt; n; k++) &#123;</span><br><span class="line">                    <span class="keyword">if</span> (dist[j][i] != <span class="built_in">int</span>.MaxValue &amp;&amp; dist[i][k] != <span class="built_in">int</span>.MaxValue) &#123;</span><br><span class="line">                        dist[j][k] = Math.Min(dist[j][k], dist[j][i] + dist[i][k]);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">int</span>[] ans = <span class="keyword">new</span> <span class="built_in">int</span>[n - <span class="number">1</span>];</span><br><span class="line">        <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; n - <span class="number">1</span>; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="built_in">int</span> j = i + <span class="number">1</span>; j &lt; n; j++) &#123;</span><br><span class="line">                ans[dist[i][j] - <span class="number">1</span>] += DFS(adj, dist, i, <span class="number">-1</span>, i, j);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="built_in">int</span> <span class="title">DFS</span>(<span class="params">IList&lt;<span class="built_in">int</span>&gt;[] adj, <span class="built_in">int</span>[][] dist, <span class="built_in">int</span> u, <span class="built_in">int</span> parent, <span class="built_in">int</span> x, <span class="built_in">int</span> y</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (dist[u][x] &gt; dist[x][y] || dist[u][y] &gt; dist[x][y]) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> ((dist[u][y] == dist[x][y] &amp;&amp; u &lt; x) || (dist[u][x] == dist[x][y] &amp;&amp; u &lt; y)) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">int</span> ret = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">foreach</span> (<span class="built_in">int</span> v <span class="keyword">in</span> adj[u]) &#123;</span><br><span class="line">            <span class="keyword">if</span> (v != parent) &#123;</span><br><span class="line">                ret *= DFS(adj, dist, v, u, x, y);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (dist[u][x] + dist[u][y] &gt; dist[x][y]) &#123;</span><br><span class="line">            ret++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ret;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="C"><figure class="iseeu highlight c"><figcaption><span>[sol3-C]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">const</span> <span class="type">int</span> INFI = <span class="number">0x3f3f3f3f</span>;</span><br><span class="line"></span><br><span class="line"><span class="type">static</span> <span class="keyword">inline</span> <span class="type">int</span> <span class="title function_">min</span><span class="params">(<span class="type">int</span> a, <span class="type">int</span> b)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> a &lt; b ? a : b;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">dfs</span><span class="params">(<span class="type">int</span> u, <span class="type">int</span> parent, <span class="type">int</span> x, <span class="type">int</span> y, <span class="type">int</span> **dist, <span class="type">int</span> **adj, <span class="type">int</span> *adjColSize)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (dist[u][x] &gt; dist[x][y] || dist[u][y] &gt; dist[x][y]) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> ((dist[u][y] == dist[x][y] &amp;&amp; u &lt; x) || (dist[u][x] == dist[x][y] &amp;&amp; u &lt; y)) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="type">int</span> ret = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; adjColSize[u]; i++) &#123;</span><br><span class="line">        <span class="type">int</span> v = adj[u][i];</span><br><span class="line">        <span class="keyword">if</span> (v != parent) &#123;</span><br><span class="line">            ret *= dfs(v, u, x, y, dist, adj, adjColSize);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (dist[u][x] + dist[u][y] &gt; dist[x][y]) &#123;</span><br><span class="line">        ret++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ret;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span>* <span class="title function_">countSubgraphsForEachDiameter</span><span class="params">(<span class="type">int</span> n, <span class="type">int</span>** edges, <span class="type">int</span> edgesSize, <span class="type">int</span>* edgesColSize, <span class="type">int</span>* returnSize)</span> &#123;</span><br><span class="line">    <span class="type">int</span> *adj[n], *dist[n];</span><br><span class="line">    <span class="type">int</span> adjColSize[n];</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">        adj[i] = (<span class="type">int</span> *)<span class="built_in">calloc</span>(n, <span class="keyword">sizeof</span>(<span class="type">int</span>));</span><br><span class="line">        dist[i] = (<span class="type">int</span> *)<span class="built_in">calloc</span>(n, <span class="keyword">sizeof</span>(<span class="type">int</span>));</span><br><span class="line">        <span class="built_in">memset</span>(dist[i], <span class="number">0x3f</span>, <span class="keyword">sizeof</span>(<span class="type">int</span>) * n);</span><br><span class="line">        dist[i][i] = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">memset</span>(adjColSize, <span class="number">0</span>, <span class="keyword">sizeof</span>(adjColSize));</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; edgesSize; i++) &#123;</span><br><span class="line">        <span class="type">int</span> x = edges[i][<span class="number">0</span>] - <span class="number">1</span>;</span><br><span class="line">        <span class="type">int</span> y = edges[i][<span class="number">1</span>] - <span class="number">1</span>;</span><br><span class="line">        adj[x][adjColSize[x]++] = y;</span><br><span class="line">        adj[y][adjColSize[y]++] = x;</span><br><span class="line">        dist[x][y] = dist[y][x] = <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt; n; j++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> k = <span class="number">0</span>; k &lt; n; k++) &#123;</span><br><span class="line">                <span class="keyword">if</span> (dist[j][i] != INFI &amp;&amp; dist[i][k] != INFI) &#123;</span><br><span class="line">                    dist[j][k] = min(dist[j][k], dist[j][i] + dist[i][k]);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="type">int</span> *ans = (<span class="type">int</span> *)<span class="built_in">calloc</span>(n - <span class="number">1</span>, <span class="keyword">sizeof</span>(<span class="type">int</span>));</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n - <span class="number">1</span>; i++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> j = i + <span class="number">1</span>; j &lt; n; j++) &#123;</span><br><span class="line">            ans[dist[i][j] - <span class="number">1</span>] += dfs(i, <span class="number">-1</span>, i, j, dist, adj, adjColSize);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">        <span class="built_in">free</span>(adj[i]);</span><br><span class="line">        <span class="built_in">free</span>(dist[i]);</span><br><span class="line">    &#125;</span><br><span class="line">    *returnSize = n - <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><figcaption><span>[sol3-JavaScript]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> countSubgraphsForEachDiameter = <span class="keyword">function</span>(<span class="params">n, edges</span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> adj = <span class="keyword">new</span> <span class="title class_">Array</span>(n).<span class="title function_">fill</span>(<span class="number">0</span>);</span><br><span class="line">    <span class="keyword">const</span> dist = <span class="keyword">new</span> <span class="title class_">Array</span>(n).<span class="title function_">fill</span>(<span class="number">0</span>).<span class="title function_">map</span>(<span class="function">() =&gt;</span> <span class="keyword">new</span> <span class="title class_">Array</span>(n).<span class="title function_">fill</span>(<span class="title class_">Number</span>.<span class="property">MAX_SAFE_INTEGER</span>));</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">        dist[i][i] = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">        adj[i] = [];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">const</span> edge <span class="keyword">of</span> edges) &#123;</span><br><span class="line">        <span class="keyword">const</span> x = edge[<span class="number">0</span>] - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">const</span> y = edge[<span class="number">1</span>] - <span class="number">1</span>;</span><br><span class="line">        adj[x].<span class="title function_">push</span>(y);</span><br><span class="line">        adj[y].<span class="title function_">push</span>(x);</span><br><span class="line">        dist[x][y] = dist[y][x] = <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">let</span> j = <span class="number">0</span>; j &lt; n; j++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">let</span> k = <span class="number">0</span>; k &lt; n; k++) &#123;</span><br><span class="line">                <span class="keyword">if</span> (dist[j][i] !== <span class="title class_">Number</span>.<span class="property">MAX_VALUE</span> &amp;&amp; dist[i][k] !== <span class="title class_">Number</span>.<span class="property">MAX_VALUE</span>) &#123;</span><br><span class="line">                    dist[j][k] = <span class="title class_">Math</span>.<span class="title function_">min</span>(dist[j][k], dist[j][i] + dist[i][k]);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">const</span> ans = <span class="keyword">new</span> <span class="title class_">Array</span>(n - <span class="number">1</span>).<span class="title function_">fill</span>(<span class="number">0</span>);</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; n - <span class="number">1</span>; i++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">let</span> j = i + <span class="number">1</span>; j &lt; n; j++) &#123;</span><br><span class="line">            ans[dist[i][j] - <span class="number">1</span>] += <span class="title function_">dfs</span>(adj, dist, i, -<span class="number">1</span>, i, j);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">dfs</span> = (<span class="params">adj, dist, u, parent, x, y</span>) =&gt; &#123;</span><br><span class="line">    <span class="keyword">if</span> (dist[u][x] &gt; dist[x][y] || dist[u][y] &gt; dist[x][y]) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> ((dist[u][y] === dist[x][y] &amp;&amp; u &lt; x) || (dist[u][x] === dist[x][y] &amp;&amp; u &lt; y)) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">let</span> ret = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">const</span> v <span class="keyword">of</span> adj[u]) &#123;</span><br><span class="line">        <span class="keyword">if</span> (v !== parent) &#123;</span><br><span class="line">            ret *= <span class="title function_">dfs</span>(adj, dist, v, u, x, y);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (dist[u][x] + dist[u][y] &gt; dist[x][y]) &#123;</span><br><span class="line">        ret++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ret;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> <span class="title function_">numberOfLeadingZeros</span> = (<span class="params">i</span>) =&gt; &#123;</span><br><span class="line">    <span class="keyword">if</span> (i === <span class="number">0</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="number">32</span>;</span><br><span class="line">    <span class="keyword">let</span> n = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">if</span> (i &gt;&gt;&gt; <span class="number">16</span> === <span class="number">0</span>) &#123; n += <span class="number">16</span>; i &lt;&lt;= <span class="number">16</span>; &#125;</span><br><span class="line">    <span class="keyword">if</span> (i &gt;&gt;&gt; <span class="number">24</span> === <span class="number">0</span>) &#123; n +=  <span class="number">8</span>; i &lt;&lt;=  <span class="number">8</span>; &#125;</span><br><span class="line">    <span class="keyword">if</span> (i &gt;&gt;&gt; <span class="number">28</span> === <span class="number">0</span>) &#123; n +=  <span class="number">4</span>; i &lt;&lt;=  <span class="number">4</span>; &#125;</span><br><span class="line">    <span class="keyword">if</span> (i &gt;&gt;&gt; <span class="number">30</span> === <span class="number">0</span>) &#123; n +=  <span class="number">2</span>; i &lt;&lt;=  <span class="number">2</span>; &#125;</span><br><span class="line">    n -= i &gt;&gt;&gt; <span class="number">31</span>;</span><br><span class="line">    <span class="keyword">return</span> n;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>复杂度分析</strong></p>
+<ul>
+<li><p>时间复杂度：O(n^3)，其中 n 表示给定的城市的数目。我们利用 Floyd 算法求图中任意两个节点的最短距离需要的时间为 O(n^3)，枚举任意两点为直径，一共最多可以有 n^2 种枚举，每次生成给定直径长度的子树需要的时间为 O(n)，因此枚举任意两点为直径的子树需要的时间为 O(n^3)，总的时间复杂度为 O(n^3)。</p>
+</li>
+<li><p>空间复杂度：O(n^2)，其中 n 表示给定的城市的数目。我们需要存储图的邻接关系，由于图中只有 n-1 条边，存储图的邻接关系需要的空间为 O(n)，存储任意两点的最大距离需要的空间为 O(n^2)，因此总的空间复杂度为 O(n^2)。</p>
+</li>
+</ul>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <!--<div class="article-copyright-info-container">-->
+    <!--&lt;!&ndash;<ul>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><strong>Title:</strong> 1617-统计子树中城市之间最大距离</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><strong>Author:</strong> Raphael Liu</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><strong>Created at&ndash;&gt;-->
+                <!--&lt;!&ndash;:</strong> 2023-09-13 00:47:26</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;&ndash;&gt;-->
+            <!--&lt;!&ndash;<li>&ndash;&gt;-->
+                <!--&lt;!&ndash;<strong>Updated at&ndash;&gt;-->
+                    <!--&lt;!&ndash;:</strong> 2023-09-13 16:06:31&ndash;&gt;-->
+            <!--&lt;!&ndash;</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;<li>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;<strong>Link:</strong> https://fida.ltd/2023/09/13/1617-统计子树中城市之间最大距离/&ndash;&gt;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;</li>&ndash;&gt;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;<li>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;<strong>&ndash;&gt;&ndash;&gt;-->
+                <!--&lt;!&ndash;&lt;!&ndash;License:&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;</strong>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0</a>.&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;&ndash;&gt;&ndash;&gt;-->
+
+        <!--&lt;!&ndash;&lt;!&ndash;</li>&ndash;&gt;&ndash;&gt;-->
+    <!--&lt;!&ndash;</ul>&ndash;&gt;-->
+<!--</div>-->
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box">
+                
+                    <li class="tag-item">
+                        <a href="/tags/algorithm/">#algorithm</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item">
+                        <a href="/tags/HARD/">#HARD</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                        rel="prev"
+                        href="/2023/09/13/1619-%E5%88%A0%E9%99%A4%E6%9F%90%E4%BA%9B%E5%85%83%E7%B4%A0%E5%90%8E%E7%9A%84%E6%95%B0%E7%BB%84%E5%9D%87%E5%80%BC/"
+                        >
+                            <span class="left arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">1619-删除某些元素后的数组均值</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                        rel="next"
+                        href="/2023/09/13/1620-%E7%BD%91%E7%BB%9C%E4%BF%A1%E5%8F%B7%E6%9C%80%E5%A5%BD%E7%9A%84%E5%9D%90%E6%A0%87/"
+                        >
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">1620-网络信号最好的坐标</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+
+        
+            <div class="comment-container">
+                <div class="comments-container pjax">
+    <div id="comment-anchor"></div>
+    <div class="comment-area-title">
+        <i class="fa-solid fa-comments"></i>&nbsp;Comments
+    </div>
+    
+
+        
+            
+ 
+    <div id="waline"></div>
+    <script type="module"  data-swup-reload-script>
+        import { init } from 'https://evan.beee.top/js/waline.mjs';
+
+        function loadWaline() {
+            init({
+                el: '#waline',
+                serverURL: 'https://example.example.com',
+                lang: 'zh-CN',
+                dark: 'body[class~="dark-mode"]',
+                requiredMeta: ['nick','mail'], // cannot customize by theme config, change it yourself
+            });
+        }
+
+        if ('true') {
+            const loadWalineTimeout = setTimeout(() => {
+                loadWaline();
+                clearTimeout(loadWalineTimeout);
+            }, 1000);
+        } else {
+            window.addEventListener('DOMContentLoaded', loadWaline);
+        }
+        
+    </script>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+
+    
+        <div class="toc-content-container">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">On this page</div>
+        <div class="page-title">1617-统计子树中城市之间最大距离</div>
+        
+
+    </div>
+</div>
+        </div>
+    
+</div>
+
+
+
+                
+
+            </div>
+
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2022</span>
+              -
+            
+            2023&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">Raphael Liu</a>
+        </div>
+        
+            <script data-swup-reload-script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">UV:</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">PV:</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <!--<div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">-->
+            <!--<span class="lg:block text-sm">powered_by</span>-->
+            <!--&lt;!&ndash;<span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.4.4</a></span>&ndash;&gt;-->
+        <!--</div>-->
+        
+        <!---->
+            <!--<div>-->
+                <!--runtime <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hours <span class="odometer" id="runtime_minutes"></span> minutes <span class="odometer" id="runtime_seconds"></span> seconds-->
+            <!--</div>-->
+        <!---->
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fa-regular fa-comments"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-expand-width flex justify-center items-center">
+            <i class="fa-regular fa-expand"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fa-solid fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa-solid fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa-solid fa-spinner fa-spin-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+    
+<script src="/js/libs/Swup.min.js"></script>
+
+<script src="/js/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/libs/SwupScrollPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+        ],
+        containers: ["#swup"],
+    });
+
+    swup.hooks.on("page:view", () => {
+        Global.refresh();
+    });
+
+    // if (document.readyState === "complete") {
+    //
+    // } else {
+    //     document.addEventListener("DOMContentLoaded", () => init());
+    // }
+</script>
+
+
+
+
+
+
+<script src="/js/utils.js" type="module"></script>
+
+<script src="/js/main.js" type="module"></script>
+
+<script src="/js/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/layouts/categoryList.js" type="module"></script>
+
+
+
+    
+<script src="/js/tools/localSearch.js"></script>
+
+
+
+
+    
+<script src="/js/tools/codeBlock.js"></script>
+
+
+
+
+    
+<script src="/js/layouts/lazyload.js"></script>
+
+
+
+
+    
+<script src="/js/tools/runtime.js"></script>
+
+    
+<script src="/js/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/libs/Typed.min.js"></script>
+
+  
+<script src="/js/plugins/typed.js"></script>
+
+
+
+
+
+
+
+<div class="post-scripts" data-swup-reload-script>
+    
+        
+<script src="/js/libs/anime.min.js"></script>
+
+        
+<script src="/js/tools/tocToggle.js" type="module"></script>
+
+<script src="/js/layouts/toc.js" type="module"></script>
+
+<script src="/js/plugins/tabs.js" type="module"></script>
+
+    
+</div>
+
+
+</body>
+</html>

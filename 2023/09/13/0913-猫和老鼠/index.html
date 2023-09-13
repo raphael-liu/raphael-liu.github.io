@@ -1,0 +1,1029 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="Raphael Liu">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/2023/09/13/0913-猫和老鼠/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="两位玩家分别扮演猫和老鼠，在一张 无向 图上进行游戏，两人轮流行动。 图的形式是：graph[a] 是一个列表，由满足 ab 是图中的一条边的所有节点 b 组成。 老鼠从节点 1 开始，第一个出发；猫从节点 2 开始，第二个出发。在节点 0 处有一个洞。 在每个玩家的行动中，他们 必须 沿着图中与所在当前位置连通的一条边移动。例如，如果老鼠在节点 1 ，那么它必须移动到 graph[1]中的任一节">
+<meta property="og:type" content="article">
+<meta property="og:title" content="0913-猫和老鼠">
+<meta property="og:url" content="http://example.com/2023/09/13/0913-%E7%8C%AB%E5%92%8C%E8%80%81%E9%BC%A0/index.html">
+<meta property="og:site_name" content="Raphael&#39;s Blog">
+<meta property="og:description" content="两位玩家分别扮演猫和老鼠，在一张 无向 图上进行游戏，两人轮流行动。 图的形式是：graph[a] 是一个列表，由满足 ab 是图中的一条边的所有节点 b 组成。 老鼠从节点 1 开始，第一个出发；猫从节点 2 开始，第二个出发。在节点 0 处有一个洞。 在每个玩家的行动中，他们 必须 沿着图中与所在当前位置连通的一条边移动。例如，如果老鼠在节点 1 ，那么它必须移动到 graph[1]中的任一节">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://assets.leetcode.com/uploads/2020/11/17/cat1.jpg">
+<meta property="og:image" content="https://assets.leetcode.com/uploads/2020/11/17/cat2.jpg">
+<meta property="article:published_time" content="2023-09-12T16:47:26.000Z">
+<meta property="article:modified_time" content="2023-09-13T08:06:23.715Z">
+<meta property="article:author" content="Raphael Liu">
+<meta property="article:tag" content="algorithm">
+<meta property="article:tag" content="HARD">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://assets.leetcode.com/uploads/2020/11/17/cat1.jpg">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/redefine-favicon.svg" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/redefine-favicon.svg">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/redefine-favicon.svg">
+    <!--- Page Info-->
+    
+    <title>
+        
+            0913-猫和老鼠 -
+        
+        Raphael&#39;s Blog
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/css/build/styles.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/fonts.css">
+
+    
+<link rel="stylesheet" href="/fonts/Satoshi/satoshi.css">
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+
+    <!--- Inject Part-->
+    
+    <script id="hexo-configurations">
+    let Global = window.Global || {};
+    Global.hexo_config = {"hostname":"example.com","root":"/","language":"zh_CN"};
+    Global.theme_config = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":true,"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"open_graph":true,"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-wqery6-light.webp","dark":"/images/wallhaven-wqery6-dark.webp"},"title":"Raphael's Blog","subtitle":{"text":["格物致知","坚持做正确的事情"],"hitokoto":{"enable":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":false,"links":{"github":"https://github.com/raphael-liu","email":"raphael@buaa.edu.cn# your email"},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.4.4","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"links":{"首页":{"path":"/","icon":"fa-regular fa-house"},"文章":{"path":"/archives","icon":"fa-regular fa-archive"},"关于":{"icon":"fa-regular fa-user","submenus":{"我":"/about/me","Github":"https://github.com/raphael-liu"}}},"search":{"enable":true,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"links":null},"article_date_format":"auto","categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}},"footerStart":"2022/8/17 11:45:14"};
+    Global.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    Global.data_config = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="swup-progress-icon">
+            <i class="fa-solid fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container" id="swup">
+
+    
+
+    <div class="main-content-container">
+
+
+        <div class="main-content-header">
+            <header class="navbar-container">
+    
+    <div class="navbar-content">
+        <div class="left">
+            
+            <a class="logo-title" href="http://example.com/">
+                
+                Raphael&#39;s Blog
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/"  >
+                                    
+                                        
+                                            <i class="fa-regular fa-house"></i>
+                                        
+                                        首页
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/archives"  >
+                                    
+                                        
+                                            <i class="fa-regular fa-archive"></i>
+                                        
+                                        文章
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="has-dropdown" 
+                                    href="#" onClick="return false;">
+                                    
+                                        
+                                            <i class="fa-regular fa-user"></i>
+                                        
+                                        关于&nbsp;<i class="fa-solid fa-chevron-down"></i>
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                                    <ul class="sub-menu">
+                                    
+                                        <li>
+                                        <a href="/about/me">我
+                                        </a>
+                                        </li>
+                                    
+                                        <li>
+                                        <a target="_blank" rel="noopener" href="https://github.com/raphael-liu">GITHUB
+                                        </a>
+                                        </li>
+                                    
+                                    </ul>
+                                
+                            </li>
+                    
+                    
+                        <li class="navbar-item search search-popup-trigger">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fa-solid fa-magnifying-glass"></i></div>
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile drawer -->
+    <div class="navbar-drawer w-full absolute top-0 left-0 bg-background-color">
+        <ul class="drawer-navbar-list flex flex-col justify-start items-center">
+            
+                
+                    <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group " 
+                        href="/"  >
+                             
+                                
+                                    <i class="fa-regular fa-house"></i>
+                                
+                                首页
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+                
+                    <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group " 
+                        href="/archives"  >
+                             
+                                
+                                    <i class="fa-regular fa-archive"></i>
+                                
+                                文章
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+                
+                    <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group has-dropdown" 
+                        href="#" onClick="return false;">
+                            
+                                
+                                    <i class="fa-regular fa-user"></i>
+                                
+                                关于&nbsp;<i class="group-hover:rotate-180 transition-transform fa-solid fa-chevron-down"></i>
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                              
+                        
+                            <li class="text-base flex justify-center items-center hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                <a class="py-0.5" href="/about/me">我</a>
+                            </li>
+                        
+                            <li class="text-base flex justify-center items-center hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                <a class="py-0.5" target="_blank" rel="noopener" href="https://github.com/raphael-liu">GITHUB</a>
+                            </li>
+                        
+                    
+            
+
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="post-page-container">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            
+                <h1 class="article-title-regular">0913-猫和老鼠</h1>
+            
+            </div>
+            
+                    
+        
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">Raphael Liu</span>
+                        
+                            <span class="author-label">Lv10</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2023-09-13 00:47:26</span>
+        <span class="mobile">2023-09-13 00:47:26</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2023-09-13 16:06:23</span>
+            <span class="mobile">2023-09-13 16:06:23</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/algorithm/">algorithm</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/HARD/">HARD</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        
+
+
+        <div class="article-content markdown-body">
+            <p>两位玩家分别扮演猫和老鼠，在一张 <strong>无向</strong> 图上进行游戏，两人轮流行动。</p>
+<p>图的形式是：<code>graph[a]</code> 是一个列表，由满足 <code>ab</code> 是图中的一条边的所有节点 <code>b</code> 组成。</p>
+<p>老鼠从节点 <code>1</code> 开始，第一个出发；猫从节点 <code>2</code> 开始，第二个出发。在节点 <code>0</code> 处有一个洞。</p>
+<p>在每个玩家的行动中，他们 <strong>必须</strong> 沿着图中与所在当前位置连通的一条边移动。例如，如果老鼠在节点 <code>1</code> ，那么它必须移动到 <code>graph[1]</code><br>中的任一节点。</p>
+<p>此外，猫无法移动到洞中（节点 <code>0</code>）。</p>
+<p>然后，游戏在出现以下三种情形之一时结束：</p>
+<ul>
+<li>如果猫和老鼠出现在同一个节点，猫获胜。</li>
+<li>如果老鼠到达洞中，老鼠获胜。</li>
+<li>如果某一位置重复出现（即，玩家的位置和移动顺序都与上一次行动相同），游戏平局。</li>
+</ul>
+<p>给你一张图 <code>graph</code> ，并假设两位玩家都都以最佳状态参与游戏：</p>
+<ul>
+<li>如果老鼠获胜，则返回 <code>1</code>；</li>
+<li>如果猫获胜，则返回 <code>2</code>；</li>
+<li>如果平局，则返回 <code>0</code> 。</li>
+</ul>
+<p><strong>示例 1：</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://assets.leetcode.com/uploads/2020/11/17/cat1.jpg"
+                     
+                ></p>
+<pre><code>**输入：** graph = [[2,5],[3],[0,4,5],[1,4,5],[2,3],[0,2,3]]
+**输出：** 0
+</code></pre>
+<p><strong>示例 2：</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://assets.leetcode.com/uploads/2020/11/17/cat2.jpg"
+                     
+                ></p>
+<pre><code>**输入：** graph = [[1,3],[0],[3],[0,2]]
+**输出：** 1
+</code></pre>
+<p><strong>提示：</strong></p>
+<ul>
+<li><code>3 &lt;= graph.length &lt;= 50</code></li>
+<li><code>1 &lt;= graph[i].length &lt; graph.length</code></li>
+<li><code>0 &lt;= graph[i][j] &lt; graph.length</code></li>
+<li><code>graph[i][j] != i</code></li>
+<li><code>graph[i]</code> 互不相同</li>
+<li>猫和老鼠在游戏中总是可以移动</li>
+</ul>
+<h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p><strong>博弈知识介绍</strong></p>
+<p>这道题是博弈问题，猫和老鼠都按照最优策略参与游戏。</p>
+<p>在阐述具体解法之前，首先介绍博弈问题中的三个概念：必胜状态、必败状态与必和状态。</p>
+<ol>
+<li><p>对于特定状态，如果游戏已经结束，则根据结束时的状态决定必胜状态、必败状态与必和状态。</p>
+<ul>
+<li><p>如果分出胜负，则该特定状态对于获胜方为必胜状态，对于落败方为必败状态。</p>
+</li>
+<li><p>如果是平局，则该特定状态对于双方都为必和状态。</p>
+</li>
+</ul>
+</li>
+<li><p>从特定状态开始，如果存在一种操作将状态变成必败状态，则当前玩家可以选择该操作，将必败状态留给对方玩家，因此该特定状态对于当前玩家为必胜状态。</p>
+</li>
+<li><p>从特定状态开始，如果所有操作都会将状态变成必胜状态，则无论当前玩家选择哪种操作，都会将必胜状态留给对方玩家，因此该特定状态对于当前玩家为必败状态。</p>
+</li>
+<li><p>从特定状态开始，如果任何操作都不能将状态变成必败状态，但是存在一种操作将状态变成必和状态，则当前玩家可以选择该操作，将必和状态留给对方玩家，因此该特定状态对于双方玩家都为必和状态。</p>
+</li>
+</ol>
+<p>对于每个玩家，最优策略如下：</p>
+<ol>
+<li><p>争取将必胜状态留给自己，将必败状态留给对方玩家。</p>
+</li>
+<li><p>在自己无法到达必胜状态的情况下，争取将必和状态留给自己。</p>
+</li>
+</ol>
+<p><strong>自顶向下动态规划解法介绍</strong></p>
+<p>博弈问题通常可以使用动态规划求解。这道题由于数据规模的原因，动态规划方法不适用，因此只是介绍。</p>
+<p>使用三维数组 dp 表示状态，dp}[\textit{mouse}][\textit{cat}][\textit{turns}] 表示从老鼠位于节点 mouse、猫位于节点 cat、游戏已经进行了 turns 轮的状态开始，猫和老鼠都按照最优策略的情况下的游戏结果。假设图中的节点数是 n，则有 0 \le \textit{mouse}, \textit{cat} &lt; n。</p>
+<p>由于游戏的初始状态是老鼠位于节点 1，猫位于节点 2，因此 dp}[1][2][0] 为从初始状态开始的游戏结果。</p>
+<p>动态规划的边界条件为可以直接得到游戏结果的状态，包括以下三种状态：</p>
+<ul>
+<li><p>如果 mouse} &#x3D; 0，老鼠躲入洞里，则老鼠获胜，因此对于任意 cat 和 turns 都有 dp}[0][\textit{cat}][\textit{turns}] &#x3D; 1，该状态为老鼠的必胜状态，猫的必败状态。</p>
+</li>
+<li><p>如果 cat} &#x3D; \textit{mouse，猫和老鼠占据相同的节点，则猫获胜，因此当 cat} &#x3D; \textit{mouse 时，对于任意 mouse、cat 和 turns 都有 dp}[\textit{mouse}][\textit{cat}][\textit{turns}] &#x3D; 2，该状态为老鼠的必败状态，猫的必胜状态。注意猫不能移动到节点 0，因此当 mouse} &#x3D; 0 时，一定有 cat} \ne \textit{mouse。</p>
+</li>
+<li><p>如果 turns} \ge 2n(n - 1)，则是平局，该状态为双方的必和状态。</p>
+<blockquote>
+<p>由于游戏中的每个局面由老鼠的位置、猫的位置和轮到移动的一方三个因素确定，老鼠可能的位置数是 n，因此猫可能的位置数是 n - 1（由于猫不能移动到节点 0），轮到移动的一方有 2 种可能，因此游戏中所有可能的局面数是 2n(n - 1)。</p>
+<p>根据抽屉原理可知，当游戏进行了 2n(n - 1) 轮时，一定存在至少一个猫和老鼠重复经过的局面。由于猫和老鼠都按照最优策略参与游戏，对于同一个局面，游戏结果是相同的。</p>
+<p>考虑该重复经过的局面。从该局面开始，双方按照最优策略移动，结果只能回到该局面，任何一方都无法让己方到达必胜状态，让对方到达必败状态，因此该状态对于双方都不是必胜状态，只能是必和状态。</p>
+<p>如果该重复经过的局面和初始局面相同，则初始局面即为双方的必和状态。如果该重复经过的局面和初始局面不同，则从初始局面开始，双方按照最优策略移动，结果只能到达双方的必和状态，任何一方都无法让己方到达必胜状态，让对方到达必败状态，因此初始局面对于双方都不是必胜状态，只能是必和状态。</p>
+<p>综上所述，如果游戏进行了 2n(n - 1) 轮还没有任何一方获胜，则是平局。</p>
+</blockquote>
+</li>
+</ul>
+<p>动态规划的状态转移需要考虑当前玩家所有可能的移动，选择最优策略的移动。</p>
+<p>由于老鼠先开始移动，猫后开始移动，因此可以根据游戏已经进行的轮数 turns 的奇偶性决定当前轮到的玩家，当 turns 是偶数时轮到老鼠移动，当 turns 是奇数时轮到猫移动。</p>
+<p>如果轮到老鼠移动，则对于老鼠从当前节点移动一次之后可能到达的每个节点，进行如下操作：</p>
+<ol>
+<li><p>如果存在一个节点，老鼠到达该节点之后，老鼠可以获胜，则老鼠到达该节点之后的状态为老鼠的必胜状态，猫的必败状态，因此在老鼠移动之前的当前状态为老鼠的必胜状态。</p>
+</li>
+<li><p>如果老鼠到达任何节点之后的状态都不是老鼠的必胜状态，但是存在一个节点，老鼠到达该节点之后，结果是平局，则老鼠到达该节点之后的状态为双方的必和状态，因此在老鼠移动之前的当前状态为双方的必和状态。</p>
+</li>
+<li><p>如果老鼠到达任何节点之后的状态都不是老鼠的必胜状态或必和状态，则老鼠到达任何节点之后的状态都为老鼠的必败状态，猫的必胜状态，因此在老鼠移动之前的当前状态为老鼠的必败状态。</p>
+</li>
+</ol>
+<p>如果轮到猫移动，则对于猫从当前节点移动一次之后可能到达的每个节点，进行如下操作：</p>
+<ol>
+<li><p>如果存在一个节点，猫到达该节点之后，猫可以获胜，则猫到达该节点之后的状态为猫的必胜状态，老鼠的必败状态，因此在猫移动之前的当前状态为猫的必胜状态。</p>
+</li>
+<li><p>如果猫到达任何节点之后的状态都不是猫的必胜状态，但是存在一个节点，猫到达该节点之后，结果是平局，则猫到达该节点之后的状态为双方的必和状态，因此在猫移动之前的当前状态为双方的必和状态。</p>
+</li>
+<li><p>如果猫到达任何节点之后的状态都不是猫的必胜状态或必和状态，则猫到达任何节点之后的状态都为猫的必败状态，老鼠的必胜状态，因此在猫移动之前的当前状态为猫的必败状态。</p>
+</li>
+</ol>
+<p>实现方面，由于双方移动的策略相似，因此可以使用一个函数实现移动策略，根据游戏已经进行的轮数的奇偶性决定当前轮到的玩家。对于特定玩家的移动，实现方法如下：</p>
+<ol>
+<li><p>如果当前玩家存在一种移动方法到达非必败状态，则用该状态更新游戏结果。</p>
+<ul>
+<li><p>如果该移动方法到达必胜状态，则将当前状态（移动前的状态）设为必胜状态，结束遍历其他可能的移动。</p>
+</li>
+<li><p>如果该移动方法到达必和状态，则将当前状态（移动前的状态）设为必和状态，继续遍历其他可能的移动，因为可能存在到达必胜状态的移动方法。</p>
+</li>
+</ul>
+</li>
+<li><p>如果当前玩家的任何移动方法都到达必败状态，则将当前状态（移动前的状态）设为必败状态。</p>
+</li>
+</ol>
+<p>由于老鼠可能的位置有 n 个，猫可能的位置有 n - 1 个，游戏轮数最大为 2n(n - 1)，因此动态规划的状态数是 O(n^4)，对于每个状态需要 O(n) 的时间计算状态值，因此总时间复杂度是 O(n^5)，该时间复杂度会超出时间限制，因此自顶向下的动态规划不适用于这道题。以下代码为自顶向下的动态规划的实现，仅供读者参考。</p>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><figcaption><span>[sol0-Java]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="variable">MOUSE_WIN</span> <span class="operator">=</span> <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="variable">CAT_WIN</span> <span class="operator">=</span> <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="variable">DRAW</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">    <span class="type">int</span> n;</span><br><span class="line">    <span class="type">int</span>[][] graph;</span><br><span class="line">    <span class="type">int</span>[][][] dp;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">catMouseGame</span><span class="params">(<span class="type">int</span>[][] graph)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.n = graph.length;</span><br><span class="line">        <span class="built_in">this</span>.graph = graph;</span><br><span class="line">        <span class="built_in">this</span>.dp = <span class="keyword">new</span> <span class="title class_">int</span>[n][n][<span class="number">2</span> * n * (n - <span class="number">1</span>)];</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">j</span> <span class="operator">=</span> <span class="number">0</span>; j &lt; n; j++) &#123;</span><br><span class="line">                Arrays.fill(dp[i][j], -<span class="number">1</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> getResult(<span class="number">1</span>, <span class="number">2</span>, <span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">getResult</span><span class="params">(<span class="type">int</span> mouse, <span class="type">int</span> cat, <span class="type">int</span> turns)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (turns == <span class="number">2</span> * n * (n - <span class="number">1</span>)) &#123;</span><br><span class="line">            <span class="keyword">return</span> DRAW;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (dp[mouse][cat][turns] &lt; <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (mouse == <span class="number">0</span>) &#123;</span><br><span class="line">                dp[mouse][cat][turns] = MOUSE_WIN;</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (cat == mouse) &#123;</span><br><span class="line">                dp[mouse][cat][turns] = CAT_WIN;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                getNextResult(mouse, cat, turns);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> dp[mouse][cat][turns];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">getNextResult</span><span class="params">(<span class="type">int</span> mouse, <span class="type">int</span> cat, <span class="type">int</span> turns)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">curMove</span> <span class="operator">=</span> turns % <span class="number">2</span> == <span class="number">0</span> ? mouse : cat;</span><br><span class="line">        <span class="type">int</span> <span class="variable">defaultResult</span> <span class="operator">=</span> curMove == mouse ? CAT_WIN : MOUSE_WIN;</span><br><span class="line">        <span class="type">int</span> <span class="variable">result</span> <span class="operator">=</span> defaultResult;</span><br><span class="line">        <span class="type">int</span>[] nextNodes = graph[curMove];</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> next : nextNodes) &#123;</span><br><span class="line">            <span class="keyword">if</span> (curMove == cat &amp;&amp; next == <span class="number">0</span>) &#123;</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="type">int</span> <span class="variable">nextMouse</span> <span class="operator">=</span> curMove == mouse ? next : mouse;</span><br><span class="line">            <span class="type">int</span> <span class="variable">nextCat</span> <span class="operator">=</span> curMove == cat ? next : cat;</span><br><span class="line">            <span class="type">int</span> <span class="variable">nextResult</span> <span class="operator">=</span> getResult(nextMouse, nextCat, turns + <span class="number">1</span>);</span><br><span class="line">            <span class="keyword">if</span> (nextResult != defaultResult) &#123;</span><br><span class="line">                result = nextResult;</span><br><span class="line">                <span class="keyword">if</span> (result != DRAW) &#123;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        dp[mouse][cat][turns] = result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="C#"><figure class="iseeu highlight c#"><figcaption><span>[sol0-C#]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> <span class="built_in">int</span> MOUSE_WIN = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">const</span> <span class="built_in">int</span> CAT_WIN = <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">const</span> <span class="built_in">int</span> DRAW = <span class="number">0</span>;</span><br><span class="line">    <span class="built_in">int</span> n;</span><br><span class="line">    <span class="built_in">int</span>[][] graph;</span><br><span class="line">    <span class="built_in">int</span>[,,] dp;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="built_in">int</span> <span class="title">CatMouseGame</span>(<span class="params"><span class="built_in">int</span>[][] graph</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">this</span>.n = graph.Length;</span><br><span class="line">        <span class="keyword">this</span>.graph = graph;</span><br><span class="line">        <span class="keyword">this</span>.dp = <span class="keyword">new</span> <span class="built_in">int</span>[n, n, <span class="number">2</span> * n * (n - <span class="number">1</span>)];</span><br><span class="line">        <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="built_in">int</span> j = <span class="number">0</span>; j &lt; n; j++) &#123;</span><br><span class="line">                <span class="keyword">for</span> (<span class="built_in">int</span> k = <span class="number">0</span>; k &lt; <span class="number">2</span> * n * (n - <span class="number">1</span>); k++) &#123;</span><br><span class="line">                    dp[i, j, k] = <span class="number">-1</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> GetResult(<span class="number">1</span>, <span class="number">2</span>, <span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="built_in">int</span> <span class="title">GetResult</span>(<span class="params"><span class="built_in">int</span> mouse, <span class="built_in">int</span> cat, <span class="built_in">int</span> turns</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (turns == <span class="number">2</span> * n * (n - <span class="number">1</span>)) &#123;</span><br><span class="line">            <span class="keyword">return</span> DRAW;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (dp[mouse, cat, turns] &lt; <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (mouse == <span class="number">0</span>) &#123;</span><br><span class="line">                dp[mouse, cat, turns] = MOUSE_WIN;</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (cat == mouse) &#123;</span><br><span class="line">                dp[mouse, cat, turns] = CAT_WIN;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                GetNextResult(mouse, cat, turns);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> dp[mouse, cat, turns];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">GetNextResult</span>(<span class="params"><span class="built_in">int</span> mouse, <span class="built_in">int</span> cat, <span class="built_in">int</span> turns</span>)</span> &#123;</span><br><span class="line">        <span class="built_in">int</span> curMove = turns % <span class="number">2</span> == <span class="number">0</span> ? mouse : cat;</span><br><span class="line">        <span class="built_in">int</span> defaultResult = curMove == mouse ? CAT_WIN : MOUSE_WIN;</span><br><span class="line">        <span class="built_in">int</span> result = defaultResult;</span><br><span class="line">        <span class="built_in">int</span>[] nextNodes = graph[curMove];</span><br><span class="line">        <span class="keyword">foreach</span> (<span class="built_in">int</span> next <span class="keyword">in</span> nextNodes) &#123;</span><br><span class="line">            <span class="keyword">if</span> (curMove == cat &amp;&amp; next == <span class="number">0</span>) &#123;</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="built_in">int</span> nextMouse = curMove == mouse ? next : mouse;</span><br><span class="line">            <span class="built_in">int</span> nextCat = curMove == cat ? next : cat;</span><br><span class="line">            <span class="built_in">int</span> nextResult = GetResult(nextMouse, nextCat, turns + <span class="number">1</span>);</span><br><span class="line">            <span class="keyword">if</span> (nextResult != defaultResult) &#123;</span><br><span class="line">                result = nextResult;</span><br><span class="line">                <span class="keyword">if</span> (result != DRAW) &#123;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        dp[mouse, cat, turns] = result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="C++"><figure class="iseeu highlight c++"><figcaption><span>[sol0-C++]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">const</span> <span class="type">int</span> MOUSE_WIN = <span class="number">1</span>;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> CAT_WIN = <span class="number">2</span>;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> DRAW = <span class="number">0</span>;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> MAXN = <span class="number">51</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="type">int</span> n;</span><br><span class="line">    <span class="type">int</span> dp[MAXN][MAXN][MAXN*(MAXN<span class="number">-1</span>)*<span class="number">2</span>];</span><br><span class="line">    vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; graph;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">catMouseGame</span><span class="params">(vector&lt;vector&lt;<span class="type">int</span>&gt;&gt;&amp; graph)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>-&gt;n = graph.<span class="built_in">size</span>();</span><br><span class="line">        <span class="keyword">this</span>-&gt;graph = graph;</span><br><span class="line">        <span class="built_in">memset</span>(dp, <span class="number">-1</span>, <span class="built_in">sizeof</span>(dp));</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">getResult</span>(<span class="number">1</span>, <span class="number">2</span>, <span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">getResult</span><span class="params">(<span class="type">int</span> mouse, <span class="type">int</span> cat, <span class="type">int</span> turns)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (turns == <span class="number">2</span> * n * (n - <span class="number">1</span>)) &#123;</span><br><span class="line">            <span class="keyword">return</span> DRAW;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (dp[mouse][cat][turns] &lt; <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (mouse == <span class="number">0</span>) &#123;</span><br><span class="line">                dp[mouse][cat][turns] = MOUSE_WIN;</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (cat == mouse) &#123;</span><br><span class="line">                dp[mouse][cat][turns] = CAT_WIN;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="built_in">getNextResult</span>(mouse, cat, turns);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> dp[mouse][cat][turns];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">getNextResult</span><span class="params">(<span class="type">int</span> mouse, <span class="type">int</span> cat, <span class="type">int</span> turns)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> curMove = turns % <span class="number">2</span> == <span class="number">0</span> ? mouse : cat;</span><br><span class="line">        <span class="type">int</span> defaultResult = curMove == mouse ? CAT_WIN : MOUSE_WIN;</span><br><span class="line">        <span class="type">int</span> result = defaultResult;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> next : graph[curMove]) &#123;</span><br><span class="line">            <span class="keyword">if</span> (curMove == cat &amp;&amp; next == <span class="number">0</span>) &#123;</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="type">int</span> nextMouse = curMove == mouse ? next : mouse;</span><br><span class="line">            <span class="type">int</span> nextCat = curMove == cat ? next : cat;</span><br><span class="line">            <span class="type">int</span> nextResult = <span class="built_in">getResult</span>(nextMouse, nextCat, turns + <span class="number">1</span>);</span><br><span class="line">            <span class="keyword">if</span> (nextResult != defaultResult) &#123;</span><br><span class="line">                result = nextResult;</span><br><span class="line">                <span class="keyword">if</span> (result != DRAW) &#123;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        dp[mouse][cat][turns] = result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><figcaption><span>[sol0-Python3]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">DRAW = <span class="number">0</span></span><br><span class="line">MOUSE_WIN = <span class="number">1</span></span><br><span class="line">CAT_WIN = <span class="number">2</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">catMouseGame</span>(<span class="params">self, graph: <span class="type">List</span>[<span class="type">List</span>[<span class="built_in">int</span>]]</span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        n = <span class="built_in">len</span>(graph)</span><br><span class="line">        dp = [[[-<span class="number">1</span>] * (<span class="number">2</span> * n * (n - <span class="number">1</span>)) <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(n)] <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(n)]</span><br><span class="line"></span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">getResult</span>(<span class="params">mouse: <span class="built_in">int</span>, cat: <span class="built_in">int</span>, turns: <span class="built_in">int</span></span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">            <span class="keyword">if</span> turns == <span class="number">2</span> * n * (n - <span class="number">1</span>):</span><br><span class="line">                <span class="keyword">return</span> DRAW</span><br><span class="line">            res = dp[mouse][cat][turns]</span><br><span class="line">            <span class="keyword">if</span> res != -<span class="number">1</span>:</span><br><span class="line">                <span class="keyword">return</span> res</span><br><span class="line">            <span class="keyword">if</span> mouse == <span class="number">0</span>:</span><br><span class="line">                res = MOUSE_WIN</span><br><span class="line">            <span class="keyword">elif</span> cat == mouse:</span><br><span class="line">                res = CAT_WIN</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                res = getNextResult(mouse, cat, turns)</span><br><span class="line">            dp[mouse][cat][turns] = res</span><br><span class="line">            <span class="keyword">return</span> res</span><br><span class="line"></span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">getNextResult</span>(<span class="params">mouse: <span class="built_in">int</span>, cat: <span class="built_in">int</span>, turns: <span class="built_in">int</span></span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">            curMove = mouse <span class="keyword">if</span> turns % <span class="number">2</span> == <span class="number">0</span> <span class="keyword">else</span> cat</span><br><span class="line">            defaultRes = MOUSE_WIN <span class="keyword">if</span> curMove != mouse <span class="keyword">else</span> CAT_WIN</span><br><span class="line">            res = defaultRes</span><br><span class="line">            <span class="keyword">for</span> <span class="built_in">next</span> <span class="keyword">in</span> graph[curMove]:</span><br><span class="line">                <span class="keyword">if</span> curMove == cat <span class="keyword">and</span> <span class="built_in">next</span> == <span class="number">0</span>:</span><br><span class="line">                    <span class="keyword">continue</span></span><br><span class="line">                nextMouse = <span class="built_in">next</span> <span class="keyword">if</span> curMove == mouse <span class="keyword">else</span> mouse</span><br><span class="line">                nextCat = <span class="built_in">next</span> <span class="keyword">if</span> curMove == cat <span class="keyword">else</span> cat</span><br><span class="line">                nextRes = getResult(nextMouse, nextCat, turns + <span class="number">1</span>)</span><br><span class="line">                <span class="keyword">if</span> nextRes != defaultRes:</span><br><span class="line">                    res = nextRes</span><br><span class="line">                    <span class="keyword">if</span> res != DRAW:</span><br><span class="line">                        <span class="keyword">break</span></span><br><span class="line">            <span class="keyword">return</span> res</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> getResult(<span class="number">1</span>, <span class="number">2</span>, <span class="number">0</span>)</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><figcaption><span>[sol0-JavaScript]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="variable constant_">MOUSE_WIN</span> = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="variable constant_">CAT_WIN</span> = <span class="number">2</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="variable constant_">DRAW</span> = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">var</span> catMouseGame = <span class="keyword">function</span>(<span class="params">graph</span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> n = graph.<span class="property">length</span>;</span><br><span class="line">    <span class="keyword">const</span> dp = <span class="keyword">new</span> <span class="title class_">Array</span>(n).<span class="title function_">fill</span>(<span class="number">0</span>).<span class="title function_">map</span>(<span class="function">() =&gt;</span> <span class="keyword">new</span> <span class="title class_">Array</span>(n).<span class="title function_">fill</span>(<span class="number">0</span>).<span class="title function_">map</span>(<span class="function">() =&gt;</span> <span class="keyword">new</span> <span class="title class_">Array</span>(<span class="number">2</span> * n * (n - <span class="number">1</span>)).<span class="title function_">fill</span>(-<span class="number">1</span>)));</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">const</span> <span class="title function_">getResult</span> = (<span class="params">mouse, cat, turns</span>) =&gt; &#123;</span><br><span class="line">        <span class="keyword">if</span> (turns === <span class="number">2</span> * n * (n - <span class="number">1</span>)) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="variable constant_">DRAW</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">let</span> res = dp[mouse][cat][turns];</span><br><span class="line">        <span class="keyword">if</span> (res !== -<span class="number">1</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> res;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (mouse === <span class="number">0</span>) &#123;</span><br><span class="line">            res = <span class="variable constant_">MOUSE_WIN</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (cat === mouse) &#123;</span><br><span class="line">            res = <span class="variable constant_">CAT_WIN</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            res = <span class="title function_">getNextResult</span>(mouse, cat, turns);</span><br><span class="line">        &#125;</span><br><span class="line">        dp[mouse][cat][turns] = res;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> <span class="title function_">getNextResult</span> = (<span class="params">mouse, cat, turns</span>) =&gt; &#123;</span><br><span class="line">        <span class="keyword">const</span> curMove = turns % <span class="number">2</span> == <span class="number">0</span> ? mouse : cat;</span><br><span class="line">        <span class="keyword">const</span> defaultRes = curMove != mouse ? <span class="variable constant_">MOUSE_WIN</span> : <span class="variable constant_">CAT_WIN</span>;</span><br><span class="line">        <span class="keyword">let</span> res = defaultRes;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">const</span> next <span class="keyword">of</span> graph[curMove]) &#123;</span><br><span class="line">            <span class="keyword">if</span> (curMove === cat &amp;&amp; next === <span class="number">0</span>) &#123;</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">const</span> nextMouse = curMove === mouse ? next : mouse;</span><br><span class="line">            <span class="keyword">const</span> nextCat = curMove == cat ? next : cat;</span><br><span class="line">            <span class="keyword">const</span> nextRes = <span class="title function_">getResult</span>(nextMouse, nextCat, turns + <span class="number">1</span>)</span><br><span class="line">            <span class="keyword">if</span> (nextRes !== defaultRes) &#123;</span><br><span class="line">                res = nextRes;</span><br><span class="line">                <span class="keyword">if</span> (res !== <span class="variable constant_">DRAW</span>) &#123;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; </span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="title function_">getResult</span>(<span class="number">1</span>, <span class="number">2</span>, <span class="number">0</span>);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Go"><figure class="iseeu highlight go"><figcaption><span>[sol0-Golang]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> (</span><br><span class="line">    draw     = <span class="number">0</span></span><br><span class="line">    mouseWin = <span class="number">1</span></span><br><span class="line">    catWin   = <span class="number">2</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">catMouseGame</span><span class="params">(graph [][]<span class="type">int</span>)</span></span> <span class="type">int</span> &#123;</span><br><span class="line">    n := <span class="built_in">len</span>(graph)</span><br><span class="line">    dp := <span class="built_in">make</span>([][][]<span class="type">int</span>, n)</span><br><span class="line">    <span class="keyword">for</span> i := <span class="keyword">range</span> dp &#123;</span><br><span class="line">        dp[i] = <span class="built_in">make</span>([][]<span class="type">int</span>, n)</span><br><span class="line">        <span class="keyword">for</span> j := <span class="keyword">range</span> dp[i] &#123;</span><br><span class="line">            dp[i][j] = <span class="built_in">make</span>([]<span class="type">int</span>, n*(n<span class="number">-1</span>)*<span class="number">2</span>)</span><br><span class="line">            <span class="keyword">for</span> k := <span class="keyword">range</span> dp[i][j] &#123;</span><br><span class="line">                dp[i][j][k] = <span class="number">-1</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> getResult, getNextResult <span class="function"><span class="keyword">func</span><span class="params">(<span class="type">int</span>, <span class="type">int</span>, <span class="type">int</span>)</span></span> <span class="type">int</span></span><br><span class="line">    getResult = <span class="function"><span class="keyword">func</span><span class="params">(mouse, cat, turns <span class="type">int</span>)</span></span> <span class="type">int</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> turns == n*(n<span class="number">-1</span>)*<span class="number">2</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> draw</span><br><span class="line">        &#125;</span><br><span class="line">        res := dp[mouse][cat][turns]</span><br><span class="line">        <span class="keyword">if</span> res != <span class="number">-1</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> res</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> mouse == <span class="number">0</span> &#123;</span><br><span class="line">            res = mouseWin</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> cat == mouse &#123;</span><br><span class="line">            res = catWin</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            res = getNextResult(mouse, cat, turns)</span><br><span class="line">        &#125;</span><br><span class="line">        dp[mouse][cat][turns] = res</span><br><span class="line">        <span class="keyword">return</span> res</span><br><span class="line">    &#125;</span><br><span class="line">    getNextResult = <span class="function"><span class="keyword">func</span><span class="params">(mouse, cat, turns <span class="type">int</span>)</span></span> <span class="type">int</span> &#123;</span><br><span class="line">        curMove := mouse</span><br><span class="line">        <span class="keyword">if</span> turns%<span class="number">2</span> == <span class="number">1</span> &#123;</span><br><span class="line">            curMove = cat</span><br><span class="line">        &#125;</span><br><span class="line">        defaultRes := mouseWin</span><br><span class="line">        <span class="keyword">if</span> curMove == mouse &#123;</span><br><span class="line">            defaultRes = catWin</span><br><span class="line">        &#125;</span><br><span class="line">        res := defaultRes</span><br><span class="line">        <span class="keyword">for</span> _, next := <span class="keyword">range</span> graph[curMove] &#123;</span><br><span class="line">            <span class="keyword">if</span> curMove == cat &amp;&amp; next == <span class="number">0</span> &#123;</span><br><span class="line">                <span class="keyword">continue</span></span><br><span class="line">            &#125;</span><br><span class="line">            nextMouse, nextCat := mouse, cat</span><br><span class="line">            <span class="keyword">if</span> curMove == mouse &#123;</span><br><span class="line">                nextMouse = next</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> curMove == cat &#123;</span><br><span class="line">                nextCat = next</span><br><span class="line">            &#125;</span><br><span class="line">            nextRes := getResult(nextMouse, nextCat, turns+<span class="number">1</span>)</span><br><span class="line">            <span class="keyword">if</span> nextRes != defaultRes &#123;</span><br><span class="line">                res = nextRes</span><br><span class="line">                <span class="keyword">if</span> res != draw &#123;</span><br><span class="line">                    <span class="keyword">break</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> getResult(<span class="number">1</span>, <span class="number">2</span>, <span class="number">0</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="C"><figure class="iseeu highlight c"><figcaption><span>[sol0-C]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> MOUSE_WIN 1</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> CAT_WIN 2</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> DRAW 0</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> MAXN 51</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> dp[MAXN][MAXN][MAXN*(MAXN<span class="number">-1</span>)*<span class="number">2</span>];</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">getResult</span><span class="params">(<span class="type">int</span> mouse, <span class="type">int</span> cat, <span class="type">int</span> turns, <span class="type">const</span> <span class="type">int</span>** graph, <span class="type">const</span> <span class="type">int</span> graphSize, <span class="type">const</span> <span class="type">int</span>* graphColSize)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (turns == graphSize * (graphSize - <span class="number">1</span>) * <span class="number">2</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> DRAW;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (dp[mouse][cat][turns] &lt; <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (mouse == <span class="number">0</span>) &#123;</span><br><span class="line">            dp[mouse][cat][turns] = MOUSE_WIN;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (cat == mouse) &#123;</span><br><span class="line">            dp[mouse][cat][turns] = CAT_WIN;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            getNextResult(mouse, cat, turns, graph, graphSize, graphColSize);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> dp[mouse][cat][turns];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">getNextResult</span><span class="params">(<span class="type">int</span> mouse, <span class="type">int</span> cat, <span class="type">int</span> turns, <span class="type">const</span> <span class="type">int</span>** graph, <span class="type">const</span> <span class="type">int</span> graphSize, <span class="type">const</span> <span class="type">int</span>* graphColSize)</span> &#123;</span><br><span class="line">    <span class="type">int</span> curMove = turns % <span class="number">2</span> == <span class="number">0</span> ? mouse : cat;</span><br><span class="line">    <span class="type">int</span> defaultResult = curMove == mouse ? CAT_WIN : MOUSE_WIN;</span><br><span class="line">    <span class="type">int</span> result = defaultResult;</span><br><span class="line">    <span class="type">int</span> * nextNodes = graph[curMove];</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; graphColSize[curMove]; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (curMove == cat &amp;&amp; nextNodes[i] == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">int</span> nextMouse = curMove == mouse ? nextNodes[i] : mouse;</span><br><span class="line">        <span class="type">int</span> nextCat = curMove == cat ? nextNodes[i] : cat;</span><br><span class="line">        <span class="type">int</span> nextResult = getResult(nextMouse, nextCat, turns + <span class="number">1</span>, graph, graphSize, graphColSize);</span><br><span class="line">        <span class="keyword">if</span> (nextResult != defaultResult) &#123;</span><br><span class="line">            result = nextResult;</span><br><span class="line">            <span class="keyword">if</span> (result != DRAW) &#123;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    dp[mouse][cat][turns] = result;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">catMouseGame</span><span class="params">(<span class="type">int</span>** graph, <span class="type">int</span> graphSize, <span class="type">int</span>* graphColSize)</span>&#123;</span><br><span class="line">    <span class="built_in">memset</span>(dp, <span class="number">-1</span>, <span class="keyword">sizeof</span>(dp));</span><br><span class="line">    <span class="keyword">return</span> getResult(<span class="number">1</span>, <span class="number">2</span>, <span class="number">0</span>, graph, graphSize, graphColSize);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h4 id="方法一：拓扑排序"><a href="#方法一：拓扑排序" class="headerlink" title="方法一：拓扑排序"></a>方法一：拓扑排序</h4><p><strong>思路和算法</strong></p>
+<p>自顶向下的动态规划由于判定平局的标准和轮数有关，因此时间复杂度较高。为了降低时间复杂度，需要使用自底向上的方法实现，消除结果和轮数之间的关系。</p>
+<p>使用自底向上的方法实现时，游戏中的状态由老鼠的位置、猫的位置和轮到移动的一方三个因素确定。初始时，只有边界情况的胜负结果已知，其余所有状态的结果都初始化为平局。边界情况为直接确定胜负的情况，包括两类情况：老鼠躲入洞里，无论猫位于哪个节点，都是老鼠获胜；猫和老鼠占据相同的节点，无论占据哪个节点，都是猫获胜。</p>
+<p>从边界情况出发遍历其他情况。对于当前状态，可以得到老鼠的位置、猫的位置和轮到移动的一方，根据当前状态可知上一轮的所有可能状态，其中上一轮的移动方和当前的移动方相反，上一轮的移动方在上一轮状态和当前状态所在的节点不同。假设当前状态是老鼠所在节点是 mouse，猫所在节点是 cat，则根据当前的移动方，可以得到上一轮的所有可能状态：</p>
+<ul>
+<li><p>如果当前的移动方是老鼠，则上一轮的移动方是猫，上一轮状态中老鼠所在节点是 mouse，猫所在节点可能是 graph}[\textit{cat}] 中的任意一个节点（除了节点 0）；</p>
+</li>
+<li><p>如果当前的移动方是猫，则上一轮的移动方是老鼠，上一轮状态中老鼠所在节点可能是 graph}[\textit{mouse}] 中的任意一个节点，猫所在节点是 cat。</p>
+</li>
+</ul>
+<p>对于上一轮的每一种可能的状态，如果该状态的结果已知不是平局，则不需要重复计算该状态的结果，只有对结果是平局的状态，才需要计算该状态的结果。对于上一轮的移动方，只有当可以确定上一轮状态是必胜状态或者必败状态时，才更新上一轮状态的结果。</p>
+<ul>
+<li><p>如果上一轮的移动方和当前状态的结果的获胜方相同，由于当前状态为上一轮的移动方的必胜状态，因此上一轮的移动方一定可以移动到当前状态而获胜，上一轮状态为上一轮的移动方的必胜状态。</p>
+</li>
+<li><p>如果上一轮的移动方和当前状态的结果的获胜方不同，则上一轮的移动方需要尝试其他可能的移动，可能有以下三种情况：</p>
+<ul>
+<li><p>如果存在一种移动可以到达上一轮的移动方的必胜状态，则上一轮状态为上一轮的移动方的必胜状态；</p>
+</li>
+<li><p>如果所有的移动都到达上一轮的移动方的必败状态，则上一轮状态为上一轮的移动方的必败状态；</p>
+</li>
+<li><p>如果所有的移动都不能到达上一轮的移动方的必胜状态，但是存在一种移动可以到达上一轮的移动方的必和状态，则上一轮状态为上一轮的移动方的必和状态。</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>其中，对于必败状态与必和状态的判断依据为上一轮的移动方可能的移动是都到达必败状态还是可以到达必和状态。为了实现必败状态与必和状态的判断，需要记录每个状态的度，初始时每个状态的度为当前玩家在当前位置可以移动到的节点数。对于老鼠而言，初始的度为老鼠所在的节点的相邻节点数；对于猫而言，初始的度为猫所在的节点的相邻且非节点 0 的节点数。</p>
+<p>遍历过程中，从当前状态出发遍历上一轮的所有可能状态，如果上一轮状态的结果是平局且上一轮的移动方和当前状态的结果的获胜方不同，则将上一轮状态的度减 1。如果上一轮状态的度减少到 0，则从上一轮状态出发到达的所有状态都是上一轮的移动方的必败状态，因此上一轮状态也是上一轮的移动方的必败状态。</p>
+<p>在确定上一轮状态的结果（必胜或必败）之后，即可从上一轮状态出发，遍历其他结果是平局的状态。当没有更多的状态可以确定胜负结果时，遍历结束，此时即可得到初始状态的结果。</p>
+<p>细心的读者可以发现，上述遍历的过程其实是拓扑排序。</p>
+<p><strong>证明</strong></p>
+<p>必胜状态和必败状态都符合博弈中的最优策略，需要证明的是必和状态的正确性。</p>
+<p>遍历结束之后，如果一个状态的结果是平局，则该状态满足以下两个条件：</p>
+<ul>
+<li><p>从该状态出发，任何移动都无法到达该状态的移动方的必胜状态；</p>
+</li>
+<li><p>从该状态出发，存在一种移动可以到达必和状态。</p>
+</li>
+</ul>
+<p>对于标记结果是平局的状态，如果其实际结果是该状态的移动方必胜，则一定存在一个下一轮状态，为当前状态的移动方的必胜状态，在根据下一轮状态的结果标记当前状态的结果时会将当前状态标记为当前状态的移动方的必胜状态，和标记结果是平局矛盾。</p>
+<p>对于标记结果是平局的状态，如果其实际结果是该状态的移动方必败，则所有的下一轮状态都为当前状态的移动方的必败状态，在根据下一轮状态的结果标记当前状态的结果时会将当前状态标记为当前状态的移动方的必败状态，和标记结果是平局矛盾。</p>
+<p>因此，如果标记的状态是必和状态，则实际结果一定是必和状态。</p>
+<p><strong>代码</strong></p>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><figcaption><span>[sol1-Java]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="variable">MOUSE_TURN</span> <span class="operator">=</span> <span class="number">0</span>, CAT_TURN = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="variable">DRAW</span> <span class="operator">=</span> <span class="number">0</span>, MOUSE_WIN = <span class="number">1</span>, CAT_WIN = <span class="number">2</span>;</span><br><span class="line">    <span class="type">int</span>[][] graph;</span><br><span class="line">    <span class="type">int</span>[][][] degrees;</span><br><span class="line">    <span class="type">int</span>[][][] results;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">catMouseGame</span><span class="params">(<span class="type">int</span>[][] graph)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">n</span> <span class="operator">=</span> graph.length;</span><br><span class="line">        <span class="built_in">this</span>.graph = graph;</span><br><span class="line">        <span class="built_in">this</span>.degrees = <span class="keyword">new</span> <span class="title class_">int</span>[n][n][<span class="number">2</span>];</span><br><span class="line">        <span class="built_in">this</span>.results = <span class="keyword">new</span> <span class="title class_">int</span>[n][n][<span class="number">2</span>];</span><br><span class="line">        Queue&lt;<span class="type">int</span>[]&gt; queue = <span class="keyword">new</span> <span class="title class_">ArrayDeque</span>&lt;<span class="type">int</span>[]&gt;();</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">j</span> <span class="operator">=</span> <span class="number">1</span>; j &lt; n; j++) &#123;</span><br><span class="line">                degrees[i][j][MOUSE_TURN] = graph[i].length;</span><br><span class="line">                degrees[i][j][CAT_TURN] = graph[j].length;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> node : graph[<span class="number">0</span>]) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">                degrees[i][node][CAT_TURN]--;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">j</span> <span class="operator">=</span> <span class="number">1</span>; j &lt; n; j++) &#123;</span><br><span class="line">            results[<span class="number">0</span>][j][MOUSE_TURN] = MOUSE_WIN;</span><br><span class="line">            results[<span class="number">0</span>][j][CAT_TURN] = MOUSE_WIN;</span><br><span class="line">            queue.offer(<span class="keyword">new</span> <span class="title class_">int</span>[]&#123;<span class="number">0</span>, j, MOUSE_TURN&#125;);</span><br><span class="line">            queue.offer(<span class="keyword">new</span> <span class="title class_">int</span>[]&#123;<span class="number">0</span>, j, CAT_TURN&#125;);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">1</span>; i &lt; n; i++) &#123;</span><br><span class="line">            results[i][i][MOUSE_TURN] = CAT_WIN;</span><br><span class="line">            results[i][i][CAT_TURN] = CAT_WIN;</span><br><span class="line">            queue.offer(<span class="keyword">new</span> <span class="title class_">int</span>[]&#123;i, i, MOUSE_TURN&#125;);</span><br><span class="line">            queue.offer(<span class="keyword">new</span> <span class="title class_">int</span>[]&#123;i, i, CAT_TURN&#125;);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">while</span> (!queue.isEmpty()) &#123;</span><br><span class="line">            <span class="type">int</span>[] state = queue.poll();</span><br><span class="line">            <span class="type">int</span> <span class="variable">mouse</span> <span class="operator">=</span> state[<span class="number">0</span>], cat = state[<span class="number">1</span>], turn = state[<span class="number">2</span>];</span><br><span class="line">            <span class="type">int</span> <span class="variable">result</span> <span class="operator">=</span> results[mouse][cat][turn];</span><br><span class="line">            List&lt;<span class="type">int</span>[]&gt; prevStates = getPrevStates(mouse, cat, turn);</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span>[] prevState : prevStates) &#123;</span><br><span class="line">                <span class="type">int</span> <span class="variable">prevMouse</span> <span class="operator">=</span> prevState[<span class="number">0</span>], prevCat = prevState[<span class="number">1</span>], prevTurn = prevState[<span class="number">2</span>];</span><br><span class="line">                <span class="keyword">if</span> (results[prevMouse][prevCat][prevTurn] == DRAW) &#123;</span><br><span class="line">                    <span class="type">boolean</span> <span class="variable">canWin</span> <span class="operator">=</span> (result == MOUSE_WIN &amp;&amp; prevTurn == MOUSE_TURN) || (result == CAT_WIN &amp;&amp; prevTurn == CAT_TURN);</span><br><span class="line">                    <span class="keyword">if</span> (canWin) &#123;</span><br><span class="line">                        results[prevMouse][prevCat][prevTurn] = result;</span><br><span class="line">                        queue.offer(<span class="keyword">new</span> <span class="title class_">int</span>[]&#123;prevMouse, prevCat, prevTurn&#125;);</span><br><span class="line">                    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                        degrees[prevMouse][prevCat][prevTurn]--;</span><br><span class="line">                        <span class="keyword">if</span> (degrees[prevMouse][prevCat][prevTurn] == <span class="number">0</span>) &#123;</span><br><span class="line">                            <span class="type">int</span> <span class="variable">loseResult</span> <span class="operator">=</span> prevTurn == MOUSE_TURN ? CAT_WIN : MOUSE_WIN;</span><br><span class="line">                            results[prevMouse][prevCat][prevTurn] = loseResult;</span><br><span class="line">                            queue.offer(<span class="keyword">new</span> <span class="title class_">int</span>[]&#123;prevMouse, prevCat, prevTurn&#125;);</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> results[<span class="number">1</span>][<span class="number">2</span>][MOUSE_TURN];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> List&lt;<span class="type">int</span>[]&gt; getPrevStates(<span class="type">int</span> mouse, <span class="type">int</span> cat, <span class="type">int</span> turn) &#123;</span><br><span class="line">        List&lt;<span class="type">int</span>[]&gt; prevStates = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;<span class="type">int</span>[]&gt;();</span><br><span class="line">        <span class="type">int</span> <span class="variable">prevTurn</span> <span class="operator">=</span> turn == MOUSE_TURN ? CAT_TURN : MOUSE_TURN;</span><br><span class="line">        <span class="keyword">if</span> (prevTurn == MOUSE_TURN) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> prev : graph[mouse]) &#123;</span><br><span class="line">                prevStates.add(<span class="keyword">new</span> <span class="title class_">int</span>[]&#123;prev, cat, prevTurn&#125;);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> prev : graph[cat]) &#123;</span><br><span class="line">                <span class="keyword">if</span> (prev != <span class="number">0</span>) &#123;</span><br><span class="line">                    prevStates.add(<span class="keyword">new</span> <span class="title class_">int</span>[]&#123;mouse, prev, prevTurn&#125;);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> prevStates;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="C#"><figure class="iseeu highlight c#"><figcaption><span>[sol1-C#]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> <span class="built_in">int</span> MOUSE_TURN = <span class="number">0</span>, CAT_TURN = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">const</span> <span class="built_in">int</span> DRAW = <span class="number">0</span>, MOUSE_WIN = <span class="number">1</span>, CAT_WIN = <span class="number">2</span>;</span><br><span class="line">    <span class="built_in">int</span>[][] graph;</span><br><span class="line">    <span class="built_in">int</span>[,,] degrees;</span><br><span class="line">    <span class="built_in">int</span>[,,] results;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="built_in">int</span> <span class="title">CatMouseGame</span>(<span class="params"><span class="built_in">int</span>[][] graph</span>)</span> &#123;</span><br><span class="line">        <span class="built_in">int</span> n = graph.Length;</span><br><span class="line">        <span class="keyword">this</span>.graph = graph;</span><br><span class="line">        <span class="keyword">this</span>.degrees = <span class="keyword">new</span> <span class="built_in">int</span>[n, n, <span class="number">2</span>];</span><br><span class="line">        <span class="keyword">this</span>.results = <span class="keyword">new</span> <span class="built_in">int</span>[n, n, <span class="number">2</span>];</span><br><span class="line">        Queue&lt;Tuple&lt;<span class="built_in">int</span>, <span class="built_in">int</span>, <span class="built_in">int</span>&gt;&gt; queue = <span class="keyword">new</span> Queue&lt;Tuple&lt;<span class="built_in">int</span>, <span class="built_in">int</span>, <span class="built_in">int</span>&gt;&gt;();</span><br><span class="line">        <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="built_in">int</span> j = <span class="number">1</span>; j &lt; n; j++) &#123;</span><br><span class="line">                degrees[i, j, MOUSE_TURN] = graph[i].Length;</span><br><span class="line">                degrees[i, j, CAT_TURN] = graph[j].Length;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">foreach</span> (<span class="built_in">int</span> node <span class="keyword">in</span> graph[<span class="number">0</span>]) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">                degrees[i, node, CAT_TURN]--;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="built_in">int</span> j = <span class="number">1</span>; j &lt; n; j++) &#123;</span><br><span class="line">            results[<span class="number">0</span>, j, MOUSE_TURN] = MOUSE_WIN;</span><br><span class="line">            results[<span class="number">0</span>, j, CAT_TURN] = MOUSE_WIN;</span><br><span class="line">            queue.Enqueue(<span class="keyword">new</span> Tuple&lt;<span class="built_in">int</span>, <span class="built_in">int</span>, <span class="built_in">int</span>&gt;(<span class="number">0</span>, j, MOUSE_TURN));</span><br><span class="line">            queue.Enqueue(<span class="keyword">new</span> Tuple&lt;<span class="built_in">int</span>, <span class="built_in">int</span>, <span class="built_in">int</span>&gt;(<span class="number">0</span>, j, CAT_TURN));</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">1</span>; i &lt; n; i++) &#123;</span><br><span class="line">            results[i, i, MOUSE_TURN] = CAT_WIN;</span><br><span class="line">            results[i, i, CAT_TURN] = CAT_WIN;</span><br><span class="line">            queue.Enqueue(<span class="keyword">new</span> Tuple&lt;<span class="built_in">int</span>, <span class="built_in">int</span>, <span class="built_in">int</span>&gt;(i, i, MOUSE_TURN));</span><br><span class="line">            queue.Enqueue(<span class="keyword">new</span> Tuple&lt;<span class="built_in">int</span>, <span class="built_in">int</span>, <span class="built_in">int</span>&gt;(i, i, CAT_TURN));</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">while</span> (queue.Count &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            Tuple&lt;<span class="built_in">int</span>, <span class="built_in">int</span>, <span class="built_in">int</span>&gt; state = queue.Dequeue();</span><br><span class="line">            <span class="built_in">int</span> mouse = state.Item1, cat = state.Item2, turn = state.Item3;</span><br><span class="line">            <span class="built_in">int</span> result = results[mouse, cat, turn];</span><br><span class="line">            IList&lt;Tuple&lt;<span class="built_in">int</span>, <span class="built_in">int</span>, <span class="built_in">int</span>&gt;&gt; prevStates = GetPrevStates(mouse, cat, turn);</span><br><span class="line">            <span class="keyword">foreach</span> (Tuple&lt;<span class="built_in">int</span>, <span class="built_in">int</span>, <span class="built_in">int</span>&gt; prevState <span class="keyword">in</span> prevStates) &#123;</span><br><span class="line">                <span class="built_in">int</span> prevMouse = prevState.Item1, prevCat = prevState.Item2, prevTurn = prevState.Item3;</span><br><span class="line">                <span class="keyword">if</span> (results[prevMouse, prevCat, prevTurn] == DRAW) &#123;</span><br><span class="line">                    <span class="built_in">bool</span> canWin = (result == MOUSE_WIN &amp;&amp; prevTurn == MOUSE_TURN) || (result == CAT_WIN &amp;&amp; prevTurn == CAT_TURN);</span><br><span class="line">                    <span class="keyword">if</span> (canWin) &#123;</span><br><span class="line">                        results[prevMouse, prevCat, prevTurn] = result;</span><br><span class="line">                        queue.Enqueue(<span class="keyword">new</span> Tuple&lt;<span class="built_in">int</span>, <span class="built_in">int</span>, <span class="built_in">int</span>&gt;(prevMouse, prevCat, prevTurn));</span><br><span class="line">                    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                        degrees[prevMouse, prevCat, prevTurn]--;</span><br><span class="line">                        <span class="keyword">if</span> (degrees[prevMouse, prevCat, prevTurn] == <span class="number">0</span>) &#123;</span><br><span class="line">                            <span class="built_in">int</span> loseResult = prevTurn == MOUSE_TURN ? CAT_WIN : MOUSE_WIN;</span><br><span class="line">                            results[prevMouse, prevCat, prevTurn] = loseResult;</span><br><span class="line">                            queue.Enqueue(<span class="keyword">new</span> Tuple&lt;<span class="built_in">int</span>, <span class="built_in">int</span>, <span class="built_in">int</span>&gt;(prevMouse, prevCat, prevTurn));</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> results[<span class="number">1</span>, <span class="number">2</span>, MOUSE_TURN];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> IList&lt;Tuple&lt;<span class="built_in">int</span>, <span class="built_in">int</span>, <span class="built_in">int</span>&gt;&gt; GetPrevStates(<span class="built_in">int</span> mouse, <span class="built_in">int</span> cat, <span class="built_in">int</span> turn) &#123;</span><br><span class="line">        IList&lt;Tuple&lt;<span class="built_in">int</span>, <span class="built_in">int</span>, <span class="built_in">int</span>&gt;&gt; prevStates = <span class="keyword">new</span> List&lt;Tuple&lt;<span class="built_in">int</span>, <span class="built_in">int</span>, <span class="built_in">int</span>&gt;&gt;();</span><br><span class="line">        <span class="built_in">int</span> prevTurn = turn == MOUSE_TURN ? CAT_TURN : MOUSE_TURN;</span><br><span class="line">        <span class="keyword">if</span> (prevTurn == MOUSE_TURN) &#123;</span><br><span class="line">            <span class="keyword">foreach</span> (<span class="built_in">int</span> prev <span class="keyword">in</span> graph[mouse]) &#123;</span><br><span class="line">                prevStates.Add(<span class="keyword">new</span> Tuple&lt;<span class="built_in">int</span>, <span class="built_in">int</span>, <span class="built_in">int</span>&gt;(prev, cat, prevTurn));</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">foreach</span> (<span class="built_in">int</span> prev <span class="keyword">in</span> graph[cat]) &#123;</span><br><span class="line">                <span class="keyword">if</span> (prev != <span class="number">0</span>) &#123;</span><br><span class="line">                    prevStates.Add(<span class="keyword">new</span> Tuple&lt;<span class="built_in">int</span>, <span class="built_in">int</span>, <span class="built_in">int</span>&gt;(mouse, prev, prevTurn));</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> prevStates;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="C++"><figure class="iseeu highlight c++"><figcaption><span>[sol1-C++]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="type">const</span> <span class="type">int</span> MOUSE_TURN = <span class="number">0</span>, CAT_TURN = <span class="number">1</span>;</span><br><span class="line">    <span class="type">const</span> <span class="type">int</span> DRAW = <span class="number">0</span>, MOUSE_WIN = <span class="number">1</span>, CAT_WIN = <span class="number">2</span>;</span><br><span class="line">    vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; graph;</span><br><span class="line">    vector&lt;vector&lt;vector&lt;<span class="type">int</span>&gt;&gt;&gt; degrees;</span><br><span class="line">    vector&lt;vector&lt;vector&lt;<span class="type">int</span>&gt;&gt;&gt; results;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">catMouseGame</span><span class="params">(vector&lt;vector&lt;<span class="type">int</span>&gt;&gt;&amp; graph)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> n = graph.<span class="built_in">size</span>();</span><br><span class="line">        <span class="keyword">this</span>-&gt;graph = graph;</span><br><span class="line">        <span class="keyword">this</span>-&gt;degrees = vector&lt;vector&lt;vector&lt;<span class="type">int</span>&gt;&gt;&gt;(n, vector&lt;vector&lt;<span class="type">int</span>&gt;&gt;(n, <span class="built_in">vector</span>&lt;<span class="type">int</span>&gt;(<span class="number">2</span>)));</span><br><span class="line">        <span class="keyword">this</span>-&gt;results = vector&lt;vector&lt;vector&lt;<span class="type">int</span>&gt;&gt;&gt;(n, vector&lt;vector&lt;<span class="type">int</span>&gt;&gt;(n, <span class="built_in">vector</span>&lt;<span class="type">int</span>&gt;(<span class="number">2</span>)));</span><br><span class="line">        queue&lt;tuple&lt;<span class="type">int</span>, <span class="type">int</span>, <span class="type">int</span>&gt;&gt; qu;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">1</span>; j &lt; n; j++) &#123;</span><br><span class="line">                degrees[i][j][MOUSE_TURN] = graph[i].<span class="built_in">size</span>();</span><br><span class="line">                degrees[i][j][CAT_TURN] = graph[j].<span class="built_in">size</span>();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> node : graph[<span class="number">0</span>]) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">                degrees[i][node][CAT_TURN]--;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">1</span>; j &lt; n; j++) &#123;</span><br><span class="line">            results[<span class="number">0</span>][j][MOUSE_TURN] = MOUSE_WIN;</span><br><span class="line">            results[<span class="number">0</span>][j][CAT_TURN] = MOUSE_WIN;</span><br><span class="line">            qu.<span class="built_in">emplace</span>(<span class="number">0</span>, j, MOUSE_TURN);</span><br><span class="line">            qu.<span class="built_in">emplace</span>(<span class="number">0</span>, j, CAT_TURN);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt; n; i++) &#123;</span><br><span class="line">            results[i][i][MOUSE_TURN] = CAT_WIN;</span><br><span class="line">            results[i][i][CAT_TURN] = CAT_WIN;</span><br><span class="line">            qu.<span class="built_in">emplace</span>(i, i, MOUSE_TURN);</span><br><span class="line">            qu.<span class="built_in">emplace</span>(i, i, CAT_TURN);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">while</span> (!qu.<span class="built_in">empty</span>()) &#123;</span><br><span class="line">            <span class="keyword">auto</span> [mouse, cat, turn] = qu.<span class="built_in">front</span>();</span><br><span class="line">            qu.<span class="built_in">pop</span>();</span><br><span class="line">            <span class="type">int</span> result = results[mouse][cat][turn];</span><br><span class="line">            vector&lt;tuple&lt;<span class="type">int</span>, <span class="type">int</span>, <span class="type">int</span>&gt;&gt; prevStates = <span class="built_in">GetPrevStates</span>(mouse, cat, turn);</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">auto</span> &amp; [prevMouse, prevCat, prevTurn] : prevStates) &#123;</span><br><span class="line">                <span class="keyword">if</span> (results[prevMouse][prevCat][prevTurn] == DRAW) &#123;</span><br><span class="line">                    <span class="type">bool</span> canWin = (result == MOUSE_WIN &amp;&amp; prevTurn == MOUSE_TURN) || (result == CAT_WIN &amp;&amp; prevTurn == CAT_TURN);</span><br><span class="line">                    <span class="keyword">if</span> (canWin) &#123;</span><br><span class="line">                        results[prevMouse][prevCat][prevTurn] = result;</span><br><span class="line">                        qu.<span class="built_in">emplace</span>(prevMouse, prevCat, prevTurn);</span><br><span class="line">                    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (--degrees[prevMouse][prevCat][prevTurn] == <span class="number">0</span>) &#123;</span><br><span class="line">                        <span class="type">int</span> loseResult = prevTurn == MOUSE_TURN ? CAT_WIN : MOUSE_WIN;</span><br><span class="line">                        results[prevMouse][prevCat][prevTurn] = loseResult;</span><br><span class="line">                        qu.<span class="built_in">emplace</span>(prevMouse, prevCat, prevTurn);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> results[<span class="number">1</span>][<span class="number">2</span>][MOUSE_TURN];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    vector&lt;tuple&lt;<span class="type">int</span>, <span class="type">int</span>, <span class="type">int</span>&gt;&gt; <span class="built_in">GetPrevStates</span>(<span class="type">int</span> mouse, <span class="type">int</span> cat, <span class="type">int</span> turn) &#123;</span><br><span class="line">        vector&lt;tuple&lt;<span class="type">int</span>, <span class="type">int</span>, <span class="type">int</span>&gt;&gt; prevStates;</span><br><span class="line">        <span class="type">int</span> prevTurn = turn == MOUSE_TURN ? CAT_TURN : MOUSE_TURN;</span><br><span class="line">        <span class="keyword">if</span> (prevTurn == MOUSE_TURN) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> &amp; prev : graph[mouse]) &#123;</span><br><span class="line">                prevStates.<span class="built_in">emplace_back</span>(prev, cat, prevTurn);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> &amp; prev : graph[cat]) &#123;</span><br><span class="line">                <span class="keyword">if</span> (prev != <span class="number">0</span>) &#123;</span><br><span class="line">                    prevStates.<span class="built_in">emplace_back</span>(mouse, prev, prevTurn);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> prevStates;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><figcaption><span>[sol1-Python3]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">MOUSE_TURN = <span class="number">0</span></span><br><span class="line">CAT_TURN = <span class="number">1</span></span><br><span class="line"></span><br><span class="line">DRAW = <span class="number">0</span></span><br><span class="line">MOUSE_WIN = <span class="number">1</span></span><br><span class="line">CAT_WIN = <span class="number">2</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">catMouseGame</span>(<span class="params">self, graph: <span class="type">List</span>[<span class="type">List</span>[<span class="built_in">int</span>]]</span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        n = <span class="built_in">len</span>(graph)</span><br><span class="line">        degrees = [[[<span class="number">0</span>, <span class="number">0</span>] <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(n)] <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(n)]</span><br><span class="line">        results = [[[<span class="number">0</span>, <span class="number">0</span>] <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(n)] <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(n)]</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(n):</span><br><span class="line">            <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, n):</span><br><span class="line">                degrees[i][j][MOUSE_TURN] = <span class="built_in">len</span>(graph[i])</span><br><span class="line">                degrees[i][j][CAT_TURN] = <span class="built_in">len</span>(graph[j])</span><br><span class="line">        <span class="keyword">for</span> y <span class="keyword">in</span> graph[<span class="number">0</span>]:</span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(n):</span><br><span class="line">                degrees[i][y][CAT_TURN] -= <span class="number">1</span></span><br><span class="line"></span><br><span class="line">        q = deque()</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, n):</span><br><span class="line">            results[<span class="number">0</span>][j][MOUSE_TURN] = MOUSE_WIN</span><br><span class="line">            results[<span class="number">0</span>][j][CAT_TURN] = MOUSE_WIN</span><br><span class="line">            q.append((<span class="number">0</span>, j, MOUSE_TURN))</span><br><span class="line">            q.append((<span class="number">0</span>, j, CAT_TURN))</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, n):</span><br><span class="line">            results[i][i][MOUSE_TURN] = CAT_WIN</span><br><span class="line">            results[i][i][CAT_TURN] = CAT_WIN</span><br><span class="line">            q.append((i, i, MOUSE_TURN))</span><br><span class="line">            q.append((i, i, CAT_TURN))</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> q:</span><br><span class="line">            mouse, cat, turn = q.popleft()</span><br><span class="line">            result = results[mouse][cat][turn]</span><br><span class="line">            <span class="keyword">if</span> turn == MOUSE_TURN:</span><br><span class="line">                prevStates = [(mouse, prev, CAT_TURN) <span class="keyword">for</span> prev <span class="keyword">in</span> graph[cat]]</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                prevStates = [(prev, cat, MOUSE_TURN) <span class="keyword">for</span> prev <span class="keyword">in</span> graph[mouse]]</span><br><span class="line">            <span class="keyword">for</span> prevMouse, prevCat, prevTurn <span class="keyword">in</span> prevStates:</span><br><span class="line">                <span class="keyword">if</span> prevCat == <span class="number">0</span>:</span><br><span class="line">                    <span class="keyword">continue</span></span><br><span class="line">                <span class="keyword">if</span> results[prevMouse][prevCat][prevTurn] == DRAW:</span><br><span class="line">                    canWin = result == MOUSE_WIN <span class="keyword">and</span> prevTurn == MOUSE_TURN <span class="keyword">or</span> result == CAT_WIN <span class="keyword">and</span> prevTurn == CAT_TURN</span><br><span class="line">                    <span class="keyword">if</span> canWin:</span><br><span class="line">                        results[prevMouse][prevCat][prevTurn] = result</span><br><span class="line">                        q.append((prevMouse, prevCat, prevTurn))</span><br><span class="line">                    <span class="keyword">else</span>:</span><br><span class="line">                        degrees[prevMouse][prevCat][prevTurn] -= <span class="number">1</span></span><br><span class="line">                        <span class="keyword">if</span> degrees[prevMouse][prevCat][prevTurn] == <span class="number">0</span>:</span><br><span class="line">                            results[prevMouse][prevCat][prevTurn] = CAT_WIN <span class="keyword">if</span> prevTurn == MOUSE_TURN <span class="keyword">else</span> MOUSE_WIN</span><br><span class="line">                            q.append((prevMouse, prevCat, prevTurn))</span><br><span class="line">        <span class="keyword">return</span> results[<span class="number">1</span>][<span class="number">2</span>][MOUSE_TURN]</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><figcaption><span>[sol1-JavaScript]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="variable constant_">MOUSE_TURN</span> = <span class="number">0</span>, <span class="variable constant_">CAT_TURN</span> = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="variable constant_">DRAW</span> = <span class="number">0</span>, <span class="variable constant_">MOUSE_WIN</span> = <span class="number">1</span>, <span class="variable constant_">CAT_WIN</span> = <span class="number">2</span>;</span><br><span class="line"><span class="keyword">var</span> catMouseGame = <span class="keyword">function</span>(<span class="params">graph</span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> n = graph.<span class="property">length</span>;</span><br><span class="line">    degrees = <span class="keyword">new</span> <span class="title class_">Array</span>(n).<span class="title function_">fill</span>(<span class="number">0</span>).<span class="title function_">map</span>(<span class="function">() =&gt;</span> <span class="keyword">new</span> <span class="title class_">Array</span>(n).<span class="title function_">fill</span>(<span class="number">0</span>).<span class="title function_">map</span>(<span class="function">() =&gt;</span> <span class="keyword">new</span> <span class="title class_">Array</span>(<span class="number">2</span>).<span class="title function_">fill</span>(<span class="number">0</span>)));</span><br><span class="line">    results = <span class="keyword">new</span> <span class="title class_">Array</span>(n).<span class="title function_">fill</span>(<span class="number">0</span>).<span class="title function_">map</span>(<span class="function">() =&gt;</span> <span class="keyword">new</span> <span class="title class_">Array</span>(n).<span class="title function_">fill</span>(<span class="number">0</span>).<span class="title function_">map</span>(<span class="function">() =&gt;</span> <span class="keyword">new</span> <span class="title class_">Array</span>(<span class="number">2</span>).<span class="title function_">fill</span>(<span class="number">0</span>)));</span><br><span class="line">    <span class="keyword">const</span> queue = [];</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">let</span> j = <span class="number">1</span>; j &lt; n; j++) &#123;</span><br><span class="line">            degrees[i][j][<span class="variable constant_">MOUSE_TURN</span>] = graph[i].<span class="property">length</span>;</span><br><span class="line">            degrees[i][j][<span class="variable constant_">CAT_TURN</span>] = graph[j].<span class="property">length</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">const</span> node <span class="keyword">of</span> graph[<span class="number">0</span>]) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">            degrees[i][node][<span class="variable constant_">CAT_TURN</span>]--;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> j = <span class="number">1</span>; j &lt; n; j++) &#123;</span><br><span class="line">        results[<span class="number">0</span>][j][<span class="variable constant_">MOUSE_TURN</span>] = <span class="variable constant_">MOUSE_WIN</span>;</span><br><span class="line">        results[<span class="number">0</span>][j][<span class="variable constant_">CAT_TURN</span>] = <span class="variable constant_">MOUSE_WIN</span>;</span><br><span class="line">        queue.<span class="title function_">push</span>([<span class="number">0</span>, j, <span class="variable constant_">MOUSE_TURN</span>]);</span><br><span class="line">        queue.<span class="title function_">push</span>([<span class="number">0</span>, j, <span class="variable constant_">CAT_TURN</span>]);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">1</span>; i &lt; n; i++) &#123;</span><br><span class="line">        results[i][i][<span class="variable constant_">MOUSE_TURN</span>] = <span class="variable constant_">CAT_WIN</span>;</span><br><span class="line">        results[i][i][<span class="variable constant_">CAT_TURN</span>] = <span class="variable constant_">CAT_WIN</span>;</span><br><span class="line">        queue.<span class="title function_">push</span>([i, i, <span class="variable constant_">MOUSE_TURN</span>]);</span><br><span class="line">        queue.<span class="title function_">push</span>([i, i, <span class="variable constant_">CAT_TURN</span>]);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span> (queue.<span class="property">length</span>) &#123;</span><br><span class="line">        <span class="keyword">const</span> state = queue.<span class="title function_">shift</span>();</span><br><span class="line">        <span class="keyword">const</span> mouse = state[<span class="number">0</span>], cat = state[<span class="number">1</span>], turn = state[<span class="number">2</span>];</span><br><span class="line">        <span class="keyword">const</span> result = results[mouse][cat][turn];</span><br><span class="line">        <span class="keyword">const</span> prevStates = <span class="title function_">getPrevStates</span>(mouse, cat, turn, graph);</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">const</span> prevState <span class="keyword">of</span> prevStates) &#123;</span><br><span class="line">            <span class="keyword">let</span> prevMouse = prevState[<span class="number">0</span>], prevCat = prevState[<span class="number">1</span>], prevTurn = prevState[<span class="number">2</span>];</span><br><span class="line">            <span class="keyword">if</span> (results[prevMouse][prevCat][prevTurn] === <span class="variable constant_">DRAW</span>) &#123;</span><br><span class="line">                <span class="keyword">const</span> canWin = (result === <span class="variable constant_">MOUSE_WIN</span> &amp;&amp; prevTurn === <span class="variable constant_">MOUSE_TURN</span>) || (result === <span class="variable constant_">CAT_WIN</span> &amp;&amp; prevTurn === <span class="variable constant_">CAT_TURN</span>);</span><br><span class="line">                <span class="keyword">if</span> (canWin) &#123;</span><br><span class="line">                    results[prevMouse][prevCat][prevTurn] = result;</span><br><span class="line">                    queue.<span class="title function_">push</span>([prevMouse, prevCat, prevTurn]);</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    degrees[prevMouse][prevCat][prevTurn]--;</span><br><span class="line">                    <span class="keyword">if</span> (degrees[prevMouse][prevCat][prevTurn] == <span class="number">0</span>) &#123;</span><br><span class="line">                        <span class="keyword">const</span> loseResult = prevTurn === <span class="variable constant_">MOUSE_TURN</span> ? <span class="variable constant_">CAT_WIN</span> : <span class="variable constant_">MOUSE_WIN</span>;</span><br><span class="line">                        results[prevMouse][prevCat][prevTurn] = loseResult;</span><br><span class="line">                        queue.<span class="title function_">push</span>([prevMouse, prevCat, prevTurn]);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> results[<span class="number">1</span>][<span class="number">2</span>][<span class="variable constant_">MOUSE_TURN</span>];</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">getPrevStates</span> = (<span class="params">mouse, cat, turn, graph</span>) =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> prevStates = [];</span><br><span class="line">    <span class="keyword">const</span> prevTurn = turn == <span class="variable constant_">MOUSE_TURN</span> ? <span class="variable constant_">CAT_TURN</span> : <span class="variable constant_">MOUSE_TURN</span>;</span><br><span class="line">    <span class="keyword">if</span> (prevTurn === <span class="variable constant_">MOUSE_TURN</span>) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">const</span> prev <span class="keyword">of</span> graph[mouse]) &#123;</span><br><span class="line">            prevStates.<span class="title function_">push</span>([prev, cat, prevTurn]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">const</span> prev <span class="keyword">of</span> graph[cat]) &#123;</span><br><span class="line">            <span class="keyword">if</span> (prev != <span class="number">0</span>) &#123;</span><br><span class="line">                prevStates.<span class="title function_">push</span>([mouse, prev, prevTurn]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> prevStates;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Go"><figure class="iseeu highlight go"><figcaption><span>[sol1-Golang]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> (</span><br><span class="line">    mouseTurn = <span class="number">0</span></span><br><span class="line">    catTurn   = <span class="number">1</span></span><br><span class="line"></span><br><span class="line">    draw     = <span class="number">0</span></span><br><span class="line">    mouseWin = <span class="number">1</span></span><br><span class="line">    catWin   = <span class="number">2</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">catMouseGame</span><span class="params">(graph [][]<span class="type">int</span>)</span></span> <span class="type">int</span> &#123;</span><br><span class="line">    n := <span class="built_in">len</span>(graph)</span><br><span class="line">    degrees := <span class="built_in">make</span>([][][<span class="number">2</span>]<span class="type">int</span>, n)</span><br><span class="line">    results := <span class="built_in">make</span>([][][<span class="number">2</span>]<span class="type">int</span>, n)</span><br><span class="line">    <span class="keyword">for</span> i := <span class="keyword">range</span> degrees &#123;</span><br><span class="line">        degrees[i] = <span class="built_in">make</span>([][<span class="number">2</span>]<span class="type">int</span>, n)</span><br><span class="line">        results[i] = <span class="built_in">make</span>([][<span class="number">2</span>]<span class="type">int</span>, n)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> i, to := <span class="keyword">range</span> graph &#123;</span><br><span class="line">        <span class="keyword">for</span> j := <span class="number">1</span>; j &lt; n; j++ &#123;</span><br><span class="line">            degrees[i][j][mouseTurn] = <span class="built_in">len</span>(to)</span><br><span class="line">            degrees[i][j][catTurn] = <span class="built_in">len</span>(graph[j])</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> _, y := <span class="keyword">range</span> graph[<span class="number">0</span>] &#123;</span><br><span class="line">        <span class="keyword">for</span> i := <span class="keyword">range</span> degrees &#123;</span><br><span class="line">            degrees[i][y][catTurn]--</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">type</span> state <span class="keyword">struct</span>&#123; mouse, cat, turn <span class="type">int</span> &#125;</span><br><span class="line">    q := []state&#123;&#125;</span><br><span class="line">    <span class="keyword">for</span> j := <span class="number">1</span>; j &lt; n; j++ &#123;</span><br><span class="line">        results[<span class="number">0</span>][j][mouseTurn] = mouseWin</span><br><span class="line">        results[<span class="number">0</span>][j][catTurn] = mouseWin</span><br><span class="line">        q = <span class="built_in">append</span>(q, state&#123;<span class="number">0</span>, j, mouseTurn&#125;, state&#123;<span class="number">0</span>, j, catTurn&#125;)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> i := <span class="number">1</span>; i &lt; n; i++ &#123;</span><br><span class="line">        results[i][i][mouseTurn] = catWin</span><br><span class="line">        results[i][i][catTurn] = catWin</span><br><span class="line">        q = <span class="built_in">append</span>(q, state&#123;i, i, mouseTurn&#125;, state&#123;i, i, catTurn&#125;)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    getPrevStates := <span class="function"><span class="keyword">func</span><span class="params">(s state)</span></span> (prevStates []state) &#123;</span><br><span class="line">        <span class="keyword">if</span> s.turn == mouseTurn &#123;</span><br><span class="line">            <span class="keyword">for</span> _, prev := <span class="keyword">range</span> graph[s.cat] &#123;</span><br><span class="line">                <span class="keyword">if</span> prev != <span class="number">0</span> &#123;</span><br><span class="line">                    prevStates = <span class="built_in">append</span>(prevStates, state&#123;s.mouse, prev, catTurn&#125;)</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">for</span> _, prev := <span class="keyword">range</span> graph[s.mouse] &#123;</span><br><span class="line">                prevStates = <span class="built_in">append</span>(prevStates, state&#123;prev, s.cat, mouseTurn&#125;)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> <span class="built_in">len</span>(q) &gt; <span class="number">0</span> &#123;</span><br><span class="line">        s := q[<span class="number">0</span>]</span><br><span class="line">        q = q[<span class="number">1</span>:]</span><br><span class="line">        result := results[s.mouse][s.cat][s.turn]</span><br><span class="line">        <span class="keyword">for</span> _, p := <span class="keyword">range</span> getPrevStates(s) &#123;</span><br><span class="line">            prevMouse, prevCat, prevTurn := p.mouse, p.cat, p.turn</span><br><span class="line">            <span class="keyword">if</span> results[prevMouse][prevCat][prevTurn] == draw &#123;</span><br><span class="line">                canWin := result == mouseWin &amp;&amp; prevTurn == mouseTurn || result == catWin &amp;&amp; prevTurn == catTurn</span><br><span class="line">                <span class="keyword">if</span> canWin &#123;</span><br><span class="line">                    results[prevMouse][prevCat][prevTurn] = result</span><br><span class="line">                    q = <span class="built_in">append</span>(q, p)</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    degrees[prevMouse][prevCat][prevTurn]--</span><br><span class="line">                    <span class="keyword">if</span> degrees[prevMouse][prevCat][prevTurn] == <span class="number">0</span> &#123;</span><br><span class="line">                        <span class="keyword">if</span> prevTurn == mouseTurn &#123;</span><br><span class="line">                            results[prevMouse][prevCat][prevTurn] = catWin</span><br><span class="line">                        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                            results[prevMouse][prevCat][prevTurn] = mouseWin</span><br><span class="line">                        &#125;</span><br><span class="line">                        q = <span class="built_in">append</span>(q, p)</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> results[<span class="number">1</span>][<span class="number">2</span>][mouseTurn]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>复杂度分析</strong></p>
+<ul>
+<li><p>时间复杂度：O(n^3)，其中 n 是图中的节点数。状态数是 O(n^2)，对于每个状态需要 O(n) 的时间计算状态值，因此总时间复杂度是 O(n^3)。</p>
+</li>
+<li><p>空间复杂度：O(n^2)，其中 n 是图中的节点数。需要记录每个状态的度和结果，状态数是 O(n^2)。</p>
+</li>
+</ul>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <!--<div class="article-copyright-info-container">-->
+    <!--&lt;!&ndash;<ul>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><strong>Title:</strong> 0913-猫和老鼠</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><strong>Author:</strong> Raphael Liu</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><strong>Created at&ndash;&gt;-->
+                <!--&lt;!&ndash;:</strong> 2023-09-13 00:47:26</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;&ndash;&gt;-->
+            <!--&lt;!&ndash;<li>&ndash;&gt;-->
+                <!--&lt;!&ndash;<strong>Updated at&ndash;&gt;-->
+                    <!--&lt;!&ndash;:</strong> 2023-09-13 16:06:23&ndash;&gt;-->
+            <!--&lt;!&ndash;</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;<li>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;<strong>Link:</strong> https://fida.ltd/2023/09/13/0913-猫和老鼠/&ndash;&gt;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;</li>&ndash;&gt;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;<li>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;<strong>&ndash;&gt;&ndash;&gt;-->
+                <!--&lt;!&ndash;&lt;!&ndash;License:&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;</strong>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0</a>.&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;&ndash;&gt;&ndash;&gt;-->
+
+        <!--&lt;!&ndash;&lt;!&ndash;</li>&ndash;&gt;&ndash;&gt;-->
+    <!--&lt;!&ndash;</ul>&ndash;&gt;-->
+<!--</div>-->
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box">
+                
+                    <li class="tag-item">
+                        <a href="/tags/algorithm/">#algorithm</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item">
+                        <a href="/tags/HARD/">#HARD</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                        rel="prev"
+                        href="/2023/09/13/0917-%E4%BB%85%E4%BB%85%E5%8F%8D%E8%BD%AC%E5%AD%97%E6%AF%8D/"
+                        >
+                            <span class="left arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">0917-仅仅反转字母</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                        rel="next"
+                        href="/2023/09/13/0919-%E5%AE%8C%E5%85%A8%E4%BA%8C%E5%8F%89%E6%A0%91%E6%8F%92%E5%85%A5%E5%99%A8/"
+                        >
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">0919-完全二叉树插入器</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+
+        
+            <div class="comment-container">
+                <div class="comments-container pjax">
+    <div id="comment-anchor"></div>
+    <div class="comment-area-title">
+        <i class="fa-solid fa-comments"></i>&nbsp;Comments
+    </div>
+    
+
+        
+            
+ 
+    <div id="waline"></div>
+    <script type="module"  data-swup-reload-script>
+        import { init } from 'https://evan.beee.top/js/waline.mjs';
+
+        function loadWaline() {
+            init({
+                el: '#waline',
+                serverURL: 'https://example.example.com',
+                lang: 'zh-CN',
+                dark: 'body[class~="dark-mode"]',
+                requiredMeta: ['nick','mail'], // cannot customize by theme config, change it yourself
+            });
+        }
+
+        if ('true') {
+            const loadWalineTimeout = setTimeout(() => {
+                loadWaline();
+                clearTimeout(loadWalineTimeout);
+            }, 1000);
+        } else {
+            window.addEventListener('DOMContentLoaded', loadWaline);
+        }
+        
+    </script>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+
+    
+        <div class="toc-content-container">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">On this page</div>
+        <div class="page-title">0913-猫和老鼠</div>
+        
+
+    </div>
+</div>
+        </div>
+    
+</div>
+
+
+
+                
+
+            </div>
+
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2022</span>
+              -
+            
+            2023&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">Raphael Liu</a>
+        </div>
+        
+            <script data-swup-reload-script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">UV:</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">PV:</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <!--<div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">-->
+            <!--<span class="lg:block text-sm">powered_by</span>-->
+            <!--&lt;!&ndash;<span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.4.4</a></span>&ndash;&gt;-->
+        <!--</div>-->
+        
+        <!---->
+            <!--<div>-->
+                <!--runtime <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hours <span class="odometer" id="runtime_minutes"></span> minutes <span class="odometer" id="runtime_seconds"></span> seconds-->
+            <!--</div>-->
+        <!---->
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fa-regular fa-comments"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-expand-width flex justify-center items-center">
+            <i class="fa-regular fa-expand"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fa-solid fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa-solid fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa-solid fa-spinner fa-spin-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+    
+<script src="/js/libs/Swup.min.js"></script>
+
+<script src="/js/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/libs/SwupScrollPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+        ],
+        containers: ["#swup"],
+    });
+
+    swup.hooks.on("page:view", () => {
+        Global.refresh();
+    });
+
+    // if (document.readyState === "complete") {
+    //
+    // } else {
+    //     document.addEventListener("DOMContentLoaded", () => init());
+    // }
+</script>
+
+
+
+
+
+
+<script src="/js/utils.js" type="module"></script>
+
+<script src="/js/main.js" type="module"></script>
+
+<script src="/js/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/layouts/categoryList.js" type="module"></script>
+
+
+
+    
+<script src="/js/tools/localSearch.js"></script>
+
+
+
+
+    
+<script src="/js/tools/codeBlock.js"></script>
+
+
+
+
+    
+<script src="/js/layouts/lazyload.js"></script>
+
+
+
+
+    
+<script src="/js/tools/runtime.js"></script>
+
+    
+<script src="/js/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/libs/Typed.min.js"></script>
+
+  
+<script src="/js/plugins/typed.js"></script>
+
+
+
+
+
+
+
+<div class="post-scripts" data-swup-reload-script>
+    
+        
+<script src="/js/libs/anime.min.js"></script>
+
+        
+<script src="/js/tools/tocToggle.js" type="module"></script>
+
+<script src="/js/layouts/toc.js" type="module"></script>
+
+<script src="/js/plugins/tabs.js" type="module"></script>
+
+    
+</div>
+
+
+</body>
+</html>

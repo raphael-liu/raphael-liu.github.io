@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="Raphael Liu">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/2023/09/13/0202-快乐数/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="编写一个算法来判断一个数 n 是不是快乐数。 「快乐数」  定义为：  对于一个正整数，每一次将该数替换为它每个位置上的数字的平方和。 然后重复这个过程直到这个数变为 1，也可能是 无限循环 但始终变不到 1。 如果这个过程 结果为  1，那么这个数就是快乐数。  如果 n 是 快乐数 就返回 true ；不是，则返回 false 。 示例 1： **输入：** n &#x3D; 19 **输出：** tr">
+<meta property="og:type" content="article">
+<meta property="og:title" content="0202-快乐数">
+<meta property="og:url" content="http://example.com/2023/09/13/0202-%E5%BF%AB%E4%B9%90%E6%95%B0/index.html">
+<meta property="og:site_name" content="Raphael&#39;s Blog">
+<meta property="og:description" content="编写一个算法来判断一个数 n 是不是快乐数。 「快乐数」  定义为：  对于一个正整数，每一次将该数替换为它每个位置上的数字的平方和。 然后重复这个过程直到这个数变为 1，也可能是 无限循环 但始终变不到 1。 如果这个过程 结果为  1，那么这个数就是快乐数。  如果 n 是 快乐数 就返回 true ；不是，则返回 false 。 示例 1： **输入：** n &#x3D; 19 **输出：** tr">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/9d8ce931-e835-45d1-a3d2-ab54b52b5377">
+<meta property="og:image" content="https://assets.leetcode-cn.com/solution-static/202/202_fig1.png">
+<meta property="og:image" content="https://assets.leetcode-cn.com/solution-static/202/202_fig2.png">
+<meta property="og:image" content="https://assets.leetcode-cn.com/solution-static/202/1.jpg">
+<meta property="og:image" content="https://assets.leetcode-cn.com/solution-static/202/2.jpg">
+<meta property="og:image" content="https://assets.leetcode-cn.com/solution-static/202/3.jpg">
+<meta property="og:image" content="https://assets.leetcode-cn.com/solution-static/202/4.jpg">
+<meta property="og:image" content="https://assets.leetcode-cn.com/solution-static/202/5.jpg">
+<meta property="og:image" content="https://assets.leetcode-cn.com/solution-static/202/6.jpg">
+<meta property="og:image" content="https://assets.leetcode-cn.com/solution-static/202/7.jpg">
+<meta property="og:image" content="https://assets.leetcode-cn.com/solution-static/202/8.jpg">
+<meta property="article:published_time" content="2023-09-12T16:47:26.000Z">
+<meta property="article:modified_time" content="2023-09-13T02:43:44.817Z">
+<meta property="article:author" content="Raphael Liu">
+<meta property="article:tag" content="algorithm">
+<meta property="article:tag" content="EASY">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/9d8ce931-e835-45d1-a3d2-ab54b52b5377">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/redefine-favicon.svg" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/redefine-favicon.svg">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/redefine-favicon.svg">
+    <!--- Page Info-->
+    
+    <title>
+        
+            0202-快乐数 -
+        
+        Raphael&#39;s Blog
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/css/build/styles.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/fonts.css">
+
+    
+<link rel="stylesheet" href="/fonts/Satoshi/satoshi.css">
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+
+    <!--- Inject Part-->
+    
+    <script id="hexo-configurations">
+    let Global = window.Global || {};
+    Global.hexo_config = {"hostname":"example.com","root":"/","language":"zh_CN"};
+    Global.theme_config = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":true,"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"open_graph":true,"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-wqery6-light.webp","dark":"/images/wallhaven-wqery6-dark.webp"},"title":"Raphael's Blog","subtitle":{"text":["格物致知","坚持做正确的事情"],"hitokoto":{"enable":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":false,"links":{"github":"https://github.com/raphael-liu","email":"raphael@buaa.edu.cn# your email"},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.4.4","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"links":{"首页":{"path":"/","icon":"fa-regular fa-house"},"文章":{"path":"/archives","icon":"fa-regular fa-archive"},"关于":{"icon":"fa-regular fa-user","submenus":{"我":"/about/me","Github":"https://github.com/raphael-liu"}}},"search":{"enable":true,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"links":null},"article_date_format":"auto","categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}},"footerStart":"2022/8/17 11:45:14"};
+    Global.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    Global.data_config = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="swup-progress-icon">
+            <i class="fa-solid fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container" id="swup">
+
+    
+
+    <div class="main-content-container">
+
+
+        <div class="main-content-header">
+            <header class="navbar-container">
+    
+    <div class="navbar-content">
+        <div class="left">
+            
+            <a class="logo-title" href="http://example.com/">
+                
+                Raphael&#39;s Blog
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/"  >
+                                    
+                                        
+                                            <i class="fa-regular fa-house"></i>
+                                        
+                                        首页
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/archives"  >
+                                    
+                                        
+                                            <i class="fa-regular fa-archive"></i>
+                                        
+                                        文章
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="has-dropdown" 
+                                    href="#" onClick="return false;">
+                                    
+                                        
+                                            <i class="fa-regular fa-user"></i>
+                                        
+                                        关于&nbsp;<i class="fa-solid fa-chevron-down"></i>
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                                    <ul class="sub-menu">
+                                    
+                                        <li>
+                                        <a href="/about/me">我
+                                        </a>
+                                        </li>
+                                    
+                                        <li>
+                                        <a target="_blank" rel="noopener" href="https://github.com/raphael-liu">GITHUB
+                                        </a>
+                                        </li>
+                                    
+                                    </ul>
+                                
+                            </li>
+                    
+                    
+                        <li class="navbar-item search search-popup-trigger">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fa-solid fa-magnifying-glass"></i></div>
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile drawer -->
+    <div class="navbar-drawer w-full absolute top-0 left-0 bg-background-color">
+        <ul class="drawer-navbar-list flex flex-col justify-start items-center">
+            
+                
+                    <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group " 
+                        href="/"  >
+                             
+                                
+                                    <i class="fa-regular fa-house"></i>
+                                
+                                首页
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+                
+                    <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group " 
+                        href="/archives"  >
+                             
+                                
+                                    <i class="fa-regular fa-archive"></i>
+                                
+                                文章
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+                
+                    <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group has-dropdown" 
+                        href="#" onClick="return false;">
+                            
+                                
+                                    <i class="fa-regular fa-user"></i>
+                                
+                                关于&nbsp;<i class="group-hover:rotate-180 transition-transform fa-solid fa-chevron-down"></i>
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                              
+                        
+                            <li class="text-base flex justify-center items-center hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                <a class="py-0.5" href="/about/me">我</a>
+                            </li>
+                        
+                            <li class="text-base flex justify-center items-center hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                <a class="py-0.5" target="_blank" rel="noopener" href="https://github.com/raphael-liu">GITHUB</a>
+                            </li>
+                        
+                    
+            
+
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="post-page-container">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            
+                <h1 class="article-title-regular">0202-快乐数</h1>
+            
+            </div>
+            
+                    
+        
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">Raphael Liu</span>
+                        
+                            <span class="author-label">Lv10</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2023-09-13 00:47:26</span>
+        <span class="mobile">2023-09-13 00:47:26</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2023-09-13 10:43:44</span>
+            <span class="mobile">2023-09-13 10:43:44</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/algorithm/">algorithm</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/EASY/">EASY</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        
+
+
+        <div class="article-content markdown-body">
+            <p>编写一个算法来判断一个数 <code>n</code> 是不是快乐数。</p>
+<p><strong>「快乐数」</strong>  定义为：</p>
+<ul>
+<li>对于一个正整数，每一次将该数替换为它每个位置上的数字的平方和。</li>
+<li>然后重复这个过程直到这个数变为 1，也可能是 <strong>无限循环</strong> 但始终变不到 1。</li>
+<li>如果这个过程 <strong>结果为</strong>  1，那么这个数就是快乐数。</li>
+</ul>
+<p>如果 <code>n</code> 是 <em>快乐数</em> 就返回 <code>true</code> ；不是，则返回 <code>false</code> 。</p>
+<p><strong>示例 1：</strong></p>
+<pre><code>**输入：** n = 19
+**输出：** true
+**解释：** 12 + 92 = 82
+82 + 22 = 68
+62 + 82 = 100
+12 + 02 + 02 = 1
+</code></pre>
+<p><strong>示例 2：</strong></p>
+<pre><code>**输入：** n = 2
+**输出：** false
+</code></pre>
+<p><strong>提示：</strong></p>
+<ul>
+<li><code>1 &lt;= n &lt;= 231 - 1</code></li>
+</ul>
+<h3 id="📺-视频题解"><a href="#📺-视频题解" class="headerlink" title="📺 视频题解"></a>📺 视频题解</h3><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/9d8ce931-e835-45d1-a3d2-ab54b52b5377"
+                      alt="202. 快乐数 - Lizzi.mp4"
+                ></p>
+<h3 id="📖-文字题解"><a href="#📖-文字题解" class="headerlink" title="📖 文字题解"></a>📖 文字题解</h3><h4 id="方法一：用哈希集合检测循环"><a href="#方法一：用哈希集合检测循环" class="headerlink" title="方法一：用哈希集合检测循环"></a>方法一：用哈希集合检测循环</h4><p>我们可以先举几个例子。我们从 $7$ 开始。则下一个数字是 $49$（因为 $7^2&#x3D;49$），然后下一个数字是 $97$（因为 $4^2+9^2&#x3D;97$）。我们可以不断重复该的过程，直到我们得到 $1$。因为我们得到了 $1$，我们知道 $7$ 是一个快乐数，函数应该返回 <code>true</code>。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://assets.leetcode-cn.com/solution-static/202/202_fig1.png"
+                      alt="fig1"
+                ></p>
+<p>再举一个例子，让我们从 $116$ 开始。通过反复通过平方和计算下一个数字，我们最终得到 $58$，再继续计算之后，我们又回到 $58$。由于我们回到了一个已经计算过的数字，可以知道有一个循环，因此不可能达到 $1$。所以对于 $116$，函数应该返回 <code>false</code>。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://assets.leetcode-cn.com/solution-static/202/202_fig2.png"
+                      alt="fig2"
+                ></p>
+<p>根据我们的探索，我们猜测会有以下三种可能。</p>
+<ol>
+<li>最终会得到 $1$。</li>
+<li>最终会进入循环。</li>
+<li>值会越来越大，最后接近无穷大。</li>
+</ol>
+<p>第三个情况比较难以检测和处理。我们怎么知道它会继续变大，而不是最终得到 $1$ 呢？我们可以仔细想一想，每一位数的最大数字的下一位数是多少。</p>
+<table>
+<thead>
+<tr>
+<th>Digits</th>
+<th align="center">Largest</th>
+<th align="right">Next</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td align="center">9</td>
+<td align="right">81</td>
+</tr>
+<tr>
+<td>2</td>
+<td align="center">99</td>
+<td align="right">162</td>
+</tr>
+<tr>
+<td>3</td>
+<td align="center">999</td>
+<td align="right">243</td>
+</tr>
+<tr>
+<td>4</td>
+<td align="center">9999</td>
+<td align="right">324</td>
+</tr>
+<tr>
+<td>13</td>
+<td align="center">9999999999999</td>
+<td align="right">1053</td>
+</tr>
+</tbody></table>
+<p>对于 $3$ 位数的数字，它不可能大于 $243$。这意味着它要么被困在 $243$ 以下的循环内，要么跌到 $1$。$4$ 位或 $4$ 位以上的数字在每一步都会丢失一位，直到降到 $3$ 位为止。所以我们知道，最坏的情况下，算法可能会在 $243$ 以下的所有数字上循环，然后回到它已经到过的一个循环或者回到 $1$。但它不会无限期地进行下去，所以我们排除第三种选择。</p>
+<p>即使在代码中你不需要处理第三种情况，你仍然需要理解为什么它永远不会发生，这样你就可以证明为什么你不处理它。</p>
+<p><strong>算法</strong></p>
+<p>算法分为两部分，我们需要设计和编写代码。</p>
+<ol>
+<li>给一个数字 $n$，它的下一个数字是什么？</li>
+<li>按照一系列的数字来判断我们是否进入了一个循环。</li>
+</ol>
+<p>第 1 部分我们按照题目的要求做数位分离，求平方和。</p>
+<p>第 2 部分可以使用哈希集合完成。每次生成链中的下一个数字时，我们都会检查它是否已经在哈希集合中。</p>
+<ul>
+<li>如果它不在哈希集合中，我们应该添加它。</li>
+<li>如果它在哈希集合中，这意味着我们处于一个循环中，因此应该返回 <code>false</code>。</li>
+</ul>
+<p>我们使用哈希集合而不是向量、列表或数组的原因是因为我们反复检查其中是否存在某数字。检查数字是否在哈希集合中需要 $O(1)$ 的时间，而对于其他数据结构，则需要 $O(n)$ 的时间。选择正确的数据结构是解决这些问题的关键部分。</p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><figcaption><span>[sol1-Python]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">isHappy</span>(<span class="params">self, n: <span class="built_in">int</span></span>) -&gt; <span class="built_in">bool</span>:</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get_next</span>(<span class="params">n</span>):</span><br><span class="line">        total_sum = <span class="number">0</span></span><br><span class="line">        <span class="keyword">while</span> n &gt; <span class="number">0</span>:</span><br><span class="line">            n, digit = <span class="built_in">divmod</span>(n, <span class="number">10</span>)</span><br><span class="line">            total_sum += digit ** <span class="number">2</span></span><br><span class="line">        <span class="keyword">return</span> total_sum</span><br><span class="line"></span><br><span class="line">    seen = <span class="built_in">set</span>()</span><br><span class="line">    <span class="keyword">while</span> n != <span class="number">1</span> <span class="keyword">and</span> n <span class="keyword">not</span> <span class="keyword">in</span> seen:</span><br><span class="line">        seen.add(n)</span><br><span class="line">        n = get_next(n)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> n == <span class="number">1</span></span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><figcaption><span>[sol1-Java]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> <span class="title function_">getNext</span><span class="params">(<span class="type">int</span> n)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">totalSum</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span> (n &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="type">int</span> <span class="variable">d</span> <span class="operator">=</span> n % <span class="number">10</span>;</span><br><span class="line">            n = n / <span class="number">10</span>;</span><br><span class="line">            totalSum += d * d;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> totalSum;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">isHappy</span><span class="params">(<span class="type">int</span> n)</span> &#123;</span><br><span class="line">        Set&lt;Integer&gt; seen = <span class="keyword">new</span> <span class="title class_">HashSet</span>&lt;&gt;();</span><br><span class="line">        <span class="keyword">while</span> (n != <span class="number">1</span> &amp;&amp; !seen.contains(n)) &#123;</span><br><span class="line">            seen.add(n);</span><br><span class="line">            n = getNext(n);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> n == <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Csharp"><figure class="iseeu highlight csharp"><figcaption><span>[sol1-C#]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="built_in">int</span> <span class="title">getNext</span>(<span class="params"><span class="built_in">int</span> n</span>)</span> &#123;</span><br><span class="line">        <span class="built_in">int</span> totalSum = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span> (n &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="built_in">int</span> d = n % <span class="number">10</span>;</span><br><span class="line">            n = n / <span class="number">10</span>;</span><br><span class="line">            totalSum += d * d;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> totalSum;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="built_in">bool</span> <span class="title">IsHappy</span>(<span class="params"><span class="built_in">int</span> n</span>)</span> &#123;</span><br><span class="line">        HashSet &lt;<span class="built_in">int</span>&gt; seen = <span class="keyword">new</span> HashSet&lt;<span class="built_in">int</span>&gt;();</span><br><span class="line">        <span class="keyword">while</span> (n != <span class="number">1</span> &amp;&amp; !seen.Contains(n)) &#123;</span><br><span class="line">            seen.Add(n);</span><br><span class="line">            n = getNext(n);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> n == <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Golang"><figure class="iseeu highlight golang"><figcaption><span>[sol1-Golang]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">isHappy</span><span class="params">(n <span class="type">int</span>)</span></span> <span class="type">bool</span> &#123;</span><br><span class="line">    m := <span class="keyword">map</span>[<span class="type">int</span>]<span class="type">bool</span>&#123;&#125;</span><br><span class="line">    <span class="keyword">for</span> ; n != <span class="number">1</span> &amp;&amp; !m[n]; n, m[n] = step(n), <span class="literal">true</span> &#123; &#125;</span><br><span class="line">    <span class="keyword">return</span> n == <span class="number">1</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">step</span><span class="params">(n <span class="type">int</span>)</span></span> <span class="type">int</span> &#123;</span><br><span class="line">    sum := <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> n &gt; <span class="number">0</span> &#123;</span><br><span class="line">        sum += (n%<span class="number">10</span>) * (n%<span class="number">10</span>)</span><br><span class="line">        n = n/<span class="number">10</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> sum</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>复杂度分析</strong></p>
+<p>确定这个问题的时间复杂度对于一个「简单」级别的问题来说是一个挑战。如果您对这些问题还不熟悉，可以尝试只计算 <code>getNext(n)</code> 函数的时间复杂度。</p>
+<ul>
+<li>时间复杂度：$O(243 \cdot	3 + \log n + \log\log n + \log\log\log n)…$ &#x3D; $O(\log n)$。<ul>
+<li>查找给定数字的下一个值的成本为 $O(\log n)$，因为我们正在处理数字中的每位数字，而数字中的位数由 $\log n$ 给定。</li>
+<li>要计算出总的时间复杂度，我们需要仔细考虑循环中有多少个数字，它们有多大。</li>
+</ul>
+<ul>
+<li>我们在上面确定，一旦一个数字低于 $243$，它就不可能回到 $243$ 以上。因此，我们就可以用 $243$ 以下最长循环的长度来代替 $243$，不过，因为常数无论如何都无关紧要，所以我们不会担心它。</li>
+<li>对于高于 $243$ 的 $n$，我们需要考虑循环中每个数高于 $243$ 的成本。通过数学运算，我们可以证明在最坏的情况下，这些成本将是 $O(\log n) + O(\log \log n) + O(\log \log \log n)…$。幸运的是，$O(\log n)$ 是占主导地位的部分，而其他部分相比之下都很小（总的来说，它们的总和小于$\log n$），所以我们可以忽略它们。</li>
+</ul>
+</li>
+<li>空间复杂度：$O(\log n)$。与时间复杂度密切相关的是衡量我们放入哈希集合中的数字以及它们有多大的指标。对于足够大的 $n$，大部分空间将由 $n$ 本身占用。我们可以很容易地优化到 $O(243 \cdot 3) &#x3D; O(1)$，方法是只保存集合中小于 $243$ 的数字，因为对于较高的数字，无论如何都不可能返回到它们。</li>
+</ul>
+<h4 id="方法二：快慢指针法"><a href="#方法二：快慢指针法" class="headerlink" title="方法二：快慢指针法"></a>方法二：快慢指针法</h4><p>通过反复调用 <code>getNext(n)</code> 得到的链是一个隐式的链表。隐式意味着我们没有实际的链表节点和指针，但数据仍然形成链表结构。起始数字是链表的头 “节点”，链中的所有其他数字都是节点。<code>next</code> 指针是通过调用 <code>getNext(n)</code> 函数获得。</p>
+<p>意识到我们实际有个链表，那么这个问题就可以转换为检测一个链表是否有环。因此我们在这里可以使用弗洛伊德循环查找算法。这个算法是两个奔跑选手，一个跑的快，一个跑得慢。在龟兔赛跑的寓言中，跑的慢的称为 “乌龟”，跑得快的称为 “兔子”。</p>
+<p>不管乌龟和兔子在循环中从哪里开始，它们最终都会相遇。这是因为兔子每走一步就向乌龟靠近一个节点（在它们的移动方向上）。</p>
+<p>&lt;<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://assets.leetcode-cn.com/solution-static/202/1.jpg"
+                      alt="fig1"
+                >,<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://assets.leetcode-cn.com/solution-static/202/2.jpg"
+                      alt="fig2"
+                >,<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://assets.leetcode-cn.com/solution-static/202/3.jpg"
+                      alt="fig3"
+                >,<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://assets.leetcode-cn.com/solution-static/202/4.jpg"
+                      alt="fig4"
+                >,<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://assets.leetcode-cn.com/solution-static/202/5.jpg"
+                      alt="fig5"
+                >,<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://assets.leetcode-cn.com/solution-static/202/6.jpg"
+                      alt="fig6"
+                >,<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://assets.leetcode-cn.com/solution-static/202/7.jpg"
+                      alt="fig7"
+                >,<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://assets.leetcode-cn.com/solution-static/202/8.jpg"
+                      alt="fig8"
+                >&gt;</p>
+<p><strong>算法</strong></p>
+<p>我们不是只跟踪链表中的一个值，而是跟踪两个值，称为快跑者和慢跑者。在算法的每一步中，慢速在链表中前进 1 个节点，快跑者前进 2 个节点（对 <code>getNext(n)</code> 函数的嵌套调用）。</p>
+<p>如果 <code>n</code> 是一个快乐数，即没有循环，那么快跑者最终会比慢跑者先到达数字 1。</p>
+<p>如果 <code>n</code> 不是一个快乐的数字，那么最终快跑者和慢跑者将在同一个数字上相遇。</p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><figcaption><span>[sol2-Python]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">isHappy</span>(<span class="params">self, n: <span class="built_in">int</span></span>) -&gt; <span class="built_in">bool</span>:  </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get_next</span>(<span class="params">number</span>):</span><br><span class="line">        total_sum = <span class="number">0</span></span><br><span class="line">        <span class="keyword">while</span> number &gt; <span class="number">0</span>:</span><br><span class="line">            number, digit = <span class="built_in">divmod</span>(number, <span class="number">10</span>)</span><br><span class="line">            total_sum += digit ** <span class="number">2</span></span><br><span class="line">        <span class="keyword">return</span> total_sum</span><br><span class="line"></span><br><span class="line">    slow_runner = n</span><br><span class="line">    fast_runner = get_next(n)</span><br><span class="line">    <span class="keyword">while</span> fast_runner != <span class="number">1</span> <span class="keyword">and</span> slow_runner != fast_runner:</span><br><span class="line">        slow_runner = get_next(slow_runner)</span><br><span class="line">        fast_runner = get_next(get_next(fast_runner))</span><br><span class="line">    <span class="keyword">return</span> fast_runner == <span class="number">1</span></span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><figcaption><span>[sol2-Java]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"></span><br><span class="line">     <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">getNext</span><span class="params">(<span class="type">int</span> n)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">totalSum</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span> (n &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="type">int</span> <span class="variable">d</span> <span class="operator">=</span> n % <span class="number">10</span>;</span><br><span class="line">            n = n / <span class="number">10</span>;</span><br><span class="line">            totalSum += d * d;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> totalSum;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">isHappy</span><span class="params">(<span class="type">int</span> n)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">slowRunner</span> <span class="operator">=</span> n;</span><br><span class="line">        <span class="type">int</span> <span class="variable">fastRunner</span> <span class="operator">=</span> getNext(n);</span><br><span class="line">        <span class="keyword">while</span> (fastRunner != <span class="number">1</span> &amp;&amp; slowRunner != fastRunner) &#123;</span><br><span class="line">            slowRunner = getNext(slowRunner);</span><br><span class="line">            fastRunner = getNext(getNext(fastRunner));</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> fastRunner == <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Csharp"><figure class="iseeu highlight csharp"><figcaption><span>[sol2-C#]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="built_in">int</span> <span class="title">getNext</span>(<span class="params"><span class="built_in">int</span> n</span>)</span> &#123;</span><br><span class="line">        <span class="built_in">int</span> totalSum = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span> (n &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="built_in">int</span> d = n % <span class="number">10</span>;</span><br><span class="line">            n = n / <span class="number">10</span>;</span><br><span class="line">            totalSum += d * d;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> totalSum;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="built_in">bool</span> <span class="title">IsHappy</span>(<span class="params"><span class="built_in">int</span> n</span>)</span> &#123;</span><br><span class="line">        <span class="built_in">int</span> slowRunner = n;</span><br><span class="line">        <span class="built_in">int</span> fastRunner = getNext(n);</span><br><span class="line">        <span class="keyword">while</span> (fastRunner != <span class="number">1</span> &amp;&amp; slowRunner != fastRunner) &#123;</span><br><span class="line">            slowRunner = getNext(slowRunner);</span><br><span class="line">            fastRunner = getNext(getNext(fastRunner));</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> fastRunner == <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Golang"><figure class="iseeu highlight golang"><figcaption><span>[sol2-Golang]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">isHappy</span><span class="params">(n <span class="type">int</span>)</span></span> <span class="type">bool</span> &#123;</span><br><span class="line">    slow, fast := n, step(n)</span><br><span class="line">    <span class="keyword">for</span> fast != <span class="number">1</span> &amp;&amp; slow != fast &#123;</span><br><span class="line">        slow = step(slow)</span><br><span class="line">        fast = step(step(fast))</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> fast == <span class="number">1</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">step</span><span class="params">(n <span class="type">int</span>)</span></span> <span class="type">int</span> &#123;</span><br><span class="line">    sum := <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> n &gt; <span class="number">0</span> &#123;</span><br><span class="line">        sum += (n%<span class="number">10</span>) * (n%<span class="number">10</span>)</span><br><span class="line">        n = n/<span class="number">10</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> sum</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>复杂度分析</strong></p>
+<ul>
+<li>时间复杂度：$O(\log n)$。该分析建立在对前一种方法的分析的基础上，但是这次我们需要跟踪两个指针而不是一个指针来分析，以及在它们相遇前需要绕着这个循环走多少次。<ul>
+<li>如果没有循环，那么快跑者将先到达 1，慢跑者将到达链表中的一半。我们知道最坏的情况下，成本是	$O(2 \cdot \log n) &#x3D; O(\log n)$。</li>
+<li>一旦两个指针都在循环中，在每个循环中，快跑者将离慢跑者更近一步。一旦快跑者落后慢跑者一步，他们就会在下一步相遇。假设循环中有 $k$ 个数字。如果他们的起点是相隔 $k-1$ 的位置（这是他们可以开始的最远的距离），那么快跑者需要 $k-1$ 步才能到达慢跑者，这对于我们的目的来说也是不变的。因此，主操作仍然在计算起始 n 的下一个值，即 $O(\log n)$。</li>
+</ul>
+</li>
+<li>空间复杂度：$O(1)$，对于这种方法，我们不需要哈希集来检测循环。指针需要常数的额外空间。</li>
+</ul>
+<h4 id="方法三：数学"><a href="#方法三：数学" class="headerlink" title="方法三：数学"></a>方法三：数学</h4><p>前两种方法是你在面试中应该想到的。第三种方法不是你在面试中会写的，而是针对对数学好奇的人，因为它很有趣。</p>
+<p>下一个值可能比自己大的最大数字是什么？根据我们之前的分析，我们知道它必须低于 243。因此，我们知道任何循环都必须包含小于 243 的数字，用这么小的数字，编写一个能找到所有周期的强力程序并不困难。</p>
+<p>如果这样做，您会发现只有一个循环：$4 \rightarrow 16 \rightarrow  37 \rightarrow  58 \rightarrow 89 \rightarrow 145 \rightarrow 42 \rightarrow 20 \rightarrow  4$。所有其他数字都在进入这个循环的链上，或者在进入 $1$ 的链上。</p>
+<p>因此，我们可以硬编码一个包含这些数字的散列集，如果我们达到其中一个数字，那么我们就知道在循环中。</p>
+<p><strong>算法</strong></p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><figcaption><span>[sol3-Python]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">isHappy</span>(<span class="params">self, n: <span class="built_in">int</span></span>) -&gt; <span class="built_in">bool</span>:</span><br><span class="line"></span><br><span class="line">    cycle_members = &#123;<span class="number">4</span>, <span class="number">16</span>, <span class="number">37</span>, <span class="number">58</span>, <span class="number">89</span>, <span class="number">145</span>, <span class="number">42</span>, <span class="number">20</span>&#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get_next</span>(<span class="params">number</span>):</span><br><span class="line">        total_sum = <span class="number">0</span></span><br><span class="line">        <span class="keyword">while</span> number &gt; <span class="number">0</span>:</span><br><span class="line">            number, digit = <span class="built_in">divmod</span>(number, <span class="number">10</span>)</span><br><span class="line">            total_sum += digit ** <span class="number">2</span></span><br><span class="line">        <span class="keyword">return</span> total_sum</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> n != <span class="number">1</span> <span class="keyword">and</span> n <span class="keyword">not</span> <span class="keyword">in</span> cycle_members:</span><br><span class="line">        n = get_next(n)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> n == <span class="number">1</span></span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><figcaption><span>[sol3-Java]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Set&lt;Integer&gt; cycleMembers =</span><br><span class="line">        <span class="keyword">new</span> <span class="title class_">HashSet</span>&lt;&gt;(Arrays.asList(<span class="number">4</span>, <span class="number">16</span>, <span class="number">37</span>, <span class="number">58</span>, <span class="number">89</span>, <span class="number">145</span>, <span class="number">42</span>, <span class="number">20</span>));</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">getNext</span><span class="params">(<span class="type">int</span> n)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">totalSum</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span> (n &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="type">int</span> <span class="variable">d</span> <span class="operator">=</span> n % <span class="number">10</span>;</span><br><span class="line">            n = n / <span class="number">10</span>;</span><br><span class="line">            totalSum += d * d;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> totalSum;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">isHappy</span><span class="params">(<span class="type">int</span> n)</span> &#123;</span><br><span class="line">        <span class="keyword">while</span> (n != <span class="number">1</span> &amp;&amp; !cycleMembers.contains(n)) &#123;</span><br><span class="line">            n = getNext(n);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> n == <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Csharp"><figure class="iseeu highlight csharp"><figcaption><span>[sol3-C#]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="built_in">int</span> <span class="title">getNext</span>(<span class="params"><span class="built_in">int</span> n</span>)</span> &#123;</span><br><span class="line">        <span class="built_in">int</span> totalSum = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span> (n &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="built_in">int</span> d = n % <span class="number">10</span>;</span><br><span class="line">            n = n / <span class="number">10</span>;</span><br><span class="line">            totalSum += d * d;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> totalSum;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="built_in">bool</span> <span class="title">IsHappy</span>(<span class="params"><span class="built_in">int</span> n</span>)</span> &#123;</span><br><span class="line">        HashSet&lt;<span class="built_in">int</span>&gt; cycleMembers =</span><br><span class="line">            <span class="keyword">new</span> HashSet&lt;<span class="built_in">int</span>&gt;(<span class="keyword">new</span> <span class="built_in">int</span>[<span class="number">8</span>] &#123;<span class="number">4</span>, <span class="number">16</span>, <span class="number">37</span>, <span class="number">58</span>, <span class="number">89</span>, <span class="number">145</span>, <span class="number">42</span>, <span class="number">20</span>&#125;);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> (n != <span class="number">1</span> &amp;&amp; !cycleMembers.Contains(n)) &#123;</span><br><span class="line">            n = getNext(n);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> n == <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Golang"><figure class="iseeu highlight golang"><figcaption><span>[sol3-Golang]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">isHappy</span><span class="params">(n <span class="type">int</span>)</span></span> <span class="type">bool</span> &#123;</span><br><span class="line">    cycle := <span class="keyword">map</span>[<span class="type">int</span>]<span class="type">bool</span>&#123;<span class="number">4</span>: <span class="literal">true</span>, <span class="number">6</span>: <span class="literal">true</span>, <span class="number">37</span>: <span class="literal">true</span>, <span class="number">58</span>: <span class="literal">true</span>, <span class="number">89</span>: <span class="literal">true</span>, <span class="number">145</span>: <span class="literal">true</span>, <span class="number">42</span>: <span class="literal">true</span>, <span class="number">20</span>: <span class="literal">true</span>&#125;</span><br><span class="line">    <span class="keyword">for</span> n != <span class="number">1</span> &amp;&amp; !cycle[n] &#123;</span><br><span class="line">        n = step(n)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> n == <span class="number">1</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">step</span><span class="params">(n <span class="type">int</span>)</span></span> <span class="type">int</span> &#123;</span><br><span class="line">    sum := <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> n &gt; <span class="number">0</span> &#123;</span><br><span class="line">        sum += (n%<span class="number">10</span>) * (n%<span class="number">10</span>)</span><br><span class="line">        n = n/<span class="number">10</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> sum</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>复杂度分析</strong></p>
+<ul>
+<li>时间复杂度：$O(\log n)$。和上面一样。</li>
+<li>空间复杂度：$O(1)$，我们没有保留我们所遇到的数字的历史记录。硬编码哈希集的大小是固定的。</li>
+</ul>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <!--<div class="article-copyright-info-container">-->
+    <!--&lt;!&ndash;<ul>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><strong>Title:</strong> 0202-快乐数</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><strong>Author:</strong> Raphael Liu</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><strong>Created at&ndash;&gt;-->
+                <!--&lt;!&ndash;:</strong> 2023-09-13 00:47:26</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;&ndash;&gt;-->
+            <!--&lt;!&ndash;<li>&ndash;&gt;-->
+                <!--&lt;!&ndash;<strong>Updated at&ndash;&gt;-->
+                    <!--&lt;!&ndash;:</strong> 2023-09-13 10:43:44&ndash;&gt;-->
+            <!--&lt;!&ndash;</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;<li>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;<strong>Link:</strong> https://fida.ltd/2023/09/13/0202-快乐数/&ndash;&gt;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;</li>&ndash;&gt;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;<li>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;<strong>&ndash;&gt;&ndash;&gt;-->
+                <!--&lt;!&ndash;&lt;!&ndash;License:&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;</strong>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0</a>.&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;&ndash;&gt;&ndash;&gt;-->
+
+        <!--&lt;!&ndash;&lt;!&ndash;</li>&ndash;&gt;&ndash;&gt;-->
+    <!--&lt;!&ndash;</ul>&ndash;&gt;-->
+<!--</div>-->
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box">
+                
+                    <li class="tag-item">
+                        <a href="/tags/algorithm/">#algorithm</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item">
+                        <a href="/tags/EASY/">#EASY</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                        rel="prev"
+                        href="/2023/09/13/0201-%E6%95%B0%E5%AD%97%E8%8C%83%E5%9B%B4%E6%8C%89%E4%BD%8D%E4%B8%8E/"
+                        >
+                            <span class="left arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">0201-数字范围按位与</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                        rel="next"
+                        href="/2023/09/13/0203-%E7%A7%BB%E9%99%A4%E9%93%BE%E8%A1%A8%E5%85%83%E7%B4%A0/"
+                        >
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">0203-移除链表元素</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+
+        
+            <div class="comment-container">
+                <div class="comments-container pjax">
+    <div id="comment-anchor"></div>
+    <div class="comment-area-title">
+        <i class="fa-solid fa-comments"></i>&nbsp;Comments
+    </div>
+    
+
+        
+            
+ 
+    <div id="waline"></div>
+    <script type="module"  data-swup-reload-script>
+        import { init } from 'https://evan.beee.top/js/waline.mjs';
+
+        function loadWaline() {
+            init({
+                el: '#waline',
+                serverURL: 'https://example.example.com',
+                lang: 'zh-CN',
+                dark: 'body[class~="dark-mode"]',
+                requiredMeta: ['nick','mail'], // cannot customize by theme config, change it yourself
+            });
+        }
+
+        if ('true') {
+            const loadWalineTimeout = setTimeout(() => {
+                loadWaline();
+                clearTimeout(loadWalineTimeout);
+            }, 1000);
+        } else {
+            window.addEventListener('DOMContentLoaded', loadWaline);
+        }
+        
+    </script>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+
+    
+        <div class="toc-content-container">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">On this page</div>
+        <div class="page-title">0202-快乐数</div>
+        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%F0%9F%93%BA-%E8%A7%86%E9%A2%91%E9%A2%98%E8%A7%A3"><span class="nav-text">📺 视频题解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%F0%9F%93%96-%E6%96%87%E5%AD%97%E9%A2%98%E8%A7%A3"><span class="nav-text">📖 文字题解</span></a></li></ol>
+
+    </div>
+</div>
+        </div>
+    
+</div>
+
+
+
+                
+
+            </div>
+
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2022</span>
+              -
+            
+            2023&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">Raphael Liu</a>
+        </div>
+        
+            <script data-swup-reload-script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">UV:</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">PV:</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <!--<div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">-->
+            <!--<span class="lg:block text-sm">powered_by</span>-->
+            <!--&lt;!&ndash;<span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.4.4</a></span>&ndash;&gt;-->
+        <!--</div>-->
+        
+        <!---->
+            <!--<div>-->
+                <!--runtime <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hours <span class="odometer" id="runtime_minutes"></span> minutes <span class="odometer" id="runtime_seconds"></span> seconds-->
+            <!--</div>-->
+        <!---->
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fa-regular fa-comments"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-expand-width flex justify-center items-center">
+            <i class="fa-regular fa-expand"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fa-solid fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa-solid fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa-solid fa-spinner fa-spin-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+    
+<script src="/js/libs/Swup.min.js"></script>
+
+<script src="/js/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/libs/SwupScrollPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+        ],
+        containers: ["#swup"],
+    });
+
+    swup.hooks.on("page:view", () => {
+        Global.refresh();
+    });
+
+    // if (document.readyState === "complete") {
+    //
+    // } else {
+    //     document.addEventListener("DOMContentLoaded", () => init());
+    // }
+</script>
+
+
+
+
+
+
+<script src="/js/utils.js" type="module"></script>
+
+<script src="/js/main.js" type="module"></script>
+
+<script src="/js/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/layouts/categoryList.js" type="module"></script>
+
+
+
+    
+<script src="/js/tools/localSearch.js"></script>
+
+
+
+
+    
+<script src="/js/tools/codeBlock.js"></script>
+
+
+
+
+    
+<script src="/js/layouts/lazyload.js"></script>
+
+
+
+
+    
+<script src="/js/tools/runtime.js"></script>
+
+    
+<script src="/js/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/libs/Typed.min.js"></script>
+
+  
+<script src="/js/plugins/typed.js"></script>
+
+
+
+
+
+
+
+<div class="post-scripts" data-swup-reload-script>
+    
+        
+<script src="/js/libs/anime.min.js"></script>
+
+        
+<script src="/js/tools/tocToggle.js" type="module"></script>
+
+<script src="/js/layouts/toc.js" type="module"></script>
+
+<script src="/js/plugins/tabs.js" type="module"></script>
+
+    
+</div>
+
+
+</body>
+</html>

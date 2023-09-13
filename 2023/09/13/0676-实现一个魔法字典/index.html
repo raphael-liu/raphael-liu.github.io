@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="Raphael Liu">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/2023/09/13/0676-实现一个魔法字典/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="设计一个使用单词列表进行初始化的数据结构，单词列表中的单词 互不相同 。 如果给出一个单词，请判定能否只将这个单词中 一个字母换成另一个字母，使得所形成的新单词存在于你构建的字典中。 实现 MagicDictionary 类：  MagicDictionary() 初始化对象 void buildDict(String[] dictionary) 使用字符串数组 dictionary 设定该数据结">
+<meta property="og:type" content="article">
+<meta property="og:title" content="0676-实现一个魔法字典">
+<meta property="og:url" content="http://example.com/2023/09/13/0676-%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E9%AD%94%E6%B3%95%E5%AD%97%E5%85%B8/index.html">
+<meta property="og:site_name" content="Raphael&#39;s Blog">
+<meta property="og:description" content="设计一个使用单词列表进行初始化的数据结构，单词列表中的单词 互不相同 。 如果给出一个单词，请判定能否只将这个单词中 一个字母换成另一个字母，使得所形成的新单词存在于你构建的字典中。 实现 MagicDictionary 类：  MagicDictionary() 初始化对象 void buildDict(String[] dictionary) 使用字符串数组 dictionary 设定该数据结">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-09-12T16:47:26.000Z">
+<meta property="article:modified_time" content="2023-09-13T08:06:27.421Z">
+<meta property="article:author" content="Raphael Liu">
+<meta property="article:tag" content="algorithm">
+<meta property="article:tag" content="MEDIUM">
+<meta name="twitter:card" content="summary">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/redefine-favicon.svg" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/redefine-favicon.svg">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/redefine-favicon.svg">
+    <!--- Page Info-->
+    
+    <title>
+        
+            0676-实现一个魔法字典 -
+        
+        Raphael&#39;s Blog
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/css/build/styles.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/fonts.css">
+
+    
+<link rel="stylesheet" href="/fonts/Satoshi/satoshi.css">
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+
+    <!--- Inject Part-->
+    
+    <script id="hexo-configurations">
+    let Global = window.Global || {};
+    Global.hexo_config = {"hostname":"example.com","root":"/","language":"zh_CN"};
+    Global.theme_config = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":true,"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"open_graph":true,"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-wqery6-light.webp","dark":"/images/wallhaven-wqery6-dark.webp"},"title":"Raphael's Blog","subtitle":{"text":["格物致知","坚持做正确的事情"],"hitokoto":{"enable":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":false,"links":{"github":"https://github.com/raphael-liu","email":"raphael@buaa.edu.cn# your email"},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.4.4","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"links":{"首页":{"path":"/","icon":"fa-regular fa-house"},"文章":{"path":"/archives","icon":"fa-regular fa-archive"},"关于":{"icon":"fa-regular fa-user","submenus":{"我":"/about/me","Github":"https://github.com/raphael-liu"}}},"search":{"enable":true,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"links":null},"article_date_format":"auto","categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}},"footerStart":"2022/8/17 11:45:14"};
+    Global.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    Global.data_config = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="swup-progress-icon">
+            <i class="fa-solid fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container" id="swup">
+
+    
+
+    <div class="main-content-container">
+
+
+        <div class="main-content-header">
+            <header class="navbar-container">
+    
+    <div class="navbar-content">
+        <div class="left">
+            
+            <a class="logo-title" href="http://example.com/">
+                
+                Raphael&#39;s Blog
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/"  >
+                                    
+                                        
+                                            <i class="fa-regular fa-house"></i>
+                                        
+                                        首页
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/archives"  >
+                                    
+                                        
+                                            <i class="fa-regular fa-archive"></i>
+                                        
+                                        文章
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="has-dropdown" 
+                                    href="#" onClick="return false;">
+                                    
+                                        
+                                            <i class="fa-regular fa-user"></i>
+                                        
+                                        关于&nbsp;<i class="fa-solid fa-chevron-down"></i>
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                                    <ul class="sub-menu">
+                                    
+                                        <li>
+                                        <a href="/about/me">我
+                                        </a>
+                                        </li>
+                                    
+                                        <li>
+                                        <a target="_blank" rel="noopener" href="https://github.com/raphael-liu">GITHUB
+                                        </a>
+                                        </li>
+                                    
+                                    </ul>
+                                
+                            </li>
+                    
+                    
+                        <li class="navbar-item search search-popup-trigger">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fa-solid fa-magnifying-glass"></i></div>
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile drawer -->
+    <div class="navbar-drawer w-full absolute top-0 left-0 bg-background-color">
+        <ul class="drawer-navbar-list flex flex-col justify-start items-center">
+            
+                
+                    <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group " 
+                        href="/"  >
+                             
+                                
+                                    <i class="fa-regular fa-house"></i>
+                                
+                                首页
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+                
+                    <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group " 
+                        href="/archives"  >
+                             
+                                
+                                    <i class="fa-regular fa-archive"></i>
+                                
+                                文章
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+                
+                    <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group has-dropdown" 
+                        href="#" onClick="return false;">
+                            
+                                
+                                    <i class="fa-regular fa-user"></i>
+                                
+                                关于&nbsp;<i class="group-hover:rotate-180 transition-transform fa-solid fa-chevron-down"></i>
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                              
+                        
+                            <li class="text-base flex justify-center items-center hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                <a class="py-0.5" href="/about/me">我</a>
+                            </li>
+                        
+                            <li class="text-base flex justify-center items-center hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                <a class="py-0.5" target="_blank" rel="noopener" href="https://github.com/raphael-liu">GITHUB</a>
+                            </li>
+                        
+                    
+            
+
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="post-page-container">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            
+                <h1 class="article-title-regular">0676-实现一个魔法字典</h1>
+            
+            </div>
+            
+                    
+        
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">Raphael Liu</span>
+                        
+                            <span class="author-label">Lv10</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2023-09-13 00:47:26</span>
+        <span class="mobile">2023-09-13 00:47:26</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2023-09-13 16:06:27</span>
+            <span class="mobile">2023-09-13 16:06:27</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/algorithm/">algorithm</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/MEDIUM/">MEDIUM</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        
+
+
+        <div class="article-content markdown-body">
+            <p>设计一个使用单词列表进行初始化的数据结构，单词列表中的单词 <strong>互不相同</strong> 。 如果给出一个单词，请判定能否只将这个单词中 <strong>一个</strong><br>字母换成另一个字母，使得所形成的新单词存在于你构建的字典中。</p>
+<p>实现 <code>MagicDictionary</code> 类：</p>
+<ul>
+<li><code>MagicDictionary()</code> 初始化对象</li>
+<li><code>void buildDict(String[] dictionary)</code> 使用字符串数组 <code>dictionary</code> 设定该数据结构，<code>dictionary</code> 中的字符串互不相同</li>
+<li><code>bool search(String searchWord)</code> 给定一个字符串 <code>searchWord</code> ，判定能否只将字符串中 <strong>一个</strong> 字母换成另一个字母，使得所形成的新字符串能够与字典中的任一字符串匹配。如果可以，返回 <code>true</code> ；否则，返回 <code>false</code> 。</li>
+</ul>
+<p><strong>示例：</strong></p>
+<pre><code>**输入**
+[&quot;MagicDictionary&quot;, &quot;buildDict&quot;, &quot;search&quot;, &quot;search&quot;, &quot;search&quot;, &quot;search&quot;]
+[[], [[&quot;hello&quot;, &quot;leetcode&quot;]], [&quot;hello&quot;], [&quot;hhllo&quot;], [&quot;hell&quot;], [&quot;leetcoded&quot;]]
+**输出**
+[null, null, false, true, false, false]
+
+**解释**
+MagicDictionary magicDictionary = new MagicDictionary();
+magicDictionary.buildDict([&quot;hello&quot;, &quot;leetcode&quot;]);
+magicDictionary.search(&quot;hello&quot;); // 返回 False
+magicDictionary.search(&quot;hhllo&quot;); // 将第二个 &#39;h&#39; 替换为 &#39;e&#39; 可以匹配 &quot;hello&quot; ，所以返回 True
+magicDictionary.search(&quot;hell&quot;); // 返回 False
+magicDictionary.search(&quot;leetcoded&quot;); // 返回 False
+</code></pre>
+<p><strong>提示：</strong></p>
+<ul>
+<li><code>1 &lt;= dictionary.length &lt;= 100</code></li>
+<li><code>1 &lt;= dictionary[i].length &lt;= 100</code></li>
+<li><code>dictionary[i]</code> 仅由小写英文字母组成</li>
+<li><code>dictionary</code> 中的所有字符串 <strong>互不相同</strong></li>
+<li><code>1 &lt;= searchWord.length &lt;= 100</code></li>
+<li><code>searchWord</code> 仅由小写英文字母组成</li>
+<li><code>buildDict</code> 仅在 <code>search</code> 之前调用一次</li>
+<li>最多调用 <code>100</code> 次 <code>search</code></li>
+</ul>
+<h4 id="方法一：枚举每个字典中的字符串并判断"><a href="#方法一：枚举每个字典中的字符串并判断" class="headerlink" title="方法一：枚举每个字典中的字符串并判断"></a>方法一：枚举每个字典中的字符串并判断</h4><p><strong>思路与算法</strong></p>
+<p>对于本题来说，我们有两种做法：第一种是把字典中的所有字符串存储在数组中，而当进行 search 操作时，我们将待查询的字符串和数组中的字符串依次进行比较；第二种是提前把字典中每个字符串替换任一字母的结果存在哈希表中，当进行 search 操作时，我们只需要检查待查询的字符串本身是否在哈希表中即可。</p>
+<p>记字典中字符串的个数为 n，平均长度为 l，查询的次数为 q，字符集为 \Sigma。那么：</p>
+<ul>
+<li><p>第一种方法需要 O(nl) 的时间把所有字符串存储在数组中，每一次查询也需要 O(nl) 的时间，总时间复杂度为 O(nl + qnl) &#x3D; O(qnl)；</p>
+</li>
+<li><p>第二种方法需要 O(nl^2|\Sigma|) 的时间把所有字符串替换任一字母的结果存在哈希表中，每一次查询仅需要 O(l) 的时间，总时间复杂度为 O(nl^2|\Sigma| + ql)。</p>
+</li>
+</ul>
+<p>在本题的数据范围中 n, l, q \leq 100 同阶，而 |\Sigma| &#x3D; 26，因此第一种方法的时间复杂度较低，下面的代码使用的是第一种方法。</p>
+<p><strong>细节</strong></p>
+<p>使用第一种方法比较两个字符串时，我们首先需要保证它们的长度相等，随后遍历这两个字符串，需要保证这两个字符串恰好有一个位置对应的字符不同。</p>
+<p><strong>代码</strong></p>
+<div class="highlight-container" data-rel="C++"><figure class="iseeu highlight c++"><figcaption><span>[sol1-C++]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MagicDictionary</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">MagicDictionary</span>() &#123;&#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">buildDict</span><span class="params">(vector&lt;string&gt; dictionary)</span> </span>&#123;</span><br><span class="line">        words = dictionary;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="type">bool</span> <span class="title">search</span><span class="params">(string searchWord)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span>&amp;&amp; word: words) &#123;</span><br><span class="line">            <span class="keyword">if</span> (word.<span class="built_in">size</span>() != searchWord.<span class="built_in">size</span>()) &#123;</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="type">int</span> diff = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; word.<span class="built_in">size</span>(); ++i) &#123;</span><br><span class="line">                <span class="keyword">if</span> (word[i] != searchWord[i]) &#123;</span><br><span class="line">                    ++diff;</span><br><span class="line">                    <span class="keyword">if</span> (diff &gt; <span class="number">1</span>) &#123;</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (diff == <span class="number">1</span>) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    vector&lt;string&gt; words;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><figcaption><span>[sol1-Java]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MagicDictionary</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> String[] words;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">MagicDictionary</span><span class="params">()</span> &#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">buildDict</span><span class="params">(String[] dictionary)</span> &#123;</span><br><span class="line">        words = dictionary;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">search</span><span class="params">(String searchWord)</span> &#123;</span><br><span class="line">        <span class="keyword">for</span> (String word : words) &#123;</span><br><span class="line">            <span class="keyword">if</span> (word.length() != searchWord.length()) &#123;</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="type">int</span> <span class="variable">diff</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; word.length(); ++i) &#123;</span><br><span class="line">                <span class="keyword">if</span> (word.charAt(i) != searchWord.charAt(i)) &#123;</span><br><span class="line">                    ++diff;</span><br><span class="line">                    <span class="keyword">if</span> (diff &gt; <span class="number">1</span>) &#123;</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (diff == <span class="number">1</span>) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="C#"><figure class="iseeu highlight c#"><figcaption><span>[sol1-C#]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">MagicDictionary</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="built_in">string</span>[] words;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MagicDictionary</span>()</span> &#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">BuildDict</span>(<span class="params"><span class="built_in">string</span>[] dictionary</span>)</span> &#123;</span><br><span class="line">        words = dictionary;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="built_in">bool</span> <span class="title">Search</span>(<span class="params"><span class="built_in">string</span> searchWord</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">foreach</span> (<span class="built_in">string</span> word <span class="keyword">in</span> words) &#123;</span><br><span class="line">            <span class="keyword">if</span> (word.Length != searchWord.Length) &#123;</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="built_in">int</span> diff = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; word.Length; ++i) &#123;</span><br><span class="line">                <span class="keyword">if</span> (word[i] != searchWord[i]) &#123;</span><br><span class="line">                    ++diff;</span><br><span class="line">                    <span class="keyword">if</span> (diff &gt; <span class="number">1</span>) &#123;</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (diff == <span class="number">1</span>) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><figcaption><span>[sol1-Python3]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MagicDictionary</span>:</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">        self.words = <span class="built_in">list</span>()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">buildDict</span>(<span class="params">self, dictionary: <span class="type">List</span>[<span class="built_in">str</span>]</span>) -&gt; <span class="literal">None</span>:</span><br><span class="line">        self.words = dictionary</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">search</span>(<span class="params">self, searchWord: <span class="built_in">str</span></span>) -&gt; <span class="built_in">bool</span>:</span><br><span class="line">        <span class="keyword">for</span> word <span class="keyword">in</span> self.words:</span><br><span class="line">            <span class="keyword">if</span> <span class="built_in">len</span>(word) != <span class="built_in">len</span>(searchWord):</span><br><span class="line">                <span class="keyword">continue</span></span><br><span class="line">            </span><br><span class="line">            diff = <span class="number">0</span></span><br><span class="line">            <span class="keyword">for</span> chx, chy <span class="keyword">in</span> <span class="built_in">zip</span>(word, searchWord):</span><br><span class="line">                <span class="keyword">if</span> chx != chy:</span><br><span class="line">                    diff += <span class="number">1</span></span><br><span class="line">                    <span class="keyword">if</span> diff &gt; <span class="number">1</span>:</span><br><span class="line">                        <span class="keyword">break</span></span><br><span class="line">            </span><br><span class="line">            <span class="keyword">if</span> diff == <span class="number">1</span>:</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> <span class="literal">False</span></span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="C"><figure class="iseeu highlight c"><figcaption><span>[sol1-C]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> &#123;</span></span><br><span class="line">    <span class="type">char</span> **words;</span><br><span class="line">    <span class="type">int</span> wordsSize;</span><br><span class="line">&#125; MagicDictionary;</span><br><span class="line"></span><br><span class="line">MagicDictionary* <span class="title function_">magicDictionaryCreate</span><span class="params">()</span> &#123;</span><br><span class="line">    MagicDictionary *obj = (MagicDictionary *)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(MagicDictionary));</span><br><span class="line">    <span class="keyword">return</span> obj;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">magicDictionaryBuildDict</span><span class="params">(MagicDictionary* obj, <span class="type">char</span> ** dictionary, <span class="type">int</span> dictionarySize)</span> &#123;</span><br><span class="line">    obj-&gt;words = dictionary;</span><br><span class="line">    obj-&gt;wordsSize = dictionarySize;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">bool</span> <span class="title function_">magicDictionarySearch</span><span class="params">(MagicDictionary* obj, <span class="type">char</span> * searchWord)</span> &#123;</span><br><span class="line">    <span class="type">int</span> len = <span class="built_in">strlen</span>(searchWord);</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt; obj-&gt;wordsSize; j++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">strlen</span>(obj-&gt;words[j]) != len) &#123;</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">int</span> diff = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; len; ++i) &#123;</span><br><span class="line">            <span class="keyword">if</span> (obj-&gt;words[j][i] != searchWord[i]) &#123;</span><br><span class="line">                ++diff;</span><br><span class="line">                <span class="keyword">if</span> (diff &gt; <span class="number">1</span>) &#123;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (diff == <span class="number">1</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">magicDictionaryFree</span><span class="params">(MagicDictionary* obj)</span> &#123;</span><br><span class="line">    <span class="built_in">free</span>(obj);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Go"><figure class="iseeu highlight go"><figcaption><span>[sol1-Golang]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> MagicDictionary []<span class="type">string</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Constructor</span><span class="params">()</span></span> MagicDictionary &#123;</span><br><span class="line">    <span class="keyword">return</span> MagicDictionary&#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(d *MagicDictionary)</span></span> BuildDict(dictionary []<span class="type">string</span>) &#123;</span><br><span class="line">    *d = dictionary</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(d *MagicDictionary)</span></span> Search(searchWord <span class="type">string</span>) <span class="type">bool</span> &#123;</span><br><span class="line">next:</span><br><span class="line">    <span class="keyword">for</span> _, word := <span class="keyword">range</span> *d &#123;</span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">len</span>(word) != <span class="built_in">len</span>(searchWord) &#123;</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        &#125;</span><br><span class="line">        diff := <span class="literal">false</span></span><br><span class="line">        <span class="keyword">for</span> i := <span class="keyword">range</span> word &#123;</span><br><span class="line">            <span class="keyword">if</span> word[i] != searchWord[i] &#123;</span><br><span class="line">                <span class="keyword">if</span> diff &#123;</span><br><span class="line">                    <span class="keyword">continue</span> next</span><br><span class="line">                &#125;</span><br><span class="line">                diff = <span class="literal">true</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> diff &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><figcaption><span>[sol1-JavaScript]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> <span class="title class_">MagicDictionary</span> = <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="title class_">MagicDictionary</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">buildDict</span> = <span class="keyword">function</span>(<span class="params">dictionary</span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">words</span> = dictionary;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="title class_">MagicDictionary</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">search</span> = <span class="keyword">function</span>(<span class="params">searchWord</span>) &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">const</span> word <span class="keyword">of</span> <span class="variable language_">this</span>.<span class="property">words</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (word.<span class="property">length</span> !== searchWord.<span class="property">length</span>) &#123;</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">let</span> diff = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; word.<span class="property">length</span>; ++i) &#123;</span><br><span class="line">            <span class="keyword">if</span> (word[i] !== searchWord[i]) &#123;</span><br><span class="line">                ++diff;</span><br><span class="line">                <span class="keyword">if</span> (diff &gt; <span class="number">1</span>) &#123;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (diff === <span class="number">1</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>复杂度分析</strong></p>
+<ul>
+<li><p>时间复杂度：O(qnl)，其中 n 是数组 dictionary 的长度，l 是数组 dictionary 中字符串的平均长度，q 是函数 search(searchWord) 的调用次数。</p>
+</li>
+<li><p>空间复杂度：O(nl)，即为数组需要使用的空间。</p>
+</li>
+</ul>
+<h4 id="方法二：使用字典树优化枚举"><a href="#方法二：使用字典树优化枚举" class="headerlink" title="方法二：使用字典树优化枚举"></a>方法二：使用字典树优化枚举</h4><p><strong>思路与算法</strong></p>
+<p>我们也可以使用字典树代替数组，将所有字符串进行存储。这一部分需要的时间是相同的。</p>
+<p>在查询时，我们可以使用递归 + 回溯的方法，使用递归函数 dfs}(\textit{node}, \textit{pos}, \textit{modified})，其中的变量分别表示：当前遍历到的字典树上的节点是 node 以及待查询字符串 searchWord 的第 pos 个字符，并且在之前的遍历中是否已经替换过恰好一个字符（如果替换过，那么 modified 为 true，否则为 false）。</p>
+<p>如果 node 有一个值为 searchWord}[pos] 的子节点，那么我们就可以继续进行递归。同时，如果 modified 为 false，我们可以将 searchWord}[pos] 替换成任意一个是 node 子节点的字符，将 modified 置为 true 并继续进行递归。</p>
+<p>当 pos 等于 searchWord 的长度时，说明递归完成。此时我们需要检查 node 是否是一个字典树上的结束节点（即一个单词的末尾），同时需要保证 modified 为 true，因为我们必须进行一次修改。</p>
+<p><strong>代码</strong></p>
+<div class="highlight-container" data-rel="C++"><figure class="iseeu highlight c++"><figcaption><span>[sol2-C++]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">Trie</span> &#123;</span><br><span class="line">    <span class="type">bool</span> is_finished;</span><br><span class="line">    Trie* child[<span class="number">26</span>];</span><br><span class="line"></span><br><span class="line">    <span class="built_in">Trie</span>() &#123;</span><br><span class="line">        is_finished = <span class="literal">false</span>;</span><br><span class="line">        <span class="built_in">fill</span>(<span class="built_in">begin</span>(child), <span class="built_in">end</span>(child), <span class="literal">nullptr</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MagicDictionary</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">MagicDictionary</span>() &#123;</span><br><span class="line">        root = <span class="keyword">new</span> <span class="built_in">Trie</span>();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">buildDict</span><span class="params">(vector&lt;string&gt; dictionary)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span>&amp;&amp; word: dictionary) &#123;</span><br><span class="line">            Trie* cur = root;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">char</span> ch: word) &#123;</span><br><span class="line">                <span class="type">int</span> idx = ch - <span class="string">&#x27;a&#x27;</span>;</span><br><span class="line">                <span class="keyword">if</span> (!cur-&gt;child[idx]) &#123;</span><br><span class="line">                    cur-&gt;child[idx] = <span class="keyword">new</span> <span class="built_in">Trie</span>();</span><br><span class="line">                &#125;</span><br><span class="line">                cur = cur-&gt;child[idx];</span><br><span class="line">            &#125;</span><br><span class="line">            cur-&gt;is_finished = <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="type">bool</span> <span class="title">search</span><span class="params">(string searchWord)</span> </span>&#123;</span><br><span class="line">        function&lt;<span class="type">bool</span>(Trie*, <span class="type">int</span>, <span class="type">bool</span>)&gt; dfs = [&amp;](Trie* node, <span class="type">int</span> pos, <span class="type">bool</span> modified) &#123;</span><br><span class="line">            <span class="keyword">if</span> (pos == searchWord.<span class="built_in">size</span>()) &#123;</span><br><span class="line">                <span class="keyword">return</span> modified &amp;&amp; node-&gt;is_finished;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="type">int</span> idx = searchWord[pos] - <span class="string">&#x27;a&#x27;</span>;</span><br><span class="line">            <span class="keyword">if</span> (node-&gt;child[idx]) &#123;</span><br><span class="line">                <span class="keyword">if</span> (<span class="built_in">dfs</span>(node-&gt;child[idx], pos + <span class="number">1</span>, modified)) &#123;</span><br><span class="line">                    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (!modified) &#123;</span><br><span class="line">                <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">26</span>; ++i) &#123;</span><br><span class="line">                    <span class="keyword">if</span> (i != idx &amp;&amp; node-&gt;child[i]) &#123;</span><br><span class="line">                        <span class="keyword">if</span> (<span class="built_in">dfs</span>(node-&gt;child[i], pos + <span class="number">1</span>, <span class="literal">true</span>)) &#123;</span><br><span class="line">                            <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">dfs</span>(root, <span class="number">0</span>, <span class="literal">false</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    Trie* root;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><figcaption><span>[sol2-Java]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MagicDictionary</span> &#123;</span><br><span class="line">    Trie root;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">MagicDictionary</span><span class="params">()</span> &#123;</span><br><span class="line">        root = <span class="keyword">new</span> <span class="title class_">Trie</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">buildDict</span><span class="params">(String[] dictionary)</span> &#123;</span><br><span class="line">        <span class="keyword">for</span> (String word : dictionary) &#123;</span><br><span class="line">            <span class="type">Trie</span> <span class="variable">cur</span> <span class="operator">=</span> root;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; word.length(); ++i) &#123;</span><br><span class="line">                <span class="type">char</span> <span class="variable">ch</span> <span class="operator">=</span> word.charAt(i);</span><br><span class="line">                <span class="type">int</span> <span class="variable">idx</span> <span class="operator">=</span> ch - <span class="string">&#x27;a&#x27;</span>;</span><br><span class="line">                <span class="keyword">if</span> (cur.child[idx] == <span class="literal">null</span>) &#123;</span><br><span class="line">                    cur.child[idx] = <span class="keyword">new</span> <span class="title class_">Trie</span>();</span><br><span class="line">                &#125;</span><br><span class="line">                cur = cur.child[idx];</span><br><span class="line">            &#125;</span><br><span class="line">            cur.isFinished = <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">search</span><span class="params">(String searchWord)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> dfs(searchWord, root, <span class="number">0</span>, <span class="literal">false</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="type">boolean</span> <span class="title function_">dfs</span><span class="params">(String searchWord, Trie node, <span class="type">int</span> pos, <span class="type">boolean</span> modified)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (pos == searchWord.length()) &#123;</span><br><span class="line">            <span class="keyword">return</span> modified &amp;&amp; node.isFinished;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">int</span> <span class="variable">idx</span> <span class="operator">=</span> searchWord.charAt(pos) - <span class="string">&#x27;a&#x27;</span>;</span><br><span class="line">        <span class="keyword">if</span> (node.child[idx] != <span class="literal">null</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (dfs(searchWord, node.child[idx], pos + <span class="number">1</span>, modified)) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (!modified) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; <span class="number">26</span>; ++i) &#123;</span><br><span class="line">                <span class="keyword">if</span> (i != idx &amp;&amp; node.child[i] != <span class="literal">null</span>) &#123;</span><br><span class="line">                    <span class="keyword">if</span> (dfs(searchWord, node.child[i], pos + <span class="number">1</span>, <span class="literal">true</span>)) &#123;</span><br><span class="line">                        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Trie</span> &#123;</span><br><span class="line">    <span class="type">boolean</span> isFinished;</span><br><span class="line">    Trie[] child;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">Trie</span><span class="params">()</span> &#123;</span><br><span class="line">        isFinished = <span class="literal">false</span>;</span><br><span class="line">        child = <span class="keyword">new</span> <span class="title class_">Trie</span>[<span class="number">26</span>];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="C#"><figure class="iseeu highlight c#"><figcaption><span>[sol2-C#]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">MagicDictionary</span> &#123;</span><br><span class="line">    Trie root;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MagicDictionary</span>()</span> &#123;</span><br><span class="line">        root = <span class="keyword">new</span> Trie();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">BuildDict</span>(<span class="params"><span class="built_in">string</span>[] dictionary</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">foreach</span> (<span class="built_in">string</span> word <span class="keyword">in</span> dictionary) &#123;</span><br><span class="line">            Trie cur = root;</span><br><span class="line">            <span class="keyword">foreach</span> (<span class="built_in">char</span> ch <span class="keyword">in</span> word) &#123;</span><br><span class="line">                <span class="built_in">int</span> idx = ch - <span class="string">&#x27;a&#x27;</span>;</span><br><span class="line">                <span class="keyword">if</span> (cur.Child[idx] == <span class="literal">null</span>) &#123;</span><br><span class="line">                    cur.Child[idx] = <span class="keyword">new</span> Trie();</span><br><span class="line">                &#125;</span><br><span class="line">                cur = cur.Child[idx];</span><br><span class="line">            &#125;</span><br><span class="line">            cur.IsFinished = <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="built_in">bool</span> <span class="title">Search</span>(<span class="params"><span class="built_in">string</span> searchWord</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> DFS(searchWord, root, <span class="number">0</span>, <span class="literal">false</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="built_in">bool</span> <span class="title">DFS</span>(<span class="params"><span class="built_in">string</span> searchWord, Trie node, <span class="built_in">int</span> pos, <span class="built_in">bool</span> modified</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (pos == searchWord.Length) &#123;</span><br><span class="line">            <span class="keyword">return</span> modified &amp;&amp; node.IsFinished;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">int</span> idx = searchWord[pos] - <span class="string">&#x27;a&#x27;</span>;</span><br><span class="line">        <span class="keyword">if</span> (node.Child[idx] != <span class="literal">null</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (DFS(searchWord, node.Child[idx], pos + <span class="number">1</span>, modified)) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (!modified) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; <span class="number">26</span>; ++i) &#123;</span><br><span class="line">                <span class="keyword">if</span> (i != idx &amp;&amp; node.Child[i] != <span class="literal">null</span>) &#123;</span><br><span class="line">                    <span class="keyword">if</span> (DFS(searchWord, node.Child[i], pos + <span class="number">1</span>, <span class="literal">true</span>)) &#123;</span><br><span class="line">                        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title">Trie</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">bool</span> IsFinished &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br><span class="line">    <span class="keyword">public</span> Trie[] Child &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Trie</span>()</span> &#123;</span><br><span class="line">        IsFinished = <span class="literal">false</span>;</span><br><span class="line">        Child = <span class="keyword">new</span> Trie[<span class="number">26</span>];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><figcaption><span>[sol2-Python3]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Trie</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">        self.is_finished = <span class="literal">False</span></span><br><span class="line">        self.child = <span class="built_in">dict</span>()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MagicDictionary</span>:</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">        self.root = Trie()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">buildDict</span>(<span class="params">self, dictionary: <span class="type">List</span>[<span class="built_in">str</span>]</span>) -&gt; <span class="literal">None</span>:</span><br><span class="line">        <span class="keyword">for</span> word <span class="keyword">in</span> dictionary:</span><br><span class="line">            cur = self.root</span><br><span class="line">            <span class="keyword">for</span> ch <span class="keyword">in</span> word:</span><br><span class="line">                <span class="keyword">if</span> ch <span class="keyword">not</span> <span class="keyword">in</span> cur.child:</span><br><span class="line">                    cur.child[ch] = Trie()</span><br><span class="line">                cur = cur.child[ch]</span><br><span class="line">            cur.is_finished = <span class="literal">True</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">search</span>(<span class="params">self, searchWord: <span class="built_in">str</span></span>) -&gt; <span class="built_in">bool</span>:</span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">dfs</span>(<span class="params">node: Trie, pos: <span class="built_in">int</span>, modified: <span class="built_in">bool</span></span>) -&gt; <span class="built_in">bool</span>:</span><br><span class="line">            <span class="keyword">if</span> pos == <span class="built_in">len</span>(searchWord):</span><br><span class="line">                <span class="keyword">return</span> modified <span class="keyword">and</span> node.is_finished</span><br><span class="line">            </span><br><span class="line">            ch = searchWord[pos]</span><br><span class="line">            <span class="keyword">if</span> ch <span class="keyword">in</span> node.child:</span><br><span class="line">                <span class="keyword">if</span> dfs(node.child[ch], pos + <span class="number">1</span>, modified):</span><br><span class="line">                    <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line">                </span><br><span class="line">            <span class="keyword">if</span> <span class="keyword">not</span> modified:</span><br><span class="line">                <span class="keyword">for</span> cnext <span class="keyword">in</span> node.child:</span><br><span class="line">                    <span class="keyword">if</span> ch != cnext:</span><br><span class="line">                        <span class="keyword">if</span> dfs(node.child[cnext], pos + <span class="number">1</span>, <span class="literal">True</span>):</span><br><span class="line">                            <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line">            </span><br><span class="line">            <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> dfs(self.root, <span class="number">0</span>, <span class="literal">False</span>)</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="C"><figure class="iseeu highlight c"><figcaption><span>[sol2-C]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">Trie</span> &#123;</span></span><br><span class="line">    <span class="type">bool</span> is_finished;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">Trie</span>* <span class="title">child</span>[26];</span></span><br><span class="line">&#125; Trie;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> &#123;</span></span><br><span class="line">    Trie *root;</span><br><span class="line">&#125; MagicDictionary;</span><br><span class="line"></span><br><span class="line">Trie* <span class="title function_">trieCreate</span><span class="params">()</span> &#123;</span><br><span class="line">    Trie *node = (Trie *)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(Trie));</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">26</span>; i++) &#123;</span><br><span class="line">        node-&gt;child[i] = <span class="literal">NULL</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    node-&gt;is_finished = <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">return</span> node;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">MagicDictionary* <span class="title function_">magicDictionaryCreate</span><span class="params">()</span> &#123;</span><br><span class="line">    MagicDictionary *obj = (MagicDictionary *)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(MagicDictionary));</span><br><span class="line">    obj-&gt;root = trieCreate();</span><br><span class="line">    <span class="keyword">return</span> obj;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">magicDictionaryBuildDict</span><span class="params">(MagicDictionary* obj, <span class="type">char</span> ** dictionary, <span class="type">int</span> dictionarySize)</span> &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt; dictionarySize; j++) &#123;</span><br><span class="line">        Trie* cur = obj-&gt;root;</span><br><span class="line">        <span class="type">int</span> len = <span class="built_in">strlen</span>(dictionary[j]);</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; len; i++) &#123;</span><br><span class="line">            <span class="type">int</span> idx = dictionary[j][i] - <span class="string">&#x27;a&#x27;</span>;</span><br><span class="line">            <span class="keyword">if</span> (!cur-&gt;child[idx]) &#123;</span><br><span class="line">                cur-&gt;child[idx] = trieCreate();</span><br><span class="line">            &#125;</span><br><span class="line">            cur = cur-&gt;child[idx];</span><br><span class="line">        &#125;</span><br><span class="line">        cur-&gt;is_finished = <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">static</span> <span class="type">bool</span> <span class="title function_">dfs</span><span class="params">(Trie* node, <span class="type">char</span> *searchWord, <span class="type">int</span> pos, <span class="type">bool</span> modified)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (pos == <span class="built_in">strlen</span>(searchWord)) &#123;</span><br><span class="line">        <span class="keyword">return</span> modified &amp;&amp; node-&gt;is_finished;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="type">int</span> idx = searchWord[pos] - <span class="string">&#x27;a&#x27;</span>;</span><br><span class="line">    <span class="keyword">if</span> (node-&gt;child[idx]) &#123;</span><br><span class="line">        <span class="keyword">if</span> (dfs(node-&gt;child[idx], searchWord, pos + <span class="number">1</span>, modified)) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (!modified) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">26</span>; ++i) &#123;</span><br><span class="line">            <span class="keyword">if</span> (i != idx &amp;&amp; node-&gt;child[i]) &#123;</span><br><span class="line">                <span class="keyword">if</span> (dfs(node-&gt;child[i], searchWord, pos + <span class="number">1</span>, <span class="literal">true</span>)) &#123;</span><br><span class="line">                    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="type">bool</span> <span class="title function_">magicDictionarySearch</span><span class="params">(MagicDictionary* obj, <span class="type">char</span> * searchWord)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> dfs(obj-&gt;root, searchWord, <span class="number">0</span>, <span class="literal">false</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">static</span> <span class="type">void</span> <span class="title function_">trieFree</span><span class="params">(Trie *root)</span> &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">26</span>; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (root-&gt;child[i]) &#123;</span><br><span class="line">            <span class="built_in">free</span>(root-&gt;child[i]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">free</span>(root);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">magicDictionaryFree</span><span class="params">(MagicDictionary* obj)</span> &#123;</span><br><span class="line">    trieFree(obj-&gt;root);</span><br><span class="line">    <span class="built_in">free</span>(obj);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Go"><figure class="iseeu highlight go"><figcaption><span>[sol2-Golang]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> trie <span class="keyword">struct</span> &#123;</span><br><span class="line">    children   [<span class="number">26</span>]*trie</span><br><span class="line">    isFinished <span class="type">bool</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> MagicDictionary <span class="keyword">struct</span> &#123;</span><br><span class="line">    *trie</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Constructor</span><span class="params">()</span></span> MagicDictionary &#123;</span><br><span class="line">    <span class="keyword">return</span> MagicDictionary&#123;&amp;trie&#123;&#125;&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(d *MagicDictionary)</span></span> BuildDict(dictionary []<span class="type">string</span>) &#123;</span><br><span class="line">    <span class="keyword">for</span> _, word := <span class="keyword">range</span> dictionary &#123;</span><br><span class="line">        cur := d.trie</span><br><span class="line">        <span class="keyword">for</span> _, c := <span class="keyword">range</span> word &#123;</span><br><span class="line">            c -= <span class="string">&#x27;a&#x27;</span></span><br><span class="line">            <span class="keyword">if</span> cur.children[c] == <span class="literal">nil</span> &#123;</span><br><span class="line">                cur.children[c] = &amp;trie&#123;&#125;</span><br><span class="line">            &#125;</span><br><span class="line">            cur = cur.children[c]</span><br><span class="line">        &#125;</span><br><span class="line">        cur.isFinished = <span class="literal">true</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">dfs</span><span class="params">(node *trie, searchWord <span class="type">string</span>, modified <span class="type">bool</span>)</span></span> <span class="type">bool</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> searchWord == <span class="string">&quot;&quot;</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> modified &amp;&amp; node.isFinished</span><br><span class="line">    &#125;</span><br><span class="line">    c := searchWord[<span class="number">0</span>] - <span class="string">&#x27;a&#x27;</span></span><br><span class="line">    <span class="keyword">if</span> node.children[c] != <span class="literal">nil</span> &amp;&amp; dfs(node.children[c], searchWord[<span class="number">1</span>:], modified) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> !modified &#123;</span><br><span class="line">        <span class="keyword">for</span> i, child := <span class="keyword">range</span> node.children &#123;</span><br><span class="line">            <span class="keyword">if</span> i != <span class="type">int</span>(c) &amp;&amp; child != <span class="literal">nil</span> &amp;&amp; dfs(child, searchWord[<span class="number">1</span>:], <span class="literal">true</span>) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(d *MagicDictionary)</span></span> Search(searchWord <span class="type">string</span>) <span class="type">bool</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> dfs(d.trie, searchWord, <span class="literal">false</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><figcaption><span>[sol2-JavaScript]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> <span class="title class_">MagicDictionary</span> = <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">root</span> = <span class="keyword">new</span> <span class="title class_">Trie</span>();</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="title class_">MagicDictionary</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">buildDict</span> = <span class="keyword">function</span>(<span class="params">dictionary</span>) &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">const</span> word <span class="keyword">of</span> dictionary) &#123;</span><br><span class="line">        <span class="keyword">let</span> cur = <span class="variable language_">this</span>.<span class="property">root</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; word.<span class="property">length</span>; ++i) &#123;</span><br><span class="line">            <span class="keyword">const</span> ch = word[i];</span><br><span class="line">            <span class="keyword">const</span> idx = ch.<span class="title function_">charCodeAt</span>() - <span class="string">&#x27;a&#x27;</span>.<span class="title function_">charCodeAt</span>();</span><br><span class="line">            <span class="keyword">if</span> (!cur.<span class="property">child</span>[idx]) &#123;</span><br><span class="line">                cur.<span class="property">child</span>[idx] = <span class="keyword">new</span> <span class="title class_">Trie</span>();</span><br><span class="line">            &#125;</span><br><span class="line">            cur = cur.<span class="property">child</span>[idx];</span><br><span class="line">        &#125;</span><br><span class="line">        cur.<span class="property">isFinished</span> = <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="title class_">MagicDictionary</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">search</span> = <span class="keyword">function</span>(<span class="params">searchWord</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title function_">dfs</span>(searchWord, <span class="variable language_">this</span>.<span class="property">root</span>, <span class="number">0</span>, <span class="literal">false</span>);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">dfs</span> = (<span class="params">searchWord, node, pos, modified</span>) =&gt; &#123;</span><br><span class="line">    <span class="keyword">if</span> (pos === searchWord.<span class="property">length</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> modified &amp;&amp; node.<span class="property">isFinished</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">let</span> idx = searchWord[pos].<span class="title function_">charCodeAt</span>() - <span class="string">&#x27;a&#x27;</span>.<span class="title function_">charCodeAt</span>();</span><br><span class="line">    <span class="keyword">if</span> (node.<span class="property">child</span>[idx]) &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="title function_">dfs</span>(searchWord, node.<span class="property">child</span>[idx], pos + <span class="number">1</span>, modified)) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (!modified) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="number">26</span>; ++i) &#123;</span><br><span class="line">            <span class="keyword">if</span> (i !== idx &amp;&amp; node.<span class="property">child</span>[i]) &#123;</span><br><span class="line">                <span class="keyword">if</span> (<span class="title function_">dfs</span>(searchWord, node.<span class="property">child</span>[i], pos + <span class="number">1</span>, <span class="literal">true</span>)) &#123;</span><br><span class="line">                    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Trie</span> &#123;</span><br><span class="line">    <span class="title function_">constructor</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">isFinished</span> = <span class="literal">false</span>;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">child</span> = <span class="keyword">new</span> <span class="title class_">Array</span>(<span class="number">26</span>).<span class="title function_">fill</span>(<span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>复杂度分析</strong></p>
+<ul>
+<li><p>时间复杂度：O(nl+ql|\Sigma|)，其中 n 是数组 dictionary 的长度，l 是数组 dictionary 中字符串的平均长度，q 是函数 search(searchWord) 的调用次数，\Sigma 是字符集。初始化需要的时间为 O(nl)，每一次查询最多会把与 searchWord 相差一个字符的单词全部遍历一遍，因此时间复杂度为 O(l|\Sigma|)。</p>
+</li>
+<li><p>空间复杂度：O(nl)，即为字典树需要使用的空间。</p>
+</li>
+</ul>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <!--<div class="article-copyright-info-container">-->
+    <!--&lt;!&ndash;<ul>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><strong>Title:</strong> 0676-实现一个魔法字典</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><strong>Author:</strong> Raphael Liu</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><strong>Created at&ndash;&gt;-->
+                <!--&lt;!&ndash;:</strong> 2023-09-13 00:47:26</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;&ndash;&gt;-->
+            <!--&lt;!&ndash;<li>&ndash;&gt;-->
+                <!--&lt;!&ndash;<strong>Updated at&ndash;&gt;-->
+                    <!--&lt;!&ndash;:</strong> 2023-09-13 16:06:27&ndash;&gt;-->
+            <!--&lt;!&ndash;</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;<li>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;<strong>Link:</strong> https://fida.ltd/2023/09/13/0676-实现一个魔法字典/&ndash;&gt;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;</li>&ndash;&gt;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;<li>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;<strong>&ndash;&gt;&ndash;&gt;-->
+                <!--&lt;!&ndash;&lt;!&ndash;License:&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;</strong>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0</a>.&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;&ndash;&gt;&ndash;&gt;-->
+
+        <!--&lt;!&ndash;&lt;!&ndash;</li>&ndash;&gt;&ndash;&gt;-->
+    <!--&lt;!&ndash;</ul>&ndash;&gt;-->
+<!--</div>-->
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box">
+                
+                    <li class="tag-item">
+                        <a href="/tags/algorithm/">#algorithm</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item">
+                        <a href="/tags/MEDIUM/">#MEDIUM</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                        rel="prev"
+                        href="/2023/09/13/0675-%E4%B8%BA%E9%AB%98%E5%B0%94%E5%A4%AB%E6%AF%94%E8%B5%9B%E7%A0%8D%E6%A0%91/"
+                        >
+                            <span class="left arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">0675-为高尔夫比赛砍树</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                        rel="next"
+                        href="/2023/09/13/0677-%E9%94%AE%E5%80%BC%E6%98%A0%E5%B0%84/"
+                        >
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">0677-键值映射</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+
+        
+            <div class="comment-container">
+                <div class="comments-container pjax">
+    <div id="comment-anchor"></div>
+    <div class="comment-area-title">
+        <i class="fa-solid fa-comments"></i>&nbsp;Comments
+    </div>
+    
+
+        
+            
+ 
+    <div id="waline"></div>
+    <script type="module"  data-swup-reload-script>
+        import { init } from 'https://evan.beee.top/js/waline.mjs';
+
+        function loadWaline() {
+            init({
+                el: '#waline',
+                serverURL: 'https://example.example.com',
+                lang: 'zh-CN',
+                dark: 'body[class~="dark-mode"]',
+                requiredMeta: ['nick','mail'], // cannot customize by theme config, change it yourself
+            });
+        }
+
+        if ('true') {
+            const loadWalineTimeout = setTimeout(() => {
+                loadWaline();
+                clearTimeout(loadWalineTimeout);
+            }, 1000);
+        } else {
+            window.addEventListener('DOMContentLoaded', loadWaline);
+        }
+        
+    </script>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+
+    
+        <div class="toc-content-container">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">On this page</div>
+        <div class="page-title">0676-实现一个魔法字典</div>
+        
+
+    </div>
+</div>
+        </div>
+    
+</div>
+
+
+
+                
+
+            </div>
+
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2022</span>
+              -
+            
+            2023&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">Raphael Liu</a>
+        </div>
+        
+            <script data-swup-reload-script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">UV:</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">PV:</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <!--<div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">-->
+            <!--<span class="lg:block text-sm">powered_by</span>-->
+            <!--&lt;!&ndash;<span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.4.4</a></span>&ndash;&gt;-->
+        <!--</div>-->
+        
+        <!---->
+            <!--<div>-->
+                <!--runtime <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hours <span class="odometer" id="runtime_minutes"></span> minutes <span class="odometer" id="runtime_seconds"></span> seconds-->
+            <!--</div>-->
+        <!---->
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fa-regular fa-comments"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-expand-width flex justify-center items-center">
+            <i class="fa-regular fa-expand"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fa-solid fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa-solid fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa-solid fa-spinner fa-spin-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+    
+<script src="/js/libs/Swup.min.js"></script>
+
+<script src="/js/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/libs/SwupScrollPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+        ],
+        containers: ["#swup"],
+    });
+
+    swup.hooks.on("page:view", () => {
+        Global.refresh();
+    });
+
+    // if (document.readyState === "complete") {
+    //
+    // } else {
+    //     document.addEventListener("DOMContentLoaded", () => init());
+    // }
+</script>
+
+
+
+
+
+
+<script src="/js/utils.js" type="module"></script>
+
+<script src="/js/main.js" type="module"></script>
+
+<script src="/js/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/layouts/categoryList.js" type="module"></script>
+
+
+
+    
+<script src="/js/tools/localSearch.js"></script>
+
+
+
+
+    
+<script src="/js/tools/codeBlock.js"></script>
+
+
+
+
+    
+<script src="/js/layouts/lazyload.js"></script>
+
+
+
+
+    
+<script src="/js/tools/runtime.js"></script>
+
+    
+<script src="/js/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/libs/Typed.min.js"></script>
+
+  
+<script src="/js/plugins/typed.js"></script>
+
+
+
+
+
+
+
+<div class="post-scripts" data-swup-reload-script>
+    
+        
+<script src="/js/libs/anime.min.js"></script>
+
+        
+<script src="/js/tools/tocToggle.js" type="module"></script>
+
+<script src="/js/layouts/toc.js" type="module"></script>
+
+<script src="/js/plugins/tabs.js" type="module"></script>
+
+    
+</div>
+
+
+</body>
+</html>

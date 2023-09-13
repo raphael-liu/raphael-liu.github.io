@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="Raphael Liu">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/2023/09/13/0886-可能的二分法/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="给定一组 n 人（编号为 1, 2, ..., n）， 我们想把每个人分进 任意大小的两组。每个人都可能不喜欢其他人，那么他们不应该属于同一组。 给定整数 n 和数组 dislikes ，其中 dislikes[i] &#x3D; [ai, bi] ，表示不允许将编号为 ai 和bi的人归入同一组。当可以用这种方法将所有人分进两组时，返回 true；否则返回 false。 示例 1： **输入：** n &#x3D;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="0886-可能的二分法">
+<meta property="og:url" content="http://example.com/2023/09/13/0886-%E5%8F%AF%E8%83%BD%E7%9A%84%E4%BA%8C%E5%88%86%E6%B3%95/index.html">
+<meta property="og:site_name" content="Raphael&#39;s Blog">
+<meta property="og:description" content="给定一组 n 人（编号为 1, 2, ..., n）， 我们想把每个人分进 任意大小的两组。每个人都可能不喜欢其他人，那么他们不应该属于同一组。 给定整数 n 和数组 dislikes ，其中 dislikes[i] &#x3D; [ai, bi] ，表示不允许将编号为 ai 和bi的人归入同一组。当可以用这种方法将所有人分进两组时，返回 true；否则返回 false。 示例 1： **输入：** n &#x3D;">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-09-12T16:47:26.000Z">
+<meta property="article:modified_time" content="2023-09-13T08:06:29.928Z">
+<meta property="article:author" content="Raphael Liu">
+<meta property="article:tag" content="algorithm">
+<meta property="article:tag" content="MEDIUM">
+<meta name="twitter:card" content="summary">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/redefine-favicon.svg" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/redefine-favicon.svg">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/redefine-favicon.svg">
+    <!--- Page Info-->
+    
+    <title>
+        
+            0886-可能的二分法 -
+        
+        Raphael&#39;s Blog
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/css/build/styles.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/fonts.css">
+
+    
+<link rel="stylesheet" href="/fonts/Satoshi/satoshi.css">
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+
+    <!--- Inject Part-->
+    
+    <script id="hexo-configurations">
+    let Global = window.Global || {};
+    Global.hexo_config = {"hostname":"example.com","root":"/","language":"zh_CN"};
+    Global.theme_config = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":true,"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"open_graph":true,"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-wqery6-light.webp","dark":"/images/wallhaven-wqery6-dark.webp"},"title":"Raphael's Blog","subtitle":{"text":["格物致知","坚持做正确的事情"],"hitokoto":{"enable":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":false,"links":{"github":"https://github.com/raphael-liu","email":"raphael@buaa.edu.cn# your email"},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.4.4","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"links":{"首页":{"path":"/","icon":"fa-regular fa-house"},"文章":{"path":"/archives","icon":"fa-regular fa-archive"},"关于":{"icon":"fa-regular fa-user","submenus":{"我":"/about/me","Github":"https://github.com/raphael-liu"}}},"search":{"enable":true,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"links":null},"article_date_format":"auto","categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}},"footerStart":"2022/8/17 11:45:14"};
+    Global.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    Global.data_config = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="swup-progress-icon">
+            <i class="fa-solid fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container" id="swup">
+
+    
+
+    <div class="main-content-container">
+
+
+        <div class="main-content-header">
+            <header class="navbar-container">
+    
+    <div class="navbar-content">
+        <div class="left">
+            
+            <a class="logo-title" href="http://example.com/">
+                
+                Raphael&#39;s Blog
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/"  >
+                                    
+                                        
+                                            <i class="fa-regular fa-house"></i>
+                                        
+                                        首页
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/archives"  >
+                                    
+                                        
+                                            <i class="fa-regular fa-archive"></i>
+                                        
+                                        文章
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="has-dropdown" 
+                                    href="#" onClick="return false;">
+                                    
+                                        
+                                            <i class="fa-regular fa-user"></i>
+                                        
+                                        关于&nbsp;<i class="fa-solid fa-chevron-down"></i>
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                                    <ul class="sub-menu">
+                                    
+                                        <li>
+                                        <a href="/about/me">我
+                                        </a>
+                                        </li>
+                                    
+                                        <li>
+                                        <a target="_blank" rel="noopener" href="https://github.com/raphael-liu">GITHUB
+                                        </a>
+                                        </li>
+                                    
+                                    </ul>
+                                
+                            </li>
+                    
+                    
+                        <li class="navbar-item search search-popup-trigger">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fa-solid fa-magnifying-glass"></i></div>
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile drawer -->
+    <div class="navbar-drawer w-full absolute top-0 left-0 bg-background-color">
+        <ul class="drawer-navbar-list flex flex-col justify-start items-center">
+            
+                
+                    <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group " 
+                        href="/"  >
+                             
+                                
+                                    <i class="fa-regular fa-house"></i>
+                                
+                                首页
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+                
+                    <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group " 
+                        href="/archives"  >
+                             
+                                
+                                    <i class="fa-regular fa-archive"></i>
+                                
+                                文章
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+                
+                    <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group has-dropdown" 
+                        href="#" onClick="return false;">
+                            
+                                
+                                    <i class="fa-regular fa-user"></i>
+                                
+                                关于&nbsp;<i class="group-hover:rotate-180 transition-transform fa-solid fa-chevron-down"></i>
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                              
+                        
+                            <li class="text-base flex justify-center items-center hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                <a class="py-0.5" href="/about/me">我</a>
+                            </li>
+                        
+                            <li class="text-base flex justify-center items-center hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                <a class="py-0.5" target="_blank" rel="noopener" href="https://github.com/raphael-liu">GITHUB</a>
+                            </li>
+                        
+                    
+            
+
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="post-page-container">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            
+                <h1 class="article-title-regular">0886-可能的二分法</h1>
+            
+            </div>
+            
+                    
+        
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">Raphael Liu</span>
+                        
+                            <span class="author-label">Lv10</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2023-09-13 00:47:26</span>
+        <span class="mobile">2023-09-13 00:47:26</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2023-09-13 16:06:29</span>
+            <span class="mobile">2023-09-13 16:06:29</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/algorithm/">algorithm</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/MEDIUM/">MEDIUM</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        
+
+
+        <div class="article-content markdown-body">
+            <p>给定一组 <code>n</code> 人（编号为 <code>1, 2, ..., n</code>）， 我们想把每个人分进 <strong>任意</strong><br>大小的两组。每个人都可能不喜欢其他人，那么他们不应该属于同一组。</p>
+<p>给定整数 <code>n</code> 和数组 <code>dislikes</code> ，其中 <code>dislikes[i] = [ai, bi]</code> ，表示不允许将编号为 <code>ai</code> 和<br><code>bi</code>的人归入同一组。当可以用这种方法将所有人分进两组时，返回 <code>true</code>；否则返回 <code>false</code>。</p>
+<p><strong>示例 1：</strong></p>
+<pre><code>**输入：** n = 4, dislikes = [[1,2],[1,3],[2,4]]
+**输出：** true
+**解释：** group1 [1,4], group2 [2,3]
+</code></pre>
+<p><strong>示例 2：</strong></p>
+<pre><code>**输入：** n = 3, dislikes = [[1,2],[1,3],[2,3]]
+**输出：** false
+</code></pre>
+<p><strong>示例 3：</strong></p>
+<pre><code>**输入：** n = 5, dislikes = [[1,2],[2,3],[3,4],[4,5],[1,5]]
+**输出：** false
+</code></pre>
+<p><strong>提示：</strong></p>
+<ul>
+<li><code>1 &lt;= n &lt;= 2000</code></li>
+<li><code>0 &lt;= dislikes.length &lt;= 104</code></li>
+<li><code>dislikes[i].length == 2</code></li>
+<li><code>1 &lt;= dislikes[i][j] &lt;= n</code></li>
+<li><code>ai &lt; bi</code></li>
+<li><code>dislikes</code> 中每一组都 <strong>不同</strong></li>
+</ul>
+<h4 id="方法一：深度优先搜索"><a href="#方法一：深度优先搜索" class="headerlink" title="方法一：深度优先搜索"></a>方法一：深度优先搜索</h4><p><strong>思路与算法</strong></p>
+<p>首先题目给定 n 个人为一组（编号为 1, 2, \dots, n），其中 n 为偶数，并给出数组 dislike，其中 dislike}[i] &#x3D; {a_i, b_i\ 表示编号 a_i 的用户不喜欢用户 b_i，1 \le a_i &lt; b_i \le n。现在判断是否能将 n 个人分成两组，并满足当一个人不喜欢某一个人时，该两人不在同一组中出现。</p>
+<p>我们可以尝试用「染色法」来解决问题：假设第一组中的人是红色，第二组中的人为蓝色。我们依次遍历每一个人，如果当前的人没有被分组，就将其分到第一组（即染为红色），那么这个人不喜欢的人必须分到第二组中（染为蓝色）。然后任何新被分到第二组中的人，其不喜欢的人必须被分到第一组，依此类推。如果在染色的过程中存在冲突，就表示这个任务是不可能完成的，否则说明染色的过程有效（即存在合法的分组方案）。</p>
+<p><strong>代码</strong></p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><figcaption><span>[sol1-Python3]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">possibleBipartition</span>(<span class="params">self, n: <span class="built_in">int</span>, dislikes: <span class="type">List</span>[<span class="type">List</span>[<span class="built_in">int</span>]]</span>) -&gt; <span class="built_in">bool</span>:</span><br><span class="line">        g = [[] <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(n)]</span><br><span class="line">        <span class="keyword">for</span> x, y <span class="keyword">in</span> dislikes:</span><br><span class="line">            g[x - <span class="number">1</span>].append(y - <span class="number">1</span>)</span><br><span class="line">            g[y - <span class="number">1</span>].append(x - <span class="number">1</span>)</span><br><span class="line">        color = [<span class="number">0</span>] * n  <span class="comment"># color[x] = 0 表示未访问节点 x</span></span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">dfs</span>(<span class="params">x: <span class="built_in">int</span>, c: <span class="built_in">int</span></span>) -&gt; <span class="built_in">bool</span>:</span><br><span class="line">            color[x] = c</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">all</span>(color[y] != c <span class="keyword">and</span> (color[y] <span class="keyword">or</span> dfs(y, -c)) <span class="keyword">for</span> y <span class="keyword">in</span> g[x])</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">all</span>(c <span class="keyword">or</span> dfs(i, <span class="number">1</span>) <span class="keyword">for</span> i, c <span class="keyword">in</span> <span class="built_in">enumerate</span>(color))</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="C++"><figure class="iseeu highlight c++"><figcaption><span>[sol1-C++]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">bool</span> <span class="title">dfs</span><span class="params">(<span class="type">int</span> curnode, <span class="type">int</span> nowcolor, vector&lt;<span class="type">int</span>&gt;&amp; color, <span class="type">const</span> vector&lt;vector&lt;<span class="type">int</span>&gt;&gt;&amp; g)</span> </span>&#123;</span><br><span class="line">        color[curnode] = nowcolor;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span>&amp; nextnode : g[curnode]) &#123;</span><br><span class="line">            <span class="keyword">if</span> (color[nextnode] &amp;&amp; color[nextnode] == color[curnode]) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (!color[nextnode] &amp;&amp; !<span class="built_in">dfs</span>(nextnode, <span class="number">3</span> ^ nowcolor, color, g)) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">bool</span> <span class="title">possibleBipartition</span><span class="params">(<span class="type">int</span> n, vector&lt;vector&lt;<span class="type">int</span>&gt;&gt;&amp; dislikes)</span> </span>&#123;</span><br><span class="line">        <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">color</span><span class="params">(n + <span class="number">1</span>, <span class="number">0</span>)</span></span>;</span><br><span class="line">        vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; <span class="built_in">g</span>(n + <span class="number">1</span>);</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span>&amp; p : dislikes) &#123;</span><br><span class="line">            g[p[<span class="number">0</span>]].<span class="built_in">push_back</span>(p[<span class="number">1</span>]);</span><br><span class="line">            g[p[<span class="number">1</span>]].<span class="built_in">push_back</span>(p[<span class="number">0</span>]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; ++i) &#123;</span><br><span class="line">            <span class="keyword">if</span> (color[i] == <span class="number">0</span> &amp;&amp; !<span class="built_in">dfs</span>(i, <span class="number">1</span>, color, g)) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><figcaption><span>[sol1-Java]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">possibleBipartition</span><span class="params">(<span class="type">int</span> n, <span class="type">int</span>[][] dislikes)</span> &#123;</span><br><span class="line">        <span class="type">int</span>[] color = <span class="keyword">new</span> <span class="title class_">int</span>[n + <span class="number">1</span>];</span><br><span class="line">        List&lt;Integer&gt;[] g = <span class="keyword">new</span> <span class="title class_">List</span>[n + <span class="number">1</span>];</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt;= n; ++i) &#123;</span><br><span class="line">            g[i] = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;Integer&gt;();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span>[] p : dislikes) &#123;</span><br><span class="line">            g[p[<span class="number">0</span>]].add(p[<span class="number">1</span>]);</span><br><span class="line">            g[p[<span class="number">1</span>]].add(p[<span class="number">0</span>]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">1</span>; i &lt;= n; ++i) &#123;</span><br><span class="line">            <span class="keyword">if</span> (color[i] == <span class="number">0</span> &amp;&amp; !dfs(i, <span class="number">1</span>, color, g)) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">dfs</span><span class="params">(<span class="type">int</span> curnode, <span class="type">int</span> nowcolor, <span class="type">int</span>[] color, List&lt;Integer&gt;[] g)</span> &#123;</span><br><span class="line">        color[curnode] = nowcolor;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> nextnode : g[curnode]) &#123;</span><br><span class="line">            <span class="keyword">if</span> (color[nextnode] != <span class="number">0</span> &amp;&amp; color[nextnode] == color[curnode]) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (color[nextnode] == <span class="number">0</span> &amp;&amp; !dfs(nextnode, <span class="number">3</span> ^ nowcolor, color, g)) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="C#"><figure class="iseeu highlight c#"><figcaption><span>[sol1-C#]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Solution</span> &#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="built_in">bool</span> <span class="title">PossibleBipartition</span>(<span class="params"><span class="built_in">int</span> n, <span class="built_in">int</span>[][] dislikes</span>)</span> &#123;</span><br><span class="line">        <span class="built_in">int</span>[] color = <span class="keyword">new</span> <span class="built_in">int</span>[n + <span class="number">1</span>];</span><br><span class="line">        IList&lt;<span class="built_in">int</span>&gt;[] g = <span class="keyword">new</span> IList&lt;<span class="built_in">int</span>&gt;[n + <span class="number">1</span>];</span><br><span class="line">        <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt;= n; ++i) &#123;</span><br><span class="line">            g[i] = <span class="keyword">new</span> List&lt;<span class="built_in">int</span>&gt;();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">foreach</span> (<span class="built_in">int</span>[] p <span class="keyword">in</span> dislikes) &#123;</span><br><span class="line">            g[p[<span class="number">0</span>]].Add(p[<span class="number">1</span>]);</span><br><span class="line">            g[p[<span class="number">1</span>]].Add(p[<span class="number">0</span>]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">1</span>; i &lt;= n; ++i) &#123;</span><br><span class="line">            <span class="keyword">if</span> (color[i] == <span class="number">0</span> &amp;&amp; !DFS(i, <span class="number">1</span>, color, g)) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="built_in">bool</span> <span class="title">DFS</span>(<span class="params"><span class="built_in">int</span> curnode, <span class="built_in">int</span> nowcolor, <span class="built_in">int</span>[] color, IList&lt;<span class="built_in">int</span>&gt;[] g</span>)</span> &#123;</span><br><span class="line">        color[curnode] = nowcolor;</span><br><span class="line">        <span class="keyword">foreach</span> (<span class="built_in">int</span> nextnode <span class="keyword">in</span> g[curnode]) &#123;</span><br><span class="line">            <span class="keyword">if</span> (color[nextnode] != <span class="number">0</span> &amp;&amp; color[nextnode] == color[curnode]) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (color[nextnode] == <span class="number">0</span> &amp;&amp; !DFS(nextnode, <span class="number">3</span> ^ nowcolor, color, g)) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="C"><figure class="iseeu highlight c"><figcaption><span>[sol1-C]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">bool</span> <span class="title function_">dfs</span><span class="params">(<span class="type">int</span> curnode, <span class="type">int</span> nowcolor, <span class="type">int</span> *color, <span class="keyword">struct</span> ListNode **g)</span> &#123;</span><br><span class="line">    color[curnode] = nowcolor;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">struct</span> ListNode *nextnode = g[curnode]; nextnode; nextnode = nextnode-&gt;next) &#123;</span><br><span class="line">        <span class="keyword">if</span> (color[nextnode-&gt;val] &amp;&amp; color[nextnode-&gt;val] == color[curnode]) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (!color[nextnode-&gt;val] &amp;&amp; !dfs(nextnode-&gt;val, <span class="number">3</span> ^ nowcolor, color, g)) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">bool</span> <span class="title function_">possibleBipartition</span><span class="params">(<span class="type">int</span> n, <span class="type">int</span>** dislikes, <span class="type">int</span> dislikesSize, <span class="type">int</span>* dislikesColSize)</span> &#123;</span><br><span class="line">    <span class="type">int</span> color[n + <span class="number">1</span>];</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span> *<span class="title">g</span>[<span class="title">n</span> + 1];</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt;= n; i++) &#123;</span><br><span class="line">        color[i] = <span class="number">0</span>;</span><br><span class="line">        g[i] = <span class="literal">NULL</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; dislikesSize; i++) &#123;</span><br><span class="line">        <span class="type">int</span> a = dislikes[i][<span class="number">0</span>], b = dislikes[i][<span class="number">1</span>];</span><br><span class="line">        <span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span> *<span class="title">node</span> =</span> (<span class="keyword">struct</span> ListNode *)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">struct</span> ListNode));</span><br><span class="line">        node-&gt;val = a;</span><br><span class="line">        node-&gt;next = g[b];</span><br><span class="line">        g[b] = node;</span><br><span class="line">        node = (<span class="keyword">struct</span> ListNode *)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">struct</span> ListNode));</span><br><span class="line">        node-&gt;val = b;</span><br><span class="line">        node-&gt;next = g[a];</span><br><span class="line">        g[a] = node;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; ++i) &#123;</span><br><span class="line">        <span class="keyword">if</span> (color[i] == <span class="number">0</span> &amp;&amp; !dfs(i, <span class="number">1</span>, color, g)) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt;= n; j++) &#123;</span><br><span class="line">                <span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span> * <span class="title">node</span> =</span> g[j];</span><br><span class="line">                <span class="keyword">while</span> (node) &#123;</span><br><span class="line">                    <span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span> * <span class="title">prev</span> =</span> node;</span><br><span class="line">                    node = node-&gt;next;</span><br><span class="line">                    <span class="built_in">free</span>(prev);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt;= n; j++) &#123;</span><br><span class="line">        <span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span> * <span class="title">node</span> =</span> g[j];</span><br><span class="line">        <span class="keyword">while</span> (node) &#123;</span><br><span class="line">            <span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span> * <span class="title">prev</span> =</span> node;</span><br><span class="line">            node = node-&gt;next;</span><br><span class="line">            <span class="built_in">free</span>(prev);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><figcaption><span>[sol1-JavaScript]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> possibleBipartition = <span class="keyword">function</span>(<span class="params">n, dislikes</span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> <span class="title function_">dfs</span> = (<span class="params">curnode, nowcolor, color, g</span>) =&gt; &#123;</span><br><span class="line">        color[curnode] = nowcolor;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">const</span> nextnode <span class="keyword">of</span> g[curnode]) &#123;</span><br><span class="line">            <span class="keyword">if</span> (color[nextnode] !== <span class="number">0</span> &amp;&amp; color[nextnode] === color[curnode]) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (color[nextnode] === <span class="number">0</span> &amp;&amp; !<span class="title function_">dfs</span>(nextnode, <span class="number">3</span> ^ nowcolor, color, g)) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">const</span> color = <span class="keyword">new</span> <span class="title class_">Array</span>(n + <span class="number">1</span>).<span class="title function_">fill</span>(<span class="number">0</span>);</span><br><span class="line">    <span class="keyword">const</span> g = <span class="keyword">new</span> <span class="title class_">Array</span>(n + <span class="number">1</span>).<span class="title function_">fill</span>(<span class="number">0</span>);</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt;= n; ++i) &#123;</span><br><span class="line">        g[i] = [];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">const</span> p <span class="keyword">of</span> dislikes) &#123;</span><br><span class="line">        g[p[<span class="number">0</span>]].<span class="title function_">push</span>(p[<span class="number">1</span>]);</span><br><span class="line">        g[p[<span class="number">1</span>]].<span class="title function_">push</span>(p[<span class="number">0</span>]);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">1</span>; i &lt;= n; ++i) &#123;</span><br><span class="line">        <span class="keyword">if</span> (color[i] === <span class="number">0</span> &amp;&amp; !<span class="title function_">dfs</span>(i, <span class="number">1</span>, color, g)) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Go"><figure class="iseeu highlight go"><figcaption><span>[sol1-Golang]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">possibleBipartition</span><span class="params">(n <span class="type">int</span>, dislikes [][]<span class="type">int</span>)</span></span> <span class="type">bool</span> &#123;</span><br><span class="line">    g := <span class="built_in">make</span>([][]<span class="type">int</span>, n)</span><br><span class="line">    <span class="keyword">for</span> _, d := <span class="keyword">range</span> dislikes &#123;</span><br><span class="line">        x, y := d[<span class="number">0</span>]<span class="number">-1</span>, d[<span class="number">1</span>]<span class="number">-1</span></span><br><span class="line">        g[x] = <span class="built_in">append</span>(g[x], y)</span><br><span class="line">        g[y] = <span class="built_in">append</span>(g[y], x)</span><br><span class="line">    &#125;</span><br><span class="line">    color := <span class="built_in">make</span>([]<span class="type">int</span>, n) <span class="comment">// color[x] = 0 表示未访问节点 x</span></span><br><span class="line">    <span class="keyword">var</span> dfs <span class="function"><span class="keyword">func</span><span class="params">(<span class="type">int</span>, <span class="type">int</span>)</span></span> <span class="type">bool</span></span><br><span class="line">    dfs = <span class="function"><span class="keyword">func</span><span class="params">(x, c <span class="type">int</span>)</span></span> <span class="type">bool</span> &#123;</span><br><span class="line">        color[x] = c</span><br><span class="line">        <span class="keyword">for</span> _, y := <span class="keyword">range</span> g[x] &#123;</span><br><span class="line">            <span class="keyword">if</span> color[y] == c || color[y] == <span class="number">0</span> &amp;&amp; !dfs(y, <span class="number">3</span>^c) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> i, c := <span class="keyword">range</span> color &#123;</span><br><span class="line">        <span class="keyword">if</span> c == <span class="number">0</span> &amp;&amp; !dfs(i, <span class="number">1</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>复杂度分析</strong></p>
+<ul>
+<li>时间复杂度：O(n + m)，其中 n 题目给定的人数，m 为给定的 dislike 数组的大小。</li>
+<li>空间复杂度：O(n + m)，其中 n 题目给定的人数，m 为给定的 dislike 数组的大小。</li>
+</ul>
+<h4 id="方法二：广度优先搜索"><a href="#方法二：广度优先搜索" class="headerlink" title="方法二：广度优先搜索"></a>方法二：广度优先搜索</h4><p><strong>思路与算法</strong></p>
+<p>同样我们也可以通过「广度优先搜索」来实现「方法一」中「染色法」的过程。</p>
+<p><strong>代码</strong></p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><figcaption><span>[sol2-Python3]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">possibleBipartition</span>(<span class="params">self, n: <span class="built_in">int</span>, dislikes: <span class="type">List</span>[<span class="type">List</span>[<span class="built_in">int</span>]]</span>) -&gt; <span class="built_in">bool</span>:</span><br><span class="line">        g = [[] <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(n)]</span><br><span class="line">        <span class="keyword">for</span> x, y <span class="keyword">in</span> dislikes:</span><br><span class="line">            g[x - <span class="number">1</span>].append(y - <span class="number">1</span>)</span><br><span class="line">            g[y - <span class="number">1</span>].append(x - <span class="number">1</span>)</span><br><span class="line">        color = [<span class="number">0</span>] * n  <span class="comment"># color[x] = 0 表示未访问节点 x</span></span><br><span class="line">        <span class="keyword">for</span> i, c <span class="keyword">in</span> <span class="built_in">enumerate</span>(color):</span><br><span class="line">            <span class="keyword">if</span> c == <span class="number">0</span>:</span><br><span class="line">                q = deque([i])</span><br><span class="line">                color[i] = <span class="number">1</span></span><br><span class="line">                <span class="keyword">while</span> q:</span><br><span class="line">                    x = q.popleft()</span><br><span class="line">                    <span class="keyword">for</span> y <span class="keyword">in</span> g[x]:</span><br><span class="line">                        <span class="keyword">if</span> color[y] == color[x]:</span><br><span class="line">                            <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">                        <span class="keyword">if</span> color[y] == <span class="number">0</span>:</span><br><span class="line">                            color[y] = -color[x]</span><br><span class="line">                            q.append(y)</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">True</span></span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="C++"><figure class="iseeu highlight c++"><figcaption><span>[sol2-C++]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">bool</span> <span class="title">possibleBipartition</span><span class="params">(<span class="type">int</span> n, vector&lt;vector&lt;<span class="type">int</span>&gt;&gt;&amp; dislikes)</span> </span>&#123;</span><br><span class="line">        <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">color</span><span class="params">(n + <span class="number">1</span>, <span class="number">0</span>)</span></span>;</span><br><span class="line">        vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; <span class="built_in">g</span>(n + <span class="number">1</span>);</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span>&amp; p : dislikes) &#123;</span><br><span class="line">            g[p[<span class="number">0</span>]].<span class="built_in">push_back</span>(p[<span class="number">1</span>]);</span><br><span class="line">            g[p[<span class="number">1</span>]].<span class="built_in">push_back</span>(p[<span class="number">0</span>]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; ++i) &#123;</span><br><span class="line">            <span class="keyword">if</span> (color[i] == <span class="number">0</span>) &#123;</span><br><span class="line">                queue&lt;<span class="type">int</span>&gt; q;</span><br><span class="line">                q.<span class="built_in">push</span>(i);</span><br><span class="line">                color[i] = <span class="number">1</span>;</span><br><span class="line">                <span class="keyword">while</span> (!q.<span class="built_in">empty</span>()) &#123;</span><br><span class="line">                    <span class="keyword">auto</span> t = q.<span class="built_in">front</span>();</span><br><span class="line">                    q.<span class="built_in">pop</span>();</span><br><span class="line">                    <span class="keyword">for</span> (<span class="keyword">auto</span>&amp; next : g[t]) &#123;</span><br><span class="line">                        <span class="keyword">if</span> (color[next] &gt; <span class="number">0</span> &amp;&amp; color[next] == color[t]) &#123;</span><br><span class="line">                            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">                        &#125;</span><br><span class="line">                        <span class="keyword">if</span> (color[next] == <span class="number">0</span>) &#123;</span><br><span class="line">                            color[next] = <span class="number">3</span> ^ color[t];</span><br><span class="line">                            q.<span class="built_in">push</span>(next);</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><figcaption><span>[sol2-Java]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">possibleBipartition</span><span class="params">(<span class="type">int</span> n, <span class="type">int</span>[][] dislikes)</span> &#123;</span><br><span class="line">        <span class="type">int</span>[] color = <span class="keyword">new</span> <span class="title class_">int</span>[n + <span class="number">1</span>];</span><br><span class="line">        List&lt;Integer&gt;[] g = <span class="keyword">new</span> <span class="title class_">List</span>[n + <span class="number">1</span>];</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt;= n; ++i) &#123;</span><br><span class="line">            g[i] = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;Integer&gt;();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span>[] p : dislikes) &#123;</span><br><span class="line">            g[p[<span class="number">0</span>]].add(p[<span class="number">1</span>]);</span><br><span class="line">            g[p[<span class="number">1</span>]].add(p[<span class="number">0</span>]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">1</span>; i &lt;= n; ++i) &#123;</span><br><span class="line">            <span class="keyword">if</span> (color[i] == <span class="number">0</span>) &#123;</span><br><span class="line">                Queue&lt;Integer&gt; queue = <span class="keyword">new</span> <span class="title class_">ArrayDeque</span>&lt;Integer&gt;();</span><br><span class="line">                queue.offer(i);</span><br><span class="line">                color[i] = <span class="number">1</span>;</span><br><span class="line">                <span class="keyword">while</span> (!queue.isEmpty()) &#123;</span><br><span class="line">                    <span class="type">int</span> <span class="variable">t</span> <span class="operator">=</span> queue.poll();</span><br><span class="line">                    <span class="keyword">for</span> (<span class="type">int</span> next : g[t]) &#123;</span><br><span class="line">                        <span class="keyword">if</span> (color[next] &gt; <span class="number">0</span> &amp;&amp; color[next] == color[t]) &#123;</span><br><span class="line">                            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">                        &#125;</span><br><span class="line">                        <span class="keyword">if</span> (color[next] == <span class="number">0</span>) &#123;</span><br><span class="line">                            color[next] = <span class="number">3</span> ^ color[t];</span><br><span class="line">                            queue.offer(next);</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="C#"><figure class="iseeu highlight c#"><figcaption><span>[sol2-C#]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Solution</span> &#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="built_in">bool</span> <span class="title">PossibleBipartition</span>(<span class="params"><span class="built_in">int</span> n, <span class="built_in">int</span>[][] dislikes</span>)</span> &#123;</span><br><span class="line">        <span class="built_in">int</span>[] color = <span class="keyword">new</span> <span class="built_in">int</span>[n + <span class="number">1</span>];</span><br><span class="line">        IList&lt;<span class="built_in">int</span>&gt;[] g = <span class="keyword">new</span> IList&lt;<span class="built_in">int</span>&gt;[n + <span class="number">1</span>];</span><br><span class="line">        <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt;= n; ++i) &#123;</span><br><span class="line">            g[i] = <span class="keyword">new</span> List&lt;<span class="built_in">int</span>&gt;();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">foreach</span> (<span class="built_in">int</span>[] p <span class="keyword">in</span> dislikes) &#123;</span><br><span class="line">            g[p[<span class="number">0</span>]].Add(p[<span class="number">1</span>]);</span><br><span class="line">            g[p[<span class="number">1</span>]].Add(p[<span class="number">0</span>]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">1</span>; i &lt;= n; ++i) &#123;</span><br><span class="line">            <span class="keyword">if</span> (color[i] == <span class="number">0</span>) &#123;</span><br><span class="line">                Queue&lt;<span class="built_in">int</span>&gt; queue = <span class="keyword">new</span> Queue&lt;<span class="built_in">int</span>&gt;();</span><br><span class="line">                queue.Enqueue(i);</span><br><span class="line">                color[i] = <span class="number">1</span>;</span><br><span class="line">                <span class="keyword">while</span> (queue.Count &gt; <span class="number">0</span>) &#123;</span><br><span class="line">                    <span class="built_in">int</span> t = queue.Dequeue();</span><br><span class="line">                    <span class="keyword">foreach</span> (<span class="built_in">int</span> next <span class="keyword">in</span> g[t]) &#123;</span><br><span class="line">                        <span class="keyword">if</span> (color[next] &gt; <span class="number">0</span> &amp;&amp; color[next] == color[t]) &#123;</span><br><span class="line">                            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">                        &#125;</span><br><span class="line">                        <span class="keyword">if</span> (color[next] == <span class="number">0</span>) &#123;</span><br><span class="line">                            color[next] = <span class="number">3</span> ^ color[t];</span><br><span class="line">                            queue.Enqueue(next);</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="C"><figure class="iseeu highlight c"><figcaption><span>[sol2-C]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">bool</span> <span class="title function_">possibleBipartition</span><span class="params">(<span class="type">int</span> n, <span class="type">int</span>** dislikes, <span class="type">int</span> dislikesSize, <span class="type">int</span>* dislikesColSize)</span> &#123;</span><br><span class="line">    <span class="type">int</span> color[n + <span class="number">1</span>];</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span> *<span class="title">g</span>[<span class="title">n</span> + 1];</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt;= n; i++) &#123;</span><br><span class="line">        color[i] = <span class="number">0</span>;</span><br><span class="line">        g[i] = <span class="literal">NULL</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; dislikesSize; i++) &#123;</span><br><span class="line">        <span class="type">int</span> a = dislikes[i][<span class="number">0</span>], b = dislikes[i][<span class="number">1</span>];</span><br><span class="line">        <span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span> *<span class="title">node</span> =</span> (<span class="keyword">struct</span> ListNode *)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">struct</span> ListNode));</span><br><span class="line">        node-&gt;val = a;</span><br><span class="line">        node-&gt;next = g[b];</span><br><span class="line">        g[b] = node;</span><br><span class="line">        node = (<span class="keyword">struct</span> ListNode *)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">struct</span> ListNode));</span><br><span class="line">        node-&gt;val = b;</span><br><span class="line">        node-&gt;next = g[a];</span><br><span class="line">        g[a] = node;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; ++i) &#123;</span><br><span class="line">        <span class="keyword">if</span> (color[i] == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="type">int</span> <span class="built_in">queue</span>[n];</span><br><span class="line">            <span class="type">int</span> head = <span class="number">0</span>, tail = <span class="number">0</span>;</span><br><span class="line">            <span class="built_in">queue</span>[tail++] = i;</span><br><span class="line">            color[i] = <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">while</span> (head != tail) &#123;</span><br><span class="line">                <span class="type">int</span> t = <span class="built_in">queue</span>[head++];</span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">struct</span> ListNode *nextNode = g[t]; nextNode; nextNode = nextNode-&gt;next) &#123;</span><br><span class="line">                    <span class="type">int</span> next = nextNode-&gt;val;</span><br><span class="line">                    <span class="keyword">if</span> (color[next] &gt; <span class="number">0</span> &amp;&amp; color[next] == color[t]) &#123;</span><br><span class="line">                        <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt;= n; j++) &#123;</span><br><span class="line">                            <span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span> * <span class="title">node</span> =</span> g[j];</span><br><span class="line">                            <span class="keyword">while</span> (node) &#123;</span><br><span class="line">                                <span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span> * <span class="title">prev</span> =</span> node;</span><br><span class="line">                                node = node-&gt;next;</span><br><span class="line">                                <span class="built_in">free</span>(prev);</span><br><span class="line">                            &#125;</span><br><span class="line">                        &#125;</span><br><span class="line">                        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">if</span> (color[next] == <span class="number">0</span>) &#123;</span><br><span class="line">                        color[next] = <span class="number">3</span> ^ color[t];</span><br><span class="line">                        <span class="built_in">queue</span>[tail++] = next;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt;= n; j++) &#123;</span><br><span class="line">        <span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span> * <span class="title">node</span> =</span> g[j];</span><br><span class="line">        <span class="keyword">while</span> (node) &#123;</span><br><span class="line">            <span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span> * <span class="title">prev</span> =</span> node;</span><br><span class="line">            node = node-&gt;next;</span><br><span class="line">            <span class="built_in">free</span>(prev);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><figcaption><span>[sol2-JavaScript]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> possibleBipartition = <span class="keyword">function</span>(<span class="params">n, dislikes</span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> color = <span class="keyword">new</span> <span class="title class_">Array</span>(n + <span class="number">1</span>).<span class="title function_">fill</span>(<span class="number">0</span>);</span><br><span class="line">    <span class="keyword">const</span> g = <span class="keyword">new</span> <span class="title class_">Array</span>(n + <span class="number">1</span>).<span class="title function_">fill</span>(<span class="number">0</span>);</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt;= n; ++i) &#123;</span><br><span class="line">        g[i] = [];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">const</span> p <span class="keyword">of</span> dislikes) &#123;</span><br><span class="line">        g[p[<span class="number">0</span>]].<span class="title function_">push</span>(p[<span class="number">1</span>]);</span><br><span class="line">        g[p[<span class="number">1</span>]].<span class="title function_">push</span>(p[<span class="number">0</span>]);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">1</span>; i &lt;= n; ++i) &#123;</span><br><span class="line">        <span class="keyword">if</span> (color[i] === <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">const</span> queue = [i];</span><br><span class="line">            color[i] = <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">while</span> (queue.<span class="property">length</span> !== <span class="number">0</span>) &#123;</span><br><span class="line">                <span class="keyword">const</span> t = queue.<span class="title function_">shift</span>();</span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">const</span> next <span class="keyword">of</span> g[t]) &#123;</span><br><span class="line">                    <span class="keyword">if</span> (color[next] &gt; <span class="number">0</span> &amp;&amp; color[next] === color[t]) &#123;</span><br><span class="line">                        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">if</span> (color[next] === <span class="number">0</span>) &#123;</span><br><span class="line">                        color[next] = <span class="number">3</span> ^ color[t];</span><br><span class="line">                        queue.<span class="title function_">push</span>(next);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Go"><figure class="iseeu highlight go"><figcaption><span>[sol2-Golang]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">possibleBipartition</span><span class="params">(n <span class="type">int</span>, dislikes [][]<span class="type">int</span>)</span></span> <span class="type">bool</span> &#123;</span><br><span class="line">    g := <span class="built_in">make</span>([][]<span class="type">int</span>, n)</span><br><span class="line">    <span class="keyword">for</span> _, d := <span class="keyword">range</span> dislikes &#123;</span><br><span class="line">        x, y := d[<span class="number">0</span>]<span class="number">-1</span>, d[<span class="number">1</span>]<span class="number">-1</span></span><br><span class="line">        g[x] = <span class="built_in">append</span>(g[x], y)</span><br><span class="line">        g[y] = <span class="built_in">append</span>(g[y], x)</span><br><span class="line">    &#125;</span><br><span class="line">    color := <span class="built_in">make</span>([]<span class="type">int</span>, n) <span class="comment">// 0 表示未访问该节点</span></span><br><span class="line">    <span class="keyword">for</span> i, c := <span class="keyword">range</span> color &#123;</span><br><span class="line">        <span class="keyword">if</span> c == <span class="number">0</span> &#123;</span><br><span class="line">            q := []<span class="type">int</span>&#123;i&#125;</span><br><span class="line">            color[i] = <span class="number">1</span></span><br><span class="line">            <span class="keyword">for</span> <span class="built_in">len</span>(q) &gt; <span class="number">0</span> &#123;</span><br><span class="line">                x := q[<span class="number">0</span>]</span><br><span class="line">                q = q[<span class="number">1</span>:]</span><br><span class="line">                <span class="keyword">for</span> _, y := <span class="keyword">range</span> g[x] &#123;</span><br><span class="line">                    <span class="keyword">if</span> color[y] == color[x] &#123;</span><br><span class="line">                        <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">if</span> color[y] == <span class="number">0</span> &#123;</span><br><span class="line">                        color[y] = -color[x]</span><br><span class="line">                        q = <span class="built_in">append</span>(q, y)</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>复杂度分析</strong></p>
+<ul>
+<li>时间复杂度：O(n + m)，其中 n 题目给定的人数，m 为给定的 dislike 数组的大小。</li>
+<li>空间复杂度：O(n + m)，其中 n 题目给定的人数，m 为给定的 dislike 数组的大小。</li>
+</ul>
+<h4 id="方法三：并查集"><a href="#方法三：并查集" class="headerlink" title="方法三：并查集"></a>方法三：并查集</h4><p><strong>思路与算法</strong></p>
+<p>同样我们也可以用「并查集」来进行分组判断：由于最后只有两组，所以某一个人全部不喜欢人一定会在同一个组中，我们可以用「并查集」进行连接，并判断这个人是否与他不喜欢的人相连，如果相连则表示存在冲突，否则说明此人和他不喜欢的人在当前可以进行合法分组。</p>
+<p><strong>代码</strong></p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><figcaption><span>[sol3-Python3]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">UnionFind</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, n: <span class="built_in">int</span></span>):</span><br><span class="line">        self.fa = <span class="built_in">list</span>(<span class="built_in">range</span>(n))</span><br><span class="line">        self.rank = [<span class="number">1</span>] * n</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">find</span>(<span class="params">self, x: <span class="built_in">int</span></span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        <span class="keyword">if</span> self.fa[x] != x:</span><br><span class="line">            self.fa[x] = self.find(self.fa[x])</span><br><span class="line">        <span class="keyword">return</span> self.fa[x]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">union</span>(<span class="params">self, x: <span class="built_in">int</span>, y: <span class="built_in">int</span></span>) -&gt; <span class="literal">None</span>:</span><br><span class="line">        fx, fy = self.find(x), self.find(y)</span><br><span class="line">        <span class="keyword">if</span> fx == fy:</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">        <span class="keyword">if</span> self.rank[fx] &lt; self.rank[fy]:</span><br><span class="line">            fx, fy = fy, fx</span><br><span class="line">        self.rank[fx] += self.rank[fy]</span><br><span class="line">        self.fa[fy] = fx</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">is_connected</span>(<span class="params">self, x: <span class="built_in">int</span>, y: <span class="built_in">int</span></span>) -&gt; <span class="built_in">bool</span>:</span><br><span class="line">        <span class="keyword">return</span> self.find(x) == self.find(y)</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">possibleBipartition</span>(<span class="params">self, n: <span class="built_in">int</span>, dislikes: <span class="type">List</span>[<span class="type">List</span>[<span class="built_in">int</span>]]</span>) -&gt; <span class="built_in">bool</span>:</span><br><span class="line">        g = [[] <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(n)]</span><br><span class="line">        <span class="keyword">for</span> x, y <span class="keyword">in</span> dislikes:</span><br><span class="line">            g[x - <span class="number">1</span>].append(y - <span class="number">1</span>)</span><br><span class="line">            g[y - <span class="number">1</span>].append(x - <span class="number">1</span>)</span><br><span class="line">        uf = UnionFind(n)</span><br><span class="line">        <span class="keyword">for</span> x, nodes <span class="keyword">in</span> <span class="built_in">enumerate</span>(g):</span><br><span class="line">            <span class="keyword">for</span> y <span class="keyword">in</span> nodes:</span><br><span class="line">                uf.union(nodes[<span class="number">0</span>], y)</span><br><span class="line">                <span class="keyword">if</span> uf.is_connected(x, y):</span><br><span class="line">                    <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">True</span></span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="C++"><figure class="iseeu highlight c++"><figcaption><span>[sol3-C++]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">findFa</span><span class="params">(<span class="type">int</span> x, vector&lt;<span class="type">int</span>&gt;&amp; fa)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> fa[x] &lt; <span class="number">0</span> ? x : fa[x] = <span class="built_in">findFa</span>(fa[x], fa);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">unit</span><span class="params">(<span class="type">int</span> x, <span class="type">int</span> y, vector&lt;<span class="type">int</span>&gt;&amp; fa)</span> </span>&#123;</span><br><span class="line">        x = <span class="built_in">findFa</span>(x, fa);</span><br><span class="line">        y = <span class="built_in">findFa</span>(y, fa);</span><br><span class="line">        <span class="keyword">if</span> (x == y) &#123;</span><br><span class="line">            <span class="keyword">return</span> ;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (fa[x] &lt; fa[y]) &#123;</span><br><span class="line">            <span class="built_in">swap</span>(x, y);</span><br><span class="line">        &#125;</span><br><span class="line">        fa[x] += fa[y];</span><br><span class="line">        fa[y] = x;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">bool</span> <span class="title">isconnect</span><span class="params">(<span class="type">int</span> x, <span class="type">int</span> y, vector&lt;<span class="type">int</span>&gt;&amp; fa)</span> </span>&#123;</span><br><span class="line">        x = <span class="built_in">findFa</span>(x, fa);</span><br><span class="line">        y = <span class="built_in">findFa</span>(y, fa);</span><br><span class="line">        <span class="keyword">return</span> x == y;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">bool</span> <span class="title">possibleBipartition</span><span class="params">(<span class="type">int</span> n, vector&lt;vector&lt;<span class="type">int</span>&gt;&gt;&amp; dislikes)</span> </span>&#123;</span><br><span class="line">        <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">fa</span><span class="params">(n + <span class="number">1</span>, <span class="number">-1</span>)</span></span>;</span><br><span class="line">        vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; <span class="built_in">g</span>(n + <span class="number">1</span>);</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span>&amp; p : dislikes) &#123;</span><br><span class="line">            g[p[<span class="number">0</span>]].<span class="built_in">push_back</span>(p[<span class="number">1</span>]);</span><br><span class="line">            g[p[<span class="number">1</span>]].<span class="built_in">push_back</span>(p[<span class="number">0</span>]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; ++i) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt; g[i].<span class="built_in">size</span>(); ++j) &#123;</span><br><span class="line">                <span class="built_in">unit</span>(g[i][<span class="number">0</span>], g[i][j], fa);</span><br><span class="line">                <span class="keyword">if</span> (<span class="built_in">isconnect</span>(i, g[i][j], fa)) &#123;</span><br><span class="line">                    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><figcaption><span>[sol3-Java]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">possibleBipartition</span><span class="params">(<span class="type">int</span> n, <span class="type">int</span>[][] dislikes)</span> &#123;</span><br><span class="line">        <span class="type">int</span>[] fa = <span class="keyword">new</span> <span class="title class_">int</span>[n + <span class="number">1</span>];</span><br><span class="line">        Arrays.fill(fa, -<span class="number">1</span>);</span><br><span class="line">        List&lt;Integer&gt;[] g = <span class="keyword">new</span> <span class="title class_">List</span>[n + <span class="number">1</span>];</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt;= n; ++i) &#123;</span><br><span class="line">            g[i] = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;Integer&gt;();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span>[] p : dislikes) &#123;</span><br><span class="line">            g[p[<span class="number">0</span>]].add(p[<span class="number">1</span>]);</span><br><span class="line">            g[p[<span class="number">1</span>]].add(p[<span class="number">0</span>]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">1</span>; i &lt;= n; ++i) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">j</span> <span class="operator">=</span> <span class="number">0</span>; j &lt; g[i].size(); ++j) &#123;</span><br><span class="line">                unit(g[i].get(<span class="number">0</span>), g[i].get(j), fa);</span><br><span class="line">                <span class="keyword">if</span> (isconnect(i, g[i].get(j), fa)) &#123;</span><br><span class="line">                    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">unit</span><span class="params">(<span class="type">int</span> x, <span class="type">int</span> y, <span class="type">int</span>[] fa)</span> &#123;</span><br><span class="line">        x = findFa(x, fa);</span><br><span class="line">        y = findFa(y, fa);</span><br><span class="line">        <span class="keyword">if</span> (x == y) &#123;</span><br><span class="line">            <span class="keyword">return</span> ;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (fa[x] &lt; fa[y]) &#123;</span><br><span class="line">            <span class="type">int</span> <span class="variable">temp</span> <span class="operator">=</span> x;</span><br><span class="line">            x = y;</span><br><span class="line">            y = temp;</span><br><span class="line">        &#125;</span><br><span class="line">        fa[x] += fa[y];</span><br><span class="line">        fa[y] = x;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">isconnect</span><span class="params">(<span class="type">int</span> x, <span class="type">int</span> y, <span class="type">int</span>[] fa)</span> &#123;</span><br><span class="line">        x = findFa(x, fa);</span><br><span class="line">        y = findFa(y, fa);</span><br><span class="line">        <span class="keyword">return</span> x == y;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">findFa</span><span class="params">(<span class="type">int</span> x, <span class="type">int</span>[] fa)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> fa[x] &lt; <span class="number">0</span> ? x : (fa[x] = findFa(fa[x], fa));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="C#"><figure class="iseeu highlight c#"><figcaption><span>[sol3-C#]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Solution</span> &#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="built_in">bool</span> <span class="title">PossibleBipartition</span>(<span class="params"><span class="built_in">int</span> n, <span class="built_in">int</span>[][] dislikes</span>)</span> &#123;</span><br><span class="line">        <span class="built_in">int</span>[] fa = <span class="keyword">new</span> <span class="built_in">int</span>[n + <span class="number">1</span>];</span><br><span class="line">        Array.Fill(fa, <span class="number">-1</span>);</span><br><span class="line">        IList&lt;<span class="built_in">int</span>&gt;[] g = <span class="keyword">new</span> IList&lt;<span class="built_in">int</span>&gt;[n + <span class="number">1</span>];</span><br><span class="line">        <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt;= n; ++i) &#123;</span><br><span class="line">            g[i] = <span class="keyword">new</span> List&lt;<span class="built_in">int</span>&gt;();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">foreach</span> (<span class="built_in">int</span>[] p <span class="keyword">in</span> dislikes) &#123;</span><br><span class="line">            g[p[<span class="number">0</span>]].Add(p[<span class="number">1</span>]);</span><br><span class="line">            g[p[<span class="number">1</span>]].Add(p[<span class="number">0</span>]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">1</span>; i &lt;= n; ++i) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="built_in">int</span> j = <span class="number">0</span>; j &lt; g[i].Count; ++j) &#123;</span><br><span class="line">                Unit(g[i][<span class="number">0</span>], g[i][j], fa);</span><br><span class="line">                <span class="keyword">if</span> (Isconnect(i, g[i][j], fa)) &#123;</span><br><span class="line">                    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Unit</span>(<span class="params"><span class="built_in">int</span> x, <span class="built_in">int</span> y, <span class="built_in">int</span>[] fa</span>)</span> &#123;</span><br><span class="line">        x = FindFa(x, fa);</span><br><span class="line">        y = FindFa(y, fa);</span><br><span class="line">        <span class="keyword">if</span> (x == y) &#123;</span><br><span class="line">            <span class="keyword">return</span> ;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (fa[x] &lt; fa[y]) &#123;</span><br><span class="line">            <span class="built_in">int</span> temp = x;</span><br><span class="line">            x = y;</span><br><span class="line">            y = temp;</span><br><span class="line">        &#125;</span><br><span class="line">        fa[x] += fa[y];</span><br><span class="line">        fa[y] = x;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="built_in">bool</span> <span class="title">Isconnect</span>(<span class="params"><span class="built_in">int</span> x, <span class="built_in">int</span> y, <span class="built_in">int</span>[] fa</span>)</span> &#123;</span><br><span class="line">        x = FindFa(x, fa);</span><br><span class="line">        y = FindFa(y, fa);</span><br><span class="line">        <span class="keyword">return</span> x == y;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="built_in">int</span> <span class="title">FindFa</span>(<span class="params"><span class="built_in">int</span> x, <span class="built_in">int</span>[] fa</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> fa[x] &lt; <span class="number">0</span> ? x : (fa[x] = FindFa(fa[x], fa));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="C"><figure class="iseeu highlight c"><figcaption><span>[sol3-C]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">findFa</span><span class="params">(<span class="type">int</span> x, <span class="type">int</span>* fa)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> fa[x] &lt; <span class="number">0</span> ? x : (fa[x] = findFa(fa[x], fa));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">swap</span><span class="params">(<span class="type">int</span> *a, <span class="type">int</span> *b)</span> &#123;</span><br><span class="line">    <span class="type">int</span> c = *a;</span><br><span class="line">    *a = *b;</span><br><span class="line">    *b = c;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">unit</span><span class="params">(<span class="type">int</span> x, <span class="type">int</span> y, <span class="type">int</span>* fa)</span> &#123;</span><br><span class="line">    x = findFa(x, fa);</span><br><span class="line">    y = findFa(y, fa);</span><br><span class="line">    <span class="keyword">if</span> (x == y) &#123;</span><br><span class="line">        <span class="keyword">return</span> ;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (fa[x] &lt; fa[y]) &#123;</span><br><span class="line">        swap(&amp;x, &amp;y);</span><br><span class="line">    &#125;</span><br><span class="line">    fa[x] += fa[y];</span><br><span class="line">    fa[y] = x;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">bool</span> <span class="title function_">isconnect</span><span class="params">(<span class="type">int</span> x, <span class="type">int</span> y, <span class="type">int</span>* fa)</span> &#123;</span><br><span class="line">    x = findFa(x, fa);</span><br><span class="line">    y = findFa(y, fa);</span><br><span class="line">    <span class="keyword">return</span> x == y;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">bool</span> <span class="title function_">possibleBipartition</span><span class="params">(<span class="type">int</span> n, <span class="type">int</span>** dislikes, <span class="type">int</span> dislikesSize, <span class="type">int</span>* dislikesColSize)</span> &#123;</span><br><span class="line">    <span class="type">int</span> color[n + <span class="number">1</span>], fa[n + <span class="number">1</span>];</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span> *<span class="title">g</span>[<span class="title">n</span> + 1];</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt;= n; i++) &#123;</span><br><span class="line">        color[i] = <span class="number">0</span>, fa[i] = <span class="number">-1</span>;</span><br><span class="line">        g[i] = <span class="literal">NULL</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; dislikesSize; i++) &#123;</span><br><span class="line">        <span class="type">int</span> a = dislikes[i][<span class="number">0</span>], b = dislikes[i][<span class="number">1</span>];</span><br><span class="line">        <span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span> *<span class="title">node</span> =</span> (<span class="keyword">struct</span> ListNode *)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">struct</span> ListNode));</span><br><span class="line">        node-&gt;val = a;</span><br><span class="line">        node-&gt;next = g[b];</span><br><span class="line">        g[b] = node;</span><br><span class="line">        node = (<span class="keyword">struct</span> ListNode *)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">struct</span> ListNode));</span><br><span class="line">        node-&gt;val = b;</span><br><span class="line">        node-&gt;next = g[a];</span><br><span class="line">        g[a] = node;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; ++i) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">struct</span> ListNode *node = g[i]; node; node = node-&gt;next) &#123;</span><br><span class="line">            unit(g[i]-&gt;val, node-&gt;val, fa);</span><br><span class="line">            <span class="keyword">if</span> (isconnect(i, node-&gt;val, fa)) &#123;</span><br><span class="line">                <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt;= n; j++) &#123;</span><br><span class="line">                    <span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span> * <span class="title">node</span> =</span> g[j];</span><br><span class="line">                    <span class="keyword">while</span> (node) &#123;</span><br><span class="line">                        <span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span> * <span class="title">prev</span> =</span> node;</span><br><span class="line">                        node = node-&gt;next;</span><br><span class="line">                        <span class="built_in">free</span>(prev);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt;= n; j++) &#123;</span><br><span class="line">        <span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span> * <span class="title">node</span> =</span> g[j];</span><br><span class="line">        <span class="keyword">while</span> (node) &#123;</span><br><span class="line">            <span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span> * <span class="title">prev</span> =</span> node;</span><br><span class="line">            node = node-&gt;next;</span><br><span class="line">            <span class="built_in">free</span>(prev);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><figcaption><span>[sol3-JavaScript]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> possibleBipartition = <span class="keyword">function</span>(<span class="params">n, dislikes</span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> fa = <span class="keyword">new</span> <span class="title class_">Array</span>(n + <span class="number">1</span>).<span class="title function_">fill</span>(-<span class="number">1</span>);</span><br><span class="line">    <span class="keyword">const</span> g = <span class="keyword">new</span> <span class="title class_">Array</span>(n + <span class="number">1</span>).<span class="title function_">fill</span>(<span class="number">0</span>);</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt;= n; ++i) &#123;</span><br><span class="line">        g[i] = [];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">const</span> p <span class="keyword">of</span> dislikes) &#123;</span><br><span class="line">        g[p[<span class="number">0</span>]].<span class="title function_">push</span>(p[<span class="number">1</span>]);</span><br><span class="line">        g[p[<span class="number">1</span>]].<span class="title function_">push</span>(p[<span class="number">0</span>]);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">1</span>; i &lt;= n; ++i) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">let</span> j = <span class="number">0</span>; j &lt; g[i].<span class="property">length</span>; ++j) &#123;</span><br><span class="line">            <span class="title function_">unit</span>(g[i][<span class="number">0</span>], g[i][j], fa);</span><br><span class="line">            <span class="keyword">if</span> (<span class="title function_">isconnect</span>(i, g[i][j], fa)) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">unit</span> = (<span class="params">x, y, fa</span>) =&gt; &#123;</span><br><span class="line">    x = <span class="title function_">findFa</span>(x, fa);</span><br><span class="line">    y = <span class="title function_">findFa</span>(y, fa);</span><br><span class="line">    <span class="keyword">if</span> (x === y) &#123;</span><br><span class="line">        <span class="keyword">return</span> ;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (fa[x] &lt; fa[y]) &#123;</span><br><span class="line">        <span class="keyword">const</span> temp = x;</span><br><span class="line">        x = y;</span><br><span class="line">        y = temp;</span><br><span class="line">    &#125;</span><br><span class="line">    fa[x] += fa[y];</span><br><span class="line">    fa[y] = x;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">isconnect</span> = (<span class="params">x, y, fa</span>) =&gt; &#123;</span><br><span class="line">    x = <span class="title function_">findFa</span>(x, fa);</span><br><span class="line">    y = <span class="title function_">findFa</span>(y, fa);</span><br><span class="line">    <span class="keyword">return</span> x === y;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">findFa</span> = (<span class="params">x, fa</span>) =&gt; &#123;</span><br><span class="line">    <span class="keyword">return</span> fa[x] &lt; <span class="number">0</span> ? x : (fa[x] = <span class="title function_">findFa</span>(fa[x], fa));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Go"><figure class="iseeu highlight go"><figcaption><span>[sol3-Golang]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> unionFind <span class="keyword">struct</span> &#123;</span><br><span class="line">    parent, rank []<span class="type">int</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">newUnionFind</span><span class="params">(n <span class="type">int</span>)</span></span> unionFind &#123;</span><br><span class="line">    parent := <span class="built_in">make</span>([]<span class="type">int</span>, n)</span><br><span class="line">    <span class="keyword">for</span> i := <span class="keyword">range</span> parent &#123;</span><br><span class="line">        parent[i] = i</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> unionFind&#123;parent, <span class="built_in">make</span>([]<span class="type">int</span>, n)&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(uf unionFind)</span></span> find(x <span class="type">int</span>) <span class="type">int</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> uf.parent[x] != x &#123;</span><br><span class="line">        uf.parent[x] = uf.find(uf.parent[x])</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> uf.parent[x]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(uf unionFind)</span></span> union(x, y <span class="type">int</span>) &#123;</span><br><span class="line">    x, y = uf.find(x), uf.find(y)</span><br><span class="line">    <span class="keyword">if</span> x == y &#123;</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> uf.rank[x] &gt; uf.rank[y] &#123;</span><br><span class="line">        uf.parent[y] = x</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> uf.rank[x] &lt; uf.rank[y] &#123;</span><br><span class="line">        uf.parent[x] = y</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        uf.parent[y] = x</span><br><span class="line">        uf.rank[x]++</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(uf unionFind)</span></span> isConnected(x, y <span class="type">int</span>) <span class="type">bool</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> uf.find(x) == uf.find(y)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">possibleBipartition</span><span class="params">(n <span class="type">int</span>, dislikes [][]<span class="type">int</span>)</span></span> <span class="type">bool</span> &#123;</span><br><span class="line">    g := <span class="built_in">make</span>([][]<span class="type">int</span>, n)</span><br><span class="line">    <span class="keyword">for</span> _, d := <span class="keyword">range</span> dislikes &#123;</span><br><span class="line">        x, y := d[<span class="number">0</span>]<span class="number">-1</span>, d[<span class="number">1</span>]<span class="number">-1</span></span><br><span class="line">        g[x] = <span class="built_in">append</span>(g[x], y)</span><br><span class="line">        g[y] = <span class="built_in">append</span>(g[y], x)</span><br><span class="line">    &#125;</span><br><span class="line">    uf := newUnionFind(n)</span><br><span class="line">    <span class="keyword">for</span> x, nodes := <span class="keyword">range</span> g &#123;</span><br><span class="line">        <span class="keyword">for</span> _, y := <span class="keyword">range</span> nodes &#123;</span><br><span class="line">            uf.union(nodes[<span class="number">0</span>], y)</span><br><span class="line">            <span class="keyword">if</span> uf.isConnected(x, y) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>复杂度分析</strong></p>
+<ul>
+<li>时间复杂度：O(n + m\alpha(n))，其中 n 题目给定的人数，m 为给定的 dislike 数组的大小，\alpha 是反 Ackerman 函数。</li>
+<li>空间复杂度：O(n + m)，其中 n 题目给定的人数，m 为给定的 dislike 数组的大小。</li>
+</ul>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <!--<div class="article-copyright-info-container">-->
+    <!--&lt;!&ndash;<ul>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><strong>Title:</strong> 0886-可能的二分法</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><strong>Author:</strong> Raphael Liu</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><strong>Created at&ndash;&gt;-->
+                <!--&lt;!&ndash;:</strong> 2023-09-13 00:47:26</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;&ndash;&gt;-->
+            <!--&lt;!&ndash;<li>&ndash;&gt;-->
+                <!--&lt;!&ndash;<strong>Updated at&ndash;&gt;-->
+                    <!--&lt;!&ndash;:</strong> 2023-09-13 16:06:29&ndash;&gt;-->
+            <!--&lt;!&ndash;</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;<li>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;<strong>Link:</strong> https://fida.ltd/2023/09/13/0886-可能的二分法/&ndash;&gt;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;</li>&ndash;&gt;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;<li>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;<strong>&ndash;&gt;&ndash;&gt;-->
+                <!--&lt;!&ndash;&lt;!&ndash;License:&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;</strong>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0</a>.&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;&ndash;&gt;&ndash;&gt;-->
+
+        <!--&lt;!&ndash;&lt;!&ndash;</li>&ndash;&gt;&ndash;&gt;-->
+    <!--&lt;!&ndash;</ul>&ndash;&gt;-->
+<!--</div>-->
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box">
+                
+                    <li class="tag-item">
+                        <a href="/tags/algorithm/">#algorithm</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item">
+                        <a href="/tags/MEDIUM/">#MEDIUM</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                        rel="prev"
+                        href="/2023/09/13/0885-%E8%9E%BA%E6%97%8B%E7%9F%A9%E9%98%B5%20III/"
+                        >
+                            <span class="left arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">0885-螺旋矩阵 III</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                        rel="next"
+                        href="/2023/09/13/0888-%E5%85%AC%E5%B9%B3%E7%9A%84%E7%B3%96%E6%9E%9C%E4%BA%A4%E6%8D%A2/"
+                        >
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">0888-公平的糖果交换</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+
+        
+            <div class="comment-container">
+                <div class="comments-container pjax">
+    <div id="comment-anchor"></div>
+    <div class="comment-area-title">
+        <i class="fa-solid fa-comments"></i>&nbsp;Comments
+    </div>
+    
+
+        
+            
+ 
+    <div id="waline"></div>
+    <script type="module"  data-swup-reload-script>
+        import { init } from 'https://evan.beee.top/js/waline.mjs';
+
+        function loadWaline() {
+            init({
+                el: '#waline',
+                serverURL: 'https://example.example.com',
+                lang: 'zh-CN',
+                dark: 'body[class~="dark-mode"]',
+                requiredMeta: ['nick','mail'], // cannot customize by theme config, change it yourself
+            });
+        }
+
+        if ('true') {
+            const loadWalineTimeout = setTimeout(() => {
+                loadWaline();
+                clearTimeout(loadWalineTimeout);
+            }, 1000);
+        } else {
+            window.addEventListener('DOMContentLoaded', loadWaline);
+        }
+        
+    </script>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+
+    
+        <div class="toc-content-container">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">On this page</div>
+        <div class="page-title">0886-可能的二分法</div>
+        
+
+    </div>
+</div>
+        </div>
+    
+</div>
+
+
+
+                
+
+            </div>
+
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2022</span>
+              -
+            
+            2023&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">Raphael Liu</a>
+        </div>
+        
+            <script data-swup-reload-script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">UV:</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">PV:</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <!--<div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">-->
+            <!--<span class="lg:block text-sm">powered_by</span>-->
+            <!--&lt;!&ndash;<span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.4.4</a></span>&ndash;&gt;-->
+        <!--</div>-->
+        
+        <!---->
+            <!--<div>-->
+                <!--runtime <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hours <span class="odometer" id="runtime_minutes"></span> minutes <span class="odometer" id="runtime_seconds"></span> seconds-->
+            <!--</div>-->
+        <!---->
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fa-regular fa-comments"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-expand-width flex justify-center items-center">
+            <i class="fa-regular fa-expand"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fa-solid fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa-solid fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa-solid fa-spinner fa-spin-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+    
+<script src="/js/libs/Swup.min.js"></script>
+
+<script src="/js/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/libs/SwupScrollPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+        ],
+        containers: ["#swup"],
+    });
+
+    swup.hooks.on("page:view", () => {
+        Global.refresh();
+    });
+
+    // if (document.readyState === "complete") {
+    //
+    // } else {
+    //     document.addEventListener("DOMContentLoaded", () => init());
+    // }
+</script>
+
+
+
+
+
+
+<script src="/js/utils.js" type="module"></script>
+
+<script src="/js/main.js" type="module"></script>
+
+<script src="/js/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/layouts/categoryList.js" type="module"></script>
+
+
+
+    
+<script src="/js/tools/localSearch.js"></script>
+
+
+
+
+    
+<script src="/js/tools/codeBlock.js"></script>
+
+
+
+
+    
+<script src="/js/layouts/lazyload.js"></script>
+
+
+
+
+    
+<script src="/js/tools/runtime.js"></script>
+
+    
+<script src="/js/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/libs/Typed.min.js"></script>
+
+  
+<script src="/js/plugins/typed.js"></script>
+
+
+
+
+
+
+
+<div class="post-scripts" data-swup-reload-script>
+    
+        
+<script src="/js/libs/anime.min.js"></script>
+
+        
+<script src="/js/tools/tocToggle.js" type="module"></script>
+
+<script src="/js/layouts/toc.js" type="module"></script>
+
+<script src="/js/plugins/tabs.js" type="module"></script>
+
+    
+</div>
+
+
+</body>
+</html>

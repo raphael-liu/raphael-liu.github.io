@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="Raphael Liu">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/2023/09/13/0770-基本计算器 iv/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="给定一个表达式如 expression &#x3D; &quot;e + 8 - a + 5&quot; 和一个求值映射，如 &amp;#123;&quot;e&quot;: 1&amp;#125;（给定的形式为 evalvars &#x3D; [&quot;e&quot;] 和 evalints &#x3D; [1]），返回表示简化表达式的标记列表，例如 [&quot;-1*a&quot;,&quot;14&quot;]  表达式交替使用块">
+<meta property="og:type" content="article">
+<meta property="og:title" content="0770-基本计算器 IV">
+<meta property="og:url" content="http://example.com/2023/09/13/0770-%E5%9F%BA%E6%9C%AC%E8%AE%A1%E7%AE%97%E5%99%A8%20IV/index.html">
+<meta property="og:site_name" content="Raphael&#39;s Blog">
+<meta property="og:description" content="给定一个表达式如 expression &#x3D; &quot;e + 8 - a + 5&quot; 和一个求值映射，如 &amp;#123;&quot;e&quot;: 1&amp;#125;（给定的形式为 evalvars &#x3D; [&quot;e&quot;] 和 evalints &#x3D; [1]），返回表示简化表达式的标记列表，例如 [&quot;-1*a&quot;,&quot;14&quot;]  表达式交替使用块">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-09-12T16:47:26.000Z">
+<meta property="article:modified_time" content="2023-09-13T08:06:26.644Z">
+<meta property="article:author" content="Raphael Liu">
+<meta property="article:tag" content="algorithm">
+<meta property="article:tag" content="HARD">
+<meta name="twitter:card" content="summary">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/redefine-favicon.svg" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/redefine-favicon.svg">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/redefine-favicon.svg">
+    <!--- Page Info-->
+    
+    <title>
+        
+            0770-基本计算器 IV -
+        
+        Raphael&#39;s Blog
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/css/build/styles.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/fonts.css">
+
+    
+<link rel="stylesheet" href="/fonts/Satoshi/satoshi.css">
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+
+    <!--- Inject Part-->
+    
+    <script id="hexo-configurations">
+    let Global = window.Global || {};
+    Global.hexo_config = {"hostname":"example.com","root":"/","language":"zh_CN"};
+    Global.theme_config = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":true,"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"open_graph":true,"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-wqery6-light.webp","dark":"/images/wallhaven-wqery6-dark.webp"},"title":"Raphael's Blog","subtitle":{"text":["格物致知","坚持做正确的事情"],"hitokoto":{"enable":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":false,"links":{"github":"https://github.com/raphael-liu","email":"raphael@buaa.edu.cn# your email"},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.4.4","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"links":{"首页":{"path":"/","icon":"fa-regular fa-house"},"文章":{"path":"/archives","icon":"fa-regular fa-archive"},"关于":{"icon":"fa-regular fa-user","submenus":{"我":"/about/me","Github":"https://github.com/raphael-liu"}}},"search":{"enable":true,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"links":null},"article_date_format":"auto","categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}},"footerStart":"2022/8/17 11:45:14"};
+    Global.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    Global.data_config = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="swup-progress-icon">
+            <i class="fa-solid fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container" id="swup">
+
+    
+
+    <div class="main-content-container">
+
+
+        <div class="main-content-header">
+            <header class="navbar-container">
+    
+    <div class="navbar-content">
+        <div class="left">
+            
+            <a class="logo-title" href="http://example.com/">
+                
+                Raphael&#39;s Blog
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/"  >
+                                    
+                                        
+                                            <i class="fa-regular fa-house"></i>
+                                        
+                                        首页
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/archives"  >
+                                    
+                                        
+                                            <i class="fa-regular fa-archive"></i>
+                                        
+                                        文章
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="has-dropdown" 
+                                    href="#" onClick="return false;">
+                                    
+                                        
+                                            <i class="fa-regular fa-user"></i>
+                                        
+                                        关于&nbsp;<i class="fa-solid fa-chevron-down"></i>
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                                    <ul class="sub-menu">
+                                    
+                                        <li>
+                                        <a href="/about/me">我
+                                        </a>
+                                        </li>
+                                    
+                                        <li>
+                                        <a target="_blank" rel="noopener" href="https://github.com/raphael-liu">GITHUB
+                                        </a>
+                                        </li>
+                                    
+                                    </ul>
+                                
+                            </li>
+                    
+                    
+                        <li class="navbar-item search search-popup-trigger">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fa-solid fa-magnifying-glass"></i></div>
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile drawer -->
+    <div class="navbar-drawer w-full absolute top-0 left-0 bg-background-color">
+        <ul class="drawer-navbar-list flex flex-col justify-start items-center">
+            
+                
+                    <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group " 
+                        href="/"  >
+                             
+                                
+                                    <i class="fa-regular fa-house"></i>
+                                
+                                首页
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+                
+                    <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group " 
+                        href="/archives"  >
+                             
+                                
+                                    <i class="fa-regular fa-archive"></i>
+                                
+                                文章
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+                
+                    <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group has-dropdown" 
+                        href="#" onClick="return false;">
+                            
+                                
+                                    <i class="fa-regular fa-user"></i>
+                                
+                                关于&nbsp;<i class="group-hover:rotate-180 transition-transform fa-solid fa-chevron-down"></i>
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                              
+                        
+                            <li class="text-base flex justify-center items-center hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                <a class="py-0.5" href="/about/me">我</a>
+                            </li>
+                        
+                            <li class="text-base flex justify-center items-center hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                <a class="py-0.5" target="_blank" rel="noopener" href="https://github.com/raphael-liu">GITHUB</a>
+                            </li>
+                        
+                    
+            
+
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="post-page-container">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            
+                <h1 class="article-title-regular">0770-基本计算器 IV</h1>
+            
+            </div>
+            
+                    
+        
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">Raphael Liu</span>
+                        
+                            <span class="author-label">Lv10</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2023-09-13 00:47:26</span>
+        <span class="mobile">2023-09-13 00:47:26</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2023-09-13 16:06:26</span>
+            <span class="mobile">2023-09-13 16:06:26</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/algorithm/">algorithm</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/HARD/">HARD</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        
+
+
+        <div class="article-content markdown-body">
+            <p>给定一个表达式如 <code>expression = &quot;e + 8 - a + 5&quot;</code> 和一个求值映射，如 <code>&#123;&quot;e&quot;: 1&#125;</code>（给定的形式为 <code>evalvars = [&quot;e&quot;]</code> 和 <code>evalints = [1]</code>），返回表示简化表达式的标记列表，例如 <code>[&quot;-1*a&quot;,&quot;14&quot;]</code></p>
+<ul>
+<li>表达式交替使用块和符号，每个块和符号之间有一个空格。</li>
+<li>块要么是括号中的表达式，要么是变量，要么是非负整数。</li>
+<li>变量是一个由小写字母组成的字符串（不包括数字）。请注意，变量可以是多个字母，并注意变量从不具有像 <code>&quot;2x&quot;</code> 或 <code>&quot;-x&quot;</code> 这样的前导系数或一元运算符 。</li>
+</ul>
+<p>表达式按通常顺序进行求值：先是括号，然后求乘法，再计算加法和减法。</p>
+<ul>
+<li>例如，<code>expression = &quot;1 + 2 * 3&quot;</code> 的答案是 <code>[&quot;7&quot;]</code>。</li>
+</ul>
+<p>输出格式如下：</p>
+<ul>
+<li>对于系数非零的每个自变量项，我们按字典排序的顺序将自变量写在一个项中。 <ul>
+<li>例如，我们永远不会写像 <code>“b*a*c”</code> 这样的项，只写 <code>“a*b*c”</code>。</li>
+</ul>
+</li>
+<li>项的次数等于被乘的自变量的数目，并计算重复项。我们先写出答案的最大次数项，用字典顺序打破关系，此时忽略词的前导系数。 <ul>
+<li>例如，<code>&quot;a*a*b*c&quot;</code> 的次数为 4。</li>
+</ul>
+</li>
+<li>项的前导系数直接放在左边，用星号将它与变量分隔开(如果存在的话)。前导系数 1 仍然要打印出来。</li>
+<li>格式良好的一个示例答案是 <code>[&quot;-2*a*a*a&quot;, &quot;3*a*a*b&quot;, &quot;3*b*b&quot;, &quot;4*a&quot;, &quot;5*c&quot;, &quot;-6&quot;]</code> 。</li>
+<li>系数为 <code>0</code> 的项（包括常数项）不包括在内。 <ul>
+<li>例如，<code>“0”</code> 的表达式输出为 <code>[]</code> 。</li>
+</ul>
+</li>
+</ul>
+<p><strong>注意：</strong> 你可以假设给定的表达式均有效。所有中间结果都在区间 <code>[-231, 231 - 1]</code> 内。</p>
+<p><strong>示例 1：</strong></p>
+<pre><code>**输入：** expression = &quot;e + 8 - a + 5&quot;, evalvars = [&quot;e&quot;], evalints = [1]
+**输出：** [&quot;-1*a&quot;,&quot;14&quot;]
+</code></pre>
+<p><strong>示例 2：</strong></p>
+<pre><code>**输入：** expression = &quot;e - 8 + temperature - pressure&quot;,
+evalvars = [&quot;e&quot;, &quot;temperature&quot;], evalints = [1, 12]
+**输出：** [&quot;-1*pressure&quot;,&quot;5&quot;]
+</code></pre>
+<p><strong>示例 3：</strong></p>
+<pre><code>**输入：** expression = &quot;(e + 8) * (e - 8)&quot;, evalvars = [], evalints = []
+**输出：** [&quot;1*e*e&quot;,&quot;-64&quot;]
+</code></pre>
+<p><strong>提示：</strong></p>
+<ul>
+<li><code>1 &lt;= expression.length &lt;= 250</code></li>
+<li><code>expression</code> 由小写英文字母，数字 <code>&#39;+&#39;</code>, <code>&#39;-&#39;</code>, <code>&#39;*&#39;</code>, <code>&#39;(&#39;</code>, <code>&#39;)&#39;</code>, <code>&#39; &#39;</code> 组成</li>
+<li><code>expression</code> 不包含任何前空格或后空格</li>
+<li><code>expression</code> 中的所有符号都用一个空格隔开</li>
+<li><code>0 &lt;= evalvars.length &lt;= 100</code></li>
+<li><code>1 &lt;= evalvars[i].length &lt;= 20</code></li>
+<li><code>evalvars[i]</code> 由小写英文字母组成</li>
+<li><code>evalints.length == evalvars.length</code></li>
+<li><code>-100 &lt;= evalints[i] &lt;= 100</code></li>
+</ul>
+<h4 id="方法一：-多项式类-【通过】"><a href="#方法一：-多项式类-【通过】" class="headerlink" title="方法一： 多项式类 【通过】"></a>方法一： 多项式类 【通过】</h4><p><strong>思路</strong></p>
+<p>构建一个 <code>Poly</code> 多项式类，实现这个多项式类的一些数学操作。 </p>
+<p><strong>算法</strong></p>
+<p>单独实现每个方法都很直接，这里先列一下要实现的方法：</p>
+<ul>
+<li><p><code>Poly:add(this, that)</code> 返回 <code>this + that</code> 的结果。</p>
+</li>
+<li><p><code>Poly:sub(this, that)</code> 返回 <code>this - that</code> 的结果。</p>
+</li>
+<li><p><code>Poly:mul(this, that)</code> 返回 <code>this * that</code> 的结果。</p>
+</li>
+<li><p><code>Poly:evaluate(this, evalmap)</code> 返回将所有的自由变量替换成 <code>evalmap</code> 指定常数之后的结果。</p>
+</li>
+<li><p><code>Poly:toList(this)</code> 返回正确的多项式输出格式。</p>
+</li>
+<li><p><code>Solution::combine(left, right, symbol)</code> 返回对 <code>左边（left)</code> 和 <code>右边(left)</code> 进行 <code>symobl</code> 操作之后的结果。</p>
+</li>
+<li><p><code>Solution::make(expr)</code> 创造一个新的 <code>Poly</code> 实例来表示常数或 <code>expr</code> 指定的变量。 </p>
+</li>
+<li><p><code>Solution::parse(expr)</code> 将 <code>expr</code> 解析成一个 <code>Poly</code> 实例。</p>
+</li>
+</ul>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><figcaption><span>[solution1-Python]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Poly</span>(collections.Counter):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__add__</span>(<span class="params">self, other</span>):</span><br><span class="line">        self.update(other)</span><br><span class="line">        <span class="keyword">return</span> self</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__sub__</span>(<span class="params">self, other</span>):</span><br><span class="line">        self.update(&#123;k: -v <span class="keyword">for</span> k, v <span class="keyword">in</span> other.items()&#125;)</span><br><span class="line">        <span class="keyword">return</span> self</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__mul__</span>(<span class="params">self, other</span>):</span><br><span class="line">        ans = Poly()</span><br><span class="line">        <span class="keyword">for</span> k1, v1 <span class="keyword">in</span> self.items():</span><br><span class="line">            <span class="keyword">for</span> k2, v2 <span class="keyword">in</span> other.items():</span><br><span class="line">                ans.update(&#123;<span class="built_in">tuple</span>(<span class="built_in">sorted</span>(k1 + k2)): v1 * v2&#125;)</span><br><span class="line">        <span class="keyword">return</span> ans</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">evaluate</span>(<span class="params">self, evalmap</span>):</span><br><span class="line">        ans = Poly()</span><br><span class="line">        <span class="keyword">for</span> k, c <span class="keyword">in</span> self.items():</span><br><span class="line">            free = []</span><br><span class="line">            <span class="keyword">for</span> token <span class="keyword">in</span> k:</span><br><span class="line">                <span class="keyword">if</span> token <span class="keyword">in</span> evalmap:</span><br><span class="line">                    c *= evalmap[token]</span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    free.append(token)</span><br><span class="line">            ans[<span class="built_in">tuple</span>(free)] += c</span><br><span class="line">        <span class="keyword">return</span> ans</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">to_list</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> [<span class="string">&quot;*&quot;</span>.join((<span class="built_in">str</span>(v),) + k)</span><br><span class="line">                <span class="keyword">for</span> k, v <span class="keyword">in</span> <span class="built_in">sorted</span>(self.items(),</span><br><span class="line">                    key = <span class="keyword">lambda</span> (k, v): (-<span class="built_in">len</span>(k), k, v))</span><br><span class="line">                <span class="keyword">if</span> v]</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>(<span class="title class_ inherited__">object</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">basicCalculatorIV</span>(<span class="params">self, expression, evalvars, evalints</span>):</span><br><span class="line">        evalmap = <span class="built_in">dict</span>(<span class="built_in">zip</span>(evalvars, evalints))</span><br><span class="line"></span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">combine</span>(<span class="params">left, right, symbol</span>):</span><br><span class="line">            <span class="keyword">if</span> symbol == <span class="string">&#x27;+&#x27;</span>: <span class="keyword">return</span> left + right</span><br><span class="line">            <span class="keyword">if</span> symbol == <span class="string">&#x27;-&#x27;</span>: <span class="keyword">return</span> left - right</span><br><span class="line">            <span class="keyword">if</span> symbol == <span class="string">&#x27;*&#x27;</span>: <span class="keyword">return</span> left * right</span><br><span class="line">            <span class="keyword">raise</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">make</span>(<span class="params">expr</span>):</span><br><span class="line">            ans = Poly()</span><br><span class="line">            <span class="keyword">if</span> expr.isdigit():</span><br><span class="line">                ans.update(&#123;(): <span class="built_in">int</span>(expr)&#125;)</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                ans[(expr,)] += <span class="number">1</span></span><br><span class="line">            <span class="keyword">return</span> ans</span><br><span class="line"></span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">parse</span>(<span class="params">expr</span>):</span><br><span class="line">            bucket = []</span><br><span class="line">            symbols = []</span><br><span class="line">            i = <span class="number">0</span></span><br><span class="line">            <span class="keyword">while</span> i &lt; <span class="built_in">len</span>(expr):</span><br><span class="line">                <span class="keyword">if</span> expr[i] == <span class="string">&#x27;(&#x27;</span>:</span><br><span class="line">                    bal = <span class="number">0</span></span><br><span class="line">                    <span class="keyword">for</span> j <span class="keyword">in</span> xrange(i, <span class="built_in">len</span>(expr)):</span><br><span class="line">                        <span class="keyword">if</span> expr[j] == <span class="string">&#x27;(&#x27;</span>: bal += <span class="number">1</span></span><br><span class="line">                        <span class="keyword">if</span> expr[j] == <span class="string">&#x27;)&#x27;</span>: bal -= <span class="number">1</span></span><br><span class="line">                        <span class="keyword">if</span> bal == <span class="number">0</span>: <span class="keyword">break</span></span><br><span class="line">                    bucket.append(parse(expr[i+<span class="number">1</span>:j]))</span><br><span class="line">                    i = j</span><br><span class="line">                <span class="keyword">elif</span> expr[i].isalnum():</span><br><span class="line">                    <span class="keyword">for</span> j <span class="keyword">in</span> xrange(i, <span class="built_in">len</span>(expr)):</span><br><span class="line">                        <span class="keyword">if</span> expr[j] == <span class="string">&#x27; &#x27;</span>:</span><br><span class="line">                            bucket.append(make(expr[i:j]))</span><br><span class="line">                            <span class="keyword">break</span></span><br><span class="line">                    <span class="keyword">else</span>:</span><br><span class="line">                        bucket.append(make(expr[i:]))</span><br><span class="line">                    i = j</span><br><span class="line">                <span class="keyword">elif</span> expr[i] <span class="keyword">in</span> <span class="string">&#x27;+-*&#x27;</span>:</span><br><span class="line">                    symbols.append(expr[i])</span><br><span class="line">                i += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> xrange(<span class="built_in">len</span>(symbols) - <span class="number">1</span>, -<span class="number">1</span>, -<span class="number">1</span>):</span><br><span class="line">                <span class="keyword">if</span> symbols[i] == <span class="string">&#x27;*&#x27;</span>:</span><br><span class="line">                    bucket[i] = combine(bucket[i], bucket.pop(i+<span class="number">1</span>),</span><br><span class="line">                                        symbols.pop(i))</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> <span class="keyword">not</span> bucket: <span class="keyword">return</span> Poly()</span><br><span class="line">            ans = bucket[<span class="number">0</span>]</span><br><span class="line">            <span class="keyword">for</span> i, symbol <span class="keyword">in</span> <span class="built_in">enumerate</span>(symbols, <span class="number">1</span>):</span><br><span class="line">                ans = combine(ans, bucket[i], symbol)</span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> ans</span><br><span class="line"></span><br><span class="line">        P = parse(expression).evaluate(evalmap)</span><br><span class="line">        <span class="keyword">return</span> P.to_list()</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><figcaption><span>[solution1-Java]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> List&lt;String&gt; <span class="title function_">basicCalculatorIV</span><span class="params">(String expression, String[] evalVars, <span class="type">int</span>[] evalInts)</span> &#123;</span><br><span class="line">        Map&lt;String, Integer&gt; evalMap = <span class="keyword">new</span> <span class="title class_">HashMap</span>();</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; evalVars.length; ++i)</span><br><span class="line">            evalMap.put(evalVars[i], evalInts[i]);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> parse(expression).evaluate(evalMap).toList();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> Poly <span class="title function_">make</span><span class="params">(String expr)</span> &#123;</span><br><span class="line">        <span class="type">Poly</span> <span class="variable">ans</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Poly</span>();</span><br><span class="line">        List&lt;String&gt; list = <span class="keyword">new</span> <span class="title class_">ArrayList</span>();</span><br><span class="line">        <span class="keyword">if</span> (Character.isDigit(expr.charAt(<span class="number">0</span>))) &#123;</span><br><span class="line">            ans.update(list, Integer.valueOf(expr));</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            list.add(expr);</span><br><span class="line">            ans.update(list, <span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> Poly <span class="title function_">combine</span><span class="params">(Poly left, Poly right, <span class="type">char</span> symbol)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (symbol == <span class="string">&#x27;+&#x27;</span>) <span class="keyword">return</span> left.add(right);</span><br><span class="line">        <span class="keyword">if</span> (symbol == <span class="string">&#x27;-&#x27;</span>) <span class="keyword">return</span> left.sub(right);</span><br><span class="line">        <span class="keyword">if</span> (symbol == <span class="string">&#x27;*&#x27;</span>) <span class="keyword">return</span> left.mul(right);</span><br><span class="line">        <span class="keyword">throw</span> <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> Poly <span class="title function_">parse</span><span class="params">(String expr)</span> &#123;</span><br><span class="line">        List&lt;Poly&gt; bucket = <span class="keyword">new</span> <span class="title class_">ArrayList</span>();</span><br><span class="line">        List&lt;Character&gt; symbols = <span class="keyword">new</span> <span class="title class_">ArrayList</span>();</span><br><span class="line">        <span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span> (i &lt; expr.length()) &#123;</span><br><span class="line">            <span class="keyword">if</span> (expr.charAt(i) == <span class="string">&#x27;(&#x27;</span>) &#123;</span><br><span class="line">                <span class="type">int</span> <span class="variable">bal</span> <span class="operator">=</span> <span class="number">0</span>, j = i;</span><br><span class="line">                <span class="keyword">for</span> (; j &lt; expr.length(); ++j) &#123;</span><br><span class="line">                    <span class="keyword">if</span> (expr.charAt(j) == <span class="string">&#x27;(&#x27;</span>) bal++;</span><br><span class="line">                    <span class="keyword">if</span> (expr.charAt(j) == <span class="string">&#x27;)&#x27;</span>) bal--;</span><br><span class="line">                    <span class="keyword">if</span> (bal == <span class="number">0</span>) <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                bucket.add(parse(expr.substring(i+<span class="number">1</span>, j)));</span><br><span class="line">                i = j;</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (Character.isLetterOrDigit(expr.charAt(i))) &#123;</span><br><span class="line">                <span class="type">int</span> <span class="variable">j</span> <span class="operator">=</span> i;</span><br><span class="line">                search : &#123;</span><br><span class="line">                    <span class="keyword">for</span> (; j &lt; expr.length(); ++j)</span><br><span class="line">                        <span class="keyword">if</span> (expr.charAt(j) == <span class="string">&#x27; &#x27;</span>) &#123;</span><br><span class="line">                            bucket.add(make(expr.substring(i, j)));</span><br><span class="line">                            <span class="keyword">break</span> search;</span><br><span class="line">                        &#125;</span><br><span class="line">                    bucket.add(make(expr.substring(i)));</span><br><span class="line">                &#125;</span><br><span class="line">                i = j;</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (expr.charAt(i) != <span class="string">&#x27; &#x27;</span>) &#123;</span><br><span class="line">                symbols.add(expr.charAt(i));</span><br><span class="line">            &#125;</span><br><span class="line">            i++;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">j</span> <span class="operator">=</span> symbols.size() - <span class="number">1</span>; j &gt;= <span class="number">0</span>; --j)</span><br><span class="line">            <span class="keyword">if</span> (symbols.get(j) == <span class="string">&#x27;*&#x27;</span>)</span><br><span class="line">                bucket.set(j, combine(bucket.get(j), bucket.remove(j+<span class="number">1</span>), symbols.remove(j)));</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (bucket.isEmpty()) <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Poly</span>();</span><br><span class="line">        <span class="type">Poly</span> <span class="variable">ans</span> <span class="operator">=</span> bucket.get(<span class="number">0</span>);</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">j</span> <span class="operator">=</span> <span class="number">0</span>; j &lt; symbols.size(); ++j)</span><br><span class="line">            ans = combine(ans, bucket.get(j+<span class="number">1</span>), symbols.get(j));</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Poly</span> &#123;</span><br><span class="line">    HashMap&lt;List&lt;String&gt;, Integer&gt; count;</span><br><span class="line">    Poly() &#123;count = <span class="keyword">new</span> <span class="title class_">HashMap</span>();&#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">update</span><span class="params">(List&lt;String&gt; key, <span class="type">int</span> val)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.count.put(key, <span class="built_in">this</span>.count.getOrDefault(key, <span class="number">0</span>) + val);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    Poly <span class="title function_">add</span><span class="params">(Poly that)</span> &#123;</span><br><span class="line">        <span class="type">Poly</span> <span class="variable">ans</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Poly</span>();</span><br><span class="line">        <span class="keyword">for</span> (List&lt;String&gt; k: <span class="built_in">this</span>.count.keySet())</span><br><span class="line">            ans.update(k, <span class="built_in">this</span>.count.get(k));</span><br><span class="line">        <span class="keyword">for</span> (List&lt;String&gt; k: that.count.keySet())</span><br><span class="line">            ans.update(k, that.count.get(k));</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    Poly <span class="title function_">sub</span><span class="params">(Poly that)</span> &#123;</span><br><span class="line">        <span class="type">Poly</span> <span class="variable">ans</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Poly</span>();</span><br><span class="line">        <span class="keyword">for</span> (List&lt;String&gt; k: <span class="built_in">this</span>.count.keySet())</span><br><span class="line">            ans.update(k, <span class="built_in">this</span>.count.get(k));</span><br><span class="line">        <span class="keyword">for</span> (List&lt;String&gt; k: that.count.keySet())</span><br><span class="line">            ans.update(k, -that.count.get(k));</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    Poly <span class="title function_">mul</span><span class="params">(Poly that)</span> &#123;</span><br><span class="line">        <span class="type">Poly</span> <span class="variable">ans</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Poly</span>();</span><br><span class="line">        <span class="keyword">for</span> (List&lt;String&gt; k1: <span class="built_in">this</span>.count.keySet())</span><br><span class="line">            <span class="keyword">for</span> (List&lt;String&gt; k2: that.count.keySet()) &#123;</span><br><span class="line">                List&lt;String&gt; kNew = <span class="keyword">new</span> <span class="title class_">ArrayList</span>();</span><br><span class="line">                <span class="keyword">for</span> (String x: k1) kNew.add(x);</span><br><span class="line">                <span class="keyword">for</span> (String x: k2) kNew.add(x);</span><br><span class="line">                Collections.sort(kNew);</span><br><span class="line">                ans.update(kNew, <span class="built_in">this</span>.count.get(k1) * that.count.get(k2));</span><br><span class="line">            &#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    Poly <span class="title function_">evaluate</span><span class="params">(Map&lt;String, Integer&gt; evalMap)</span> &#123;</span><br><span class="line">        <span class="type">Poly</span> <span class="variable">ans</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Poly</span>();</span><br><span class="line">        <span class="keyword">for</span> (List&lt;String&gt; k: <span class="built_in">this</span>.count.keySet()) &#123;</span><br><span class="line">            <span class="type">int</span> <span class="variable">c</span> <span class="operator">=</span> <span class="built_in">this</span>.count.get(k);</span><br><span class="line">            List&lt;String&gt; free = <span class="keyword">new</span> <span class="title class_">ArrayList</span>();</span><br><span class="line">            <span class="keyword">for</span> (String token: k) &#123;</span><br><span class="line">                <span class="keyword">if</span> (evalMap.containsKey(token))</span><br><span class="line">                    c *= evalMap.get(token);</span><br><span class="line">                <span class="keyword">else</span></span><br><span class="line">                    free.add(token);</span><br><span class="line">            &#125;</span><br><span class="line">            ans.update(free, c);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="type">int</span> <span class="title function_">compareList</span><span class="params">(List&lt;String&gt; A, List&lt;String&gt; B)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (String x: A) &#123;</span><br><span class="line">            <span class="type">String</span> <span class="variable">y</span> <span class="operator">=</span> B.get(i++);</span><br><span class="line">            <span class="keyword">if</span> (x.compareTo(y) != <span class="number">0</span>) <span class="keyword">return</span> x.compareTo(y);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    List&lt;String&gt; <span class="title function_">toList</span><span class="params">()</span> &#123;</span><br><span class="line">        List&lt;String&gt; ans = <span class="keyword">new</span> <span class="title class_">ArrayList</span>();</span><br><span class="line">        List&lt;List&lt;String&gt;&gt; keys = <span class="keyword">new</span> <span class="title class_">ArrayList</span>(<span class="built_in">this</span>.count.keySet());</span><br><span class="line">        Collections.sort(keys, (a, b) -&gt;</span><br><span class="line">            a.size() != b.size() ? b.size() - a.size() : compareList(a, b));</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (List&lt;String&gt; key: keys) &#123;</span><br><span class="line">            <span class="type">int</span> <span class="variable">v</span> <span class="operator">=</span> <span class="built_in">this</span>.count.get(key);</span><br><span class="line">            <span class="keyword">if</span> (v == <span class="number">0</span>) <span class="keyword">continue</span>;</span><br><span class="line">            <span class="type">StringBuilder</span> <span class="variable">word</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringBuilder</span>();</span><br><span class="line">            word.append(<span class="string">&quot;&quot;</span> + v);</span><br><span class="line">            <span class="keyword">for</span> (String token: key) &#123;</span><br><span class="line">                word.append(<span class="string">&#x27;*&#x27;</span>);</span><br><span class="line">                word.append(token);</span><br><span class="line">            &#125;</span><br><span class="line">            ans.add(word.toString());</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+
+<p><strong>复杂度分析</strong></p>
+<ul>
+<li><p>时间复杂度: 时间复杂度即为 O(2^N + M)，其中 N 为 <code>expression</code> 的长度， M 为 <code>evalvars</code> 和 <code>evalints</code> 的长度。</p>
+</li>
+<li><p>空间复杂度: O(N + M)。</p>
+</li>
+</ul>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <!--<div class="article-copyright-info-container">-->
+    <!--&lt;!&ndash;<ul>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><strong>Title:</strong> 0770-基本计算器 IV</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><strong>Author:</strong> Raphael Liu</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><strong>Created at&ndash;&gt;-->
+                <!--&lt;!&ndash;:</strong> 2023-09-13 00:47:26</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;&ndash;&gt;-->
+            <!--&lt;!&ndash;<li>&ndash;&gt;-->
+                <!--&lt;!&ndash;<strong>Updated at&ndash;&gt;-->
+                    <!--&lt;!&ndash;:</strong> 2023-09-13 16:06:26&ndash;&gt;-->
+            <!--&lt;!&ndash;</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;<li>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;<strong>Link:</strong> https://fida.ltd/2023/09/13/0770-基本计算器 IV/&ndash;&gt;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;</li>&ndash;&gt;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;<li>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;<strong>&ndash;&gt;&ndash;&gt;-->
+                <!--&lt;!&ndash;&lt;!&ndash;License:&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;</strong>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0</a>.&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;&ndash;&gt;&ndash;&gt;-->
+
+        <!--&lt;!&ndash;&lt;!&ndash;</li>&ndash;&gt;&ndash;&gt;-->
+    <!--&lt;!&ndash;</ul>&ndash;&gt;-->
+<!--</div>-->
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box">
+                
+                    <li class="tag-item">
+                        <a href="/tags/algorithm/">#algorithm</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item">
+                        <a href="/tags/HARD/">#HARD</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                        rel="prev"
+                        href="/2023/09/13/0769-%E6%9C%80%E5%A4%9A%E8%83%BD%E5%AE%8C%E6%88%90%E6%8E%92%E5%BA%8F%E7%9A%84%E5%9D%97/"
+                        >
+                            <span class="left arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">0769-最多能完成排序的块</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                        rel="next"
+                        href="/2023/09/13/0772-%E5%9F%BA%E6%9C%AC%E8%AE%A1%E7%AE%97%E5%99%A8%20III/"
+                        >
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">0772-基本计算器 III</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+
+        
+            <div class="comment-container">
+                <div class="comments-container pjax">
+    <div id="comment-anchor"></div>
+    <div class="comment-area-title">
+        <i class="fa-solid fa-comments"></i>&nbsp;Comments
+    </div>
+    
+
+        
+            
+ 
+    <div id="waline"></div>
+    <script type="module"  data-swup-reload-script>
+        import { init } from 'https://evan.beee.top/js/waline.mjs';
+
+        function loadWaline() {
+            init({
+                el: '#waline',
+                serverURL: 'https://example.example.com',
+                lang: 'zh-CN',
+                dark: 'body[class~="dark-mode"]',
+                requiredMeta: ['nick','mail'], // cannot customize by theme config, change it yourself
+            });
+        }
+
+        if ('true') {
+            const loadWalineTimeout = setTimeout(() => {
+                loadWaline();
+                clearTimeout(loadWalineTimeout);
+            }, 1000);
+        } else {
+            window.addEventListener('DOMContentLoaded', loadWaline);
+        }
+        
+    </script>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+
+    
+        <div class="toc-content-container">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">On this page</div>
+        <div class="page-title">0770-基本计算器 IV</div>
+        
+
+    </div>
+</div>
+        </div>
+    
+</div>
+
+
+
+                
+
+            </div>
+
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2022</span>
+              -
+            
+            2023&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">Raphael Liu</a>
+        </div>
+        
+            <script data-swup-reload-script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">UV:</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">PV:</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <!--<div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">-->
+            <!--<span class="lg:block text-sm">powered_by</span>-->
+            <!--&lt;!&ndash;<span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.4.4</a></span>&ndash;&gt;-->
+        <!--</div>-->
+        
+        <!---->
+            <!--<div>-->
+                <!--runtime <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hours <span class="odometer" id="runtime_minutes"></span> minutes <span class="odometer" id="runtime_seconds"></span> seconds-->
+            <!--</div>-->
+        <!---->
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fa-regular fa-comments"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-expand-width flex justify-center items-center">
+            <i class="fa-regular fa-expand"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fa-solid fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa-solid fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa-solid fa-spinner fa-spin-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+    
+<script src="/js/libs/Swup.min.js"></script>
+
+<script src="/js/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/libs/SwupScrollPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+        ],
+        containers: ["#swup"],
+    });
+
+    swup.hooks.on("page:view", () => {
+        Global.refresh();
+    });
+
+    // if (document.readyState === "complete") {
+    //
+    // } else {
+    //     document.addEventListener("DOMContentLoaded", () => init());
+    // }
+</script>
+
+
+
+
+
+
+<script src="/js/utils.js" type="module"></script>
+
+<script src="/js/main.js" type="module"></script>
+
+<script src="/js/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/layouts/categoryList.js" type="module"></script>
+
+
+
+    
+<script src="/js/tools/localSearch.js"></script>
+
+
+
+
+    
+<script src="/js/tools/codeBlock.js"></script>
+
+
+
+
+    
+<script src="/js/layouts/lazyload.js"></script>
+
+
+
+
+    
+<script src="/js/tools/runtime.js"></script>
+
+    
+<script src="/js/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/libs/Typed.min.js"></script>
+
+  
+<script src="/js/plugins/typed.js"></script>
+
+
+
+
+
+
+
+<div class="post-scripts" data-swup-reload-script>
+    
+        
+<script src="/js/libs/anime.min.js"></script>
+
+        
+<script src="/js/tools/tocToggle.js" type="module"></script>
+
+<script src="/js/layouts/toc.js" type="module"></script>
+
+<script src="/js/plugins/tabs.js" type="module"></script>
+
+    
+</div>
+
+
+</body>
+</html>

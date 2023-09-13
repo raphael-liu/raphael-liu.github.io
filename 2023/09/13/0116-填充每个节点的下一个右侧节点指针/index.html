@@ -1,0 +1,1075 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="Raphael Liu">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/2023/09/13/0116-填充每个节点的下一个右侧节点指针/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="给定一个  **完美二叉树  **，其所有叶子节点都在同一层，每个父节点都有两个子节点。二叉树定义如下： struct Node &amp;#123;   int val;   Node *left;   Node *right;   Node *next; &amp;#125;  填充它的每个 next 指针，让这个指针指向其下一个右侧节点。如果找不到下一个右侧节点，则将 next 指针设置为 NULL。 初始">
+<meta property="og:type" content="article">
+<meta property="og:title" content="0116-填充每个节点的下一个右侧节点指针">
+<meta property="og:url" content="http://example.com/2023/09/13/0116-%E5%A1%AB%E5%85%85%E6%AF%8F%E4%B8%AA%E8%8A%82%E7%82%B9%E7%9A%84%E4%B8%8B%E4%B8%80%E4%B8%AA%E5%8F%B3%E4%BE%A7%E8%8A%82%E7%82%B9%E6%8C%87%E9%92%88/index.html">
+<meta property="og:site_name" content="Raphael&#39;s Blog">
+<meta property="og:description" content="给定一个  **完美二叉树  **，其所有叶子节点都在同一层，每个父节点都有两个子节点。二叉树定义如下： struct Node &amp;#123;   int val;   Node *left;   Node *right;   Node *next; &amp;#125;  填充它的每个 next 指针，让这个指针指向其下一个右侧节点。如果找不到下一个右侧节点，则将 next 指针设置为 NULL。 初始">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://assets.leetcode.com/uploads/2019/02/14/116_sample.png">
+<meta property="og:image" content="https://assets.leetcode-cn.com/solution-static/116/p1.png">
+<meta property="og:image" content="https://assets.leetcode-cn.com/solution-static/116/p2.png">
+<meta property="og:image" content="https://assets.leetcode-cn.com/solution-static/116/p3.png">
+<meta property="og:image" content="https://assets.leetcode-cn.com/solution-static/116/p4.png">
+<meta property="og:image" content="https://assets.leetcode-cn.com/solution-static/116/p5.png">
+<meta property="og:image" content="https://assets.leetcode-cn.com/solution-static/116/p6.png">
+<meta property="og:image" content="https://assets.leetcode-cn.com/solution-static/116/p7.png">
+<meta property="og:image" content="https://assets.leetcode-cn.com/solution-static/116/p8.png">
+<meta property="og:image" content="https://assets.leetcode-cn.com/solution-static/116/p9.png">
+<meta property="og:image" content="https://assets.leetcode-cn.com/solution-static/116/p10.png">
+<meta property="og:image" content="https://assets.leetcode-cn.com/solution-static/116/p11.png">
+<meta property="og:image" content="https://assets.leetcode-cn.com/solution-static/116/p12.png">
+<meta property="og:image" content="https://assets.leetcode-cn.com/solution-static/116/p13.png">
+<meta property="og:image" content="https://assets.leetcode-cn.com/solution-static/116/p14.png">
+<meta property="og:image" content="https://assets.leetcode-cn.com/solution-static/116/p15.png">
+<meta property="og:image" content="https://assets.leetcode-cn.com/solution-static/116/1.png">
+<meta property="og:image" content="https://assets.leetcode-cn.com/solution-static/116/2.png">
+<meta property="og:image" content="https://assets.leetcode-cn.com/solution-static/116/3.png">
+<meta property="og:image" content="https://assets.leetcode-cn.com/solution-static/116/4.png">
+<meta property="og:image" content="https://assets.leetcode-cn.com/solution-static/116/5.png">
+<meta property="og:image" content="https://assets.leetcode-cn.com/solution-static/116/6.png">
+<meta property="article:published_time" content="2023-09-12T16:47:26.000Z">
+<meta property="article:modified_time" content="2023-09-13T02:42:30.000Z">
+<meta property="article:author" content="Raphael Liu">
+<meta property="article:tag" content="algorithm">
+<meta property="article:tag" content="MEDIUM">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://assets.leetcode.com/uploads/2019/02/14/116_sample.png">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/redefine-favicon.svg" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/redefine-favicon.svg">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/redefine-favicon.svg">
+    <!--- Page Info-->
+    
+    <title>
+        
+            0116-填充每个节点的下一个右侧节点指针 -
+        
+        Raphael&#39;s Blog
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/css/build/styles.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/fonts.css">
+
+    
+<link rel="stylesheet" href="/fonts/Satoshi/satoshi.css">
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+
+    <!--- Inject Part-->
+    
+    <script id="hexo-configurations">
+    let Global = window.Global || {};
+    Global.hexo_config = {"hostname":"example.com","root":"/","language":"zh_CN"};
+    Global.theme_config = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":true,"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"open_graph":true,"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-wqery6-light.webp","dark":"/images/wallhaven-wqery6-dark.webp"},"title":"Raphael's Blog","subtitle":{"text":["格物致知","坚持做正确的事情"],"hitokoto":{"enable":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":false,"links":{"github":"https://github.com/raphael-liu","email":"raphael@buaa.edu.cn# your email"},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.4.4","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"links":{"首页":{"path":"/","icon":"fa-regular fa-house"},"文章":{"path":"/archives","icon":"fa-regular fa-archive"},"关于":{"icon":"fa-regular fa-user","submenus":{"我":"/about/me","Github":"https://github.com/raphael-liu"}}},"search":{"enable":true,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"links":null},"article_date_format":"auto","categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}},"footerStart":"2022/8/17 11:45:14"};
+    Global.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    Global.data_config = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="swup-progress-icon">
+            <i class="fa-solid fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container" id="swup">
+
+    
+
+    <div class="main-content-container">
+
+
+        <div class="main-content-header">
+            <header class="navbar-container">
+    
+    <div class="navbar-content">
+        <div class="left">
+            
+            <a class="logo-title" href="http://example.com/">
+                
+                Raphael&#39;s Blog
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/"  >
+                                    
+                                        
+                                            <i class="fa-regular fa-house"></i>
+                                        
+                                        首页
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/archives"  >
+                                    
+                                        
+                                            <i class="fa-regular fa-archive"></i>
+                                        
+                                        文章
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="has-dropdown" 
+                                    href="#" onClick="return false;">
+                                    
+                                        
+                                            <i class="fa-regular fa-user"></i>
+                                        
+                                        关于&nbsp;<i class="fa-solid fa-chevron-down"></i>
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                                    <ul class="sub-menu">
+                                    
+                                        <li>
+                                        <a href="/about/me">我
+                                        </a>
+                                        </li>
+                                    
+                                        <li>
+                                        <a target="_blank" rel="noopener" href="https://github.com/raphael-liu">GITHUB
+                                        </a>
+                                        </li>
+                                    
+                                    </ul>
+                                
+                            </li>
+                    
+                    
+                        <li class="navbar-item search search-popup-trigger">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fa-solid fa-magnifying-glass"></i></div>
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile drawer -->
+    <div class="navbar-drawer w-full absolute top-0 left-0 bg-background-color">
+        <ul class="drawer-navbar-list flex flex-col justify-start items-center">
+            
+                
+                    <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group " 
+                        href="/"  >
+                             
+                                
+                                    <i class="fa-regular fa-house"></i>
+                                
+                                首页
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+                
+                    <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group " 
+                        href="/archives"  >
+                             
+                                
+                                    <i class="fa-regular fa-archive"></i>
+                                
+                                文章
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+                
+                    <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group has-dropdown" 
+                        href="#" onClick="return false;">
+                            
+                                
+                                    <i class="fa-regular fa-user"></i>
+                                
+                                关于&nbsp;<i class="group-hover:rotate-180 transition-transform fa-solid fa-chevron-down"></i>
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                              
+                        
+                            <li class="text-base flex justify-center items-center hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                <a class="py-0.5" href="/about/me">我</a>
+                            </li>
+                        
+                            <li class="text-base flex justify-center items-center hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                <a class="py-0.5" target="_blank" rel="noopener" href="https://github.com/raphael-liu">GITHUB</a>
+                            </li>
+                        
+                    
+            
+
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="post-page-container">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            
+                <h1 class="article-title-regular">0116-填充每个节点的下一个右侧节点指针</h1>
+            
+            </div>
+            
+                    
+        
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">Raphael Liu</span>
+                        
+                            <span class="author-label">Lv10</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2023-09-13 00:47:26</span>
+        <span class="mobile">2023-09-13 00:47:26</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2023-09-13 10:42:30</span>
+            <span class="mobile">2023-09-13 10:42:30</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/algorithm/">algorithm</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/MEDIUM/">MEDIUM</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        
+
+
+        <div class="article-content markdown-body">
+            <p>给定一个  **完美二叉树  **，其所有叶子节点都在同一层，每个父节点都有两个子节点。二叉树定义如下：</p>
+<pre><code>struct Node &#123;
+  int val;
+  Node *left;
+  Node *right;
+  Node *next;
+&#125;
+</code></pre>
+<p>填充它的每个 next 指针，让这个指针指向其下一个右侧节点。如果找不到下一个右侧节点，则将 next 指针设置为 <code>NULL</code>。</p>
+<p>初始状态下，所有 next 指针都被设置为 <code>NULL</code>。</p>
+<p><strong>示例 1：</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://assets.leetcode.com/uploads/2019/02/14/116_sample.png"
+                     
+                ></p>
+<pre><code>**输入：** root = [1,2,3,4,5,6,7]
+**输出：** [1,#,2,3,#,4,5,6,7,#]
+**解释：** 给定二叉树如图 A 所示，你的函数应该填充它的每个 next 指针，以指向其下一个右侧节点，如图 B 所示。序列化的输出按层序遍历排列，同一层节点由 next 指针连接，&#39;#&#39; 标志着每一层的结束。
+</code></pre>
+<p><strong>示例 2:</strong></p>
+<pre><code>**输入：** root = []
+**输出：** []
+</code></pre>
+<p><strong>提示：</strong></p>
+<ul>
+<li>树中节点的数量在 <code>[0, 212 - 1]</code> 范围内</li>
+<li><code>-1000 &lt;= node.val &lt;= 1000</code></li>
+</ul>
+<p><strong>进阶：</strong></p>
+<ul>
+<li>你只能使用常量级额外空间。</li>
+<li>使用递归解题也符合要求，本题中递归程序占用的栈空间不算做额外的空间复杂度。</li>
+</ul>
+<h4 id="方法一：层次遍历"><a href="#方法一：层次遍历" class="headerlink" title="方法一：层次遍历"></a>方法一：层次遍历</h4><p><strong>思路与算法</strong></p>
+<p>题目本身希望我们将二叉树的每一层节点都连接起来形成一个链表。因此直观的做法我们可以对二叉树进行层次遍历，在层次遍历的过程中将我们将二叉树每一层的节点拿出来遍历并连接。</p>
+<p>层次遍历基于广度优先搜索，它与广度优先搜索的不同之处在于，广度优先搜索每次只会取出一个节点来拓展，而层次遍历会每次将队列中的所有元素都拿出来拓展，这样能保证每次从队列中拿出来遍历的元素都是属于同一层的，因此我们可以在遍历的过程中修改每个节点的 $\text{next}$ 指针，同时拓展下一层的新队列。</p>
+<p>&lt;<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://assets.leetcode-cn.com/solution-static/116/p1.png"
+                      alt="ppt1"
+                >,<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://assets.leetcode-cn.com/solution-static/116/p2.png"
+                      alt="ppt2"
+                >,<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://assets.leetcode-cn.com/solution-static/116/p3.png"
+                      alt="ppt3"
+                >,<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://assets.leetcode-cn.com/solution-static/116/p4.png"
+                      alt="ppt4"
+                >,<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://assets.leetcode-cn.com/solution-static/116/p5.png"
+                      alt="ppt5"
+                >,<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://assets.leetcode-cn.com/solution-static/116/p6.png"
+                      alt="ppt6"
+                >,<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://assets.leetcode-cn.com/solution-static/116/p7.png"
+                      alt="ppt7"
+                >,<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://assets.leetcode-cn.com/solution-static/116/p8.png"
+                      alt="ppt8"
+                >,<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://assets.leetcode-cn.com/solution-static/116/p9.png"
+                      alt="ppt9"
+                >,<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://assets.leetcode-cn.com/solution-static/116/p10.png"
+                      alt="ppt10"
+                >,<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://assets.leetcode-cn.com/solution-static/116/p11.png"
+                      alt="ppt11"
+                >,<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://assets.leetcode-cn.com/solution-static/116/p12.png"
+                      alt="ppt12"
+                >,<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://assets.leetcode-cn.com/solution-static/116/p13.png"
+                      alt="ppt13"
+                >,<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://assets.leetcode-cn.com/solution-static/116/p14.png"
+                      alt="ppt14"
+                >,<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://assets.leetcode-cn.com/solution-static/116/p15.png"
+                      alt="ppt15"
+                >&gt;</p>
+<p><strong>代码</strong></p>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><figcaption><span>[sol1-Java]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> Node <span class="title function_">connect</span><span class="params">(Node root)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (root == <span class="literal">null</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> root;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 初始化队列同时将第一层节点加入队列中，即根节点</span></span><br><span class="line">        Queue&lt;Node&gt; queue = <span class="keyword">new</span> <span class="title class_">LinkedList</span>&lt;Node&gt;(); </span><br><span class="line">        queue.add(root);</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 外层的 while 循环迭代的是层数</span></span><br><span class="line">        <span class="keyword">while</span> (!queue.isEmpty()) &#123;</span><br><span class="line">            </span><br><span class="line">            <span class="comment">// 记录当前队列大小</span></span><br><span class="line">            <span class="type">int</span> <span class="variable">size</span> <span class="operator">=</span> queue.size();</span><br><span class="line">            </span><br><span class="line">            <span class="comment">// 遍历这一层的所有节点</span></span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; size; i++) &#123;</span><br><span class="line">                </span><br><span class="line">                <span class="comment">// 从队首取出元素</span></span><br><span class="line">                <span class="type">Node</span> <span class="variable">node</span> <span class="operator">=</span> queue.poll();</span><br><span class="line">                </span><br><span class="line">                <span class="comment">// 连接</span></span><br><span class="line">                <span class="keyword">if</span> (i &lt; size - <span class="number">1</span>) &#123;</span><br><span class="line">                    node.next = queue.peek();</span><br><span class="line">                &#125;</span><br><span class="line">                </span><br><span class="line">                <span class="comment">// 拓展下一层节点</span></span><br><span class="line">                <span class="keyword">if</span> (node.left != <span class="literal">null</span>) &#123;</span><br><span class="line">                    queue.add(node.left);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">if</span> (node.right != <span class="literal">null</span>) &#123;</span><br><span class="line">                    queue.add(node.right);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 返回根节点</span></span><br><span class="line">        <span class="keyword">return</span> root;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><figcaption><span>[sol1-Python3]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> collections </span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">connect</span>(<span class="params">self, root: <span class="string">&#x27;Node&#x27;</span></span>) -&gt; <span class="string">&#x27;Node&#x27;</span>:</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> root:</span><br><span class="line">            <span class="keyword">return</span> root</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># 初始化队列同时将第一层节点加入队列中，即根节点</span></span><br><span class="line">        Q = collections.deque([root])</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># 外层的 while 循环迭代的是层数</span></span><br><span class="line">        <span class="keyword">while</span> Q:</span><br><span class="line">            </span><br><span class="line">            <span class="comment"># 记录当前队列大小</span></span><br><span class="line">            size = <span class="built_in">len</span>(Q)</span><br><span class="line">            </span><br><span class="line">            <span class="comment"># 遍历这一层的所有节点</span></span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(size):</span><br><span class="line">                </span><br><span class="line">                <span class="comment"># 从队首取出元素</span></span><br><span class="line">                node = Q.popleft()</span><br><span class="line">                </span><br><span class="line">                <span class="comment"># 连接</span></span><br><span class="line">                <span class="keyword">if</span> i &lt; size - <span class="number">1</span>:</span><br><span class="line">                    node.<span class="built_in">next</span> = Q[<span class="number">0</span>]</span><br><span class="line">                </span><br><span class="line">                <span class="comment"># 拓展下一层节点</span></span><br><span class="line">                <span class="keyword">if</span> node.left:</span><br><span class="line">                    Q.append(node.left)</span><br><span class="line">                <span class="keyword">if</span> node.right:</span><br><span class="line">                    Q.append(node.right)</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># 返回根节点</span></span><br><span class="line">        <span class="keyword">return</span> root</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="C++"><figure class="iseeu highlight c++"><figcaption><span>[sol1-C++]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">Node* <span class="title">connect</span><span class="params">(Node* root)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (root == <span class="literal">nullptr</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> root;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 初始化队列同时将第一层节点加入队列中，即根节点</span></span><br><span class="line">        queue&lt;Node*&gt; Q;</span><br><span class="line">        Q.<span class="built_in">push</span>(root);</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 外层的 while 循环迭代的是层数</span></span><br><span class="line">        <span class="keyword">while</span> (!Q.<span class="built_in">empty</span>()) &#123;</span><br><span class="line">            </span><br><span class="line">            <span class="comment">// 记录当前队列大小</span></span><br><span class="line">            <span class="type">int</span> size = Q.<span class="built_in">size</span>();</span><br><span class="line">            </span><br><span class="line">            <span class="comment">// 遍历这一层的所有节点</span></span><br><span class="line">            <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>; i &lt; size; i++) &#123;</span><br><span class="line">                </span><br><span class="line">                <span class="comment">// 从队首取出元素</span></span><br><span class="line">                Node* node = Q.<span class="built_in">front</span>();</span><br><span class="line">                Q.<span class="built_in">pop</span>();</span><br><span class="line">                </span><br><span class="line">                <span class="comment">// 连接</span></span><br><span class="line">                <span class="keyword">if</span> (i &lt; size - <span class="number">1</span>) &#123;</span><br><span class="line">                    node-&gt;next = Q.<span class="built_in">front</span>();</span><br><span class="line">                &#125;</span><br><span class="line">                </span><br><span class="line">                <span class="comment">// 拓展下一层节点</span></span><br><span class="line">                <span class="keyword">if</span> (node-&gt;left != <span class="literal">nullptr</span>) &#123;</span><br><span class="line">                    Q.<span class="built_in">push</span>(node-&gt;left);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">if</span> (node-&gt;right != <span class="literal">nullptr</span>) &#123;</span><br><span class="line">                    Q.<span class="built_in">push</span>(node-&gt;right);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 返回根节点</span></span><br><span class="line">        <span class="keyword">return</span> root;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><figcaption><span>[sol1-JavaScript]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> connect = <span class="keyword">function</span>(<span class="params">root</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (root === <span class="literal">null</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> root;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 初始化队列同时将第一层节点加入队列中，即根节点</span></span><br><span class="line">    <span class="keyword">const</span> Q = [root]; </span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 外层的 while 循环迭代的是层数</span></span><br><span class="line">    <span class="keyword">while</span> (Q.<span class="property">length</span> &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 记录当前队列大小</span></span><br><span class="line">        <span class="keyword">const</span> size = Q.<span class="property">length</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 遍历这一层的所有节点</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; size; i++) &#123;</span><br><span class="line">            </span><br><span class="line">            <span class="comment">// 从队首取出元素</span></span><br><span class="line">            <span class="keyword">const</span> node = Q.<span class="title function_">shift</span>();</span><br><span class="line">            </span><br><span class="line">            <span class="comment">// 连接</span></span><br><span class="line">            <span class="keyword">if</span> (i &lt; size - <span class="number">1</span>) &#123;</span><br><span class="line">                node.<span class="property">next</span> = Q[<span class="number">0</span>];</span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">            <span class="comment">// 拓展下一层节点</span></span><br><span class="line">            <span class="keyword">if</span> (node.<span class="property">left</span> !== <span class="literal">null</span>) &#123;</span><br><span class="line">                Q.<span class="title function_">push</span>(node.<span class="property">left</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (node.<span class="property">right</span> !== <span class="literal">null</span>) &#123;</span><br><span class="line">                Q.<span class="title function_">push</span>(node.<span class="property">right</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 返回根节点</span></span><br><span class="line">    <span class="keyword">return</span> root;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Golang"><figure class="iseeu highlight golang"><figcaption><span>[sol1-Golang]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">connect</span><span class="params">(root *Node)</span></span> *Node &#123;</span><br><span class="line">    <span class="keyword">if</span> root == <span class="literal">nil</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> root</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 初始化队列同时将第一层节点加入队列中，即根节点</span></span><br><span class="line">    queue := []*Node&#123;root&#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 循环迭代的是层数</span></span><br><span class="line">    <span class="keyword">for</span> <span class="built_in">len</span>(queue) &gt; <span class="number">0</span> &#123;</span><br><span class="line">        tmp := queue</span><br><span class="line">        queue = <span class="literal">nil</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// 遍历这一层的所有节点</span></span><br><span class="line">        <span class="keyword">for</span> i, node := <span class="keyword">range</span> tmp &#123;</span><br><span class="line">            <span class="comment">// 连接</span></span><br><span class="line">            <span class="keyword">if</span> i+<span class="number">1</span> &lt; <span class="built_in">len</span>(tmp) &#123;</span><br><span class="line">                node.Next = tmp[i+<span class="number">1</span>]</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 拓展下一层节点</span></span><br><span class="line">            <span class="keyword">if</span> node.Left != <span class="literal">nil</span> &#123;</span><br><span class="line">                queue = <span class="built_in">append</span>(queue, node.Left)</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> node.Right != <span class="literal">nil</span> &#123;</span><br><span class="line">                queue = <span class="built_in">append</span>(queue, node.Right)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 返回根节点</span></span><br><span class="line">    <span class="keyword">return</span> root</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="C"><figure class="iseeu highlight c"><figcaption><span>[sol1-C]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> Node* <span class="title function_">connect</span><span class="params">(<span class="keyword">struct</span> Node* root)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (root == <span class="literal">NULL</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> root;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 初始化队列同时将第一层节点加入队列中，即根节点</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">Node</span>* <span class="title">Q</span>[5000];</span></span><br><span class="line">    <span class="type">int</span> left = <span class="number">0</span>, right = <span class="number">0</span>;</span><br><span class="line">    Q[right++] = root;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 外层的 while 循环迭代的是层数</span></span><br><span class="line">    <span class="keyword">while</span> (left &lt; right) &#123;</span><br><span class="line">        <span class="comment">// 记录当前队列大小</span></span><br><span class="line">        <span class="type">int</span> size = right - left;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 遍历这一层的所有节点</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; size; i++) &#123;</span><br><span class="line">            <span class="comment">// 从队首取出元素</span></span><br><span class="line">            <span class="class"><span class="keyword">struct</span> <span class="title">Node</span>* <span class="title">node</span> =</span> Q[left++];</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 连接</span></span><br><span class="line">            <span class="keyword">if</span> (i &lt; size - <span class="number">1</span>) &#123;</span><br><span class="line">                node-&gt;next = Q[left];</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 拓展下一层节点</span></span><br><span class="line">            <span class="keyword">if</span> (node-&gt;left != <span class="literal">NULL</span>) &#123;</span><br><span class="line">                Q[right++] = node-&gt;left;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (node-&gt;right != <span class="literal">NULL</span>) &#123;</span><br><span class="line">                Q[right++] = node-&gt;right;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 返回根节点</span></span><br><span class="line">    <span class="keyword">return</span> root;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>复杂度分析</strong></p>
+<ul>
+<li><p>时间复杂度：$O(N)$。每个节点会被访问一次且只会被访问一次，即从队列中弹出，并建立 $\text{next}$ 指针。</p>
+</li>
+<li><p>空间复杂度：$O(N)$。这是一棵完美二叉树，它的最后一个层级包含 $N&#x2F;2$ 个节点。广度优先遍历的复杂度取决于一个层级上的最大元素数量。这种情况下空间复杂度为 $O(N)$。</p>
+</li>
+</ul>
+<h4 id="方法二：使用已建立的-text-next-指针"><a href="#方法二：使用已建立的-text-next-指针" class="headerlink" title="方法二：使用已建立的 $\text{next}$ 指针"></a>方法二：使用已建立的 $\text{next}$ 指针</h4><p><strong>思路</strong></p>
+<p>一棵树中，存在两种类型的 $\text{next}$ 指针。</p>
+<ol>
+<li><p>第一种情况是连接同一个父节点的两个子节点。它们可以通过同一个节点直接访问到，因此执行下面操作即可完成连接。</p>
+ <div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node.left.next = node.right</span><br></pre></td></tr></table></figure></div>
+
+<p> <img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://assets.leetcode-cn.com/solution-static/116/1.png"
+                      alt="fig1"
+                >{:width&#x3D;480}</p>
+</li>
+<li><p>第二种情况在不同父亲的子节点之间建立连接，这种情况不能直接连接。</p>
+<p> <img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://assets.leetcode-cn.com/solution-static/116/2.png"
+                      alt="fig2"
+                >{:width&#x3D;480}</p>
+<p> 如果每个节点有指向父节点的指针，可以通过该指针找到 $\text{next}$ 节点。如果不存在该指针，则按照下面思路建立连接：</p>
+</li>
+</ol>
+<blockquote>
+<p>第 $N$ 层节点之间建立 $\text{next}$ 指针后，再建立第 $N+1$ 层节点的 $\text{next}$ 指针。可以通过 $\text{next}$ 指针访问同一层的所有节点，因此可以使用第 $N$ 层的 $\text{next}$ 指针，为第 $N+1$ 层节点建立 $\text{next}$ 指针。</p>
+</blockquote>
+<p><strong>算法</strong></p>
+<ol>
+<li><p>从根节点开始，由于第 $0$ 层只有一个节点，所以不需要连接，直接为第 $1$ 层节点建立 $\text{next}$ 指针即可。该算法中需要注意的一点是，当我们为第 $N$ 层节点建立 $\text{next}$ 指针时，处于第 $N-1$ 层。当第 $N$ 层节点的 $\text{next}$ 指针全部建立完成后，移至第 $N$ 层，建立第 $N+1$ 层节点的 $\text{next}$ 指针。</p>
+</li>
+<li><p>遍历某一层的节点时，这层节点的 $\text{next}$ 指针已经建立。因此我们只需要知道这一层的最左节点，就可以按照链表方式遍历，不需要使用队列。</p>
+</li>
+<li><p>上面思路的伪代码如下：</p>
+ <div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">leftmost = root</span><br><span class="line">while (leftmost.left != null) &#123;</span><br><span class="line">    head = leftmost</span><br><span class="line">    while (head.next != null) &#123;</span><br><span class="line">        1) Establish Connection 1</span><br><span class="line">        2) Establish Connection 2 using next pointers</span><br><span class="line">        head = head.next</span><br><span class="line">    &#125;</span><br><span class="line">    leftmost = leftmost.left</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p> <img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://assets.leetcode-cn.com/solution-static/116/3.png"
+                      alt="fig3"
+                >{:width&#x3D;480}</p>
+</li>
+<li><p>两种类型的 $\text{next}$ 指针。</p>
+<ol>
+<li><p>第一种情况两个子节点属于同一个父节点，因此直接通过父节点建立两个子节点的 $\text{next}$ 指针即可。</p>
+ <div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node.left.next = node.right</span><br></pre></td></tr></table></figure></div></li>
+</ol>
+<p> <img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://assets.leetcode-cn.com/solution-static/116/4.png"
+                      alt="fig4"
+                >{:width&#x3D;480}</p>
+<ol start="2">
+<li><p>第二种情况是连接不同父节点之间子节点的情况。更具体地说，连接的是第一个父节点的右孩子和第二父节点的左孩子。由于已经在父节点这一层建立了 $\text{next}$ 指针，因此可以直接通过第一个父节点的 $\text{next}$ 指针找到第二个父节点，然后在它们的孩子之间建立连接。</p>
+ <div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node.right.next = node.next.left</span><br></pre></td></tr></table></figure></div></li>
+</ol>
+<p> <img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://assets.leetcode-cn.com/solution-static/116/5.png"
+                      alt="fig5"
+                >{:width&#x3D;480}</p>
+</li>
+<li><p>完成当前层的连接后，进入下一层重复操作，直到所有的节点全部连接。进入下一层后需要更新最左节点，然后从新的最左节点开始遍历该层所有节点。因为是完美二叉树，因此最左节点一定是当前层最左节点的左孩子。如果当前最左节点的左孩子不存在，说明已经到达该树的最后一层，完成了所有节点的连接。</p>
+<p> <img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://assets.leetcode-cn.com/solution-static/116/6.png"
+                      alt="fig6"
+                >{:width&#x3D;480}</p>
+</li>
+</ol>
+<p><strong>代码</strong></p>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><figcaption><span>[sol2-Java]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> Node <span class="title function_">connect</span><span class="params">(Node root)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (root == <span class="literal">null</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> root;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 从根节点开始</span></span><br><span class="line">        <span class="type">Node</span> <span class="variable">leftmost</span> <span class="operator">=</span> root;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">while</span> (leftmost.left != <span class="literal">null</span>) &#123;</span><br><span class="line">            </span><br><span class="line">            <span class="comment">// 遍历这一层节点组织成的链表，为下一层的节点更新 next 指针</span></span><br><span class="line">            <span class="type">Node</span> <span class="variable">head</span> <span class="operator">=</span> leftmost;</span><br><span class="line">            </span><br><span class="line">            <span class="keyword">while</span> (head != <span class="literal">null</span>) &#123;</span><br><span class="line">                </span><br><span class="line">                <span class="comment">// CONNECTION 1</span></span><br><span class="line">                head.left.next = head.right;</span><br><span class="line">                </span><br><span class="line">                <span class="comment">// CONNECTION 2</span></span><br><span class="line">                <span class="keyword">if</span> (head.next != <span class="literal">null</span>) &#123;</span><br><span class="line">                    head.right.next = head.next.left;</span><br><span class="line">                &#125;</span><br><span class="line">                </span><br><span class="line">                <span class="comment">// 指针向后移动</span></span><br><span class="line">                head = head.next;</span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">            <span class="comment">// 去下一层的最左的节点</span></span><br><span class="line">            leftmost = leftmost.left;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> root;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><figcaption><span>[sol2-Python3]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">connect</span>(<span class="params">self, root: <span class="string">&#x27;Node&#x27;</span></span>) -&gt; <span class="string">&#x27;Node&#x27;</span>:</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> root:</span><br><span class="line">            <span class="keyword">return</span> root</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># 从根节点开始</span></span><br><span class="line">        leftmost = root</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">while</span> leftmost.left:</span><br><span class="line">            </span><br><span class="line">            <span class="comment"># 遍历这一层节点组织成的链表，为下一层的节点更新 next 指针</span></span><br><span class="line">            head = leftmost</span><br><span class="line">            <span class="keyword">while</span> head:</span><br><span class="line">                </span><br><span class="line">                <span class="comment"># CONNECTION 1</span></span><br><span class="line">                head.left.<span class="built_in">next</span> = head.right</span><br><span class="line">                </span><br><span class="line">                <span class="comment"># CONNECTION 2</span></span><br><span class="line">                <span class="keyword">if</span> head.<span class="built_in">next</span>:</span><br><span class="line">                    head.right.<span class="built_in">next</span> = head.<span class="built_in">next</span>.left</span><br><span class="line">                </span><br><span class="line">                <span class="comment"># 指针向后移动</span></span><br><span class="line">                head = head.<span class="built_in">next</span></span><br><span class="line">            </span><br><span class="line">            <span class="comment"># 去下一层的最左的节点</span></span><br><span class="line">            leftmost = leftmost.left</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> root </span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="C++"><figure class="iseeu highlight c++"><figcaption><span>[sol2-C++]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">Node* <span class="title">connect</span><span class="params">(Node* root)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (root == <span class="literal">nullptr</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> root;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 从根节点开始</span></span><br><span class="line">        Node* leftmost = root;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">while</span> (leftmost-&gt;left != <span class="literal">nullptr</span>) &#123;</span><br><span class="line">            </span><br><span class="line">            <span class="comment">// 遍历这一层节点组织成的链表，为下一层的节点更新 next 指针</span></span><br><span class="line">            Node* head = leftmost;</span><br><span class="line">            </span><br><span class="line">            <span class="keyword">while</span> (head != <span class="literal">nullptr</span>) &#123;</span><br><span class="line">                </span><br><span class="line">                <span class="comment">// CONNECTION 1</span></span><br><span class="line">                head-&gt;left-&gt;next = head-&gt;right;</span><br><span class="line">                </span><br><span class="line">                <span class="comment">// CONNECTION 2</span></span><br><span class="line">                <span class="keyword">if</span> (head-&gt;next != <span class="literal">nullptr</span>) &#123;</span><br><span class="line">                    head-&gt;right-&gt;next = head-&gt;next-&gt;left;</span><br><span class="line">                &#125;</span><br><span class="line">                </span><br><span class="line">                <span class="comment">// 指针向后移动</span></span><br><span class="line">                head = head-&gt;next;</span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">            <span class="comment">// 去下一层的最左的节点</span></span><br><span class="line">            leftmost = leftmost-&gt;left;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> root;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><figcaption><span>[sol2-JavaScript]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> connect = <span class="keyword">function</span>(<span class="params">root</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (root === <span class="literal">null</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> root;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 从根节点开始</span></span><br><span class="line">    <span class="keyword">let</span> leftmost = root;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">while</span> (leftmost.<span class="property">left</span> !== <span class="literal">null</span>) &#123;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 遍历这一层节点组织成的链表，为下一层的节点更新 next 指针</span></span><br><span class="line">        <span class="keyword">let</span> head = leftmost;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">while</span> (head !== <span class="literal">null</span>) &#123;</span><br><span class="line">            </span><br><span class="line">            <span class="comment">// CONNECTION 1</span></span><br><span class="line">            head.<span class="property">left</span>.<span class="property">next</span> = head.<span class="property">right</span>;</span><br><span class="line">            </span><br><span class="line">            <span class="comment">// CONNECTION 2</span></span><br><span class="line">            <span class="keyword">if</span> (head.<span class="property">next</span> != <span class="literal">null</span>) &#123;</span><br><span class="line">                head.<span class="property">right</span>.<span class="property">next</span> = head.<span class="property">next</span>.<span class="property">left</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">            <span class="comment">// 指针向后移动</span></span><br><span class="line">            head = head.<span class="property">next</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 去下一层的最左的节点</span></span><br><span class="line">        leftmost = leftmost.<span class="property">left</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> root;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Golang"><figure class="iseeu highlight golang"><figcaption><span>[sol2-Golang]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">connect</span><span class="params">(root *Node)</span></span> *Node &#123;</span><br><span class="line">    <span class="keyword">if</span> root == <span class="literal">nil</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> root</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 每次循环从该层的最左侧节点开始</span></span><br><span class="line">    <span class="keyword">for</span> leftmost := root; leftmost.Left != <span class="literal">nil</span>; leftmost = leftmost.Left &#123;</span><br><span class="line">        <span class="comment">// 通过 Next 遍历这一层节点，为下一层的节点更新 Next 指针</span></span><br><span class="line">        <span class="keyword">for</span> node := leftmost; node != <span class="literal">nil</span>; node = node.Next &#123;</span><br><span class="line">            <span class="comment">// 左节点指向右节点</span></span><br><span class="line">            node.Left.Next = node.Right</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 右节点指向下一个左节点</span></span><br><span class="line">            <span class="keyword">if</span> node.Next != <span class="literal">nil</span> &#123;</span><br><span class="line">                node.Right.Next = node.Next.Left</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 返回根节点</span></span><br><span class="line">    <span class="keyword">return</span> root</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="C"><figure class="iseeu highlight c"><figcaption><span>[sol2-C]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> Node* <span class="title function_">connect</span><span class="params">(<span class="keyword">struct</span> Node* root)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (root == <span class="literal">NULL</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> root;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 从根节点开始</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">Node</span>* <span class="title">leftmost</span> =</span> root;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (leftmost-&gt;left != <span class="literal">NULL</span>) &#123;</span><br><span class="line">        <span class="comment">// 遍历这一层节点组织成的链表，为下一层的节点更新 next 指针</span></span><br><span class="line">        <span class="class"><span class="keyword">struct</span> <span class="title">Node</span>* <span class="title">head</span> =</span> leftmost;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> (head != <span class="literal">NULL</span>) &#123;</span><br><span class="line">            <span class="comment">// CONNECTION 1</span></span><br><span class="line">            head-&gt;left-&gt;next = head-&gt;right;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// CONNECTION 2</span></span><br><span class="line">            <span class="keyword">if</span> (head-&gt;next != <span class="literal">NULL</span>) &#123;</span><br><span class="line">                head-&gt;right-&gt;next = head-&gt;next-&gt;left;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 指针向后移动</span></span><br><span class="line">            head = head-&gt;next;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 去下一层的最左的节点</span></span><br><span class="line">        leftmost = leftmost-&gt;left;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> root;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>复杂度分析</strong></p>
+<ul>
+<li><p>时间复杂度：$O(N)$，每个节点只访问一次。 </p>
+</li>
+<li><p>空间复杂度：$O(1)$，不需要存储额外的节点。</p>
+</li>
+</ul>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <!--<div class="article-copyright-info-container">-->
+    <!--&lt;!&ndash;<ul>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><strong>Title:</strong> 0116-填充每个节点的下一个右侧节点指针</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><strong>Author:</strong> Raphael Liu</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><strong>Created at&ndash;&gt;-->
+                <!--&lt;!&ndash;:</strong> 2023-09-13 00:47:26</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;&ndash;&gt;-->
+            <!--&lt;!&ndash;<li>&ndash;&gt;-->
+                <!--&lt;!&ndash;<strong>Updated at&ndash;&gt;-->
+                    <!--&lt;!&ndash;:</strong> 2023-09-13 10:42:30&ndash;&gt;-->
+            <!--&lt;!&ndash;</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;<li>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;<strong>Link:</strong> https://fida.ltd/2023/09/13/0116-填充每个节点的下一个右侧节点指针/&ndash;&gt;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;</li>&ndash;&gt;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;<li>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;<strong>&ndash;&gt;&ndash;&gt;-->
+                <!--&lt;!&ndash;&lt;!&ndash;License:&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;</strong>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0</a>.&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;&ndash;&gt;&ndash;&gt;-->
+
+        <!--&lt;!&ndash;&lt;!&ndash;</li>&ndash;&gt;&ndash;&gt;-->
+    <!--&lt;!&ndash;</ul>&ndash;&gt;-->
+<!--</div>-->
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box">
+                
+                    <li class="tag-item">
+                        <a href="/tags/algorithm/">#algorithm</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item">
+                        <a href="/tags/MEDIUM/">#MEDIUM</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                        rel="prev"
+                        href="/2023/09/13/0115-%E4%B8%8D%E5%90%8C%E7%9A%84%E5%AD%90%E5%BA%8F%E5%88%97/"
+                        >
+                            <span class="left arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">0115-不同的子序列</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                        rel="next"
+                        href="/2023/09/13/0117-%E5%A1%AB%E5%85%85%E6%AF%8F%E4%B8%AA%E8%8A%82%E7%82%B9%E7%9A%84%E4%B8%8B%E4%B8%80%E4%B8%AA%E5%8F%B3%E4%BE%A7%E8%8A%82%E7%82%B9%E6%8C%87%E9%92%88%20II/"
+                        >
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">0117-填充每个节点的下一个右侧节点指针 II</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+
+        
+            <div class="comment-container">
+                <div class="comments-container pjax">
+    <div id="comment-anchor"></div>
+    <div class="comment-area-title">
+        <i class="fa-solid fa-comments"></i>&nbsp;Comments
+    </div>
+    
+
+        
+            
+ 
+    <div id="waline"></div>
+    <script type="module"  data-swup-reload-script>
+        import { init } from 'https://evan.beee.top/js/waline.mjs';
+
+        function loadWaline() {
+            init({
+                el: '#waline',
+                serverURL: 'https://example.example.com',
+                lang: 'zh-CN',
+                dark: 'body[class~="dark-mode"]',
+                requiredMeta: ['nick','mail'], // cannot customize by theme config, change it yourself
+            });
+        }
+
+        if ('true') {
+            const loadWalineTimeout = setTimeout(() => {
+                loadWaline();
+                clearTimeout(loadWalineTimeout);
+            }, 1000);
+        } else {
+            window.addEventListener('DOMContentLoaded', loadWaline);
+        }
+        
+    </script>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+
+    
+        <div class="toc-content-container">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">On this page</div>
+        <div class="page-title">0116-填充每个节点的下一个右侧节点指针</div>
+        
+
+    </div>
+</div>
+        </div>
+    
+</div>
+
+
+
+                
+
+            </div>
+
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2022</span>
+              -
+            
+            2023&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">Raphael Liu</a>
+        </div>
+        
+            <script data-swup-reload-script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">UV:</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">PV:</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <!--<div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">-->
+            <!--<span class="lg:block text-sm">powered_by</span>-->
+            <!--&lt;!&ndash;<span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.4.4</a></span>&ndash;&gt;-->
+        <!--</div>-->
+        
+        <!---->
+            <!--<div>-->
+                <!--runtime <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hours <span class="odometer" id="runtime_minutes"></span> minutes <span class="odometer" id="runtime_seconds"></span> seconds-->
+            <!--</div>-->
+        <!---->
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fa-regular fa-comments"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-expand-width flex justify-center items-center">
+            <i class="fa-regular fa-expand"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fa-solid fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa-solid fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa-solid fa-spinner fa-spin-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+    
+<script src="/js/libs/Swup.min.js"></script>
+
+<script src="/js/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/libs/SwupScrollPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+        ],
+        containers: ["#swup"],
+    });
+
+    swup.hooks.on("page:view", () => {
+        Global.refresh();
+    });
+
+    // if (document.readyState === "complete") {
+    //
+    // } else {
+    //     document.addEventListener("DOMContentLoaded", () => init());
+    // }
+</script>
+
+
+
+
+
+
+<script src="/js/utils.js" type="module"></script>
+
+<script src="/js/main.js" type="module"></script>
+
+<script src="/js/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/layouts/categoryList.js" type="module"></script>
+
+
+
+    
+<script src="/js/tools/localSearch.js"></script>
+
+
+
+
+    
+<script src="/js/tools/codeBlock.js"></script>
+
+
+
+
+    
+<script src="/js/layouts/lazyload.js"></script>
+
+
+
+
+    
+<script src="/js/tools/runtime.js"></script>
+
+    
+<script src="/js/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/libs/Typed.min.js"></script>
+
+  
+<script src="/js/plugins/typed.js"></script>
+
+
+
+
+
+
+
+<div class="post-scripts" data-swup-reload-script>
+    
+        
+<script src="/js/libs/anime.min.js"></script>
+
+        
+<script src="/js/tools/tocToggle.js" type="module"></script>
+
+<script src="/js/layouts/toc.js" type="module"></script>
+
+<script src="/js/plugins/tabs.js" type="module"></script>
+
+    
+</div>
+
+
+</body>
+</html>

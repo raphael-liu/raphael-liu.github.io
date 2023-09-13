@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="Raphael Liu">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/2023/09/13/1631-最小体力消耗路径/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="你准备参加一场远足活动。给你一个二维 rows x columns 的地图 heights ，其中 heights[row][col] 表示格子(row, col) 的高度。一开始你在最左上角的格子 (0, 0) ，且你希望去最右下角的格子 (rows-1, columns-1)（注意下标从 0 开始编号）。你每次可以往 上 ， 下 ， 左 ， 右 四个方向之一移动，你想要找到耗费体力 最小的一条">
+<meta property="og:type" content="article">
+<meta property="og:title" content="1631-最小体力消耗路径">
+<meta property="og:url" content="http://example.com/2023/09/13/1631-%E6%9C%80%E5%B0%8F%E4%BD%93%E5%8A%9B%E6%B6%88%E8%80%97%E8%B7%AF%E5%BE%84/index.html">
+<meta property="og:site_name" content="Raphael&#39;s Blog">
+<meta property="og:description" content="你准备参加一场远足活动。给你一个二维 rows x columns 的地图 heights ，其中 heights[row][col] 表示格子(row, col) 的高度。一开始你在最左上角的格子 (0, 0) ，且你希望去最右下角的格子 (rows-1, columns-1)（注意下标从 0 开始编号）。你每次可以往 上 ， 下 ， 左 ， 右 四个方向之一移动，你想要找到耗费体力 最小的一条">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-09-12T16:47:26.000Z">
+<meta property="article:modified_time" content="2023-09-13T09:01:06.471Z">
+<meta property="article:author" content="Raphael Liu">
+<meta property="article:tag" content="algorithm">
+<meta property="article:tag" content="MEDIUM">
+<meta name="twitter:card" content="summary">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/redefine-favicon.svg" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/redefine-favicon.svg">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/redefine-favicon.svg">
+    <!--- Page Info-->
+    
+    <title>
+        
+            1631-最小体力消耗路径 -
+        
+        Raphael&#39;s Blog
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/css/build/styles.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/fonts.css">
+
+    
+<link rel="stylesheet" href="/fonts/Satoshi/satoshi.css">
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+
+    <!--- Inject Part-->
+    
+    <script id="hexo-configurations">
+    let Global = window.Global || {};
+    Global.hexo_config = {"hostname":"example.com","root":"/","language":"zh_CN"};
+    Global.theme_config = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":true,"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"open_graph":true,"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-wqery6-light.webp","dark":"/images/wallhaven-wqery6-dark.webp"},"title":"Raphael's Blog","subtitle":{"text":["格物致知","坚持做正确的事情"],"hitokoto":{"enable":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":false,"links":{"github":"https://github.com/raphael-liu","email":"raphael@buaa.edu.cn# your email"},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.4.4","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"links":{"首页":{"path":"/","icon":"fa-regular fa-house"},"文章":{"path":"/archives","icon":"fa-regular fa-archive"},"关于":{"icon":"fa-regular fa-user","submenus":{"我":"/about/me","Github":"https://github.com/raphael-liu"}}},"search":{"enable":true,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"links":null},"article_date_format":"auto","categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}},"footerStart":"2022/8/17 11:45:14"};
+    Global.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    Global.data_config = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="swup-progress-icon">
+            <i class="fa-solid fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container" id="swup">
+
+    
+
+    <div class="main-content-container">
+
+
+        <div class="main-content-header">
+            <header class="navbar-container">
+    
+    <div class="navbar-content">
+        <div class="left">
+            
+            <a class="logo-title" href="http://example.com/">
+                
+                Raphael&#39;s Blog
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/"  >
+                                    
+                                        
+                                            <i class="fa-regular fa-house"></i>
+                                        
+                                        首页
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/archives"  >
+                                    
+                                        
+                                            <i class="fa-regular fa-archive"></i>
+                                        
+                                        文章
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="has-dropdown" 
+                                    href="#" onClick="return false;">
+                                    
+                                        
+                                            <i class="fa-regular fa-user"></i>
+                                        
+                                        关于&nbsp;<i class="fa-solid fa-chevron-down"></i>
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                                    <ul class="sub-menu">
+                                    
+                                        <li>
+                                        <a href="/about/me">我
+                                        </a>
+                                        </li>
+                                    
+                                        <li>
+                                        <a target="_blank" rel="noopener" href="https://github.com/raphael-liu">GITHUB
+                                        </a>
+                                        </li>
+                                    
+                                    </ul>
+                                
+                            </li>
+                    
+                    
+                        <li class="navbar-item search search-popup-trigger">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fa-solid fa-magnifying-glass"></i></div>
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile drawer -->
+    <div class="navbar-drawer w-full absolute top-0 left-0 bg-background-color">
+        <ul class="drawer-navbar-list flex flex-col justify-start items-center">
+            
+                
+                    <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group " 
+                        href="/"  >
+                             
+                                
+                                    <i class="fa-regular fa-house"></i>
+                                
+                                首页
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+                
+                    <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group " 
+                        href="/archives"  >
+                             
+                                
+                                    <i class="fa-regular fa-archive"></i>
+                                
+                                文章
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+                
+                    <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group has-dropdown" 
+                        href="#" onClick="return false;">
+                            
+                                
+                                    <i class="fa-regular fa-user"></i>
+                                
+                                关于&nbsp;<i class="group-hover:rotate-180 transition-transform fa-solid fa-chevron-down"></i>
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                              
+                        
+                            <li class="text-base flex justify-center items-center hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                <a class="py-0.5" href="/about/me">我</a>
+                            </li>
+                        
+                            <li class="text-base flex justify-center items-center hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                <a class="py-0.5" target="_blank" rel="noopener" href="https://github.com/raphael-liu">GITHUB</a>
+                            </li>
+                        
+                    
+            
+
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="post-page-container">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            
+                <h1 class="article-title-regular">1631-最小体力消耗路径</h1>
+            
+            </div>
+            
+                    
+        
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">Raphael Liu</span>
+                        
+                            <span class="author-label">Lv10</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2023-09-13 00:47:26</span>
+        <span class="mobile">2023-09-13 00:47:26</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2023-09-13 17:01:06</span>
+            <span class="mobile">2023-09-13 17:01:06</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/algorithm/">algorithm</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/MEDIUM/">MEDIUM</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        
+
+
+        <div class="article-content markdown-body">
+            <p>你准备参加一场远足活动。给你一个二维 <code>rows x columns</code> 的地图 <code>heights</code> ，其中 <code>heights[row][col]</code> 表示格子<br><code>(row, col)</code> 的高度。一开始你在最左上角的格子 <code>(0, 0)</code> ，且你希望去最右下角的格子 <code>(rows-1, columns-1)</code><br>（注意下标从 <strong>0</strong> 开始编号）。你每次可以往 <strong>上</strong> ， <strong>下</strong> ， <strong>左</strong> ， <strong>右</strong> 四个方向之一移动，你想要找到耗费<br><strong>体力</strong> 最小的一条路径。</p>
+<p>一条路径耗费的 <strong>体力值</strong> 是路径上相邻格子之间 <strong>高度差绝对值</strong> 的 <strong>最大值</strong> 决定的。</p>
+<p>请你返回从左上角走到右下角的最小 <strong>体力消耗值</strong> 。</p>
+<p><strong>示例 1：</strong></p>
+<p>![](<a class="link"   target="_blank" rel="noopener" href="https://assets.leetcode-cn.com/aliyun-lc-" >https://assets.leetcode-cn.com/aliyun-lc- <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a><br>upload&#x2F;uploads&#x2F;2020&#x2F;10&#x2F;25&#x2F;ex1.png)</p>
+<pre><code>**输入：** heights = [[1,2,2],[3,8,2],[5,3,5]]
+**输出：** 2
+**解释：** 路径 [1,3,5,3,5] 连续格子的差值绝对值最大为 2 。
+这条路径比路径 [1,2,2,2,5] 更优，因为另一条路径差值最大值为 3 。
+</code></pre>
+<p><strong>示例 2：</strong></p>
+<p>![](<a class="link"   target="_blank" rel="noopener" href="https://assets.leetcode-cn.com/aliyun-lc-" >https://assets.leetcode-cn.com/aliyun-lc- <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a><br>upload&#x2F;uploads&#x2F;2020&#x2F;10&#x2F;25&#x2F;ex2.png)</p>
+<pre><code>**输入：** heights = [[1,2,3],[3,8,4],[5,3,5]]
+**输出：** 1
+**解释：** 路径 [1,2,3,4,5] 的相邻格子差值绝对值最大为 1 ，比路径 [1,3,5,3,5] 更优。
+</code></pre>
+<p><strong>示例 3：</strong></p>
+<p>![](<a class="link"   target="_blank" rel="noopener" href="https://assets.leetcode-cn.com/aliyun-lc-" >https://assets.leetcode-cn.com/aliyun-lc- <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a><br>upload&#x2F;uploads&#x2F;2020&#x2F;10&#x2F;25&#x2F;ex3.png)</p>
+<pre><code>**输入：** heights = [[1,2,1,1,1],[1,2,1,2,1],[1,2,1,2,1],[1,2,1,2,1],[1,1,1,2,1]]
+**输出：** 0
+**解释：** 上图所示路径不需要消耗任何体力。
+</code></pre>
+<p><strong>提示：</strong></p>
+<ul>
+<li><code>rows == heights.length</code></li>
+<li><code>columns == heights[i].length</code></li>
+<li><code>1 &lt;= rows, columns &lt;= 100</code></li>
+<li><code>1 &lt;= heights[i][j] &lt;= 106</code></li>
+</ul>
+<h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>我们可以将本题抽象成如下的一个图论模型：</p>
+<ul>
+<li><p>我们将地图中的每一个格子看成图中的一个节点；</p>
+</li>
+<li><p>我么将两个相邻（左右相邻或者上下相邻）的两个格子对应的节点之间连接一条无向边，边的权值为这两个格子的高度差的绝对值；</p>
+</li>
+<li><p>我们需要找到一条从左上角到右下角的<strong>最短</strong>路径，其中一条路径的长度定义为其经过的所有边权的<strong>最大值</strong>。</p>
+</li>
+</ul>
+<p>由于地图是二维的，我们需要给每个格子对应的节点赋予一个唯一的节点编号。如果地图的行数为 m，列数为 n，那么位置为 (i, j) 的格子对应的编号为 i \times n + j，这样 ,mn 个格子的编号一一对应着 [0, mn) 范围内的所有整数。当然，如果读者使用的语言支持对二元组进行哈希计算、作为下标访问等，则不需要这一步操作。</p>
+<p>本篇题解中会介绍三种不同的解决方法。</p>
+<h4 id="方法一：二分查找"><a href="#方法一：二分查找" class="headerlink" title="方法一：二分查找"></a>方法一：二分查找</h4><p><strong>思路与算法</strong></p>
+<p>我们可以将这个问题转化成一个「判定性」问题，即：</p>
+<blockquote>
+<p>是否存在一条从左上角到右下角的路径，其经过的所有边权的最大值不超过 x？</p>
+</blockquote>
+<p>这个判定性问题解决起来并不复杂，我们只要从左上角开始进行深度优先搜索或者广度优先搜索，在搜索的过程中只允许经过边权不超过 x 的边，搜索结束后判断是否能到达右下角即可。</p>
+<p>随着 x 的增大，原先可以经过的边仍然会被保留，因此如果当 x&#x3D;x_0 时，我们可以从左上角到达右下角，那么当 x &gt; x_0 时同样也可以可行的。因此我们可以使用二分查找的方法，找出满足要求的最小的那个 x 值，记为 x_\textit{ans，那么：</p>
+<ul>
+<li><p>当 x &lt; x_\textit{ans，我们无法从左上角到达右下角；</p>
+</li>
+<li><p>当 x \geq x_\textit{ans，我们可以从左上角到达右下角。</p>
+</li>
+</ul>
+<p>由于格子的高度范围为 [1, 10^6]，因此我们可以 [0, 10^6-1] 的范围内对 x 进行二分查找。在每一步查找的过程中，我们使用进行深度优先搜索或者广度优先搜索判断是否可以从左上角到达右下角，并根据判定结果更新二分查找的左边界或右边界即可。</p>
+<p><strong>代码</strong></p>
+<p>下面的代码中使用的是广度优先搜索。</p>
+<div class="highlight-container" data-rel="C++"><figure class="iseeu highlight c++"><figcaption><span>[sol1-C++]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="type">static</span> <span class="keyword">constexpr</span> <span class="type">int</span> dirs[<span class="number">4</span>][<span class="number">2</span>] = &#123; &#123;<span class="number">-1</span>, <span class="number">0</span>&#125;, &#123;<span class="number">1</span>, <span class="number">0</span>&#125;, &#123;<span class="number">0</span>, <span class="number">-1</span>&#125;, &#123;<span class="number">0</span>, <span class="number">1</span>&#125; &#125;;</span><br><span class="line">    </span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">minimumEffortPath</span><span class="params">(vector&lt;vector&lt;<span class="type">int</span>&gt;&gt;&amp; heights)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> m = heights.<span class="built_in">size</span>();</span><br><span class="line">        <span class="type">int</span> n = heights[<span class="number">0</span>].<span class="built_in">size</span>();</span><br><span class="line">        <span class="type">int</span> left = <span class="number">0</span>, right = <span class="number">999999</span>, ans = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span> (left &lt;= right) &#123;</span><br><span class="line">            <span class="type">int</span> mid = (left + right) / <span class="number">2</span>;</span><br><span class="line">            queue&lt;pair&lt;<span class="type">int</span>, <span class="type">int</span>&gt;&gt; q;</span><br><span class="line">            q.<span class="built_in">emplace</span>(<span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">            <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">seen</span><span class="params">(m * n)</span></span>;</span><br><span class="line">            seen[<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">while</span> (!q.<span class="built_in">empty</span>()) &#123;</span><br><span class="line">                <span class="keyword">auto</span> [x, y] = q.<span class="built_in">front</span>();</span><br><span class="line">                q.<span class="built_in">pop</span>();</span><br><span class="line">                <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">4</span>; ++i) &#123;</span><br><span class="line">                    <span class="type">int</span> nx = x + dirs[i][<span class="number">0</span>];</span><br><span class="line">                    <span class="type">int</span> ny = y + dirs[i][<span class="number">1</span>];</span><br><span class="line">                    <span class="keyword">if</span> (nx &gt;= <span class="number">0</span> &amp;&amp; nx &lt; m &amp;&amp; ny &gt;= <span class="number">0</span> &amp;&amp; ny &lt; n &amp;&amp; !seen[nx * n + ny] &amp;&amp; <span class="built_in">abs</span>(heights[x][y] - heights[nx][ny]) &lt;= mid) &#123;</span><br><span class="line">                        q.<span class="built_in">emplace</span>(nx, ny);</span><br><span class="line">                        seen[nx * n + ny] = <span class="number">1</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (seen[m * n - <span class="number">1</span>]) &#123;</span><br><span class="line">                ans = mid;</span><br><span class="line">                right = mid - <span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> &#123;</span><br><span class="line">                left = mid + <span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><figcaption><span>[sol1-Java]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="type">int</span>[][] dirs = &#123; &#123;-<span class="number">1</span>, <span class="number">0</span>&#125;, &#123;<span class="number">1</span>, <span class="number">0</span>&#125;, &#123;<span class="number">0</span>, -<span class="number">1</span>&#125;, &#123;<span class="number">0</span>, <span class="number">1</span>&#125; &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">minimumEffortPath</span><span class="params">(<span class="type">int</span>[][] heights)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">m</span> <span class="operator">=</span> heights.length;</span><br><span class="line">        <span class="type">int</span> <span class="variable">n</span> <span class="operator">=</span> heights[<span class="number">0</span>].length;</span><br><span class="line">        <span class="type">int</span> <span class="variable">left</span> <span class="operator">=</span> <span class="number">0</span>, right = <span class="number">999999</span>, ans = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span> (left &lt;= right) &#123;</span><br><span class="line">            <span class="type">int</span> <span class="variable">mid</span> <span class="operator">=</span> (left + right) / <span class="number">2</span>;</span><br><span class="line">            Queue&lt;<span class="type">int</span>[]&gt; queue = <span class="keyword">new</span> <span class="title class_">LinkedList</span>&lt;<span class="type">int</span>[]&gt;();</span><br><span class="line">            queue.offer(<span class="keyword">new</span> <span class="title class_">int</span>[]&#123;<span class="number">0</span>, <span class="number">0</span>&#125;);</span><br><span class="line">            <span class="type">boolean</span>[] seen = <span class="keyword">new</span> <span class="title class_">boolean</span>[m * n];</span><br><span class="line">            seen[<span class="number">0</span>] = <span class="literal">true</span>;</span><br><span class="line">            <span class="keyword">while</span> (!queue.isEmpty()) &#123;</span><br><span class="line">                <span class="type">int</span>[] cell = queue.poll();</span><br><span class="line">                <span class="type">int</span> <span class="variable">x</span> <span class="operator">=</span> cell[<span class="number">0</span>], y = cell[<span class="number">1</span>];</span><br><span class="line">                <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; <span class="number">4</span>; ++i) &#123;</span><br><span class="line">                    <span class="type">int</span> <span class="variable">nx</span> <span class="operator">=</span> x + dirs[i][<span class="number">0</span>];</span><br><span class="line">                    <span class="type">int</span> <span class="variable">ny</span> <span class="operator">=</span> y + dirs[i][<span class="number">1</span>];</span><br><span class="line">                    <span class="keyword">if</span> (nx &gt;= <span class="number">0</span> &amp;&amp; nx &lt; m &amp;&amp; ny &gt;= <span class="number">0</span> &amp;&amp; ny &lt; n &amp;&amp; !seen[nx * n + ny] &amp;&amp; Math.abs(heights[x][y] - heights[nx][ny]) &lt;= mid) &#123;</span><br><span class="line">                        queue.offer(<span class="keyword">new</span> <span class="title class_">int</span>[]&#123;nx, ny&#125;);</span><br><span class="line">                        seen[nx * n + ny] = <span class="literal">true</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (seen[m * n - <span class="number">1</span>]) &#123;</span><br><span class="line">                ans = mid;</span><br><span class="line">                right = mid - <span class="number">1</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                left = mid + <span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><figcaption><span>[sol1-Python3]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">minimumEffortPath</span>(<span class="params">self, heights: <span class="type">List</span>[<span class="type">List</span>[<span class="built_in">int</span>]]</span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        m, n = <span class="built_in">len</span>(heights), <span class="built_in">len</span>(heights[<span class="number">0</span>])</span><br><span class="line">        left, right, ans = <span class="number">0</span>, <span class="number">10</span>**<span class="number">6</span> - <span class="number">1</span>, <span class="number">0</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> left &lt;= right:</span><br><span class="line">            mid = (left + right) // <span class="number">2</span></span><br><span class="line">            q = collections.deque([(<span class="number">0</span>, <span class="number">0</span>)])</span><br><span class="line">            seen = &#123;(<span class="number">0</span>, <span class="number">0</span>)&#125;</span><br><span class="line">            </span><br><span class="line">            <span class="keyword">while</span> q:</span><br><span class="line">                x, y = q.popleft()</span><br><span class="line">                <span class="keyword">for</span> nx, ny <span class="keyword">in</span> [(x - <span class="number">1</span>, y), (x + <span class="number">1</span>, y), (x, y - <span class="number">1</span>), (x, y + <span class="number">1</span>)]:</span><br><span class="line">                    <span class="keyword">if</span> <span class="number">0</span> &lt;= nx &lt; m <span class="keyword">and</span> <span class="number">0</span> &lt;= ny &lt; n <span class="keyword">and</span> (nx, ny) <span class="keyword">not</span> <span class="keyword">in</span> seen <span class="keyword">and</span> <span class="built_in">abs</span>(heights[x][y] - heights[nx][ny]) &lt;= mid:</span><br><span class="line">                        q.append((nx, ny))</span><br><span class="line">                        seen.add((nx, ny))</span><br><span class="line">            </span><br><span class="line">            <span class="keyword">if</span> (m - <span class="number">1</span>, n - <span class="number">1</span>) <span class="keyword">in</span> seen:</span><br><span class="line">                ans = mid</span><br><span class="line">                right = mid - <span class="number">1</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                left = mid + <span class="number">1</span></span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> ans</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><figcaption><span>[sol1-JavaScript]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> minimumEffortPath = <span class="keyword">function</span>(<span class="params">heights</span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> dirs = [[-<span class="number">1</span>, <span class="number">0</span>], [<span class="number">1</span>, <span class="number">0</span>], [<span class="number">0</span>, -<span class="number">1</span>], [<span class="number">0</span>, <span class="number">1</span>]];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> m = heights.<span class="property">length</span>, n = heights[<span class="number">0</span>].<span class="property">length</span>;</span><br><span class="line">    <span class="keyword">let</span> left = <span class="number">0</span>, right = <span class="number">999999</span>, ans = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span> (left &lt;= right) &#123;</span><br><span class="line">        <span class="keyword">const</span> mid = <span class="title class_">Math</span>.<span class="title function_">floor</span>((left + right) / <span class="number">2</span>);</span><br><span class="line">        <span class="keyword">const</span> queue = [[<span class="number">0</span>, <span class="number">0</span>]];</span><br><span class="line">        <span class="keyword">const</span> seen = <span class="keyword">new</span> <span class="title class_">Array</span>(m * n).<span class="title function_">fill</span>(<span class="number">0</span>);</span><br><span class="line">        seen[<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span> (queue.<span class="property">length</span>) &#123;</span><br><span class="line">            <span class="keyword">const</span> [x, y] = queue.<span class="title function_">shift</span>();</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="number">4</span>; i++) &#123;</span><br><span class="line">                <span class="keyword">const</span> nx = x + dirs[i][<span class="number">0</span>];</span><br><span class="line">                <span class="keyword">const</span> ny = y + dirs[i][<span class="number">1</span>];</span><br><span class="line">                <span class="keyword">if</span> (nx &gt;= <span class="number">0</span> &amp;&amp; nx &lt; m &amp;&amp; ny &gt;= <span class="number">0</span> &amp;&amp; ny &lt; n &amp;&amp; !seen[nx * n + ny] &amp;&amp; <span class="title class_">Math</span>.<span class="title function_">abs</span>(heights[x][y] - heights[nx][ny]) &lt;= mid) &#123;</span><br><span class="line">                    queue.<span class="title function_">push</span>([nx, ny]);</span><br><span class="line">                    seen[nx * n + ny] = <span class="number">1</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (seen[m * n - <span class="number">1</span>]) &#123;</span><br><span class="line">            ans = mid;</span><br><span class="line">            right = mid - <span class="number">1</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            left = mid + <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ans;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Go"><figure class="iseeu highlight go"><figcaption><span>[sol1-Golang]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> pair <span class="keyword">struct</span>&#123; x, y <span class="type">int</span> &#125;</span><br><span class="line"><span class="keyword">var</span> dirs = []pair&#123; &#123;<span class="number">-1</span>, <span class="number">0</span>&#125;, &#123;<span class="number">1</span>, <span class="number">0</span>&#125;, &#123;<span class="number">0</span>, <span class="number">-1</span>&#125;, &#123;<span class="number">0</span>, <span class="number">1</span>&#125; &#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">minimumEffortPath</span><span class="params">(heights [][]<span class="type">int</span>)</span></span> <span class="type">int</span> &#123;</span><br><span class="line">    n, m := <span class="built_in">len</span>(heights), <span class="built_in">len</span>(heights[<span class="number">0</span>])</span><br><span class="line">    <span class="keyword">return</span> sort.Search(<span class="number">1e6</span>, <span class="function"><span class="keyword">func</span><span class="params">(maxHeightDiff <span class="type">int</span>)</span></span> <span class="type">bool</span> &#123;</span><br><span class="line">        vis := <span class="built_in">make</span>([][]<span class="type">bool</span>, n)</span><br><span class="line">        <span class="keyword">for</span> i := <span class="keyword">range</span> vis &#123;</span><br><span class="line">            vis[i] = <span class="built_in">make</span>([]<span class="type">bool</span>, m)</span><br><span class="line">        &#125;</span><br><span class="line">        vis[<span class="number">0</span>][<span class="number">0</span>] = <span class="literal">true</span></span><br><span class="line">        queue := []pair&#123; &#123;&#125; &#125;</span><br><span class="line">        <span class="keyword">for</span> <span class="built_in">len</span>(queue) &gt; <span class="number">0</span> &#123;</span><br><span class="line">            p := queue[<span class="number">0</span>]</span><br><span class="line">            queue = queue[<span class="number">1</span>:]</span><br><span class="line">            <span class="keyword">if</span> p.x == n<span class="number">-1</span> &amp;&amp; p.y == m<span class="number">-1</span> &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">for</span> _, d := <span class="keyword">range</span> dirs &#123;</span><br><span class="line">                x, y := p.x+d.x, p.y+d.y</span><br><span class="line">                <span class="keyword">if</span> <span class="number">0</span> &lt;= x &amp;&amp; x &lt; n &amp;&amp; <span class="number">0</span> &lt;= y &amp;&amp; y &lt; m &amp;&amp; !vis[x][y] &amp;&amp; abs(heights[x][y]-heights[p.x][p.y]) &lt;= maxHeightDiff &#123;</span><br><span class="line">                    vis[x][y] = <span class="literal">true</span></span><br><span class="line">                    queue = <span class="built_in">append</span>(queue, pair&#123;x, y&#125;)</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">abs</span><span class="params">(x <span class="type">int</span>)</span></span> <span class="type">int</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> x &lt; <span class="number">0</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> -x</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> x</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="C"><figure class="iseeu highlight c"><figcaption><span>[sol1-C]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> dirs[<span class="number">4</span>][<span class="number">2</span>] = &#123; &#123;<span class="number">-1</span>, <span class="number">0</span>&#125;, &#123;<span class="number">1</span>, <span class="number">0</span>&#125;, &#123;<span class="number">0</span>, <span class="number">-1</span>&#125;, &#123;<span class="number">0</span>, <span class="number">1</span>&#125; &#125;;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">minimumEffortPath</span><span class="params">(<span class="type">int</span>** heights, <span class="type">int</span> heightsSize, <span class="type">int</span>* heightsColSize)</span> &#123;</span><br><span class="line">    <span class="type">int</span> m = heightsSize;</span><br><span class="line">    <span class="type">int</span> n = heightsColSize[<span class="number">0</span>];</span><br><span class="line">    <span class="type">int</span> left = <span class="number">0</span>, right = <span class="number">999999</span>, ans = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span> (left &lt;= right) &#123;</span><br><span class="line">        <span class="type">int</span> mid = (left + right) / <span class="number">2</span>;</span><br><span class="line">        <span class="type">int</span> q[n * m][<span class="number">2</span>];</span><br><span class="line">        <span class="type">int</span> qleft = <span class="number">0</span>, qright = <span class="number">0</span>;</span><br><span class="line">        q[qright][<span class="number">0</span>] = <span class="number">0</span>, q[qright++][<span class="number">1</span>] = <span class="number">0</span>;</span><br><span class="line">        <span class="type">int</span> seen[m * n];</span><br><span class="line">        <span class="built_in">memset</span>(seen, <span class="number">0</span>, <span class="keyword">sizeof</span>(seen));</span><br><span class="line">        seen[<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span> (qleft &lt; qright) &#123;</span><br><span class="line">            <span class="type">int</span> x = q[qleft][<span class="number">0</span>], y = q[qleft++][<span class="number">1</span>];</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">4</span>; ++i) &#123;</span><br><span class="line">                <span class="type">int</span> nx = x + dirs[i][<span class="number">0</span>];</span><br><span class="line">                <span class="type">int</span> ny = y + dirs[i][<span class="number">1</span>];</span><br><span class="line">                <span class="keyword">if</span> (nx &gt;= <span class="number">0</span> &amp;&amp; nx &lt; m &amp;&amp; ny &gt;= <span class="number">0</span> &amp;&amp; ny &lt; n &amp;&amp; !seen[nx * n + ny] &amp;&amp; <span class="built_in">abs</span>(heights[x][y] - heights[nx][ny]) &lt;= mid) &#123;</span><br><span class="line">                    q[qright][<span class="number">0</span>] = nx, q[qright++][<span class="number">1</span>] = ny;</span><br><span class="line">                    seen[nx * n + ny] = <span class="number">1</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (seen[m * n - <span class="number">1</span>]) &#123;</span><br><span class="line">            ans = mid;</span><br><span class="line">            right = mid - <span class="number">1</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            left = mid + <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>复杂度分析</strong></p>
+<ul>
+<li><p>时间复杂度：O(mn \log C)，其中 m 和 n 分别是地图的行数和列数，C 是格子的最大高度，在本题中 C 不超过 10^6。我们需要进行 O(\log C) 次二分查找，每一步查找的过程中需要使用广度优先搜索，在 O(mn) 的时间判断是否可以从左上角到达右下角，因此总时间复杂度为 O(mn \log C)。</p>
+</li>
+<li><p>空间复杂度：O(mn)，即为广度优先搜索中使用的队列需要的空间。</p>
+</li>
+</ul>
+<h4 id="方法二：并查集"><a href="#方法二：并查集" class="headerlink" title="方法二：并查集"></a>方法二：并查集</h4><p><strong>思路与算法</strong></p>
+<p>我们将这 mn 个节点放入并查集中，实时维护它们的连通性。</p>
+<p>由于我们需要找到从左上角到右下角的最短路径，因此我们可以将图中的所有边按照权值从小到大进行排序，并依次加入并查集中。当我们加入一条权值为 x 的边之后，如果左上角和右下角从非连通状态变为连通状态，那么 x 即为答案。</p>
+<p><strong>代码</strong></p>
+<div class="highlight-container" data-rel="C++"><figure class="iseeu highlight c++"><figcaption><span>[sol2-C++]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 并查集模板</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">UnionFind</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    vector&lt;<span class="type">int</span>&gt; parent;</span><br><span class="line">    vector&lt;<span class="type">int</span>&gt; size;</span><br><span class="line">    <span class="type">int</span> n;</span><br><span class="line">    <span class="comment">// 当前连通分量数目</span></span><br><span class="line">    <span class="type">int</span> setCount;</span><br><span class="line">    </span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">UnionFind</span>(<span class="type">int</span> _n): <span class="built_in">n</span>(_n), <span class="built_in">setCount</span>(_n), <span class="built_in">parent</span>(_n), <span class="built_in">size</span>(_n, <span class="number">1</span>) &#123;</span><br><span class="line">        <span class="built_in">iota</span>(parent.<span class="built_in">begin</span>(), parent.<span class="built_in">end</span>(), <span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">findset</span><span class="params">(<span class="type">int</span> x)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> parent[x] == x ? x : parent[x] = <span class="built_in">findset</span>(parent[x]);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="type">bool</span> <span class="title">unite</span><span class="params">(<span class="type">int</span> x, <span class="type">int</span> y)</span> </span>&#123;</span><br><span class="line">        x = <span class="built_in">findset</span>(x);</span><br><span class="line">        y = <span class="built_in">findset</span>(y);</span><br><span class="line">        <span class="keyword">if</span> (x == y) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (size[x] &lt; size[y]) &#123;</span><br><span class="line">            <span class="built_in">swap</span>(x, y);</span><br><span class="line">        &#125;</span><br><span class="line">        parent[y] = x;</span><br><span class="line">        size[x] += size[y];</span><br><span class="line">        --setCount;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="type">bool</span> <span class="title">connected</span><span class="params">(<span class="type">int</span> x, <span class="type">int</span> y)</span> </span>&#123;</span><br><span class="line">        x = <span class="built_in">findset</span>(x);</span><br><span class="line">        y = <span class="built_in">findset</span>(y);</span><br><span class="line">        <span class="keyword">return</span> x == y;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">minimumEffortPath</span><span class="params">(vector&lt;vector&lt;<span class="type">int</span>&gt;&gt;&amp; heights)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> m = heights.<span class="built_in">size</span>();</span><br><span class="line">        <span class="type">int</span> n = heights[<span class="number">0</span>].<span class="built_in">size</span>();</span><br><span class="line">        vector&lt;tuple&lt;<span class="type">int</span>, <span class="type">int</span>, <span class="type">int</span>&gt;&gt; edges;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; m; ++i) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt; n; ++j) &#123;</span><br><span class="line">                <span class="type">int</span> id = i * n + j;</span><br><span class="line">                <span class="keyword">if</span> (i &gt; <span class="number">0</span>) &#123;</span><br><span class="line">                    edges.<span class="built_in">emplace_back</span>(id - n, id, <span class="built_in">abs</span>(heights[i][j] - heights[i - <span class="number">1</span>][j]));</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">if</span> (j &gt; <span class="number">0</span>) &#123;</span><br><span class="line">                    edges.<span class="built_in">emplace_back</span>(id - <span class="number">1</span>, id, <span class="built_in">abs</span>(heights[i][j] - heights[i][j - <span class="number">1</span>]));</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">sort</span>(edges.<span class="built_in">begin</span>(), edges.<span class="built_in">end</span>(), [](<span class="type">const</span> <span class="keyword">auto</span>&amp; e1, <span class="type">const</span> <span class="keyword">auto</span>&amp; e2) &#123;</span><br><span class="line">            <span class="keyword">auto</span>&amp;&amp; [x1, y1, v1] = e1;</span><br><span class="line">            <span class="keyword">auto</span>&amp;&amp; [x2, y2, v2] = e2;</span><br><span class="line">            <span class="keyword">return</span> v1 &lt; v2;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        <span class="function">UnionFind <span class="title">uf</span><span class="params">(m * n)</span></span>;</span><br><span class="line">        <span class="type">int</span> ans = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">const</span> <span class="keyword">auto</span> [x, y, v]: edges) &#123;</span><br><span class="line">            uf.<span class="built_in">unite</span>(x, y);</span><br><span class="line">            <span class="keyword">if</span> (uf.<span class="built_in">connected</span>(<span class="number">0</span>, m * n - <span class="number">1</span>)) &#123;</span><br><span class="line">                ans = v;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><figcaption><span>[sol2-Java]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">minimumEffortPath</span><span class="params">(<span class="type">int</span>[][] heights)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">m</span> <span class="operator">=</span> heights.length;</span><br><span class="line">        <span class="type">int</span> <span class="variable">n</span> <span class="operator">=</span> heights[<span class="number">0</span>].length;</span><br><span class="line">        List&lt;<span class="type">int</span>[]&gt; edges = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;<span class="type">int</span>[]&gt;();</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; m; ++i) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">j</span> <span class="operator">=</span> <span class="number">0</span>; j &lt; n; ++j) &#123;</span><br><span class="line">                <span class="type">int</span> <span class="variable">id</span> <span class="operator">=</span> i * n + j;</span><br><span class="line">                <span class="keyword">if</span> (i &gt; <span class="number">0</span>) &#123;</span><br><span class="line">                    edges.add(<span class="keyword">new</span> <span class="title class_">int</span>[]&#123;id - n, id, Math.abs(heights[i][j] - heights[i - <span class="number">1</span>][j])&#125;);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">if</span> (j &gt; <span class="number">0</span>) &#123;</span><br><span class="line">                    edges.add(<span class="keyword">new</span> <span class="title class_">int</span>[]&#123;id - <span class="number">1</span>, id, Math.abs(heights[i][j] - heights[i][j - <span class="number">1</span>])&#125;);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        Collections.sort(edges, <span class="keyword">new</span> <span class="title class_">Comparator</span>&lt;<span class="type">int</span>[]&gt;() &#123;</span><br><span class="line">            <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">compare</span><span class="params">(<span class="type">int</span>[] edge1, <span class="type">int</span>[] edge2)</span> &#123;</span><br><span class="line">                <span class="keyword">return</span> edge1[<span class="number">2</span>] - edge2[<span class="number">2</span>];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        <span class="type">UnionFind</span> <span class="variable">uf</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">UnionFind</span>(m * n);</span><br><span class="line">        <span class="type">int</span> <span class="variable">ans</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span>[] edge : edges) &#123;</span><br><span class="line">            <span class="type">int</span> <span class="variable">x</span> <span class="operator">=</span> edge[<span class="number">0</span>], y = edge[<span class="number">1</span>], v = edge[<span class="number">2</span>];</span><br><span class="line">            uf.unite(x, y);</span><br><span class="line">            <span class="keyword">if</span> (uf.connected(<span class="number">0</span>, m * n - <span class="number">1</span>)) &#123;</span><br><span class="line">                ans = v;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 并查集模板</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">UnionFind</span> &#123;</span><br><span class="line">    <span class="type">int</span>[] parent;</span><br><span class="line">    <span class="type">int</span>[] size;</span><br><span class="line">    <span class="type">int</span> n;</span><br><span class="line">    <span class="comment">// 当前连通分量数目</span></span><br><span class="line">    <span class="type">int</span> setCount;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">UnionFind</span><span class="params">(<span class="type">int</span> n)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.n = n;</span><br><span class="line">        <span class="built_in">this</span>.setCount = n;</span><br><span class="line">        <span class="built_in">this</span>.parent = <span class="keyword">new</span> <span class="title class_">int</span>[n];</span><br><span class="line">        <span class="built_in">this</span>.size = <span class="keyword">new</span> <span class="title class_">int</span>[n];</span><br><span class="line">        Arrays.fill(size, <span class="number">1</span>);</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; n; ++i) &#123;</span><br><span class="line">            parent[i] = i;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">findset</span><span class="params">(<span class="type">int</span> x)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> parent[x] == x ? x : (parent[x] = findset(parent[x]));</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">unite</span><span class="params">(<span class="type">int</span> x, <span class="type">int</span> y)</span> &#123;</span><br><span class="line">        x = findset(x);</span><br><span class="line">        y = findset(y);</span><br><span class="line">        <span class="keyword">if</span> (x == y) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (size[x] &lt; size[y]) &#123;</span><br><span class="line">            <span class="type">int</span> <span class="variable">temp</span> <span class="operator">=</span> x;</span><br><span class="line">            x = y;</span><br><span class="line">            y = temp;</span><br><span class="line">        &#125;</span><br><span class="line">        parent[y] = x;</span><br><span class="line">        size[x] += size[y];</span><br><span class="line">        --setCount;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">connected</span><span class="params">(<span class="type">int</span> x, <span class="type">int</span> y)</span> &#123;</span><br><span class="line">        x = findset(x);</span><br><span class="line">        y = findset(y);</span><br><span class="line">        <span class="keyword">return</span> x == y;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><figcaption><span>[sol2-Python3]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 并查集模板</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">UnionFind</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, n: <span class="built_in">int</span></span>):</span><br><span class="line">        self.parent = <span class="built_in">list</span>(<span class="built_in">range</span>(n))</span><br><span class="line">        self.size = [<span class="number">1</span>] * n</span><br><span class="line">        self.n = n</span><br><span class="line">        <span class="comment"># 当前连通分量数目</span></span><br><span class="line">        self.setCount = n</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">findset</span>(<span class="params">self, x: <span class="built_in">int</span></span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        <span class="keyword">if</span> self.parent[x] == x:</span><br><span class="line">            <span class="keyword">return</span> x</span><br><span class="line">        self.parent[x] = self.findset(self.parent[x])</span><br><span class="line">        <span class="keyword">return</span> self.parent[x]</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">unite</span>(<span class="params">self, x: <span class="built_in">int</span>, y: <span class="built_in">int</span></span>) -&gt; <span class="built_in">bool</span>:</span><br><span class="line">        x, y = self.findset(x), self.findset(y)</span><br><span class="line">        <span class="keyword">if</span> x == y:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">        <span class="keyword">if</span> self.size[x] &lt; self.size[y]:</span><br><span class="line">            x, y = y, x</span><br><span class="line">        self.parent[y] = x</span><br><span class="line">        self.size[x] += self.size[y]</span><br><span class="line">        self.setCount -= <span class="number">1</span></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">connected</span>(<span class="params">self, x: <span class="built_in">int</span>, y: <span class="built_in">int</span></span>) -&gt; <span class="built_in">bool</span>:</span><br><span class="line">        x, y = self.findset(x), self.findset(y)</span><br><span class="line">        <span class="keyword">return</span> x == y</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">minimumEffortPath</span>(<span class="params">self, heights: <span class="type">List</span>[<span class="type">List</span>[<span class="built_in">int</span>]]</span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        m, n = <span class="built_in">len</span>(heights), <span class="built_in">len</span>(heights[<span class="number">0</span>])</span><br><span class="line">        edges = <span class="built_in">list</span>()</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(m):</span><br><span class="line">            <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(n):</span><br><span class="line">                iden = i * n + j</span><br><span class="line">                <span class="keyword">if</span> i &gt; <span class="number">0</span>:</span><br><span class="line">                    edges.append((iden - n, iden, <span class="built_in">abs</span>(heights[i][j] - heights[i - <span class="number">1</span>][j])))</span><br><span class="line">                <span class="keyword">if</span> j &gt; <span class="number">0</span>:</span><br><span class="line">                    edges.append((iden - <span class="number">1</span>, iden, <span class="built_in">abs</span>(heights[i][j] - heights[i][j - <span class="number">1</span>])))</span><br><span class="line">        </span><br><span class="line">        edges.sort(key=<span class="keyword">lambda</span> e: e[<span class="number">2</span>])</span><br><span class="line"></span><br><span class="line">        uf = UnionFind(m * n)</span><br><span class="line">        ans = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> x, y, v <span class="keyword">in</span> edges:</span><br><span class="line">            uf.unite(x, y)</span><br><span class="line">            <span class="keyword">if</span> uf.connected(<span class="number">0</span>, m * n - <span class="number">1</span>):</span><br><span class="line">                ans = v</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> ans</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><figcaption><span>[sol2-JavaScript]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> minimumEffortPath = <span class="keyword">function</span>(<span class="params">heights</span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> m = heights.<span class="property">length</span>;</span><br><span class="line">    <span class="keyword">const</span> n = heights[<span class="number">0</span>].<span class="property">length</span>;</span><br><span class="line">    <span class="keyword">const</span> edges = [];</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; m; ++i) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">let</span> j = <span class="number">0</span>; j &lt; n; ++j) &#123;</span><br><span class="line">            <span class="keyword">const</span> id = i * n + j;</span><br><span class="line">            <span class="keyword">if</span> (i &gt; <span class="number">0</span>) &#123;</span><br><span class="line">                edges.<span class="title function_">push</span>([id - n, id, <span class="title class_">Math</span>.<span class="title function_">abs</span>(heights[i][j] - heights[i - <span class="number">1</span>][j])]);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (j &gt; <span class="number">0</span>) &#123;</span><br><span class="line">                edges.<span class="title function_">push</span>([id - <span class="number">1</span>, id, <span class="title class_">Math</span>.<span class="title function_">abs</span>(heights[i][j] - heights[i][j - <span class="number">1</span>])]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    edges.<span class="title function_">sort</span>(<span class="function">(<span class="params">a, b</span>) =&gt;</span> a[<span class="number">2</span>] - b[<span class="number">2</span>]);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> uf = <span class="keyword">new</span> <span class="title class_">UnionFind</span>(m * n);</span><br><span class="line">    <span class="keyword">let</span> ans = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">const</span> edge <span class="keyword">of</span> edges) &#123;</span><br><span class="line">        <span class="keyword">const</span> x = edge[<span class="number">0</span>], y = edge[<span class="number">1</span>], v = edge[<span class="number">2</span>];</span><br><span class="line">        uf.<span class="title function_">unite</span>(x, y);</span><br><span class="line">        <span class="keyword">if</span> (uf.<span class="title function_">connected</span>(<span class="number">0</span>, m * n - <span class="number">1</span>)) &#123;</span><br><span class="line">            ans = v;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ans;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 并查集模板</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">UnionFind</span> &#123;</span><br><span class="line">    <span class="title function_">constructor</span> (n) &#123;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">parent</span> = <span class="keyword">new</span> <span class="title class_">Array</span>(n).<span class="title function_">fill</span>(<span class="number">0</span>).<span class="title function_">map</span>(<span class="function">(<span class="params">element, index</span>) =&gt;</span> index);</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">size</span> = <span class="keyword">new</span> <span class="title class_">Array</span>(n).<span class="title function_">fill</span>(<span class="number">1</span>);</span><br><span class="line">        <span class="comment">// 当前连通分量数目</span></span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">setCount</span> = n;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    findset (x) &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="variable language_">this</span>.<span class="property">parent</span>[x] === x) &#123;</span><br><span class="line">            <span class="keyword">return</span> x;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">parent</span>[x] = <span class="variable language_">this</span>.<span class="title function_">findset</span>(<span class="variable language_">this</span>.<span class="property">parent</span>[x]);</span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">parent</span>[x];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    unite (a, b) &#123;</span><br><span class="line">        <span class="keyword">let</span> x = <span class="variable language_">this</span>.<span class="title function_">findset</span>(a), y = <span class="variable language_">this</span>.<span class="title function_">findset</span>(b);</span><br><span class="line">        <span class="keyword">if</span> (x === y) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (<span class="variable language_">this</span>.<span class="property">size</span>[x] &lt; <span class="variable language_">this</span>.<span class="property">size</span>[y]) &#123;</span><br><span class="line">            [x, y] = [y, x];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">parent</span>[y] = x;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">size</span>[x] += <span class="variable language_">this</span>.<span class="property">size</span>[y];</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">setCount</span> -= <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    connected (a, b) &#123;</span><br><span class="line">        <span class="keyword">const</span> x = <span class="variable language_">this</span>.<span class="title function_">findset</span>(a), y = <span class="variable language_">this</span>.<span class="title function_">findset</span>(b);</span><br><span class="line">        <span class="keyword">return</span> x === y;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Go"><figure class="iseeu highlight go"><figcaption><span>[sol2-Golang]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> unionFind <span class="keyword">struct</span> &#123;</span><br><span class="line">    parent, size []<span class="type">int</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">newUnionFind</span><span class="params">(n <span class="type">int</span>)</span></span> *unionFind &#123;</span><br><span class="line">    parent := <span class="built_in">make</span>([]<span class="type">int</span>, n)</span><br><span class="line">    size := <span class="built_in">make</span>([]<span class="type">int</span>, n)</span><br><span class="line">    <span class="keyword">for</span> i := <span class="keyword">range</span> parent &#123;</span><br><span class="line">        parent[i] = i</span><br><span class="line">        size[i] = <span class="number">1</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> &amp;unionFind&#123;parent, size&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(uf *unionFind)</span></span> find(x <span class="type">int</span>) <span class="type">int</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> uf.parent[x] != x &#123;</span><br><span class="line">        uf.parent[x] = uf.find(uf.parent[x])</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> uf.parent[x]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(uf *unionFind)</span></span> union(x, y <span class="type">int</span>) &#123;</span><br><span class="line">    fx, fy := uf.find(x), uf.find(y)</span><br><span class="line">    <span class="keyword">if</span> fx == fy &#123;</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> uf.size[fx] &lt; uf.size[fy] &#123;</span><br><span class="line">        fx, fy = fy, fx</span><br><span class="line">    &#125;</span><br><span class="line">    uf.size[fx] += uf.size[fy]</span><br><span class="line">    uf.parent[fy] = fx</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(uf *unionFind)</span></span> inSameSet(x, y <span class="type">int</span>) <span class="type">bool</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> uf.find(x) == uf.find(y)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> edge <span class="keyword">struct</span> &#123;</span><br><span class="line">    v, w, diff <span class="type">int</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">minimumEffortPath</span><span class="params">(heights [][]<span class="type">int</span>)</span></span> <span class="type">int</span> &#123;</span><br><span class="line">    n, m := <span class="built_in">len</span>(heights), <span class="built_in">len</span>(heights[<span class="number">0</span>])</span><br><span class="line">    edges := []edge&#123;&#125;</span><br><span class="line">    <span class="keyword">for</span> i, row := <span class="keyword">range</span> heights &#123;</span><br><span class="line">        <span class="keyword">for</span> j, h := <span class="keyword">range</span> row &#123;</span><br><span class="line">            id := i*m + j</span><br><span class="line">            <span class="keyword">if</span> i &gt; <span class="number">0</span> &#123;</span><br><span class="line">                edges = <span class="built_in">append</span>(edges, edge&#123;id - m, id, abs(h - heights[i<span class="number">-1</span>][j])&#125;)</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> j &gt; <span class="number">0</span> &#123;</span><br><span class="line">                edges = <span class="built_in">append</span>(edges, edge&#123;id - <span class="number">1</span>, id, abs(h - heights[i][j<span class="number">-1</span>])&#125;)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    sort.Slice(edges, <span class="function"><span class="keyword">func</span><span class="params">(i, j <span class="type">int</span>)</span></span> <span class="type">bool</span> &#123; <span class="keyword">return</span> edges[i].diff &lt; edges[j].diff &#125;)</span><br><span class="line"></span><br><span class="line">    uf := newUnionFind(n * m)</span><br><span class="line">    <span class="keyword">for</span> _, e := <span class="keyword">range</span> edges &#123;</span><br><span class="line">        uf.union(e.v, e.w)</span><br><span class="line">        <span class="keyword">if</span> uf.inSameSet(<span class="number">0</span>, n*m<span class="number">-1</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> e.diff</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">abs</span><span class="params">(x <span class="type">int</span>)</span></span> <span class="type">int</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> x &lt; <span class="number">0</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> -x</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> x</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="C"><figure class="iseeu highlight c"><figcaption><span>[sol2-C]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">swap</span><span class="params">(<span class="type">int</span>* a, <span class="type">int</span>* b)</span> &#123;</span><br><span class="line">    <span class="type">int</span> tmp = *a;</span><br><span class="line">    *a = *b, *b = tmp;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">DisjointSetUnion</span> &#123;</span></span><br><span class="line">    <span class="type">int</span> *f, *size;</span><br><span class="line">    <span class="type">int</span> n, setCount;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">initDSU</span><span class="params">(<span class="keyword">struct</span> DisjointSetUnion* obj, <span class="type">int</span> n)</span> &#123;</span><br><span class="line">    obj-&gt;f = <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="type">int</span>) * n);</span><br><span class="line">    obj-&gt;size = <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="type">int</span>) * n);</span><br><span class="line">    obj-&gt;n = n;</span><br><span class="line">    obj-&gt;setCount = n;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">        obj-&gt;f[i] = i;</span><br><span class="line">        obj-&gt;size[i] = <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">find</span><span class="params">(<span class="keyword">struct</span> DisjointSetUnion* obj, <span class="type">int</span> x)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> obj-&gt;f[x] == x ? x : (obj-&gt;f[x] = find(obj, obj-&gt;f[x]));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">unionSet</span><span class="params">(<span class="keyword">struct</span> DisjointSetUnion* obj, <span class="type">int</span> x, <span class="type">int</span> y)</span> &#123;</span><br><span class="line">    <span class="type">int</span> fx = find(obj, x), fy = find(obj, y);</span><br><span class="line">    <span class="keyword">if</span> (fx == fy) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (obj-&gt;size[fx] &lt; obj-&gt;size[fy]) &#123;</span><br><span class="line">        swap(&amp;fx, &amp;fy);</span><br><span class="line">    &#125;</span><br><span class="line">    obj-&gt;size[fx] += obj-&gt;size[fy];</span><br><span class="line">    obj-&gt;f[fy] = fx;</span><br><span class="line">    obj-&gt;setCount--;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">connected</span><span class="params">(<span class="keyword">struct</span> DisjointSetUnion* obj, <span class="type">int</span> x, <span class="type">int</span> y)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> find(obj, x) == find(obj, y);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Tuple</span> &#123;</span></span><br><span class="line">    <span class="type">int</span> x, y, z</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">cmp</span><span class="params">(<span class="type">const</span> <span class="keyword">struct</span> Tuple* a, <span class="type">const</span> <span class="keyword">struct</span> Tuple* b)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> a-&gt;z - b-&gt;z;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">minimumEffortPath</span><span class="params">(<span class="type">int</span>** heights, <span class="type">int</span> heightsSize, <span class="type">int</span>* heightsColSize)</span> &#123;</span><br><span class="line">    <span class="type">int</span> m = heightsSize;</span><br><span class="line">    <span class="type">int</span> n = heightsColSize[<span class="number">0</span>];</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">Tuple</span> <span class="title">edges</span>[<span class="title">n</span> * <span class="title">m</span> * 2];</span></span><br><span class="line">    <span class="type">int</span> edgesSize = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; m; ++i) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt; n; ++j) &#123;</span><br><span class="line">            <span class="type">int</span> id = i * n + j;</span><br><span class="line">            <span class="keyword">if</span> (i &gt; <span class="number">0</span>) &#123;</span><br><span class="line">                edges[edgesSize].x = id - n;</span><br><span class="line">                edges[edgesSize].y = id;</span><br><span class="line">                edges[edgesSize++].z = <span class="built_in">fabs</span>(heights[i][j] - heights[i - <span class="number">1</span>][j]);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (j &gt; <span class="number">0</span>) &#123;</span><br><span class="line">                edges[edgesSize].x = id - <span class="number">1</span>;</span><br><span class="line">                edges[edgesSize].y = id;</span><br><span class="line">                edges[edgesSize++].z = <span class="built_in">fabs</span>(heights[i][j] - heights[i][j - <span class="number">1</span>]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    qsort(edges, edgesSize, <span class="keyword">sizeof</span>(<span class="keyword">struct</span> Tuple), cmp);</span><br><span class="line"></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">DisjointSetUnion</span>* <span class="title">uf</span> =</span> <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">struct</span> DisjointSetUnion));</span><br><span class="line">    initDSU(uf, m * n);</span><br><span class="line">    <span class="type">int</span> ans = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; edgesSize; i++) &#123;</span><br><span class="line">        unionSet(uf, edges[i].x, edges[i].y);</span><br><span class="line">        <span class="keyword">if</span> (connected(uf, <span class="number">0</span>, m * n - <span class="number">1</span>)) &#123;</span><br><span class="line">            ans = edges[i].z;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>复杂度分析</strong></p>
+<ul>
+<li><p>时间复杂度：O(mn \log(mn))，其中 m 和 n 分别是地图的行数和列数。图中的边数为 O(mn)，因此排序的时间复杂度为 O(mn \log (mn))。并查集的时间复杂度为 O(mn \cdot \alpha(mn))，其中 \alpha 为阿克曼函数的反函数。由于后者在渐进意义下小于前者，因此总时间复杂度为 O(mn \log(mn))。</p>
+</li>
+<li><p>空间复杂度：O(mn)，即为存储所有边以及并查集需要的空间。</p>
+</li>
+</ul>
+<h4 id="方法三：最短路"><a href="#方法三：最短路" class="headerlink" title="方法三：最短路"></a>方法三：最短路</h4><p><strong>思路与算法</strong></p>
+<p>「最短路径」使得我们很容易想到求解最短路径的 Dijkstra 算法，然而本题中对于「最短路径」的定义不是其经过的所有边权的和，而是其经过的所有边权的<strong>最大值</strong>，那么我们还可以用 Dijkstra 算法进行求解吗？</p>
+<p>答案是可以的。Dijkstra 算法本质上是一种启发式搜索算法，它是 A* 算法在启发函数 h \equiv 0 时的特殊情况。读者可以参考 <a class="link"   target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/A*_search_algorithm" >A* search algorithm <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>，<a class="link"   target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Consistent_heuristic" >Consistent heuristic <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>，<a class="link"   target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Admissible_heuristic" >Admissible heuristic <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> 深入了解 Dijkstra 算法的本质。</p>
+<p>下面给出 Dijkstra 算法的可行性证明，需要读者对 A* 算法以及其可行性条件有一定的掌握。</p>
+<p><strong>证明</strong></p>
+<p>定义加法运算 a \oplus b &#x3D; \max (a,b)，显然 \oplus 满足交换律和结合律。那么如果一条路径上的边权分别为 e_0, e_1, \cdots, e_k，那么 e_0 \oplus e_1 \oplus \cdots \oplus e_k 即为这条路径的长度。</p>
+<p>在 Dijkstra 算法中 h \equiv 0，对于图中任意的无向边 x \leftrightarrow y，由于 e_{x, y} \geq 0，那么 h(x)&#x3D;0\leq e_{x,y} \oplus h(y) 恒成立，其中 e_{x, y 表示边权。因此启发函数 h 和加法运算 \oplus 满足三角不等式，是 consistent heuristic 的，可以使用 Dijkstra 算法求出最短路径。</p>
+<p><strong>代码</strong></p>
+<div class="highlight-container" data-rel="C++"><figure class="iseeu highlight c++"><figcaption><span>[sol3-C++]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="type">static</span> <span class="keyword">constexpr</span> <span class="type">int</span> dirs[<span class="number">4</span>][<span class="number">2</span>] = &#123; &#123;<span class="number">-1</span>, <span class="number">0</span>&#125;, &#123;<span class="number">1</span>, <span class="number">0</span>&#125;, &#123;<span class="number">0</span>, <span class="number">-1</span>&#125;, &#123;<span class="number">0</span>, <span class="number">1</span>&#125; &#125;;</span><br><span class="line">    </span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">minimumEffortPath</span><span class="params">(vector&lt;vector&lt;<span class="type">int</span>&gt;&gt;&amp; heights)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> m = heights.<span class="built_in">size</span>();</span><br><span class="line">        <span class="type">int</span> n = heights[<span class="number">0</span>].<span class="built_in">size</span>();</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">auto</span> tupleCmp = [](<span class="type">const</span> <span class="keyword">auto</span>&amp; e1, <span class="type">const</span> <span class="keyword">auto</span>&amp; e2) &#123;</span><br><span class="line">            <span class="keyword">auto</span>&amp;&amp; [x1, y1, d1] = e1;</span><br><span class="line">            <span class="keyword">auto</span>&amp;&amp; [x2, y2, d2] = e2;</span><br><span class="line">            <span class="keyword">return</span> d1 &gt; d2;</span><br><span class="line">        &#125;;</span><br><span class="line">        priority_queue&lt;tuple&lt;<span class="type">int</span>, <span class="type">int</span>, <span class="type">int</span>&gt;, vector&lt;tuple&lt;<span class="type">int</span>, <span class="type">int</span>, <span class="type">int</span>&gt;&gt;, <span class="keyword">decltype</span>(tupleCmp)&gt; <span class="built_in">q</span>(tupleCmp);</span><br><span class="line">        q.<span class="built_in">emplace</span>(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">        <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">dist</span><span class="params">(m * n, INT_MAX)</span></span>;</span><br><span class="line">        dist[<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">        <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">seen</span><span class="params">(m * n)</span></span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> (!q.<span class="built_in">empty</span>()) &#123;</span><br><span class="line">            <span class="keyword">auto</span> [x, y, d] = q.<span class="built_in">top</span>();</span><br><span class="line">            q.<span class="built_in">pop</span>();</span><br><span class="line">            <span class="type">int</span> id = x * n + y;</span><br><span class="line">            <span class="keyword">if</span> (seen[id]) &#123;</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (x == m - <span class="number">1</span> &amp;&amp; y == n - <span class="number">1</span>) &#123;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            seen[id] = <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">4</span>; ++i) &#123;</span><br><span class="line">                <span class="type">int</span> nx = x + dirs[i][<span class="number">0</span>];</span><br><span class="line">                <span class="type">int</span> ny = y + dirs[i][<span class="number">1</span>];</span><br><span class="line">                <span class="keyword">if</span> (nx &gt;= <span class="number">0</span> &amp;&amp; nx &lt; m &amp;&amp; ny &gt;= <span class="number">0</span> &amp;&amp; ny &lt; n &amp;&amp; <span class="built_in">max</span>(d, <span class="built_in">abs</span>(heights[x][y] - heights[nx][ny])) &lt; dist[nx * n + ny]) &#123;</span><br><span class="line">                    dist[nx * n + ny] = <span class="built_in">max</span>(d, <span class="built_in">abs</span>(heights[x][y] - heights[nx][ny]));</span><br><span class="line">                    q.<span class="built_in">emplace</span>(nx, ny, dist[nx * n + ny]);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> dist[m * n - <span class="number">1</span>];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><figcaption><span>[sol3-Java]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="type">int</span>[][] dirs = &#123; &#123;-<span class="number">1</span>, <span class="number">0</span>&#125;, &#123;<span class="number">1</span>, <span class="number">0</span>&#125;, &#123;<span class="number">0</span>, -<span class="number">1</span>&#125;, &#123;<span class="number">0</span>, <span class="number">1</span>&#125; &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">minimumEffortPath</span><span class="params">(<span class="type">int</span>[][] heights)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">m</span> <span class="operator">=</span> heights.length;</span><br><span class="line">        <span class="type">int</span> <span class="variable">n</span> <span class="operator">=</span> heights[<span class="number">0</span>].length;</span><br><span class="line">        PriorityQueue&lt;<span class="type">int</span>[]&gt; pq = <span class="keyword">new</span> <span class="title class_">PriorityQueue</span>&lt;<span class="type">int</span>[]&gt;(<span class="keyword">new</span> <span class="title class_">Comparator</span>&lt;<span class="type">int</span>[]&gt;() &#123;</span><br><span class="line">            <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">compare</span><span class="params">(<span class="type">int</span>[] edge1, <span class="type">int</span>[] edge2)</span> &#123;</span><br><span class="line">                <span class="keyword">return</span> edge1[<span class="number">2</span>] - edge2[<span class="number">2</span>];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        pq.offer(<span class="keyword">new</span> <span class="title class_">int</span>[]&#123;<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>&#125;);</span><br><span class="line"></span><br><span class="line">        <span class="type">int</span>[] dist = <span class="keyword">new</span> <span class="title class_">int</span>[m * n];</span><br><span class="line">        Arrays.fill(dist, Integer.MAX_VALUE);</span><br><span class="line">        dist[<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">        <span class="type">boolean</span>[] seen = <span class="keyword">new</span> <span class="title class_">boolean</span>[m * n];</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> (!pq.isEmpty()) &#123;</span><br><span class="line">            <span class="type">int</span>[] edge = pq.poll();</span><br><span class="line">            <span class="type">int</span> <span class="variable">x</span> <span class="operator">=</span> edge[<span class="number">0</span>], y = edge[<span class="number">1</span>], d = edge[<span class="number">2</span>];</span><br><span class="line">            <span class="type">int</span> <span class="variable">id</span> <span class="operator">=</span> x * n + y;</span><br><span class="line">            <span class="keyword">if</span> (seen[id]) &#123;</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (x == m - <span class="number">1</span> &amp;&amp; y == n - <span class="number">1</span>) &#123;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            seen[id] = <span class="literal">true</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; <span class="number">4</span>; ++i) &#123;</span><br><span class="line">                <span class="type">int</span> <span class="variable">nx</span> <span class="operator">=</span> x + dirs[i][<span class="number">0</span>];</span><br><span class="line">                <span class="type">int</span> <span class="variable">ny</span> <span class="operator">=</span> y + dirs[i][<span class="number">1</span>];</span><br><span class="line">                <span class="keyword">if</span> (nx &gt;= <span class="number">0</span> &amp;&amp; nx &lt; m &amp;&amp; ny &gt;= <span class="number">0</span> &amp;&amp; ny &lt; n &amp;&amp; Math.max(d, Math.abs(heights[x][y] - heights[nx][ny])) &lt; dist[nx * n + ny]) &#123;</span><br><span class="line">                    dist[nx * n + ny] = Math.max(d, Math.abs(heights[x][y] - heights[nx][ny]));</span><br><span class="line">                    pq.offer(<span class="keyword">new</span> <span class="title class_">int</span>[]&#123;nx, ny, dist[nx * n + ny]&#125;);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> dist[m * n - <span class="number">1</span>];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><figcaption><span>[sol3-Python3]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">minimumEffortPath</span>(<span class="params">self, heights: <span class="type">List</span>[<span class="type">List</span>[<span class="built_in">int</span>]]</span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        m, n = <span class="built_in">len</span>(heights), <span class="built_in">len</span>(heights[<span class="number">0</span>])</span><br><span class="line">        q = [(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>)]</span><br><span class="line">        dist = [<span class="number">0</span>] + [<span class="built_in">float</span>(<span class="string">&quot;inf&quot;</span>)] * (m * n - <span class="number">1</span>)</span><br><span class="line">        seen = <span class="built_in">set</span>()</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> q:</span><br><span class="line">            d, x, y = heapq.heappop(q)</span><br><span class="line">            iden = x * n + y</span><br><span class="line">            <span class="keyword">if</span> iden <span class="keyword">in</span> seen:</span><br><span class="line">                <span class="keyword">continue</span></span><br><span class="line">            <span class="keyword">if</span> (x, y) == (m - <span class="number">1</span>, n - <span class="number">1</span>):</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">            </span><br><span class="line">            seen.add(iden)</span><br><span class="line">            <span class="keyword">for</span> nx, ny <span class="keyword">in</span> [(x - <span class="number">1</span>, y), (x + <span class="number">1</span>, y), (x, y - <span class="number">1</span>), (x, y + <span class="number">1</span>)]:</span><br><span class="line">                <span class="keyword">if</span> <span class="number">0</span> &lt;= nx &lt; m <span class="keyword">and</span> <span class="number">0</span> &lt;= ny &lt; n <span class="keyword">and</span> <span class="built_in">max</span>(d, <span class="built_in">abs</span>(heights[x][y] - heights[nx][ny])) &lt;= dist[nx * n + ny]:</span><br><span class="line">                    dist[nx * n + ny] = <span class="built_in">max</span>(d, <span class="built_in">abs</span>(heights[x][y] - heights[nx][ny]))</span><br><span class="line">                    heapq.heappush(q, (dist[nx * n + ny], nx, ny))</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> dist[m * n - <span class="number">1</span>]</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Go"><figure class="iseeu highlight go"><figcaption><span>[sol3-Golang]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> point <span class="keyword">struct</span>&#123; x, y, maxDiff <span class="type">int</span> &#125;</span><br><span class="line"><span class="keyword">type</span> hp []point</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(h hp)</span></span> Len() <span class="type">int</span>              &#123; <span class="keyword">return</span> <span class="built_in">len</span>(h) &#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(h hp)</span></span> Less(i, j <span class="type">int</span>) <span class="type">bool</span>    &#123; <span class="keyword">return</span> h[i].maxDiff &lt; h[j].maxDiff &#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(h hp)</span></span> Swap(i, j <span class="type">int</span>)         &#123; h[i], h[j] = h[j], h[i] &#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(h *hp)</span></span> Push(v <span class="keyword">interface</span>&#123;&#125;)   &#123; *h = <span class="built_in">append</span>(*h, v.(point)) &#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(h *hp)</span></span> Pop() (v <span class="keyword">interface</span>&#123;&#125;) &#123; a := *h; *h, v = a[:<span class="built_in">len</span>(a)<span class="number">-1</span>], a[<span class="built_in">len</span>(a)<span class="number">-1</span>]; <span class="keyword">return</span> &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> pair <span class="keyword">struct</span>&#123; x, y <span class="type">int</span> &#125;</span><br><span class="line"><span class="keyword">var</span> dir4 = []pair&#123; &#123;<span class="number">-1</span>, <span class="number">0</span>&#125;, &#123;<span class="number">1</span>, <span class="number">0</span>&#125;, &#123;<span class="number">0</span>, <span class="number">-1</span>&#125;, &#123;<span class="number">0</span>, <span class="number">1</span>&#125; &#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">minimumEffortPath</span><span class="params">(heights [][]<span class="type">int</span>)</span></span> <span class="type">int</span> &#123;</span><br><span class="line">    n, m := <span class="built_in">len</span>(heights), <span class="built_in">len</span>(heights[<span class="number">0</span>])</span><br><span class="line">    maxDiff := <span class="built_in">make</span>([][]<span class="type">int</span>, n)</span><br><span class="line">    <span class="keyword">for</span> i := <span class="keyword">range</span> maxDiff &#123;</span><br><span class="line">        maxDiff[i] = <span class="built_in">make</span>([]<span class="type">int</span>, m)</span><br><span class="line">        <span class="keyword">for</span> j := <span class="keyword">range</span> maxDiff[i] &#123;</span><br><span class="line">            maxDiff[i][j] = math.MaxInt64</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    maxDiff[<span class="number">0</span>][<span class="number">0</span>] = <span class="number">0</span></span><br><span class="line">    h := &amp;hp&#123; &#123;&#125; &#125;</span><br><span class="line">    <span class="keyword">for</span> &#123;</span><br><span class="line">        p := heap.Pop(h).(point)</span><br><span class="line">        <span class="keyword">if</span> p.x == n<span class="number">-1</span> &amp;&amp; p.y == m<span class="number">-1</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> p.maxDiff</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> maxDiff[p.x][p.y] &lt; p.maxDiff &#123;</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> _, d := <span class="keyword">range</span> dir4 &#123;</span><br><span class="line">            <span class="keyword">if</span> x, y := p.x+d.x, p.y+d.y; <span class="number">0</span> &lt;= x &amp;&amp; x &lt; n &amp;&amp; <span class="number">0</span> &lt;= y &amp;&amp; y &lt; m &#123;</span><br><span class="line">                <span class="keyword">if</span> diff := max(p.maxDiff, abs(heights[x][y]-heights[p.x][p.y])); diff &lt; maxDiff[x][y] &#123;</span><br><span class="line">                    maxDiff[x][y] = diff</span><br><span class="line">                    heap.Push(h, point&#123;x, y, diff&#125;)</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">max</span><span class="params">(a, b <span class="type">int</span>)</span></span> <span class="type">int</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> a &gt; b &#123;</span><br><span class="line">        <span class="keyword">return</span> a</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> b</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">abs</span><span class="params">(x <span class="type">int</span>)</span></span> <span class="type">int</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> x &lt; <span class="number">0</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> -x</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> x</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>复杂度分析</strong></p>
+<ul>
+<li><p>时间复杂度：O(mn \log(mn))，其中 m 和 n 分别是地图的行数和列数。对于节点数为 n_0，边数为 m_0 的图，使用优先队列优化的 Dijkstra 算法的时间复杂度为 O(m_0 \log m_0)。由于图中的边数为 O(mn)，带入即可得到时间复杂度 O(mn \log(mn))。</p>
+</li>
+<li><p>空间复杂度：O(mn)，即为 Dijkstra 算法需要使用的空间。</p>
+</li>
+</ul>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <!--<div class="article-copyright-info-container">-->
+    <!--&lt;!&ndash;<ul>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><strong>Title:</strong> 1631-最小体力消耗路径</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><strong>Author:</strong> Raphael Liu</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><strong>Created at&ndash;&gt;-->
+                <!--&lt;!&ndash;:</strong> 2023-09-13 00:47:26</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;&ndash;&gt;-->
+            <!--&lt;!&ndash;<li>&ndash;&gt;-->
+                <!--&lt;!&ndash;<strong>Updated at&ndash;&gt;-->
+                    <!--&lt;!&ndash;:</strong> 2023-09-13 17:01:06&ndash;&gt;-->
+            <!--&lt;!&ndash;</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;<li>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;<strong>Link:</strong> https://fida.ltd/2023/09/13/1631-最小体力消耗路径/&ndash;&gt;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;</li>&ndash;&gt;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;<li>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;<strong>&ndash;&gt;&ndash;&gt;-->
+                <!--&lt;!&ndash;&lt;!&ndash;License:&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;</strong>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0</a>.&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;&ndash;&gt;&ndash;&gt;-->
+
+        <!--&lt;!&ndash;&lt;!&ndash;</li>&ndash;&gt;&ndash;&gt;-->
+    <!--&lt;!&ndash;</ul>&ndash;&gt;-->
+<!--</div>-->
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box">
+                
+                    <li class="tag-item">
+                        <a href="/tags/algorithm/">#algorithm</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item">
+                        <a href="/tags/MEDIUM/">#MEDIUM</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                        rel="prev"
+                        href="/2023/09/13/1630-%E7%AD%89%E5%B7%AE%E5%AD%90%E6%95%B0%E7%BB%84/"
+                        >
+                            <span class="left arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">1630-等差子数组</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                        rel="next"
+                        href="/2023/09/13/1634-%E6%B1%82%E4%B8%A4%E4%B8%AA%E5%A4%9A%E9%A1%B9%E5%BC%8F%E9%93%BE%E8%A1%A8%E7%9A%84%E5%92%8C/"
+                        >
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">1634-求两个多项式链表的和</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+
+        
+            <div class="comment-container">
+                <div class="comments-container pjax">
+    <div id="comment-anchor"></div>
+    <div class="comment-area-title">
+        <i class="fa-solid fa-comments"></i>&nbsp;Comments
+    </div>
+    
+
+        
+            
+ 
+    <div id="waline"></div>
+    <script type="module"  data-swup-reload-script>
+        import { init } from 'https://evan.beee.top/js/waline.mjs';
+
+        function loadWaline() {
+            init({
+                el: '#waline',
+                serverURL: 'https://example.example.com',
+                lang: 'zh-CN',
+                dark: 'body[class~="dark-mode"]',
+                requiredMeta: ['nick','mail'], // cannot customize by theme config, change it yourself
+            });
+        }
+
+        if ('true') {
+            const loadWalineTimeout = setTimeout(() => {
+                loadWaline();
+                clearTimeout(loadWalineTimeout);
+            }, 1000);
+        } else {
+            window.addEventListener('DOMContentLoaded', loadWaline);
+        }
+        
+    </script>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+
+    
+        <div class="toc-content-container">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">On this page</div>
+        <div class="page-title">1631-最小体力消耗路径</div>
+        
+
+    </div>
+</div>
+        </div>
+    
+</div>
+
+
+
+                
+
+            </div>
+
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2022</span>
+              -
+            
+            2023&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">Raphael Liu</a>
+        </div>
+        
+            <script data-swup-reload-script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">UV:</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">PV:</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <!--<div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">-->
+            <!--<span class="lg:block text-sm">powered_by</span>-->
+            <!--&lt;!&ndash;<span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.4.4</a></span>&ndash;&gt;-->
+        <!--</div>-->
+        
+        <!---->
+            <!--<div>-->
+                <!--runtime <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hours <span class="odometer" id="runtime_minutes"></span> minutes <span class="odometer" id="runtime_seconds"></span> seconds-->
+            <!--</div>-->
+        <!---->
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fa-regular fa-comments"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-expand-width flex justify-center items-center">
+            <i class="fa-regular fa-expand"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fa-solid fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa-solid fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa-solid fa-spinner fa-spin-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+    
+<script src="/js/libs/Swup.min.js"></script>
+
+<script src="/js/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/libs/SwupScrollPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+        ],
+        containers: ["#swup"],
+    });
+
+    swup.hooks.on("page:view", () => {
+        Global.refresh();
+    });
+
+    // if (document.readyState === "complete") {
+    //
+    // } else {
+    //     document.addEventListener("DOMContentLoaded", () => init());
+    // }
+</script>
+
+
+
+
+
+
+<script src="/js/utils.js" type="module"></script>
+
+<script src="/js/main.js" type="module"></script>
+
+<script src="/js/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/layouts/categoryList.js" type="module"></script>
+
+
+
+    
+<script src="/js/tools/localSearch.js"></script>
+
+
+
+
+    
+<script src="/js/tools/codeBlock.js"></script>
+
+
+
+
+    
+<script src="/js/layouts/lazyload.js"></script>
+
+
+
+
+    
+<script src="/js/tools/runtime.js"></script>
+
+    
+<script src="/js/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/libs/Typed.min.js"></script>
+
+  
+<script src="/js/plugins/typed.js"></script>
+
+
+
+
+
+
+
+<div class="post-scripts" data-swup-reload-script>
+    
+        
+<script src="/js/libs/anime.min.js"></script>
+
+        
+<script src="/js/tools/tocToggle.js" type="module"></script>
+
+<script src="/js/layouts/toc.js" type="module"></script>
+
+<script src="/js/plugins/tabs.js" type="module"></script>
+
+    
+</div>
+
+
+</body>
+</html>

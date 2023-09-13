@@ -1,0 +1,1048 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="Raphael Liu">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/2023/09/13/0106-从中序与后序遍历序列构造二叉树/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="给定两个整数数组 inorder 和 postorder ，其中 inorder 是二叉树的中序遍历， postorder是同一棵树的后序遍历，请你构造并返回这颗  二叉树  。 示例 1:  **输入：** inorder &#x3D; [9,3,15,20,7], postorder &#x3D; [9,15,7,20,3] **输出：** [3,9,20,null,null,15,7]  示例 2: **输入：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="0106-从中序与后序遍历序列构造二叉树">
+<meta property="og:url" content="http://example.com/2023/09/13/0106-%E4%BB%8E%E4%B8%AD%E5%BA%8F%E4%B8%8E%E5%90%8E%E5%BA%8F%E9%81%8D%E5%8E%86%E5%BA%8F%E5%88%97%E6%9E%84%E9%80%A0%E4%BA%8C%E5%8F%89%E6%A0%91/index.html">
+<meta property="og:site_name" content="Raphael&#39;s Blog">
+<meta property="og:description" content="给定两个整数数组 inorder 和 postorder ，其中 inorder 是二叉树的中序遍历， postorder是同一棵树的后序遍历，请你构造并返回这颗  二叉树  。 示例 1:  **输入：** inorder &#x3D; [9,3,15,20,7], postorder &#x3D; [9,15,7,20,3] **输出：** [3,9,20,null,null,15,7]  示例 2: **输入：">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://assets.leetcode.com/uploads/2021/02/19/tree.jpg">
+<meta property="og:image" content="https://assets.leetcode-cn.com/solution-static/106/6.png">
+<meta property="og:image" content="https://assets.leetcode-cn.com/solution-static/106/1.png">
+<meta property="og:image" content="https://assets.leetcode-cn.com/solution-static/106/2.png">
+<meta property="og:image" content="https://assets.leetcode-cn.com/solution-static/106/3.png">
+<meta property="og:image" content="https://assets.leetcode-cn.com/solution-static/106/4.png">
+<meta property="og:image" content="https://assets.leetcode-cn.com/solution-static/106/5.png">
+<meta property="og:image" content="https://assets.leetcode-cn.com/solution-static/106/6.png">
+<meta property="og:image" content="https://assets.leetcode-cn.com/solution-static/106/7.png">
+<meta property="article:published_time" content="2023-09-12T16:47:26.000Z">
+<meta property="article:modified_time" content="2023-09-13T02:42:19.000Z">
+<meta property="article:author" content="Raphael Liu">
+<meta property="article:tag" content="algorithm">
+<meta property="article:tag" content="MEDIUM">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://assets.leetcode.com/uploads/2021/02/19/tree.jpg">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/redefine-favicon.svg" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/redefine-favicon.svg">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/redefine-favicon.svg">
+    <!--- Page Info-->
+    
+    <title>
+        
+            0106-从中序与后序遍历序列构造二叉树 -
+        
+        Raphael&#39;s Blog
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/css/build/styles.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/fonts.css">
+
+    
+<link rel="stylesheet" href="/fonts/Satoshi/satoshi.css">
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+
+    <!--- Inject Part-->
+    
+    <script id="hexo-configurations">
+    let Global = window.Global || {};
+    Global.hexo_config = {"hostname":"example.com","root":"/","language":"zh_CN"};
+    Global.theme_config = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":true,"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"open_graph":true,"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-wqery6-light.webp","dark":"/images/wallhaven-wqery6-dark.webp"},"title":"Raphael's Blog","subtitle":{"text":["格物致知","坚持做正确的事情"],"hitokoto":{"enable":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":false,"links":{"github":"https://github.com/raphael-liu","email":"raphael@buaa.edu.cn# your email"},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.4.4","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"links":{"首页":{"path":"/","icon":"fa-regular fa-house"},"文章":{"path":"/archives","icon":"fa-regular fa-archive"},"关于":{"icon":"fa-regular fa-user","submenus":{"我":"/about/me","Github":"https://github.com/raphael-liu"}}},"search":{"enable":true,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"links":null},"article_date_format":"auto","categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}},"footerStart":"2022/8/17 11:45:14"};
+    Global.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    Global.data_config = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="swup-progress-icon">
+            <i class="fa-solid fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container" id="swup">
+
+    
+
+    <div class="main-content-container">
+
+
+        <div class="main-content-header">
+            <header class="navbar-container">
+    
+    <div class="navbar-content">
+        <div class="left">
+            
+            <a class="logo-title" href="http://example.com/">
+                
+                Raphael&#39;s Blog
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/"  >
+                                    
+                                        
+                                            <i class="fa-regular fa-house"></i>
+                                        
+                                        首页
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/archives"  >
+                                    
+                                        
+                                            <i class="fa-regular fa-archive"></i>
+                                        
+                                        文章
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="has-dropdown" 
+                                    href="#" onClick="return false;">
+                                    
+                                        
+                                            <i class="fa-regular fa-user"></i>
+                                        
+                                        关于&nbsp;<i class="fa-solid fa-chevron-down"></i>
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                                    <ul class="sub-menu">
+                                    
+                                        <li>
+                                        <a href="/about/me">我
+                                        </a>
+                                        </li>
+                                    
+                                        <li>
+                                        <a target="_blank" rel="noopener" href="https://github.com/raphael-liu">GITHUB
+                                        </a>
+                                        </li>
+                                    
+                                    </ul>
+                                
+                            </li>
+                    
+                    
+                        <li class="navbar-item search search-popup-trigger">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fa-solid fa-magnifying-glass"></i></div>
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile drawer -->
+    <div class="navbar-drawer w-full absolute top-0 left-0 bg-background-color">
+        <ul class="drawer-navbar-list flex flex-col justify-start items-center">
+            
+                
+                    <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group " 
+                        href="/"  >
+                             
+                                
+                                    <i class="fa-regular fa-house"></i>
+                                
+                                首页
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+                
+                    <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group " 
+                        href="/archives"  >
+                             
+                                
+                                    <i class="fa-regular fa-archive"></i>
+                                
+                                文章
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+                
+                    <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group has-dropdown" 
+                        href="#" onClick="return false;">
+                            
+                                
+                                    <i class="fa-regular fa-user"></i>
+                                
+                                关于&nbsp;<i class="group-hover:rotate-180 transition-transform fa-solid fa-chevron-down"></i>
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                              
+                        
+                            <li class="text-base flex justify-center items-center hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                <a class="py-0.5" href="/about/me">我</a>
+                            </li>
+                        
+                            <li class="text-base flex justify-center items-center hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                <a class="py-0.5" target="_blank" rel="noopener" href="https://github.com/raphael-liu">GITHUB</a>
+                            </li>
+                        
+                    
+            
+
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="post-page-container">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            
+                <h1 class="article-title-regular">0106-从中序与后序遍历序列构造二叉树</h1>
+            
+            </div>
+            
+                    
+        
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">Raphael Liu</span>
+                        
+                            <span class="author-label">Lv10</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2023-09-13 00:47:26</span>
+        <span class="mobile">2023-09-13 00:47:26</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2023-09-13 10:42:19</span>
+            <span class="mobile">2023-09-13 10:42:19</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/algorithm/">algorithm</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/MEDIUM/">MEDIUM</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        
+
+
+        <div class="article-content markdown-body">
+            <p>给定两个整数数组 <code>inorder</code> 和 <code>postorder</code> ，其中 <code>inorder</code> 是二叉树的中序遍历， <code>postorder</code><br>是同一棵树的后序遍历，请你构造并返回这颗  <em>二叉树</em>  。</p>
+<p><strong>示例 1:</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://assets.leetcode.com/uploads/2021/02/19/tree.jpg"
+                     
+                ></p>
+<pre><code>**输入：** inorder = [9,3,15,20,7], postorder = [9,15,7,20,3]
+**输出：** [3,9,20,null,null,15,7]
+</code></pre>
+<p><strong>示例 2:</strong></p>
+<pre><code>**输入：** inorder = [-1], postorder = [-1]
+**输出：** [-1]
+</code></pre>
+<p><strong>提示:</strong></p>
+<ul>
+<li><code>1 &lt;= inorder.length &lt;= 3000</code></li>
+<li><code>postorder.length == inorder.length</code></li>
+<li><code>-3000 &lt;= inorder[i], postorder[i] &lt;= 3000</code></li>
+<li><code>inorder</code> 和 <code>postorder</code> 都由 <strong>不同</strong> 的值组成</li>
+<li><code>postorder</code> 中每一个值都在 <code>inorder</code> 中</li>
+<li><code>inorder</code>  <strong>保证</strong> 是树的中序遍历</li>
+<li><code>postorder</code>  <strong>保证</strong> 是树的后序遍历</li>
+</ul>
+<h4 id="方法一：递归"><a href="#方法一：递归" class="headerlink" title="方法一：递归"></a>方法一：递归</h4><p><strong>思路</strong></p>
+<p>首先解决这道题我们需要明确给定一棵二叉树，我们是如何对其进行中序遍历与后序遍历的：</p>
+<ul>
+<li>中序遍历的顺序是每次遍历左孩子，再遍历根节点，最后遍历右孩子。</li>
+<li>后序遍历的顺序是每次遍历左孩子，再遍历右孩子，最后遍历根节点。</li>
+</ul>
+<p>写成代码的形式即：</p>
+<div class="highlight-container" data-rel="C++"><figure class="iseeu highlight c++"><figcaption><span>[sol0-C++]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 中序遍历</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">inorder</span><span class="params">(TreeNode* root)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (root == <span class="literal">nullptr</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">inorder</span>(root-&gt;left);</span><br><span class="line">    ans.<span class="built_in">push_back</span>(root-&gt;val);</span><br><span class="line">    <span class="built_in">inorder</span>(root-&gt;right);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 后序遍历</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">postorder</span><span class="params">(TreeNode* root)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (root == <span class="literal">nullptr</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">postorder</span>(root-&gt;left);</span><br><span class="line">    <span class="built_in">postorder</span>(root-&gt;right);</span><br><span class="line">    ans.<span class="built_in">push_back</span>(root-&gt;val);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>因此根据上文所述，我们可以发现后序遍历的数组最后一个元素代表的即为根节点。知道这个性质后，我们可以利用已知的根节点信息在中序遍历的数组中找到根节点所在的下标，然后根据其将中序遍历的数组分成左右两部分，左边部分即左子树，右边部分为右子树，针对每个部分可以用同样的方法继续递归下去构造。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://assets.leetcode-cn.com/solution-static/106/6.png"
+                      alt="fig1"
+                >{:width&#x3D;480}</p>
+<p>*<em>算法</em></p>
+<ul>
+<li><p>为了高效查找根节点元素在中序遍历数组中的下标，我们选择创建哈希表来存储中序序列，即建立一个（元素，下标）键值对的哈希表。</p>
+</li>
+<li><p>定义递归函数 <code>helper(in_left, in_right)</code> 表示当前递归到中序序列中当前子树的左右边界，递归入口为<code>helper(0, n - 1)</code> ：</p>
+<ul>
+<li><p>如果 <code>in_left &gt; in_right</code>，说明子树为空，返回空节点。</p>
+</li>
+<li><p>选择后序遍历的最后一个节点作为根节点。</p>
+</li>
+<li><p>利用哈希表 $O(1)$ 查询当根节点在中序遍历中下标为 <code>index</code>。从 <code>in_left</code> 到 <code>index - 1</code> 属于左子树，从 <code>index + 1</code> 到 <code>in_right</code> 属于右子树。</p>
+</li>
+<li><p>根据后序遍历逻辑，递归创建右子树 <code>helper(index + 1, in_right)</code> 和左子树 <code>helper(in_left, index - 1)</code>。注意这里有需要先创建右子树，再创建左子树的依赖关系。可以理解为在后序遍历的数组中整个数组是先存储左子树的节点，再存储右子树的节点，最后存储根节点，如果按每次选择「后序遍历的最后一个节点」为根节点，则先被构造出来的应该为右子树。</p>
+</li>
+<li><p>返回根节点 <code>root</code>。</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>&lt;<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://assets.leetcode-cn.com/solution-static/106/1.png"
+                      alt="ppt1"
+                >,<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://assets.leetcode-cn.com/solution-static/106/2.png"
+                      alt="ppt2"
+                >,<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://assets.leetcode-cn.com/solution-static/106/3.png"
+                      alt="ppt3"
+                >,<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://assets.leetcode-cn.com/solution-static/106/4.png"
+                      alt="ppt4"
+                >,<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://assets.leetcode-cn.com/solution-static/106/5.png"
+                      alt="ppt5"
+                >,<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://assets.leetcode-cn.com/solution-static/106/6.png"
+                      alt="ppt6"
+                >,<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://assets.leetcode-cn.com/solution-static/106/7.png"
+                      alt="ppt7"
+                >&gt;</p>
+<p><strong>代码</strong></p>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><figcaption><span>[sol1-Java]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="type">int</span> post_idx;</span><br><span class="line">    <span class="type">int</span>[] postorder;</span><br><span class="line">    <span class="type">int</span>[] inorder;</span><br><span class="line">    Map&lt;Integer, Integer&gt; idx_map = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;Integer, Integer&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> TreeNode <span class="title function_">helper</span><span class="params">(<span class="type">int</span> in_left, <span class="type">int</span> in_right)</span> &#123;</span><br><span class="line">        <span class="comment">// 如果这里没有节点构造二叉树了，就结束</span></span><br><span class="line">        <span class="keyword">if</span> (in_left &gt; in_right) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 选择 post_idx 位置的元素作为当前子树根节点</span></span><br><span class="line">        <span class="type">int</span> <span class="variable">root_val</span> <span class="operator">=</span> postorder[post_idx];</span><br><span class="line">        <span class="type">TreeNode</span> <span class="variable">root</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">TreeNode</span>(root_val);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 根据 root 所在位置分成左右两棵子树</span></span><br><span class="line">        <span class="type">int</span> <span class="variable">index</span> <span class="operator">=</span> idx_map.get(root_val);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 下标减一</span></span><br><span class="line">        post_idx--;</span><br><span class="line">        <span class="comment">// 构造右子树</span></span><br><span class="line">        root.right = helper(index + <span class="number">1</span>, in_right);</span><br><span class="line">        <span class="comment">// 构造左子树</span></span><br><span class="line">        root.left = helper(in_left, index - <span class="number">1</span>);</span><br><span class="line">        <span class="keyword">return</span> root;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> TreeNode <span class="title function_">buildTree</span><span class="params">(<span class="type">int</span>[] inorder, <span class="type">int</span>[] postorder)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.postorder = postorder;</span><br><span class="line">        <span class="built_in">this</span>.inorder = inorder;</span><br><span class="line">        <span class="comment">// 从后序遍历的最后一个元素开始</span></span><br><span class="line">        post_idx = postorder.length - <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 建立（元素，下标）键值对的哈希表</span></span><br><span class="line">        <span class="type">int</span> <span class="variable">idx</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (Integer val : inorder) &#123;</span><br><span class="line">            idx_map.put(val, idx++);</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> helper(<span class="number">0</span>, inorder.length - <span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><figcaption><span>[sol1-Python3]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">buildTree</span>(<span class="params">self, inorder: <span class="type">List</span>[<span class="built_in">int</span>], postorder: <span class="type">List</span>[<span class="built_in">int</span>]</span>) -&gt; TreeNode:</span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">helper</span>(<span class="params">in_left, in_right</span>):</span><br><span class="line">            <span class="comment"># 如果这里没有节点构造二叉树了，就结束</span></span><br><span class="line">            <span class="keyword">if</span> in_left &gt; in_right:</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">None</span></span><br><span class="line">            </span><br><span class="line">            <span class="comment"># 选择 post_idx 位置的元素作为当前子树根节点</span></span><br><span class="line">            val = postorder.pop()</span><br><span class="line">            root = TreeNode(val)</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 根据 root 所在位置分成左右两棵子树</span></span><br><span class="line">            index = idx_map[val]</span><br><span class="line"> </span><br><span class="line">            <span class="comment"># 构造右子树</span></span><br><span class="line">            root.right = helper(index + <span class="number">1</span>, in_right)</span><br><span class="line">            <span class="comment"># 构造左子树</span></span><br><span class="line">            root.left = helper(in_left, index - <span class="number">1</span>)</span><br><span class="line">            <span class="keyword">return</span> root</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># 建立（元素，下标）键值对的哈希表</span></span><br><span class="line">        idx_map = &#123;val:idx <span class="keyword">for</span> idx, val <span class="keyword">in</span> <span class="built_in">enumerate</span>(inorder)&#125; </span><br><span class="line">        <span class="keyword">return</span> helper(<span class="number">0</span>, <span class="built_in">len</span>(inorder) - <span class="number">1</span>)</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="C++"><figure class="iseeu highlight c++"><figcaption><span>[sol1-C++]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="type">int</span> post_idx;</span><br><span class="line">    unordered_map&lt;<span class="type">int</span>, <span class="type">int</span>&gt; idx_map;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">TreeNode* <span class="title">helper</span><span class="params">(<span class="type">int</span> in_left, <span class="type">int</span> in_right, vector&lt;<span class="type">int</span>&gt;&amp; inorder, vector&lt;<span class="type">int</span>&gt;&amp; postorder)</span></span>&#123;</span><br><span class="line">        <span class="comment">// 如果这里没有节点构造二叉树了，就结束</span></span><br><span class="line">        <span class="keyword">if</span> (in_left &gt; in_right) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">nullptr</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 选择 post_idx 位置的元素作为当前子树根节点</span></span><br><span class="line">        <span class="type">int</span> root_val = postorder[post_idx];</span><br><span class="line">        TreeNode* root = <span class="keyword">new</span> <span class="built_in">TreeNode</span>(root_val);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 根据 root 所在位置分成左右两棵子树</span></span><br><span class="line">        <span class="type">int</span> index = idx_map[root_val];</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 下标减一</span></span><br><span class="line">        post_idx--;</span><br><span class="line">        <span class="comment">// 构造右子树</span></span><br><span class="line">        root-&gt;right = <span class="built_in">helper</span>(index + <span class="number">1</span>, in_right, inorder, postorder);</span><br><span class="line">        <span class="comment">// 构造左子树</span></span><br><span class="line">        root-&gt;left = <span class="built_in">helper</span>(in_left, index - <span class="number">1</span>, inorder, postorder);</span><br><span class="line">        <span class="keyword">return</span> root;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function">TreeNode* <span class="title">buildTree</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; inorder, vector&lt;<span class="type">int</span>&gt;&amp; postorder)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 从后序遍历的最后一个元素开始</span></span><br><span class="line">        post_idx = (<span class="type">int</span>)postorder.<span class="built_in">size</span>() - <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 建立（元素，下标）键值对的哈希表</span></span><br><span class="line">        <span class="type">int</span> idx = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span>&amp; val : inorder) &#123;</span><br><span class="line">            idx_map[val] = idx++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">helper</span>(<span class="number">0</span>, (<span class="type">int</span>)inorder.<span class="built_in">size</span>() - <span class="number">1</span>, inorder, postorder);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><figcaption><span>[sol1-JavaScript]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> buildTree = <span class="keyword">function</span>(<span class="params">inorder, postorder</span>) &#123;</span><br><span class="line">    <span class="keyword">let</span> post_idx;</span><br><span class="line">    <span class="keyword">const</span> idx_map = <span class="keyword">new</span> <span class="title class_">Map</span>();</span><br><span class="line">    <span class="keyword">const</span> <span class="title function_">helper</span> = (<span class="params">in_left, in_right</span>) =&gt; &#123;</span><br><span class="line">        <span class="comment">// 如果这里没有节点构造二叉树了，就结束</span></span><br><span class="line">        <span class="keyword">if</span> (in_left &gt; in_right) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 选择 post_idx 位置的元素作为当前子树根节点</span></span><br><span class="line">        <span class="keyword">const</span> root_val = postorder[post_idx];</span><br><span class="line">        <span class="keyword">const</span> root = <span class="keyword">new</span> <span class="title class_">TreeNode</span>(root_val);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 根据 root 所在位置分成左右两棵子树</span></span><br><span class="line">        <span class="keyword">const</span> index = idx_map.<span class="title function_">get</span>(root_val);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 下标减一</span></span><br><span class="line">        post_idx--;</span><br><span class="line">        <span class="comment">// 构造右子树</span></span><br><span class="line">        root.<span class="property">right</span> = <span class="title function_">helper</span>(index + <span class="number">1</span>, in_right);</span><br><span class="line">        <span class="comment">// 构造左子树</span></span><br><span class="line">        root.<span class="property">left</span> = <span class="title function_">helper</span>(in_left, index - <span class="number">1</span>);</span><br><span class="line">        <span class="keyword">return</span> root;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 从后序遍历的最后一个元素开始</span></span><br><span class="line">    post_idx = postorder.<span class="property">length</span> - <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 建立（元素，下标）键值对的哈希表</span></span><br><span class="line">    <span class="keyword">let</span> idx = <span class="number">0</span>;</span><br><span class="line">    inorder.<span class="title function_">forEach</span>(<span class="function">(<span class="params">val, idx</span>) =&gt;</span> &#123;</span><br><span class="line">        idx_map.<span class="title function_">set</span>(val, idx);</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="keyword">return</span> <span class="title function_">helper</span>(<span class="number">0</span>, inorder.<span class="property">length</span> - <span class="number">1</span>);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Golang"><figure class="iseeu highlight golang"><figcaption><span>[sol1-Golang]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">buildTree</span><span class="params">(inorder []<span class="type">int</span>, postorder []<span class="type">int</span>)</span></span> *TreeNode &#123;</span><br><span class="line">    idxMap := <span class="keyword">map</span>[<span class="type">int</span>]<span class="type">int</span>&#123;&#125;</span><br><span class="line">    <span class="keyword">for</span> i, v := <span class="keyword">range</span> inorder &#123;</span><br><span class="line">        idxMap[v] = i</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">var</span> build <span class="function"><span class="keyword">func</span><span class="params">(<span class="type">int</span>, <span class="type">int</span>)</span></span> *TreeNode</span><br><span class="line">    build = <span class="function"><span class="keyword">func</span><span class="params">(inorderLeft, inorderRight <span class="type">int</span>)</span></span> *TreeNode &#123;</span><br><span class="line">        <span class="comment">// 无剩余节点</span></span><br><span class="line">        <span class="keyword">if</span> inorderLeft &gt; inorderRight &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 后序遍历的末尾元素即为当前子树的根节点</span></span><br><span class="line">        val := postorder[<span class="built_in">len</span>(postorder)<span class="number">-1</span>]</span><br><span class="line">        postorder = postorder[:<span class="built_in">len</span>(postorder)<span class="number">-1</span>]</span><br><span class="line">        root := &amp;TreeNode&#123;Val: val&#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 根据 val 在中序遍历的位置，将中序遍历划分成左右两颗子树</span></span><br><span class="line">        <span class="comment">// 由于我们每次都从后序遍历的末尾取元素，所以要先遍历右子树再遍历左子树</span></span><br><span class="line">        inorderRootIndex := idxMap[val]</span><br><span class="line">        root.Right = build(inorderRootIndex+<span class="number">1</span>, inorderRight)</span><br><span class="line">        root.Left = build(inorderLeft, inorderRootIndex<span class="number">-1</span>)</span><br><span class="line">        <span class="keyword">return</span> root</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> build(<span class="number">0</span>, <span class="built_in">len</span>(inorder)<span class="number">-1</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="C"><figure class="iseeu highlight c"><figcaption><span>[sol1-C]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> post_idx;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> &#123;</span></span><br><span class="line">    <span class="type">int</span> key;</span><br><span class="line">    <span class="type">int</span> val;</span><br><span class="line">    UT_hash_handle hh;</span><br><span class="line">&#125; hashTable;</span><br><span class="line"></span><br><span class="line">hashTable* idx_map;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">insertHashTable</span><span class="params">(<span class="type">int</span> x, <span class="type">int</span> y)</span> &#123;</span><br><span class="line">    hashTable* rec = <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(hashTable));</span><br><span class="line">    rec-&gt;key = x;</span><br><span class="line">    rec-&gt;val = y;</span><br><span class="line">    HASH_ADD_INT(idx_map, key, rec);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">queryHashTable</span><span class="params">(<span class="type">int</span> x)</span> &#123;</span><br><span class="line">    hashTable* rec;</span><br><span class="line">    HASH_FIND_INT(idx_map, &amp;x, rec);</span><br><span class="line">    <span class="keyword">return</span> rec-&gt;val;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> TreeNode* <span class="title function_">helper</span><span class="params">(<span class="type">int</span> in_left, <span class="type">int</span> in_right, <span class="type">int</span>* inorder, <span class="type">int</span>* postorder)</span> &#123;</span><br><span class="line">    <span class="comment">// 如果这里没有节点构造二叉树了，就结束</span></span><br><span class="line">    <span class="keyword">if</span> (in_left &gt; in_right) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 选择 post_idx 位置的元素作为当前子树根节点</span></span><br><span class="line">    <span class="type">int</span> root_val = postorder[post_idx];</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">TreeNode</span>* <span class="title">root</span> =</span> <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">struct</span> TreeNode));</span><br><span class="line">    root-&gt;val = root_val;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 根据 root 所在位置分成左右两棵子树</span></span><br><span class="line">    <span class="type">int</span> index = queryHashTable(root_val);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 下标减一</span></span><br><span class="line">    post_idx--;</span><br><span class="line">    <span class="comment">// 构造右子树</span></span><br><span class="line">    root-&gt;right = helper(index + <span class="number">1</span>, in_right, inorder, postorder);</span><br><span class="line">    <span class="comment">// 构造左子树</span></span><br><span class="line">    root-&gt;left = helper(in_left, index - <span class="number">1</span>, inorder, postorder);</span><br><span class="line">    <span class="keyword">return</span> root;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> TreeNode* <span class="title function_">buildTree</span><span class="params">(<span class="type">int</span>* inorder, <span class="type">int</span> inorderSize, <span class="type">int</span>* postorder, <span class="type">int</span> postorderSize)</span> &#123;</span><br><span class="line">    <span class="comment">// 从后序遍历的最后一个元素开始</span></span><br><span class="line">    post_idx = postorderSize - <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 建立（元素，下标）键值对的哈希表</span></span><br><span class="line">    idx_map = <span class="literal">NULL</span>;</span><br><span class="line">    <span class="type">int</span> idx = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; inorderSize; i++) &#123;</span><br><span class="line">        insertHashTable(inorder[i], idx++);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> helper(<span class="number">0</span>, inorderSize - <span class="number">1</span>, inorder, postorder);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>复杂度分析</strong></p>
+<ul>
+<li><p>时间复杂度：$O(n)$，其中 $n$ 是树中的节点个数。</p>
+</li>
+<li><p>空间复杂度：$O(n)$。我们需要使用 $O(n)$ 的空间存储哈希表，以及 $O(h)$（其中 $h$ 是树的高度）的空间表示递归时栈空间。这里 $h &lt; n$，所以总空间复杂度为 $O(n)$。</p>
+</li>
+</ul>
+<h4 id="方法二：迭代"><a href="#方法二：迭代" class="headerlink" title="方法二：迭代"></a>方法二：迭代</h4><p><strong>思路</strong></p>
+<p>迭代法是一种非常巧妙的实现方法。迭代法的实现基于以下两点发现。</p>
+<ul>
+<li>如果将中序遍历反序，则得到反向的中序遍历，即每次遍历右孩子，再遍历根节点，最后遍历左孩子。</li>
+<li>如果将后序遍历反序，则得到反向的前序遍历，即每次遍历根节点，再遍历右孩子，最后遍历左孩子。</li>
+</ul>
+<p>「反向」的意思是交换遍历左孩子和右孩子的顺序，即反向的遍历中，右孩子在左孩子之前被遍历。</p>
+<p>因此可以使用和「<a class="link"   target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/" >105. 从前序与中序遍历序列构造二叉树 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>」的迭代方法类似的方法构造二叉树。</p>
+<p>对于后序遍历中的任意两个连续节点 $u$ 和 $v$（在后序遍历中，$u$ 在 $v$ 的前面），根据后序遍历的流程，我们可以知道 $u$ 和 $v$ 只有两种可能的关系：</p>
+<ul>
+<li><p>$u$ 是 $v$ 的右儿子。这是因为在遍历到 $u$ 之后，下一个遍历的节点就是 $u$ 的双亲节点，即 $v$；</p>
+</li>
+<li><p>$v$ 没有右儿子，并且 $u$ 是 $v$ 的某个祖先节点（或者 $v$ 本身）的左儿子。如果 $v$ 没有右儿子，那么上一个遍历的节点就是 $v$ 的左儿子。如果 $v$ 没有左儿子，则从 $v$ 开始向上遍历 $v$ 的祖先节点，直到遇到一个有左儿子（且 $v$ 不在它的左儿子的子树中）的节点 $v_a$，那么 $u$ 就是 $v_a$ 的左儿子。</p>
+</li>
+</ul>
+<p>第二种关系看上去有些复杂。我们举一个例子来说明其正确性，并在例子中给出我们的迭代算法。</p>
+<p><strong>例子</strong></p>
+<p>我们以树</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">    3</span><br><span class="line">   / \</span><br><span class="line">  9  20</span><br><span class="line"> / \   \</span><br><span class="line">15 10   7</span><br><span class="line">       / \</span><br><span class="line">      5   8</span><br><span class="line">           \</span><br><span class="line">            4</span><br></pre></td></tr></table></figure></div>
+
+<p>为例，它的中序遍历和后序遍历分别为</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">inorder = [15, 9, 10, 3, 20, 5, 7, 8, 4]</span><br><span class="line">postorder = [15, 10, 9, 5, 4, 8, 7, 20, 3]</span><br></pre></td></tr></table></figure></div>
+
+<p>我们用一个栈 <code>stack</code> 来维护「当前节点的所有还没有考虑过左儿子的祖先节点」，栈顶就是当前节点。也就是说，只有在栈中的节点才可能连接一个新的左儿子。同时，我们用一个指针 <code>index</code> 指向中序遍历的某个位置，初始值为 <code>n - 1</code>，其中 <code>n</code> 为数组的长度。<code>index</code> 对应的节点是「当前节点不断往右走达到的最终节点」，这也是符合反向中序遍历的，它的作用在下面的过程中会有所体现。</p>
+<p>首先我们将根节点 <code>3</code> 入栈，再初始化 <code>index</code> 所指向的节点为 <code>4</code>，随后对于后序遍历中的每个节点，我们依次判断它是栈顶节点的右儿子，还是栈中某个节点的左儿子。</p>
+<ul>
+<li><p>我们遍历 <code>20</code>。<code>20</code> 一定是栈顶节点 <code>3</code> 的右儿子。我们使用反证法，假设 <code>20</code> 是 <code>3</code> 的左儿子，因为 <code>20</code> 和 <code>3</code> 中间不存在其他的节点，那么 <code>3</code> 没有右儿子，<code>index</code> 应该恰好指向 <code>3</code>，但实际上为 <code>4</code>，因此产生了矛盾。所以我们将 <code>20</code> 作为 <code>3</code> 的右儿子，并将 <code>20</code> 入栈。</p>
+<ul>
+<li><code>stack = [3, 20]</code></li>
+<li><code>index -&gt; inorder[8] = 4</code></li>
+</ul>
+</li>
+<li><p>我们遍历 <code>7</code>，<code>8</code> 和 <code>4</code>。同理可得它们都是上一个节点（栈顶节点）的右儿子，所以它们会依次入栈。</p>
+<ul>
+<li><code>stack = [3, 20, 7, 8, 4]</code></li>
+<li><code>index -&gt; inorder[8] = 4</code></li>
+</ul>
+</li>
+<li><p>我们遍历 <code>5</code>，这时情况就不一样了。我们发现 <code>index</code> 恰好指向当前的栈顶节点 <code>4</code>，也就是说 <code>4</code> 没有右儿子，那么 <code>5</code> 必须为栈中某个节点的左儿子。那么如何找到这个节点呢？栈中的节点的顺序和它们在反向前序遍历中出现的顺序是一致的，而且每一个节点的左儿子都还没有被遍历过，<strong>那么这些节点的顺序和它们在反向中序遍历中出现的顺序一定是相反的</strong>。</p>
+<blockquote>
+<p>这是因为栈中的任意两个相邻的节点，前者都是后者的某个祖先。并且我们知道，栈中的任意一个节点的左儿子还没有被遍历过，说明后者一定是前者右儿子的子树中的节点，那么后者就先于前者出现在反向中序遍历中。</p>
+</blockquote>
+<p>  因此我们可以把 <code>index</code> 不断向左移动，并与栈顶节点进行比较。如果 <code>index</code> 对应的元素恰好等于栈顶节点，那么说明我们在反向中序遍历中找到了栈顶节点，所以将 <code>index</code> 减少 <code>1</code> 并弹出栈顶节点，直到 <code>index</code> 对应的元素不等于栈顶节点。按照这样的过程，我们弹出的最后一个节点 <code>x</code> 就是 <code>5</code> 的双亲节点，<strong>这是因为 <code>5</code> 出现在了 <code>x</code> 与 <code>x</code> 在栈中的下一个节点的反向中序遍历之间</strong>，因此 <code>5</code> 就是 <code>x</code> 的左儿子。</p>
+<p>  回到我们的例子，我们会依次从栈顶弹出 <code>4</code>，<code>8</code> 和 <code>7</code>，并且将 <code>index</code> 向左移动了三次。我们将 <code>5</code> 作为最后弹出的节点 <code>7</code> 的左儿子，并将 <code>5</code> 入栈。</p>
+<ul>
+<li><code>stack = [3, 20, 5]</code></li>
+<li><code>index -&gt; inorder[5] = 5</code></li>
+</ul>
+</li>
+<li><p>我们遍历 <code>9</code>。同理，<code>index</code> 恰好指向当前栈顶节点 <code>5</code>，那么我们会依次从栈顶弹出 <code>5</code>，<code>20</code> 和 <code>3</code>，并且将 <code>index</code> 向左移动了三次。我们将 <code>9</code> 作为最后弹出的节点 <code>3</code> 的左儿子，并将 <code>9</code> 入栈。</p>
+<ul>
+<li><code>stack = [9]</code></li>
+<li><code>index -&gt; inorder[2] = 10</code></li>
+</ul>
+</li>
+<li><p>我们遍历 <code>10</code>，将 <code>10</code> 作为栈顶节点 <code>9</code> 的右儿子，并将 <code>10</code> 入栈。</p>
+<ul>
+<li><code>stack = [9, 10]</code></li>
+<li><code>index -&gt; inorder[2] = 10</code></li>
+</ul>
+</li>
+<li><p>我们遍历 <code>15</code>。<code>index</code> 恰好指向当前栈顶节点 <code>10</code>，那么我们会依次从栈顶弹出 <code>10</code> 和 <code>9</code>，并且将 <code>index</code> 向左移动了两次。我们将 <code>15</code> 作为最后弹出的节点 <code>9</code> 的左儿子，并将 <code>15</code> 入栈。</p>
+<ul>
+<li><code>stack = [15]</code></li>
+<li><code>index -&gt; inorder[0] = 15</code></li>
+</ul>
+</li>
+</ul>
+<p>此时遍历结束，我们就构造出了正确的二叉树。</p>
+<p><strong>算法</strong></p>
+<p>我们归纳出上述例子中的算法流程：</p>
+<ul>
+<li><p>我们用一个栈和一个指针辅助进行二叉树的构造。初始时栈中存放了根节点（后序遍历的最后一个节点），指针指向中序遍历的最后一个节点；</p>
+</li>
+<li><p>我们依次枚举后序遍历中除了第一个节点以外的每个节点。如果 <code>index</code> 恰好指向栈顶节点，那么我们不断地弹出栈顶节点并向左移动 <code>index</code>，并将当前节点作为最后一个弹出的节点的左儿子；如果 <code>index</code> 和栈顶节点不同，我们将当前节点作为栈顶节点的右儿子；</p>
+</li>
+<li><p>无论是哪一种情况，我们最后都将当前的节点入栈。</p>
+</li>
+</ul>
+<p>最后得到的二叉树即为答案。</p>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><figcaption><span>[sol2-Java]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> TreeNode <span class="title function_">buildTree</span><span class="params">(<span class="type">int</span>[] inorder, <span class="type">int</span>[] postorder)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (postorder == <span class="literal">null</span> || postorder.length == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">TreeNode</span> <span class="variable">root</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">TreeNode</span>(postorder[postorder.length - <span class="number">1</span>]);</span><br><span class="line">        Deque&lt;TreeNode&gt; stack = <span class="keyword">new</span> <span class="title class_">LinkedList</span>&lt;TreeNode&gt;();</span><br><span class="line">        stack.push(root);</span><br><span class="line">        <span class="type">int</span> <span class="variable">inorderIndex</span> <span class="operator">=</span> inorder.length - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> postorder.length - <span class="number">2</span>; i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">            <span class="type">int</span> <span class="variable">postorderVal</span> <span class="operator">=</span> postorder[i];</span><br><span class="line">            <span class="type">TreeNode</span> <span class="variable">node</span> <span class="operator">=</span> stack.peek();</span><br><span class="line">            <span class="keyword">if</span> (node.val != inorder[inorderIndex]) &#123;</span><br><span class="line">                node.right = <span class="keyword">new</span> <span class="title class_">TreeNode</span>(postorderVal);</span><br><span class="line">                stack.push(node.right);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">while</span> (!stack.isEmpty() &amp;&amp; stack.peek().val == inorder[inorderIndex]) &#123;</span><br><span class="line">                    node = stack.pop();</span><br><span class="line">                    inorderIndex--;</span><br><span class="line">                &#125;</span><br><span class="line">                node.left = <span class="keyword">new</span> <span class="title class_">TreeNode</span>(postorderVal);</span><br><span class="line">                stack.push(node.left);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> root;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Cpp"><figure class="iseeu highlight cpp"><figcaption><span>[sol2-C++]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">TreeNode* <span class="title">buildTree</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; inorder, vector&lt;<span class="type">int</span>&gt;&amp; postorder)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (postorder.<span class="built_in">size</span>() == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">nullptr</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">auto</span> root = <span class="keyword">new</span> <span class="built_in">TreeNode</span>(postorder[postorder.<span class="built_in">size</span>() - <span class="number">1</span>]);</span><br><span class="line">        <span class="keyword">auto</span> s = <span class="built_in">stack</span>&lt;TreeNode*&gt;();</span><br><span class="line">        s.<span class="built_in">push</span>(root);</span><br><span class="line">        <span class="type">int</span> inorderIndex = inorder.<span class="built_in">size</span>() - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="built_in">int</span>(postorder.<span class="built_in">size</span>()) - <span class="number">2</span>; i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">            <span class="type">int</span> postorderVal = postorder[i];</span><br><span class="line">            <span class="keyword">auto</span> node = s.<span class="built_in">top</span>();</span><br><span class="line">            <span class="keyword">if</span> (node-&gt;val != inorder[inorderIndex]) &#123;</span><br><span class="line">                node-&gt;right = <span class="keyword">new</span> <span class="built_in">TreeNode</span>(postorderVal);</span><br><span class="line">                s.<span class="built_in">push</span>(node-&gt;right);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">while</span> (!s.<span class="built_in">empty</span>() &amp;&amp; s.<span class="built_in">top</span>()-&gt;val == inorder[inorderIndex]) &#123;</span><br><span class="line">                    node = s.<span class="built_in">top</span>();</span><br><span class="line">                    s.<span class="built_in">pop</span>();</span><br><span class="line">                    inorderIndex--;</span><br><span class="line">                &#125;</span><br><span class="line">                node-&gt;left = <span class="keyword">new</span> <span class="built_in">TreeNode</span>(postorderVal);</span><br><span class="line">                s.<span class="built_in">push</span>(node-&gt;left);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> root;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Golang"><figure class="iseeu highlight golang"><figcaption><span>[sol2-Golang]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">buildTree</span><span class="params">(inorder []<span class="type">int</span>, postorder []<span class="type">int</span>)</span></span> *TreeNode &#123;</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(postorder) == <span class="number">0</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">    &#125;</span><br><span class="line">    root := &amp;TreeNode&#123;Val: postorder[<span class="built_in">len</span>(postorder)<span class="number">-1</span>]&#125;</span><br><span class="line">    stack := []*TreeNode&#123;root&#125;</span><br><span class="line">    inorderIndex := <span class="built_in">len</span>(inorder) - <span class="number">1</span></span><br><span class="line">    <span class="keyword">for</span> i := <span class="built_in">len</span>(postorder) - <span class="number">2</span>; i &gt;= <span class="number">0</span>; i-- &#123;</span><br><span class="line">        postorderVal := postorder[i]</span><br><span class="line">        node := stack[<span class="built_in">len</span>(stack)<span class="number">-1</span>]</span><br><span class="line">        <span class="keyword">if</span> node.Val != inorder[inorderIndex] &#123;</span><br><span class="line">            node.Right = &amp;TreeNode&#123;Val: postorderVal&#125;</span><br><span class="line">            stack = <span class="built_in">append</span>(stack, node.Right)</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">for</span> <span class="built_in">len</span>(stack) &gt; <span class="number">0</span> &amp;&amp; stack[<span class="built_in">len</span>(stack)<span class="number">-1</span>].Val == inorder[inorderIndex] &#123;</span><br><span class="line">                node = stack[<span class="built_in">len</span>(stack)<span class="number">-1</span>]</span><br><span class="line">                stack = stack[:<span class="built_in">len</span>(stack)<span class="number">-1</span>]</span><br><span class="line">                inorderIndex--</span><br><span class="line">            &#125;</span><br><span class="line">            node.Left = &amp;TreeNode&#123;Val: postorderVal&#125;</span><br><span class="line">            stack = <span class="built_in">append</span>(stack, node.Left)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> root</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><figcaption><span>[sol2-JavaScript]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> buildTree = <span class="keyword">function</span>(<span class="params">inorder, postorder</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (postorder.<span class="property">length</span> == <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">const</span> root = <span class="keyword">new</span> <span class="title class_">TreeNode</span>(postorder[postorder.<span class="property">length</span> - <span class="number">1</span>]);</span><br><span class="line">    <span class="keyword">const</span> stack = [];</span><br><span class="line">    stack.<span class="title function_">push</span>(root);</span><br><span class="line">    <span class="keyword">let</span> inorderIndex = inorder.<span class="property">length</span> - <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = postorder.<span class="property">length</span> - <span class="number">2</span>; i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">        <span class="keyword">let</span> postorderVal = postorder[i];</span><br><span class="line">        <span class="keyword">let</span> node = stack[stack.<span class="property">length</span> - <span class="number">1</span>];</span><br><span class="line">        <span class="keyword">if</span> (node.<span class="property">val</span> !== inorder[inorderIndex]) &#123;</span><br><span class="line">            node.<span class="property">right</span> = <span class="keyword">new</span> <span class="title class_">TreeNode</span>(postorderVal);</span><br><span class="line">            stack.<span class="title function_">push</span>(node.<span class="property">right</span>);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">while</span> (stack.<span class="property">length</span> &amp;&amp; stack[stack.<span class="property">length</span> - <span class="number">1</span>].<span class="property">val</span> === inorder[inorderIndex]) &#123;</span><br><span class="line">                node = stack.<span class="title function_">pop</span>();</span><br><span class="line">                inorderIndex--;</span><br><span class="line">            &#125;</span><br><span class="line">            node.<span class="property">left</span> = <span class="keyword">new</span> <span class="title class_">TreeNode</span>(postorderVal);</span><br><span class="line">            stack.<span class="title function_">push</span>(node.<span class="property">left</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> root;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="C"><figure class="iseeu highlight c"><figcaption><span>[sol2-C]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> TreeNode* <span class="title function_">createTreeNode</span><span class="params">(<span class="type">int</span> val)</span> &#123;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">TreeNode</span>* <span class="title">ret</span> =</span> <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">struct</span> TreeNode));</span><br><span class="line">    ret-&gt;val = val;</span><br><span class="line">    ret-&gt;left = ret-&gt;right = <span class="literal">NULL</span>;</span><br><span class="line">    <span class="keyword">return</span> ret;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> TreeNode* <span class="title function_">buildTree</span><span class="params">(<span class="type">int</span>* inorder, <span class="type">int</span> inorderSize, <span class="type">int</span>* postorder, <span class="type">int</span> postorderSize)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (postorderSize == <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">TreeNode</span>* <span class="title">root</span> =</span> createTreeNode(postorder[postorderSize - <span class="number">1</span>]);</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">TreeNode</span>** <span class="title">s</span> =</span> <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">struct</span> TreeNode*) * <span class="number">10001</span>);</span><br><span class="line">    <span class="type">int</span> top = <span class="number">0</span>;</span><br><span class="line">    s[top++] = root;</span><br><span class="line">    <span class="type">int</span> inorderIndex = inorderSize - <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = postorderSize - <span class="number">2</span>; i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">        <span class="type">int</span> postorderVal = postorder[i];</span><br><span class="line">        <span class="class"><span class="keyword">struct</span> <span class="title">TreeNode</span>* <span class="title">node</span> =</span> s[top - <span class="number">1</span>];</span><br><span class="line">        <span class="keyword">if</span> (node-&gt;val != inorder[inorderIndex]) &#123;</span><br><span class="line">            node-&gt;right = createTreeNode(postorderVal);</span><br><span class="line">            s[top++] = node-&gt;right;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">while</span> (top &gt; <span class="number">0</span> &amp;&amp; s[top - <span class="number">1</span>]-&gt;val == inorder[inorderIndex]) &#123;</span><br><span class="line">                node = s[--top];</span><br><span class="line">                inorderIndex--;</span><br><span class="line">            &#125;</span><br><span class="line">            node-&gt;left = createTreeNode(postorderVal);</span><br><span class="line">            s[top++] = node-&gt;left;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> root;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>复杂度分析</strong></p>
+<ul>
+<li><p>时间复杂度：$O(n)$，其中 $n$ 是树中的节点个数。</p>
+</li>
+<li><p>空间复杂度：$O(n)$，我们需要使用 $O(h)$（其中 $h$ 是树的高度）的空间存储栈。这里 $h &lt; n$，所以（在最坏情况下）总空间复杂度为 $O(n)$。</p>
+</li>
+</ul>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <!--<div class="article-copyright-info-container">-->
+    <!--&lt;!&ndash;<ul>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><strong>Title:</strong> 0106-从中序与后序遍历序列构造二叉树</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><strong>Author:</strong> Raphael Liu</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><strong>Created at&ndash;&gt;-->
+                <!--&lt;!&ndash;:</strong> 2023-09-13 00:47:26</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;&ndash;&gt;-->
+            <!--&lt;!&ndash;<li>&ndash;&gt;-->
+                <!--&lt;!&ndash;<strong>Updated at&ndash;&gt;-->
+                    <!--&lt;!&ndash;:</strong> 2023-09-13 10:42:19&ndash;&gt;-->
+            <!--&lt;!&ndash;</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;<li>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;<strong>Link:</strong> https://fida.ltd/2023/09/13/0106-从中序与后序遍历序列构造二叉树/&ndash;&gt;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;</li>&ndash;&gt;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;<li>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;<strong>&ndash;&gt;&ndash;&gt;-->
+                <!--&lt;!&ndash;&lt;!&ndash;License:&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;</strong>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0</a>.&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;&ndash;&gt;&ndash;&gt;-->
+
+        <!--&lt;!&ndash;&lt;!&ndash;</li>&ndash;&gt;&ndash;&gt;-->
+    <!--&lt;!&ndash;</ul>&ndash;&gt;-->
+<!--</div>-->
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box">
+                
+                    <li class="tag-item">
+                        <a href="/tags/algorithm/">#algorithm</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item">
+                        <a href="/tags/MEDIUM/">#MEDIUM</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                        rel="prev"
+                        href="/2023/09/13/0105-%E4%BB%8E%E5%89%8D%E5%BA%8F%E4%B8%8E%E4%B8%AD%E5%BA%8F%E9%81%8D%E5%8E%86%E5%BA%8F%E5%88%97%E6%9E%84%E9%80%A0%E4%BA%8C%E5%8F%89%E6%A0%91/"
+                        >
+                            <span class="left arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">0105-从前序与中序遍历序列构造二叉树</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                        rel="next"
+                        href="/2023/09/13/0107-%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E5%B1%82%E5%BA%8F%E9%81%8D%E5%8E%86%20II/"
+                        >
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">0107-二叉树的层序遍历 II</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+
+        
+            <div class="comment-container">
+                <div class="comments-container pjax">
+    <div id="comment-anchor"></div>
+    <div class="comment-area-title">
+        <i class="fa-solid fa-comments"></i>&nbsp;Comments
+    </div>
+    
+
+        
+            
+ 
+    <div id="waline"></div>
+    <script type="module"  data-swup-reload-script>
+        import { init } from 'https://evan.beee.top/js/waline.mjs';
+
+        function loadWaline() {
+            init({
+                el: '#waline',
+                serverURL: 'https://example.example.com',
+                lang: 'zh-CN',
+                dark: 'body[class~="dark-mode"]',
+                requiredMeta: ['nick','mail'], // cannot customize by theme config, change it yourself
+            });
+        }
+
+        if ('true') {
+            const loadWalineTimeout = setTimeout(() => {
+                loadWaline();
+                clearTimeout(loadWalineTimeout);
+            }, 1000);
+        } else {
+            window.addEventListener('DOMContentLoaded', loadWaline);
+        }
+        
+    </script>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+
+    
+        <div class="toc-content-container">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">On this page</div>
+        <div class="page-title">0106-从中序与后序遍历序列构造二叉树</div>
+        
+
+    </div>
+</div>
+        </div>
+    
+</div>
+
+
+
+                
+
+            </div>
+
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2022</span>
+              -
+            
+            2023&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">Raphael Liu</a>
+        </div>
+        
+            <script data-swup-reload-script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">UV:</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">PV:</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <!--<div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">-->
+            <!--<span class="lg:block text-sm">powered_by</span>-->
+            <!--&lt;!&ndash;<span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.4.4</a></span>&ndash;&gt;-->
+        <!--</div>-->
+        
+        <!---->
+            <!--<div>-->
+                <!--runtime <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hours <span class="odometer" id="runtime_minutes"></span> minutes <span class="odometer" id="runtime_seconds"></span> seconds-->
+            <!--</div>-->
+        <!---->
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fa-regular fa-comments"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-expand-width flex justify-center items-center">
+            <i class="fa-regular fa-expand"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fa-solid fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa-solid fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa-solid fa-spinner fa-spin-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+    
+<script src="/js/libs/Swup.min.js"></script>
+
+<script src="/js/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/libs/SwupScrollPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+        ],
+        containers: ["#swup"],
+    });
+
+    swup.hooks.on("page:view", () => {
+        Global.refresh();
+    });
+
+    // if (document.readyState === "complete") {
+    //
+    // } else {
+    //     document.addEventListener("DOMContentLoaded", () => init());
+    // }
+</script>
+
+
+
+
+
+
+<script src="/js/utils.js" type="module"></script>
+
+<script src="/js/main.js" type="module"></script>
+
+<script src="/js/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/layouts/categoryList.js" type="module"></script>
+
+
+
+    
+<script src="/js/tools/localSearch.js"></script>
+
+
+
+
+    
+<script src="/js/tools/codeBlock.js"></script>
+
+
+
+
+    
+<script src="/js/layouts/lazyload.js"></script>
+
+
+
+
+    
+<script src="/js/tools/runtime.js"></script>
+
+    
+<script src="/js/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/libs/Typed.min.js"></script>
+
+  
+<script src="/js/plugins/typed.js"></script>
+
+
+
+
+
+
+
+<div class="post-scripts" data-swup-reload-script>
+    
+        
+<script src="/js/libs/anime.min.js"></script>
+
+        
+<script src="/js/tools/tocToggle.js" type="module"></script>
+
+<script src="/js/layouts/toc.js" type="module"></script>
+
+<script src="/js/plugins/tabs.js" type="module"></script>
+
+    
+</div>
+
+
+</body>
+</html>

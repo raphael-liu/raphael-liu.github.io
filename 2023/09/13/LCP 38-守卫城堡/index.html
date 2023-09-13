@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="Raphael Liu">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/2023/09/13/lcp 38-守卫城堡/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="城堡守卫游戏的胜利条件为使恶魔无法从出生点到达城堡。游戏地图可视作 2*N 的方格图，记作字符串数组 grid，其中： - &quot;.&quot;表示恶魔可随意通行的平地； - &quot;#&quot; 表示恶魔不可通过的障碍物，玩家可通过在 平地 上设置障碍物，即将 &quot;.&quot; 变为 &quot;#&quot;以阻挡恶魔前进； - &quot;S&quot; 表示恶魔出生点">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LCP 38-守卫城堡">
+<meta property="og:url" content="http://example.com/2023/09/13/LCP%2038-%E5%AE%88%E5%8D%AB%E5%9F%8E%E5%A0%A1/index.html">
+<meta property="og:site_name" content="Raphael&#39;s Blog">
+<meta property="og:description" content="城堡守卫游戏的胜利条件为使恶魔无法从出生点到达城堡。游戏地图可视作 2*N 的方格图，记作字符串数组 grid，其中： - &quot;.&quot;表示恶魔可随意通行的平地； - &quot;#&quot; 表示恶魔不可通过的障碍物，玩家可通过在 平地 上设置障碍物，即将 &quot;.&quot; 变为 &quot;#&quot;以阻挡恶魔前进； - &quot;S&quot; 表示恶魔出生点">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://pic.leetcode-cn.com/1614828208-oFlpVs-image.png">
+<meta property="og:image" content="https://pic.leetcode-cn.com/1614828242-oveClu-image.png">
+<meta property="article:published_time" content="2023-09-12T16:47:26.000Z">
+<meta property="article:modified_time" content="2023-09-13T09:01:06.661Z">
+<meta property="article:author" content="Raphael Liu">
+<meta property="article:tag" content="algorithm">
+<meta property="article:tag" content="HARD">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://pic.leetcode-cn.com/1614828208-oFlpVs-image.png">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/redefine-favicon.svg" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/redefine-favicon.svg">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/redefine-favicon.svg">
+    <!--- Page Info-->
+    
+    <title>
+        
+            LCP 38-守卫城堡 -
+        
+        Raphael&#39;s Blog
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/css/build/styles.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/fonts.css">
+
+    
+<link rel="stylesheet" href="/fonts/Satoshi/satoshi.css">
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+
+    <!--- Inject Part-->
+    
+    <script id="hexo-configurations">
+    let Global = window.Global || {};
+    Global.hexo_config = {"hostname":"example.com","root":"/","language":"zh_CN"};
+    Global.theme_config = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":true,"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"open_graph":true,"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-wqery6-light.webp","dark":"/images/wallhaven-wqery6-dark.webp"},"title":"Raphael's Blog","subtitle":{"text":["格物致知","坚持做正确的事情"],"hitokoto":{"enable":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":false,"links":{"github":"https://github.com/raphael-liu","email":"raphael@buaa.edu.cn# your email"},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.4.4","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"links":{"首页":{"path":"/","icon":"fa-regular fa-house"},"文章":{"path":"/archives","icon":"fa-regular fa-archive"},"关于":{"icon":"fa-regular fa-user","submenus":{"我":"/about/me","Github":"https://github.com/raphael-liu"}}},"search":{"enable":true,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"links":null},"article_date_format":"auto","categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}},"footerStart":"2022/8/17 11:45:14"};
+    Global.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    Global.data_config = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="swup-progress-icon">
+            <i class="fa-solid fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container" id="swup">
+
+    
+
+    <div class="main-content-container">
+
+
+        <div class="main-content-header">
+            <header class="navbar-container">
+    
+    <div class="navbar-content">
+        <div class="left">
+            
+            <a class="logo-title" href="http://example.com/">
+                
+                Raphael&#39;s Blog
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/"  >
+                                    
+                                        
+                                            <i class="fa-regular fa-house"></i>
+                                        
+                                        首页
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/archives"  >
+                                    
+                                        
+                                            <i class="fa-regular fa-archive"></i>
+                                        
+                                        文章
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="has-dropdown" 
+                                    href="#" onClick="return false;">
+                                    
+                                        
+                                            <i class="fa-regular fa-user"></i>
+                                        
+                                        关于&nbsp;<i class="fa-solid fa-chevron-down"></i>
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                                    <ul class="sub-menu">
+                                    
+                                        <li>
+                                        <a href="/about/me">我
+                                        </a>
+                                        </li>
+                                    
+                                        <li>
+                                        <a target="_blank" rel="noopener" href="https://github.com/raphael-liu">GITHUB
+                                        </a>
+                                        </li>
+                                    
+                                    </ul>
+                                
+                            </li>
+                    
+                    
+                        <li class="navbar-item search search-popup-trigger">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fa-solid fa-magnifying-glass"></i></div>
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile drawer -->
+    <div class="navbar-drawer w-full absolute top-0 left-0 bg-background-color">
+        <ul class="drawer-navbar-list flex flex-col justify-start items-center">
+            
+                
+                    <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group " 
+                        href="/"  >
+                             
+                                
+                                    <i class="fa-regular fa-house"></i>
+                                
+                                首页
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+                
+                    <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group " 
+                        href="/archives"  >
+                             
+                                
+                                    <i class="fa-regular fa-archive"></i>
+                                
+                                文章
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+                
+                    <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group has-dropdown" 
+                        href="#" onClick="return false;">
+                            
+                                
+                                    <i class="fa-regular fa-user"></i>
+                                
+                                关于&nbsp;<i class="group-hover:rotate-180 transition-transform fa-solid fa-chevron-down"></i>
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                              
+                        
+                            <li class="text-base flex justify-center items-center hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                <a class="py-0.5" href="/about/me">我</a>
+                            </li>
+                        
+                            <li class="text-base flex justify-center items-center hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                <a class="py-0.5" target="_blank" rel="noopener" href="https://github.com/raphael-liu">GITHUB</a>
+                            </li>
+                        
+                    
+            
+
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="post-page-container">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            
+                <h1 class="article-title-regular">LCP 38-守卫城堡</h1>
+            
+            </div>
+            
+                    
+        
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">Raphael Liu</span>
+                        
+                            <span class="author-label">Lv10</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2023-09-13 00:47:26</span>
+        <span class="mobile">2023-09-13 00:47:26</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2023-09-13 17:01:06</span>
+            <span class="mobile">2023-09-13 17:01:06</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/algorithm/">algorithm</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/HARD/">HARD</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        
+
+
+        <div class="article-content markdown-body">
+            <p>城堡守卫游戏的胜利条件为使恶魔无法从出生点到达城堡。游戏地图可视作 <code>2*N</code> 的方格图，记作字符串数组 <code>grid</code>，其中： - <code>&quot;.&quot;</code><br>表示恶魔可随意通行的平地； - <code>&quot;#&quot;</code> 表示恶魔不可通过的障碍物，玩家可通过在 <strong>平地</strong> 上设置障碍物，即将 <code>&quot;.&quot;</code> 变为 <code>&quot;#&quot;</code><br>以阻挡恶魔前进； - <code>&quot;S&quot;</code> 表示恶魔出生点，将有大量的恶魔该点生成，恶魔可向上&#x2F;向下&#x2F;向左&#x2F;向右移动，且无法移动至地图外； - <code>&quot;P&quot;</code><br>表示瞬移点，移动到 <code>&quot;P&quot;</code> 点的恶魔可被传送至任意一个 <code>&quot;P&quot;</code> 点，也可选择不传送； - <code>&quot;C&quot;</code> 表示城堡。<br>然而在游戏中用于建造障碍物的金钱是有限的，请返回玩家最少需要放置几个障碍物才能获得胜利。若无论怎样放置障碍物均无法获胜，请返回 <code>-1</code>。 <strong>注意：</strong><br>- 地图上可能有一个或多个出生点 - 地图上有且只有一个城堡 <strong>示例 1</strong> &gt;输入：<code>grid = [&quot;S.C.P#P.&quot;, &quot;.....#.S&quot;]</code> &gt; &gt;输出：<code>3</code> &gt; &gt;解释：至少需要放置三个障碍物 ![image.png](<a class="link"   target="_blank" rel="noopener" href="https://pic.leetcode-/" >https://pic.leetcode- <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a><br>cn.com&#x2F;1614828255-uuNdNJ-image.png) <strong>示例 2：</strong> &gt;输入：<code>grid = [&quot;SP#P..P#PC#.S&quot;, &quot;..#P..P####.#&quot;]</code> &gt; &gt;输出：<code>-1</code> &gt; &gt;解释：无论怎样修筑障碍物，均无法阻挡最左侧出生的恶魔到达城堡位置<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://pic.leetcode-cn.com/1614828208-oFlpVs-image.png"
+                      alt="image.png"
+                > <strong>示例<br>3：</strong> &gt;输入：<code>grid = [&quot;SP#.C.#PS&quot;, &quot;P.#...#.P&quot;]</code> &gt; &gt;输出：<code>0</code> &gt; &gt;解释：无需放置障碍物即可获得胜利<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://pic.leetcode-cn.com/1614828242-oveClu-image.png"
+                      alt="image.png"
+                > <strong>示例<br>4：</strong> &gt;输入：<code>grid = [&quot;CP.#.P.&quot;, &quot;...S..S&quot;]</code> &gt; &gt;输出：<code>4</code> &gt; &gt;解释：至少需要放置 4<br>个障碍物，示意图为放置方法之一 ![image.png](<a class="link"   target="_blank" rel="noopener" href="https://pic.leetcode-cn.com/1614828218-sIAYkb-" >https://pic.leetcode-cn.com/1614828218-sIAYkb- <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a><br>image.png) <strong>提示：</strong> - <code>grid.length == 2</code> - <code>2 &lt;= grid[0].length == grid[1].length &lt;= 10^4</code> - <code>grid[i][j]</code> 仅包含字符 <code>&quot;.&quot;</code>、<code>&quot;#&quot;</code>、<code>&quot;C&quot;</code>、<code>&quot;P&quot;</code>、<code>&quot;S&quot;</code></p>
+<h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>由于本题是「力扣杯」的竞赛题，因此只会给出提示、简要思路以及代码，不会对算法本身进行详细说明，希望读者多多思考。</p>
+<h4 id="方法一：拆点-最小割"><a href="#方法一：拆点-最小割" class="headerlink" title="方法一：拆点 + 最小割"></a>方法一：拆点 + 最小割</h4><h4 id="提示-1"><a href="#提示-1" class="headerlink" title="提示 1"></a>提示 1</h4><p>我们希望「恶魔」无法到达城堡，即「城堡」和「恶魔」之间不连通，对应到图论模型上就是「割」问题。</p>
+<h4 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h4><p>使用最小割建模：</p>
+<ul>
+<li>将每一个非「障碍物」的格子拆分成两个点，一个作为「起点」一个作为「终点」。<ul>
+<li>如果该格子是「空地」，连接一条流量为 1 的边。</li>
+<li>否则，连接一条流量为 \infty 的边。</li>
+</ul>
+</li>
+<li>相邻两个格子之间，从一个格子的「终点」到另一个格子的「起点」连接一条流量为 \infty 的边。</li>
+<li>对于所有「传送门」，它们的「终点」向「超级传送门节点」连接一条流量为 \infty 的边，并从该节点连回「起点」一条流量为 \infty 的边。</li>
+<li>所有「恶魔」的「终点」向「超级恶魔节点」连接一条流量为 \infty 的边。</li>
+</ul>
+<p>以「城堡」的「起点」为源点，「超级恶魔节点」为汇点，求出最小割。根据最小割最大流定理，求出最大流即可。如果最大流为 \infty，说明答案为 -1。</p>
+<h4 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h4><p>下面的最大流模板参考自 <a class="link"   target="_blank" rel="noopener" href="https://github.com/atcoder/ac-library" >AtCoder Library <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>。</p>
+<div class="highlight-container" data-rel="C++"><figure class="iseeu highlight c++"><figcaption><span>[sol1-C++]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> atcoder &#123;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> internal &#123;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> <span class="title class_">T</span>&gt; <span class="keyword">struct</span> <span class="title class_">simple_queue</span> &#123;</span><br><span class="line">    std::vector&lt;T&gt; payload;</span><br><span class="line">    <span class="type">int</span> pos = <span class="number">0</span>;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">reserve</span><span class="params">(<span class="type">int</span> n)</span> </span>&#123; payload.<span class="built_in">reserve</span>(n); &#125;</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">size</span><span class="params">()</span> <span class="type">const</span> </span>&#123; <span class="keyword">return</span> <span class="built_in">int</span>(payload.<span class="built_in">size</span>()) - pos; &#125;</span><br><span class="line">    <span class="function"><span class="type">bool</span> <span class="title">empty</span><span class="params">()</span> <span class="type">const</span> </span>&#123; <span class="keyword">return</span> pos == <span class="built_in">int</span>(payload.<span class="built_in">size</span>()); &#125;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">push</span><span class="params">(<span class="type">const</span> T&amp; t)</span> </span>&#123; payload.<span class="built_in">push_back</span>(t); &#125;</span><br><span class="line">    <span class="function">T&amp; <span class="title">front</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> payload[pos]; &#125;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">clear</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        payload.<span class="built_in">clear</span>();</span><br><span class="line">        pos = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">pop</span><span class="params">()</span> </span>&#123; pos++; &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">&#125;  <span class="comment">// namespace internal</span></span><br><span class="line"></span><br><span class="line">&#125;  <span class="comment">// namespace atcoder</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> atcoder &#123;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> <span class="title class_">Cap</span>&gt; <span class="keyword">struct</span> <span class="title class_">mf_graph</span> &#123;</span><br><span class="line">  <span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">mf_graph</span>() : _n(<span class="number">0</span>) &#123;&#125;</span><br><span class="line">    <span class="function"><span class="keyword">explicit</span> <span class="title">mf_graph</span><span class="params">(<span class="type">int</span> n)</span> : _n(n), g(n) &#123;</span>&#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">add_edge</span><span class="params">(<span class="type">int</span> from, <span class="type">int</span> to, Cap cap)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// printf(&quot;edge = %d %d %d\n&quot;, from, to, cap);</span></span><br><span class="line">        <span class="built_in">assert</span>(<span class="number">0</span> &lt;= from &amp;&amp; from &lt; _n);</span><br><span class="line">        <span class="built_in">assert</span>(<span class="number">0</span> &lt;= to &amp;&amp; to &lt; _n);</span><br><span class="line">        <span class="built_in">assert</span>(<span class="number">0</span> &lt;= cap);</span><br><span class="line">        <span class="type">int</span> m = <span class="built_in">int</span>(pos.<span class="built_in">size</span>());</span><br><span class="line">        pos.<span class="built_in">push_back</span>(&#123;from, <span class="built_in">int</span>(g[from].<span class="built_in">size</span>())&#125;);</span><br><span class="line">        <span class="type">int</span> from_id = <span class="built_in">int</span>(g[from].<span class="built_in">size</span>());</span><br><span class="line">        <span class="type">int</span> to_id = <span class="built_in">int</span>(g[to].<span class="built_in">size</span>());</span><br><span class="line">        <span class="keyword">if</span> (from == to) to_id++;</span><br><span class="line">        g[from].<span class="built_in">push_back</span>(_edge&#123;to, to_id, cap&#125;);</span><br><span class="line">        g[to].<span class="built_in">push_back</span>(_edge&#123;from, from_id, <span class="number">0</span>&#125;);</span><br><span class="line">        <span class="keyword">return</span> m;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">struct</span> <span class="title class_">edge</span> &#123;</span><br><span class="line">        <span class="type">int</span> from, to;</span><br><span class="line">        Cap cap, flow;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="function">edge <span class="title">get_edge</span><span class="params">(<span class="type">int</span> i)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> m = <span class="built_in">int</span>(pos.<span class="built_in">size</span>());</span><br><span class="line">        <span class="built_in">assert</span>(<span class="number">0</span> &lt;= i &amp;&amp; i &lt; m);</span><br><span class="line">        <span class="keyword">auto</span> _e = g[pos[i].first][pos[i].second];</span><br><span class="line">        <span class="keyword">auto</span> _re = g[_e.to][_e.rev];</span><br><span class="line">        <span class="keyword">return</span> edge&#123;pos[i].first, _e.to, _e.cap + _re.cap, _re.cap&#125;;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function">std::vector&lt;edge&gt; <span class="title">edges</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> m = <span class="built_in">int</span>(pos.<span class="built_in">size</span>());</span><br><span class="line">        std::vector&lt;edge&gt; result;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; m; i++) &#123;</span><br><span class="line">            result.<span class="built_in">push_back</span>(<span class="built_in">get_edge</span>(i));</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">change_edge</span><span class="params">(<span class="type">int</span> i, Cap new_cap, Cap new_flow)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> m = <span class="built_in">int</span>(pos.<span class="built_in">size</span>());</span><br><span class="line">        <span class="built_in">assert</span>(<span class="number">0</span> &lt;= i &amp;&amp; i &lt; m);</span><br><span class="line">        <span class="built_in">assert</span>(<span class="number">0</span> &lt;= new_flow &amp;&amp; new_flow &lt;= new_cap);</span><br><span class="line">        <span class="keyword">auto</span>&amp; _e = g[pos[i].first][pos[i].second];</span><br><span class="line">        <span class="keyword">auto</span>&amp; _re = g[_e.to][_e.rev];</span><br><span class="line">        _e.cap = new_cap - new_flow;</span><br><span class="line">        _re.cap = new_flow;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function">Cap <span class="title">flow</span><span class="params">(<span class="type">int</span> s, <span class="type">int</span> t)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">flow</span>(s, t, std::numeric_limits&lt;Cap&gt;::<span class="built_in">max</span>());</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function">Cap <span class="title">flow</span><span class="params">(<span class="type">int</span> s, <span class="type">int</span> t, Cap flow_limit)</span> </span>&#123;</span><br><span class="line">        <span class="built_in">assert</span>(<span class="number">0</span> &lt;= s &amp;&amp; s &lt; _n);</span><br><span class="line">        <span class="built_in">assert</span>(<span class="number">0</span> &lt;= t &amp;&amp; t &lt; _n);</span><br><span class="line">        <span class="built_in">assert</span>(s != t);</span><br><span class="line"></span><br><span class="line">        <span class="function">std::vector&lt;<span class="type">int</span>&gt; <span class="title">level</span><span class="params">(_n)</span>, <span class="title">iter</span><span class="params">(_n)</span></span>;</span><br><span class="line">        internal::simple_queue&lt;<span class="type">int</span>&gt; que;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">auto</span> bfs = [&amp;]() &#123;</span><br><span class="line">            std::<span class="built_in">fill</span>(level.<span class="built_in">begin</span>(), level.<span class="built_in">end</span>(), <span class="number">-1</span>);</span><br><span class="line">            level[s] = <span class="number">0</span>;</span><br><span class="line">            que.<span class="built_in">clear</span>();</span><br><span class="line">            que.<span class="built_in">push</span>(s);</span><br><span class="line">            <span class="keyword">while</span> (!que.<span class="built_in">empty</span>()) &#123;</span><br><span class="line">                <span class="type">int</span> v = que.<span class="built_in">front</span>();</span><br><span class="line">                que.<span class="built_in">pop</span>();</span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">auto</span> e : g[v]) &#123;</span><br><span class="line">                    <span class="keyword">if</span> (e.cap == <span class="number">0</span> || level[e.to] &gt;= <span class="number">0</span>) <span class="keyword">continue</span>;</span><br><span class="line">                    level[e.to] = level[v] + <span class="number">1</span>;</span><br><span class="line">                    <span class="keyword">if</span> (e.to == t) <span class="keyword">return</span>;</span><br><span class="line">                    que.<span class="built_in">push</span>(e.to);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line">        <span class="keyword">auto</span> dfs = [&amp;](<span class="keyword">auto</span> self, <span class="type">int</span> v, Cap up) &#123;</span><br><span class="line">            <span class="keyword">if</span> (v == s) <span class="keyword">return</span> up;</span><br><span class="line">            Cap res = <span class="number">0</span>;</span><br><span class="line">            <span class="type">int</span> level_v = level[v];</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span>&amp; i = iter[v]; i &lt; <span class="built_in">int</span>(g[v].<span class="built_in">size</span>()); i++) &#123;</span><br><span class="line">                _edge&amp; e = g[v][i];</span><br><span class="line">                <span class="keyword">if</span> (level_v &lt;= level[e.to] || g[e.to][e.rev].cap == <span class="number">0</span>) <span class="keyword">continue</span>;</span><br><span class="line">                Cap d =</span><br><span class="line">                    <span class="built_in">self</span>(self, e.to, std::<span class="built_in">min</span>(up - res, g[e.to][e.rev].cap));</span><br><span class="line">                <span class="keyword">if</span> (d &lt;= <span class="number">0</span>) <span class="keyword">continue</span>;</span><br><span class="line">                g[v][i].cap += d;</span><br><span class="line">                g[e.to][e.rev].cap -= d;</span><br><span class="line">                res += d;</span><br><span class="line">                <span class="keyword">if</span> (res == up) <span class="keyword">return</span> res;</span><br><span class="line">            &#125;</span><br><span class="line">            level[v] = _n;</span><br><span class="line">            <span class="keyword">return</span> res;</span><br><span class="line">        &#125;;</span><br><span class="line"></span><br><span class="line">        Cap flow = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span> (flow &lt; flow_limit) &#123;</span><br><span class="line">            <span class="built_in">bfs</span>();</span><br><span class="line">            <span class="keyword">if</span> (level[t] == <span class="number">-1</span>) <span class="keyword">break</span>;</span><br><span class="line">            std::<span class="built_in">fill</span>(iter.<span class="built_in">begin</span>(), iter.<span class="built_in">end</span>(), <span class="number">0</span>);</span><br><span class="line">            Cap f = <span class="built_in">dfs</span>(dfs, t, flow_limit - flow);</span><br><span class="line">            <span class="keyword">if</span> (!f) <span class="keyword">break</span>;</span><br><span class="line">            flow += f;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> flow;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function">std::vector&lt;<span class="type">bool</span>&gt; <span class="title">min_cut</span><span class="params">(<span class="type">int</span> s)</span> </span>&#123;</span><br><span class="line">        <span class="function">std::vector&lt;<span class="type">bool</span>&gt; <span class="title">visited</span><span class="params">(_n)</span></span>;</span><br><span class="line">        internal::simple_queue&lt;<span class="type">int</span>&gt; que;</span><br><span class="line">        que.<span class="built_in">push</span>(s);</span><br><span class="line">        <span class="keyword">while</span> (!que.<span class="built_in">empty</span>()) &#123;</span><br><span class="line">            <span class="type">int</span> p = que.<span class="built_in">front</span>();</span><br><span class="line">            que.<span class="built_in">pop</span>();</span><br><span class="line">            visited[p] = <span class="literal">true</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">auto</span> e : g[p]) &#123;</span><br><span class="line">                <span class="keyword">if</span> (e.cap &amp;&amp; !visited[e.to]) &#123;</span><br><span class="line">                    visited[e.to] = <span class="literal">true</span>;</span><br><span class="line">                    que.<span class="built_in">push</span>(e.to);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> visited;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span>:</span><br><span class="line">    <span class="type">int</span> _n;</span><br><span class="line">    <span class="keyword">struct</span> <span class="title class_">_edge</span> &#123;</span><br><span class="line">        <span class="type">int</span> to, rev;</span><br><span class="line">        Cap cap;</span><br><span class="line">    &#125;;</span><br><span class="line">    std::vector&lt;std::pair&lt;<span class="type">int</span>, <span class="type">int</span>&gt;&gt; pos;</span><br><span class="line">    std::vector&lt;std::vector&lt;_edge&gt;&gt; g;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">&#125;  <span class="comment">// namespace atcoder</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="type">static</span> <span class="keyword">constexpr</span> <span class="type">int</span> dirs[<span class="number">4</span>][<span class="number">2</span>] = &#123; &#123;<span class="number">-1</span>, <span class="number">0</span>&#125;, &#123;<span class="number">1</span>, <span class="number">0</span>&#125;, &#123;<span class="number">0</span>, <span class="number">-1</span>&#125;, &#123;<span class="number">0</span>, <span class="number">1</span>&#125; &#125;;</span><br><span class="line">    <span class="type">static</span> <span class="keyword">constexpr</span> <span class="type">int</span> INF = <span class="number">20010</span>;</span><br><span class="line">    </span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">guardCastle</span><span class="params">(vector&lt;string&gt;&amp; grid)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> n = grid[<span class="number">0</span>].<span class="built_in">size</span>();</span><br><span class="line">        <span class="comment">// extra point for collecting portals &amp; demons</span></span><br><span class="line">        <span class="comment">// portal=n*4, demons=n*4+1</span></span><br><span class="line">        <span class="function">atcoder::mf_graph&lt;<span class="type">int</span>&gt; <span class="title">g</span><span class="params">(n * <span class="number">4</span> + <span class="number">2</span>)</span></span>;</span><br><span class="line">        <span class="type">int</span> sx = <span class="number">-1</span>, sy = <span class="number">-1</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">2</span>; ++i) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt; n; ++j) &#123;</span><br><span class="line">                <span class="type">int</span> base_id = i * n + j;</span><br><span class="line">                <span class="keyword">if</span>(grid[i][j]==<span class="string">&#x27;#&#x27;</span>) <span class="keyword">continue</span>;</span><br><span class="line">                <span class="keyword">if</span> (grid[i][j] == <span class="string">&#x27;.&#x27;</span>) &#123;</span><br><span class="line">                    g.<span class="built_in">add_edge</span>(base_id * <span class="number">2</span>, base_id * <span class="number">2</span> + <span class="number">1</span>, <span class="number">1</span>);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">else</span> <span class="keyword">if</span> (grid[i][j] == <span class="string">&#x27;C&#x27;</span>) &#123;</span><br><span class="line">                    g.<span class="built_in">add_edge</span>(base_id * <span class="number">2</span>, base_id * <span class="number">2</span> + <span class="number">1</span>, INF);</span><br><span class="line">                    sx = i;</span><br><span class="line">                    sy = j;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">else</span> <span class="keyword">if</span> (grid[i][j] == <span class="string">&#x27;S&#x27;</span> || grid[i][j] == <span class="string">&#x27;P&#x27;</span>) &#123;</span><br><span class="line">                    g.<span class="built_in">add_edge</span>(base_id * <span class="number">2</span>, base_id * <span class="number">2</span> + <span class="number">1</span>, INF);</span><br><span class="line">                &#125;</span><br><span class="line">                </span><br><span class="line">                <span class="keyword">if</span> (grid[i][j] == <span class="string">&#x27;S&#x27;</span>) &#123;</span><br><span class="line">                    g.<span class="built_in">add_edge</span>(base_id * <span class="number">2</span> + <span class="number">1</span>, n * <span class="number">4</span> + <span class="number">1</span>, INF);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">if</span> (grid[i][j] == <span class="string">&#x27;P&#x27;</span>) &#123;</span><br><span class="line">                    g.<span class="built_in">add_edge</span>(base_id * <span class="number">2</span> + <span class="number">1</span>, n * <span class="number">4</span>, INF);</span><br><span class="line">                    g.<span class="built_in">add_edge</span>(n * <span class="number">4</span>, base_id * <span class="number">2</span>, INF);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">for</span> (<span class="type">int</span> d = <span class="number">0</span>; d &lt; <span class="number">4</span>; ++d) &#123;</span><br><span class="line">                    <span class="type">int</span> ii = i + dirs[d][<span class="number">0</span>];</span><br><span class="line">                    <span class="type">int</span> jj = j + dirs[d][<span class="number">1</span>];</span><br><span class="line">                    <span class="keyword">if</span> (ii &gt;= <span class="number">0</span> &amp;&amp; ii &lt; <span class="number">2</span> &amp;&amp; jj &gt;= <span class="number">0</span> &amp;&amp; jj &lt; n) &#123;</span><br><span class="line">                        <span class="keyword">if</span> (grid[ii][jj] == <span class="string">&#x27;#&#x27;</span>) &#123;</span><br><span class="line">                            <span class="keyword">continue</span>;</span><br><span class="line">                        &#125;</span><br><span class="line">                        <span class="type">int</span> case_id = ii * n + jj;</span><br><span class="line">                        g.<span class="built_in">add_edge</span>(base_id * <span class="number">2</span> + <span class="number">1</span>, case_id * <span class="number">2</span>, INF);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="type">int</span> ans = g.<span class="built_in">flow</span>((sx * n + sy) * <span class="number">2</span>, n * <span class="number">4</span> + <span class="number">1</span>);</span><br><span class="line">        <span class="keyword">if</span> (ans == INF) &#123;</span><br><span class="line">            ans = <span class="number">-1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></div>
+
+<h4 id="方法二：动态规划"><a href="#方法二：动态规划" class="headerlink" title="方法二：动态规划"></a>方法二：动态规划</h4><h4 id="提示-1-1"><a href="#提示-1-1" class="headerlink" title="提示 1"></a>提示 1</h4><p>如果「恶魔」能够走到「传送门」，那么「恶魔」就会支配所有的「传送门」。<br>因此，我们可以考虑两种情况：即允许「恶魔」走到「传送门」，或者不允许「恶魔」走到「传送门」。</p>
+<ul>
+<li>对于第一种情况，我们可以将所有的「传送门」全部看成「恶魔」；</li>
+<li>对于第二种情况，我们可以将所有的「传送门」全部看成「城堡」。</li>
+</ul>
+<p>此时，网格中就只有「城堡」「恶魔」「空地」「障碍物」了，我们需要做的就是把「城堡」和「恶魔」之间互相分开。</p>
+<h4 id="提示-2"><a href="#提示-2" class="headerlink" title="提示 2"></a>提示 2</h4><p>使用两次动态规划解决上述问题，每一次动态规划考虑一种情况。</p>
+<h4 id="思路-1"><a href="#思路-1" class="headerlink" title="思路"></a>思路</h4><p>在动态规划之前（将「传送门」替换成「恶魔」或「城堡」之后），我们首先需要判断网格中是否有相邻的「城堡」和「恶魔」。如果有，那么显然是无法将它们分开的，因此无解；如果没有，那么把所有的「空地」都放上「障碍物」，显然可以将它们分开的，因此存在解。</p>
+<p>用 f[i][s_1][s_2] 表示当前处理到第 i 列，并且第 i 列的两个格子的状态分别是 s_1 和 s_2 时，最小需要将「空地」放上「障碍物」的操作次数。状态有 4 种：</p>
+<ul>
+<li>0 表示「空地」</li>
+<li>1 表示「城堡」或者之前的列存在「城堡」可以到达此位置</li>
+<li>2 表示「恶魔」或者之前的列存在「恶魔」可以到达此位置</li>
+<li>3 表示「障碍物」</li>
+</ul>
+<p>任意两种状态之间都是相互独立的。</p>
+<p>使用该状态的表示方法进行动态规划即可，其中的细节较为复杂，希望读者可以结合下面的细节部分以及代码部分自行思考。</p>
+<h4 id="细节"><a href="#细节" class="headerlink" title="细节"></a>细节</h4><p>这里介绍一种相对容易实现的状态转移方法。</p>
+<p>设第 i-1 列的 f 状态为 s_1 和 s_2，第 i 列本身的两个格子（不考虑第 i-1 列的影响）的状态为 t_1 和 t_2，我们需要判断 s_1, s_2 是否可以和 t_1, t_2 成为相邻的两列。如果可以，那么 s_1, s_2 会对 t_1, t_2 产生影响（例如 s_1&#x3D;1 且 t_1&#x3D;0，那么「城堡」就可以到达 t_1 的位置，会将 t_1 的值更新为 1）。设影响后的状态为 t_1’, t_2’，那么就有状态转移方程：</p>
+<p>f[i][t_1’][t_2’] &#x3D; \min\big{ f[i-1][s_1][s_2] + \Delta(t_1, t_2) \big}</p>
+<p>其中 \Delta(t_1, t_2) 表示我们额外在第 i 列放置的「障碍物」数量。</p>
+<h4 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h4><div class="highlight-container" data-rel="C++"><figure class="iseeu highlight c++"><figcaption><span>[sol2-C++]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> f[<span class="number">10010</span>][<span class="number">4</span>][<span class="number">4</span>];</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="type">static</span> <span class="keyword">constexpr</span> <span class="type">int</span> dirs[<span class="number">4</span>][<span class="number">2</span>] = &#123; &#123;<span class="number">-1</span>, <span class="number">0</span>&#125;, &#123;<span class="number">1</span>, <span class="number">0</span>&#125;, &#123;<span class="number">0</span>, <span class="number">-1</span>&#125;, &#123;<span class="number">0</span>, <span class="number">1</span>&#125; &#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">check</span><span class="params">(<span class="type">const</span> vector&lt;string&gt;&amp; grid)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> n = grid[<span class="number">0</span>].<span class="built_in">size</span>();</span><br><span class="line">        <span class="comment">// check if no (castle, demon) neighbor pair exists</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">2</span>; ++i) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt; n; ++j) &#123;</span><br><span class="line">                <span class="keyword">for</span> (<span class="type">int</span> d = <span class="number">0</span>; d &lt; <span class="number">4</span>; ++d) &#123;</span><br><span class="line">                    <span class="type">int</span> ni = i + dirs[d][<span class="number">0</span>];</span><br><span class="line">                    <span class="type">int</span> nj = j + dirs[d][<span class="number">1</span>];</span><br><span class="line">                    <span class="keyword">if</span> (ni &gt;= <span class="number">0</span> &amp;&amp; ni &lt; <span class="number">2</span> &amp;&amp; nj &gt;= <span class="number">0</span> &amp;&amp; nj &lt; n) &#123;</span><br><span class="line">                        <span class="keyword">if</span> (grid[i][j] == <span class="string">&#x27;C&#x27;</span> &amp;&amp; grid[ni][nj] == <span class="string">&#x27;S&#x27;</span>) &#123;</span><br><span class="line">                            <span class="keyword">return</span> INT_MAX;</span><br><span class="line">                        &#125;</span><br><span class="line">                        <span class="keyword">if</span> (grid[i][j] == <span class="string">&#x27;S&#x27;</span> &amp;&amp; grid[ni][nj] == <span class="string">&#x27;C&#x27;</span>) &#123;</span><br><span class="line">                            <span class="keyword">return</span> INT_MAX;</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// f[i][s1][s2] = ith column, s1, s2, minimum barriers to put</span></span><br><span class="line">        <span class="comment">// s1, s2 = (0=empty, 1=castle, 2=demon, 3=stone)</span></span><br><span class="line">        <span class="built_in">memset</span>(f, <span class="number">0x3f</span>, <span class="built_in">sizeof</span>(f));</span><br><span class="line">        f[<span class="number">0</span>][<span class="number">0</span>][<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">        unordered_map&lt;<span class="type">char</span>, <span class="type">int</span>&gt; rep = &#123; &#123;<span class="string">&#x27;.&#x27;</span>, <span class="number">0</span>&#125;, &#123;<span class="string">&#x27;C&#x27;</span>, <span class="number">1</span>&#125;, &#123;<span class="string">&#x27;S&#x27;</span>, <span class="number">2</span>&#125;, &#123;<span class="string">&#x27;#&#x27;</span>, <span class="number">3</span>&#125; &#125;;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">auto</span> update = [&amp;](<span class="type">int</span> i, <span class="type">int</span> s1, <span class="type">int</span> s2, <span class="type">int</span> t1, <span class="type">int</span> t2, <span class="type">int</span> extra) &#123;</span><br><span class="line">            <span class="keyword">if</span> (s1 == <span class="number">1</span> || s1 == <span class="number">2</span>) &#123;</span><br><span class="line">                <span class="keyword">if</span> (s1 + t1 == <span class="number">3</span>) &#123;</span><br><span class="line">                    <span class="keyword">return</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">if</span> (t1 == <span class="number">0</span>) &#123;</span><br><span class="line">                    t1 = s1;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (s2 == <span class="number">1</span> || s2 == <span class="number">2</span>) &#123;</span><br><span class="line">                <span class="keyword">if</span> (s2 + t2 == <span class="number">3</span>) &#123;</span><br><span class="line">                    <span class="keyword">return</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">if</span> (t2 == <span class="number">0</span>) &#123;</span><br><span class="line">                    t2 = s2;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> ((t1 == <span class="number">1</span> || t1 == <span class="number">2</span>) &amp;&amp; (t1 + t2 == <span class="number">3</span>)) &#123;</span><br><span class="line">                <span class="keyword">return</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> ((t1 == <span class="number">1</span> || t1 == <span class="number">2</span>) &amp;&amp; t2 == <span class="number">0</span>) &#123;</span><br><span class="line">                t2 = t1;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> ((t2 == <span class="number">1</span> || t2 == <span class="number">2</span>) &amp;&amp; t1 == <span class="number">0</span>) &#123;</span><br><span class="line">                t1 = t2;</span><br><span class="line">            &#125;</span><br><span class="line">            f[i][t1][t2] = <span class="built_in">min</span>(f[i][t1][t2], f[i - <span class="number">1</span>][s1][s2] + extra);</span><br><span class="line">        &#125;;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; ++i) &#123;</span><br><span class="line">            <span class="type">int</span> t1 = rep[grid[<span class="number">0</span>][i - <span class="number">1</span>]];</span><br><span class="line">            <span class="type">int</span> t2 = rep[grid[<span class="number">1</span>][i - <span class="number">1</span>]];</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> s1 = <span class="number">0</span>; s1 &lt; <span class="number">4</span>; ++s1) &#123;</span><br><span class="line">                <span class="keyword">for</span> (<span class="type">int</span> s2 = <span class="number">0</span>; s2 &lt; <span class="number">4</span>; ++s2) &#123;</span><br><span class="line">                    <span class="built_in">update</span>(i, s1, s2, t1, t2, <span class="number">0</span>);</span><br><span class="line">                    <span class="keyword">if</span> (grid[<span class="number">0</span>][i - <span class="number">1</span>] == <span class="string">&#x27;.&#x27;</span>) &#123;</span><br><span class="line">                        <span class="built_in">update</span>(i, s1, s2, <span class="number">3</span>, t2, <span class="number">1</span>);</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">if</span> (grid[<span class="number">1</span>][i - <span class="number">1</span>] == <span class="string">&#x27;.&#x27;</span>) &#123;</span><br><span class="line">                        <span class="built_in">update</span>(i, s1, s2, t1, <span class="number">3</span>, <span class="number">1</span>);</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">if</span> (grid[<span class="number">0</span>][i - <span class="number">1</span>] == <span class="string">&#x27;.&#x27;</span> &amp;&amp; grid[<span class="number">1</span>][i - <span class="number">1</span>] == <span class="string">&#x27;.&#x27;</span>) &#123;</span><br><span class="line">                        <span class="built_in">update</span>(i, s1, s2, <span class="number">3</span>, <span class="number">3</span>, <span class="number">2</span>);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="type">int</span> ans = INT_MAX;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">4</span>; ++i) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt; <span class="number">4</span>; ++j) &#123;</span><br><span class="line">                ans = <span class="built_in">min</span>(ans, f[n][i][j]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">guardCastle</span><span class="params">(vector&lt;string&gt;&amp; grid)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> n = grid[<span class="number">0</span>].<span class="built_in">size</span>();</span><br><span class="line">        <span class="type">int</span> ans = INT_MAX;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// mark every portal as castle</span></span><br><span class="line">        <span class="keyword">auto</span> g1 = grid;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">2</span>; ++i) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt; n; ++j) &#123;</span><br><span class="line">                <span class="keyword">if</span> (g1[i][j] == <span class="string">&#x27;P&#x27;</span>) &#123;</span><br><span class="line">                    g1[i][j] = <span class="string">&#x27;C&#x27;</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        ans = <span class="built_in">min</span>(ans, <span class="built_in">check</span>(g1));</span><br><span class="line"></span><br><span class="line">        <span class="comment">// mark every portal as demon</span></span><br><span class="line">        <span class="keyword">auto</span> g2 = grid;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">2</span>; ++i) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt; n; ++j) &#123;</span><br><span class="line">                <span class="keyword">if</span> (g2[i][j] == <span class="string">&#x27;P&#x27;</span>) &#123;</span><br><span class="line">                    g2[i][j] = <span class="string">&#x27;S&#x27;</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        ans = <span class="built_in">min</span>(ans, <span class="built_in">check</span>(g2));</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (ans == INT_MAX) &#123;</span><br><span class="line">            ans = <span class="number">-1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></div>
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <!--<div class="article-copyright-info-container">-->
+    <!--&lt;!&ndash;<ul>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><strong>Title:</strong> LCP 38-守卫城堡</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><strong>Author:</strong> Raphael Liu</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><strong>Created at&ndash;&gt;-->
+                <!--&lt;!&ndash;:</strong> 2023-09-13 00:47:26</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;&ndash;&gt;-->
+            <!--&lt;!&ndash;<li>&ndash;&gt;-->
+                <!--&lt;!&ndash;<strong>Updated at&ndash;&gt;-->
+                    <!--&lt;!&ndash;:</strong> 2023-09-13 17:01:06&ndash;&gt;-->
+            <!--&lt;!&ndash;</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;<li>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;<strong>Link:</strong> https://fida.ltd/2023/09/13/LCP 38-守卫城堡/&ndash;&gt;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;</li>&ndash;&gt;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;<li>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;<strong>&ndash;&gt;&ndash;&gt;-->
+                <!--&lt;!&ndash;&lt;!&ndash;License:&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;</strong>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0</a>.&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;&ndash;&gt;&ndash;&gt;-->
+
+        <!--&lt;!&ndash;&lt;!&ndash;</li>&ndash;&gt;&ndash;&gt;-->
+    <!--&lt;!&ndash;</ul>&ndash;&gt;-->
+<!--</div>-->
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box">
+                
+                    <li class="tag-item">
+                        <a href="/tags/algorithm/">#algorithm</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item">
+                        <a href="/tags/HARD/">#HARD</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                        rel="prev"
+                        href="/2023/09/13/LCP%2037-%E6%9C%80%E5%B0%8F%E7%9F%A9%E5%BD%A2%E9%9D%A2%E7%A7%AF/"
+                        >
+                            <span class="left arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">LCP 37-最小矩形面积</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                        rel="next"
+                        href="/2023/09/13/LCP%2039-%E6%97%A0%E4%BA%BA%E6%9C%BA%E6%96%B9%E9%98%B5/"
+                        >
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">LCP 39-无人机方阵</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+
+        
+            <div class="comment-container">
+                <div class="comments-container pjax">
+    <div id="comment-anchor"></div>
+    <div class="comment-area-title">
+        <i class="fa-solid fa-comments"></i>&nbsp;Comments
+    </div>
+    
+
+        
+            
+ 
+    <div id="waline"></div>
+    <script type="module"  data-swup-reload-script>
+        import { init } from 'https://evan.beee.top/js/waline.mjs';
+
+        function loadWaline() {
+            init({
+                el: '#waline',
+                serverURL: 'https://example.example.com',
+                lang: 'zh-CN',
+                dark: 'body[class~="dark-mode"]',
+                requiredMeta: ['nick','mail'], // cannot customize by theme config, change it yourself
+            });
+        }
+
+        if ('true') {
+            const loadWalineTimeout = setTimeout(() => {
+                loadWaline();
+                clearTimeout(loadWalineTimeout);
+            }, 1000);
+        } else {
+            window.addEventListener('DOMContentLoaded', loadWaline);
+        }
+        
+    </script>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+
+    
+        <div class="toc-content-container">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">On this page</div>
+        <div class="page-title">LCP 38-守卫城堡</div>
+        
+
+    </div>
+</div>
+        </div>
+    
+</div>
+
+
+
+                
+
+            </div>
+
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2022</span>
+              -
+            
+            2023&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">Raphael Liu</a>
+        </div>
+        
+            <script data-swup-reload-script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">UV:</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">PV:</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <!--<div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">-->
+            <!--<span class="lg:block text-sm">powered_by</span>-->
+            <!--&lt;!&ndash;<span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.4.4</a></span>&ndash;&gt;-->
+        <!--</div>-->
+        
+        <!---->
+            <!--<div>-->
+                <!--runtime <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hours <span class="odometer" id="runtime_minutes"></span> minutes <span class="odometer" id="runtime_seconds"></span> seconds-->
+            <!--</div>-->
+        <!---->
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fa-regular fa-comments"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-expand-width flex justify-center items-center">
+            <i class="fa-regular fa-expand"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fa-solid fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa-solid fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa-solid fa-spinner fa-spin-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+    
+<script src="/js/libs/Swup.min.js"></script>
+
+<script src="/js/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/libs/SwupScrollPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+        ],
+        containers: ["#swup"],
+    });
+
+    swup.hooks.on("page:view", () => {
+        Global.refresh();
+    });
+
+    // if (document.readyState === "complete") {
+    //
+    // } else {
+    //     document.addEventListener("DOMContentLoaded", () => init());
+    // }
+</script>
+
+
+
+
+
+
+<script src="/js/utils.js" type="module"></script>
+
+<script src="/js/main.js" type="module"></script>
+
+<script src="/js/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/layouts/categoryList.js" type="module"></script>
+
+
+
+    
+<script src="/js/tools/localSearch.js"></script>
+
+
+
+
+    
+<script src="/js/tools/codeBlock.js"></script>
+
+
+
+
+    
+<script src="/js/layouts/lazyload.js"></script>
+
+
+
+
+    
+<script src="/js/tools/runtime.js"></script>
+
+    
+<script src="/js/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/libs/Typed.min.js"></script>
+
+  
+<script src="/js/plugins/typed.js"></script>
+
+
+
+
+
+
+
+<div class="post-scripts" data-swup-reload-script>
+    
+        
+<script src="/js/libs/anime.min.js"></script>
+
+        
+<script src="/js/tools/tocToggle.js" type="module"></script>
+
+<script src="/js/layouts/toc.js" type="module"></script>
+
+<script src="/js/plugins/tabs.js" type="module"></script>
+
+    
+</div>
+
+
+</body>
+</html>

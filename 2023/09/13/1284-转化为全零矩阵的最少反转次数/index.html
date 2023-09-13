@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="Raphael Liu">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/2023/09/13/1284-转化为全零矩阵的最少反转次数/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="给你一个 m x n 的二进制矩阵 mat。每一步，你可以选择一个单元格并将它反转（反转表示 0 变 1 ，1 变 0）。如果存在和它相邻的单元格，那么这些相邻的单元格也会被反转。相邻的两个单元格共享同一条边。 请你返回将矩阵 mat 转化为全零矩阵的 最少反转次数 ，如果无法转化为全零矩阵，请返回 -1 。 二进制矩阵  的每一个格子要么是 0 要么是 1 。 全零矩阵  是所有格子都为 0 的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="1284-转化为全零矩阵的最少反转次数">
+<meta property="og:url" content="http://example.com/2023/09/13/1284-%E8%BD%AC%E5%8C%96%E4%B8%BA%E5%85%A8%E9%9B%B6%E7%9F%A9%E9%98%B5%E7%9A%84%E6%9C%80%E5%B0%91%E5%8F%8D%E8%BD%AC%E6%AC%A1%E6%95%B0/index.html">
+<meta property="og:site_name" content="Raphael&#39;s Blog">
+<meta property="og:description" content="给你一个 m x n 的二进制矩阵 mat。每一步，你可以选择一个单元格并将它反转（反转表示 0 变 1 ，1 变 0）。如果存在和它相邻的单元格，那么这些相邻的单元格也会被反转。相邻的两个单元格共享同一条边。 请你返回将矩阵 mat 转化为全零矩阵的 最少反转次数 ，如果无法转化为全零矩阵，请返回 -1 。 二进制矩阵  的每一个格子要么是 0 要么是 1 。 全零矩阵  是所有格子都为 0 的">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-09-12T16:47:26.000Z">
+<meta property="article:modified_time" content="2023-09-13T09:01:06.858Z">
+<meta property="article:author" content="Raphael Liu">
+<meta property="article:tag" content="algorithm">
+<meta property="article:tag" content="HARD">
+<meta name="twitter:card" content="summary">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/redefine-favicon.svg" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/redefine-favicon.svg">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/redefine-favicon.svg">
+    <!--- Page Info-->
+    
+    <title>
+        
+            1284-转化为全零矩阵的最少反转次数 -
+        
+        Raphael&#39;s Blog
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/css/build/styles.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/fonts.css">
+
+    
+<link rel="stylesheet" href="/fonts/Satoshi/satoshi.css">
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+
+    <!--- Inject Part-->
+    
+    <script id="hexo-configurations">
+    let Global = window.Global || {};
+    Global.hexo_config = {"hostname":"example.com","root":"/","language":"zh_CN"};
+    Global.theme_config = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":true,"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"open_graph":true,"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-wqery6-light.webp","dark":"/images/wallhaven-wqery6-dark.webp"},"title":"Raphael's Blog","subtitle":{"text":["格物致知","坚持做正确的事情"],"hitokoto":{"enable":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":false,"links":{"github":"https://github.com/raphael-liu","email":"raphael@buaa.edu.cn# your email"},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.4.4","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"links":{"首页":{"path":"/","icon":"fa-regular fa-house"},"文章":{"path":"/archives","icon":"fa-regular fa-archive"},"关于":{"icon":"fa-regular fa-user","submenus":{"我":"/about/me","Github":"https://github.com/raphael-liu"}}},"search":{"enable":true,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"links":null},"article_date_format":"auto","categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}},"footerStart":"2022/8/17 11:45:14"};
+    Global.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    Global.data_config = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="swup-progress-icon">
+            <i class="fa-solid fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container" id="swup">
+
+    
+
+    <div class="main-content-container">
+
+
+        <div class="main-content-header">
+            <header class="navbar-container">
+    
+    <div class="navbar-content">
+        <div class="left">
+            
+            <a class="logo-title" href="http://example.com/">
+                
+                Raphael&#39;s Blog
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/"  >
+                                    
+                                        
+                                            <i class="fa-regular fa-house"></i>
+                                        
+                                        首页
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/archives"  >
+                                    
+                                        
+                                            <i class="fa-regular fa-archive"></i>
+                                        
+                                        文章
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="has-dropdown" 
+                                    href="#" onClick="return false;">
+                                    
+                                        
+                                            <i class="fa-regular fa-user"></i>
+                                        
+                                        关于&nbsp;<i class="fa-solid fa-chevron-down"></i>
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                                    <ul class="sub-menu">
+                                    
+                                        <li>
+                                        <a href="/about/me">我
+                                        </a>
+                                        </li>
+                                    
+                                        <li>
+                                        <a target="_blank" rel="noopener" href="https://github.com/raphael-liu">GITHUB
+                                        </a>
+                                        </li>
+                                    
+                                    </ul>
+                                
+                            </li>
+                    
+                    
+                        <li class="navbar-item search search-popup-trigger">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fa-solid fa-magnifying-glass"></i></div>
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile drawer -->
+    <div class="navbar-drawer w-full absolute top-0 left-0 bg-background-color">
+        <ul class="drawer-navbar-list flex flex-col justify-start items-center">
+            
+                
+                    <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group " 
+                        href="/"  >
+                             
+                                
+                                    <i class="fa-regular fa-house"></i>
+                                
+                                首页
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+                
+                    <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group " 
+                        href="/archives"  >
+                             
+                                
+                                    <i class="fa-regular fa-archive"></i>
+                                
+                                文章
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+                
+                    <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group has-dropdown" 
+                        href="#" onClick="return false;">
+                            
+                                
+                                    <i class="fa-regular fa-user"></i>
+                                
+                                关于&nbsp;<i class="group-hover:rotate-180 transition-transform fa-solid fa-chevron-down"></i>
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                              
+                        
+                            <li class="text-base flex justify-center items-center hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                <a class="py-0.5" href="/about/me">我</a>
+                            </li>
+                        
+                            <li class="text-base flex justify-center items-center hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                <a class="py-0.5" target="_blank" rel="noopener" href="https://github.com/raphael-liu">GITHUB</a>
+                            </li>
+                        
+                    
+            
+
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="post-page-container">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            
+                <h1 class="article-title-regular">1284-转化为全零矩阵的最少反转次数</h1>
+            
+            </div>
+            
+                    
+        
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">Raphael Liu</span>
+                        
+                            <span class="author-label">Lv10</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2023-09-13 00:47:26</span>
+        <span class="mobile">2023-09-13 00:47:26</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2023-09-13 17:01:06</span>
+            <span class="mobile">2023-09-13 17:01:06</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/algorithm/">algorithm</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/HARD/">HARD</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        
+
+
+        <div class="article-content markdown-body">
+            <p>给你一个 <code>m x n</code> 的二进制矩阵 <code>mat</code>。每一步，你可以选择一个单元格并将它反转（反转表示 <code>0</code> 变 <code>1</code> ，<code>1</code> 变 <code>0</code><br>）。如果存在和它相邻的单元格，那么这些相邻的单元格也会被反转。相邻的两个单元格共享同一条边。</p>
+<p>请你返回将矩阵 <code>mat</code> 转化为全零矩阵的 <em>最少反转次数</em> ，如果无法转化为全零矩阵，请返回 <code>-1</code> 。</p>
+<p><strong>二进制矩阵</strong>  的每一个格子要么是 <code>0</code> 要么是 <code>1</code> 。</p>
+<p><strong>全零矩阵</strong>  是所有格子都为 <code>0</code> 的矩阵。</p>
+<p><strong>示例  1：</strong></p>
+<p>![](<a class="link"   target="_blank" rel="noopener" href="https://assets.leetcode-cn.com/aliyun-lc-" >https://assets.leetcode-cn.com/aliyun-lc- <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a><br>upload&#x2F;uploads&#x2F;2019&#x2F;12&#x2F;13&#x2F;matrix.png)</p>
+<pre><code>**输入：** mat = [[0,0],[0,1]]
+**输出：** 3
+**解释：** 一个可能的解是反转 (1, 0)，然后 (0, 1) ，最后是 (1, 1) 。
+</code></pre>
+<p><strong>示例 2：</strong></p>
+<pre><code>**输入：** mat = [[0]]
+**输出：** 0
+**解释：** 给出的矩阵是全零矩阵，所以你不需要改变它。
+</code></pre>
+<p><strong>示例 3：</strong></p>
+<pre><code>**输入：** mat = [[1,0,0],[1,0,0]]
+**输出：** -1
+**解释：** 该矩阵无法转变成全零矩阵
+</code></pre>
+<p><strong>提示：</strong></p>
+<ul>
+<li><code>m == mat.length</code></li>
+<li><code>n == mat[0].length</code></li>
+<li><code>1 &lt;= m &lt;= 3</code></li>
+<li><code>1 &lt;= n &lt;= 3</code></li>
+<li><code>mat[i][j]</code> 是 0 或 1 。</li>
+</ul>
+<p><strong>预备知识</strong></p>
+<p>本题需要用到一些位运算的知识：</p>
+<ul>
+<li><p>对于十进制整数 <code>x</code>，我们可以用 <code>x &amp; 1</code> 得到 <code>x</code> 的二进制表示的最低位，它等价于 <code>x % 2</code>：</p>
+<ul>
+<li><p>例如当 <code>x = 3</code> 时，<code>x</code> 的二进制表示为 <code>11</code>，<code>x &amp; 1</code> 的值为 <code>1</code>；</p>
+</li>
+<li><p>例如当 <code>x = 6</code> 时，<code>x</code> 的二进制表示为 <code>110</code>，<code>x &amp; 1</code> 的值为 <code>0</code>。</p>
+</li>
+</ul>
+</li>
+<li><p>对于十进制整数 <code>x</code>，我们可以用 <code>x &amp; (1 &lt;&lt; k)</code> 来判断 <code>x</code> 二进制表示的第 <code>k</code> 位（最低位为第 <code>0</code> 位）是否为 <code>1</code>。如果该表达式的值大于零，那么第 <code>k</code> 位为 <code>1</code>：</p>
+<ul>
+<li><p>例如当 <code>x = 3</code> 时，<code>x</code> 的二进制表示为 <code>11</code>，<code>x &amp; (1 &lt;&lt; 1) = 11 &amp; 10 = 10 &gt; 0</code>，说明第 <code>1</code> 位为 <code>1</code>；</p>
+</li>
+<li><p>例如当 <code>x = 5</code> 时，<code>x</code> 的二进制表示为 <code>101</code>，<code>x &amp; (1 &lt;&lt; 1) = 101 &amp; 10 = 0</code>，说明第 <code>1</code> 位不为 <code>1</code>。</p>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>方法一：广度优先搜索</strong></p>
+<p>由于题目需要我们求出将矩阵 <code>mat</code> 变为全零矩阵的最少翻转次数，因此一种合适的方法是使用广度优先搜索。我们把起始状态加入队列，每次取出队首的状态，并搜索其相邻的状态。如果相邻的状态未被搜索过，则将其加入队尾，直至搜索到全零状态。</p>
+<p>然而本题的状态表示是一个二维矩阵。如果将二维矩阵直接作为状态进行存储，会占用较多空间，并且不容易判断其是否被搜索过：在 <code>Python</code> 语言中，可以使用 <code>set()</code> 存储和判断这些二维矩阵，但在 <code>Java</code> 和 <code>C++</code> 中实现起来较为复杂。因此我们需要考虑将二维矩阵与语言中的内置类型进行映射。</p>
+<p>一种简单的方法是将二维矩阵按照行优先的顺序展开，看成一个十进制整数的二进制表示。例如矩阵</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[0,0,1]</span><br><span class="line">[1,0,0]</span><br><span class="line">[0,1,1]</span><br></pre></td></tr></table></figure></div>
+
+<p>将其按照行优先的顺序展开可以得到</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[0,0,1,1,0,0,0,1,1]</span><br></pre></td></tr></table></figure></div>
+
+<p>再看成一个二进制表示</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">001100011</span><br></pre></td></tr></table></figure></div>
+
+<p>即为十进制整数 <code>99</code>。这样我们就设计了一种从二维矩阵到整数的映射方法，可以看出此映射是单射，因此就可以使用哈希集合（HashSet）来存储已经被搜索过的状态了。综上所述，我们需要实现如下函数：</p>
+<ul>
+<li><p>函数 <code>encode(mat) -&gt; x</code>，将二维矩阵 <code>mat</code> 映射成十进制整数 <code>x</code>。具体地，我们按照行优先的顺序遍历 <code>mat</code>，并使用二进制转十进制的方法即可得到 <code>x</code>；</p>
+</li>
+<li><p>函数 <code>decode(x) -&gt; mat</code>，将十进制整数 <code>x</code> 映射成二维矩阵 <code>mat</code>。具体地，我们每次取出 <code>x</code> 二进制表示的最低位，依次填入 <code>mat</code> 中，填入的顺序为行优先顺序的反序。</p>
+</li>
+</ul>
+<p>实现了这两个函数之后，广度优先搜索的部分就很容易了。我们首先对初始状态调用 <code>encode()</code> 并加入队列。在搜索过程中，我们依次取出队首的状态，调用 <code>decode()</code> 得到二维矩阵，枚举二维矩阵中的每个位置进行翻转。对于每个翻转后的状态，我们调用 <code>encode()</code> 函数，通过哈希集合判断该状态是否被搜索过。如果未被搜索，则将其加入队尾。当搜索到全零状态，即 <code>encode()</code> 的值也为 <code>0</code> 时，搜索结束。</p>
+<div class="highlight-container" data-rel="C++"><figure class="iseeu highlight c++"><figcaption><span>[sol1]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="type">static</span> <span class="keyword">constexpr</span> <span class="type">int</span> dirs[<span class="number">5</span>][<span class="number">2</span>] = &#123; &#123;<span class="number">-1</span>, <span class="number">0</span>&#125;, &#123;<span class="number">1</span>, <span class="number">0</span>&#125;, &#123;<span class="number">0</span>, <span class="number">-1</span>&#125;, &#123;<span class="number">0</span>, <span class="number">1</span>&#125;, &#123;<span class="number">0</span>, <span class="number">0</span>&#125; &#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">encode</span><span class="params">(<span class="type">const</span> vector&lt;vector&lt;<span class="type">int</span>&gt;&gt;&amp; mat, <span class="type">int</span> m, <span class="type">int</span> n)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> x = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; m; ++i) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt; n; ++j) &#123;</span><br><span class="line">                x = x * <span class="number">2</span> + mat[i][j];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> x;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; <span class="built_in">decode</span>(<span class="type">int</span> x, <span class="type">int</span> m, <span class="type">int</span> n) &#123;</span><br><span class="line">        vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; <span class="built_in">mat</span>(m, <span class="built_in">vector</span>&lt;<span class="type">int</span>&gt;(n));</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = m - <span class="number">1</span>; i &gt;= <span class="number">0</span>; --i) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> j = n - <span class="number">1</span>; j &gt;= <span class="number">0</span>; --j) &#123;</span><br><span class="line">                mat[i][j] = x &amp; <span class="number">1</span>;</span><br><span class="line">                x &gt;&gt;= <span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> mat;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">convert</span><span class="params">(vector&lt;vector&lt;<span class="type">int</span>&gt;&gt;&amp; mat, <span class="type">int</span> m, <span class="type">int</span> n, <span class="type">int</span> i, <span class="type">int</span> j)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> k = <span class="number">0</span>; k &lt; <span class="number">5</span>; ++k) &#123;</span><br><span class="line">            <span class="type">int</span> i0 = i + dirs[k][<span class="number">0</span>], j0 = j + dirs[k][<span class="number">1</span>];</span><br><span class="line">            <span class="keyword">if</span> (i0 &gt;= <span class="number">0</span> &amp;&amp; i0 &lt; m &amp;&amp; j0 &gt;= <span class="number">0</span> &amp;&amp; j0 &lt; n) &#123;</span><br><span class="line">                mat[i0][j0] ^= <span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">minFlips</span><span class="params">(vector&lt;vector&lt;<span class="type">int</span>&gt;&gt;&amp; mat)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> m = mat.<span class="built_in">size</span>(), n = mat[<span class="number">0</span>].<span class="built_in">size</span>();</span><br><span class="line">        <span class="type">int</span> x_start = <span class="built_in">encode</span>(mat, m, n), step = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">if</span> (x_start == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> step;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        unordered_set&lt;<span class="type">int</span>&gt; visited;</span><br><span class="line">        queue&lt;<span class="type">int</span>&gt; q;</span><br><span class="line">        visited.<span class="built_in">insert</span>(x_start);</span><br><span class="line">        q.<span class="built_in">push</span>(x_start);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> (!q.<span class="built_in">empty</span>()) &#123;</span><br><span class="line">            ++step;</span><br><span class="line">            <span class="type">int</span> k = q.<span class="built_in">size</span>();</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> _ = <span class="number">0</span>; _ &lt; k; ++_) &#123;</span><br><span class="line">                vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; status = <span class="built_in">decode</span>(q.<span class="built_in">front</span>(), m, n);</span><br><span class="line">                q.<span class="built_in">pop</span>();</span><br><span class="line">                <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; m; ++i) &#123;</span><br><span class="line">                    <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt; n; ++j) &#123;</span><br><span class="line">                        <span class="built_in">convert</span>(status, m, n, i, j);</span><br><span class="line">                        <span class="type">int</span> x_cur = <span class="built_in">encode</span>(status, m, n);</span><br><span class="line">                        <span class="keyword">if</span> (x_cur == <span class="number">0</span>) &#123;</span><br><span class="line">                            <span class="keyword">return</span> step;</span><br><span class="line">                        &#125;</span><br><span class="line">                        <span class="keyword">if</span> (!visited.<span class="built_in">count</span>(x_cur)) &#123;</span><br><span class="line">                            visited.<span class="built_in">insert</span>(x_cur);</span><br><span class="line">                            q.<span class="built_in">push</span>(x_cur);</span><br><span class="line">                        &#125;</span><br><span class="line">                        <span class="built_in">convert</span>(status, m, n, i, j);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><figcaption><span>[sol1]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">encode</span>(<span class="params">self, mat, m, n</span>):</span><br><span class="line">        x = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(m):</span><br><span class="line">            <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(n):</span><br><span class="line">                x = x * <span class="number">2</span> + mat[i][j]</span><br><span class="line">        <span class="keyword">return</span> x</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">decode</span>(<span class="params">self, x, m, n</span>):</span><br><span class="line">        mat = [[<span class="number">0</span>] * n <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(m)]</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(m - <span class="number">1</span>, -<span class="number">1</span>, -<span class="number">1</span>):</span><br><span class="line">            <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(n - <span class="number">1</span>, -<span class="number">1</span>, -<span class="number">1</span>):</span><br><span class="line">                mat[i][j] = x &amp; <span class="number">1</span></span><br><span class="line">                x &gt;&gt;= <span class="number">1</span></span><br><span class="line">        <span class="keyword">return</span> mat</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">convert</span>(<span class="params">self, mat, m, n, i, j</span>):</span><br><span class="line">        <span class="keyword">for</span> di, dj <span class="keyword">in</span> [(-<span class="number">1</span>, <span class="number">0</span>), (<span class="number">1</span>, <span class="number">0</span>), (<span class="number">0</span>, -<span class="number">1</span>), (<span class="number">0</span>, <span class="number">1</span>), (<span class="number">0</span>, <span class="number">0</span>)]:</span><br><span class="line">            i0, j0 = i + di, j + dj</span><br><span class="line">            <span class="keyword">if</span> <span class="number">0</span> &lt;= i0 &lt; m <span class="keyword">and</span> <span class="number">0</span> &lt;= j0 &lt; n:</span><br><span class="line">                mat[i0][j0] ^= <span class="number">1</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">minFlips</span>(<span class="params">self, mat: <span class="type">List</span>[<span class="type">List</span>[<span class="built_in">int</span>]]</span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        m, n = <span class="built_in">len</span>(mat), <span class="built_in">len</span>(mat[<span class="number">0</span>])</span><br><span class="line">        x_start, step = self.encode(mat, m, n), <span class="number">0</span></span><br><span class="line">        <span class="keyword">if</span> x_start == <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">return</span> step</span><br><span class="line"></span><br><span class="line">        visited = &#123;x_start&#125;</span><br><span class="line">        q = queue.Queue()</span><br><span class="line">        q.put_nowait(x_start)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> <span class="keyword">not</span> q.empty():</span><br><span class="line">            step += <span class="number">1</span></span><br><span class="line">            k = q.qsize()</span><br><span class="line">            <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(k):</span><br><span class="line">                status = self.decode(q.get_nowait(), m, n)</span><br><span class="line">                <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(m):</span><br><span class="line">                    <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(n):</span><br><span class="line">                        self.convert(status, m, n, i, j)</span><br><span class="line">                        x_cur = self.encode(status, m, n)</span><br><span class="line">                        <span class="keyword">if</span> x_cur == <span class="number">0</span>:</span><br><span class="line">                            <span class="keyword">return</span> step</span><br><span class="line">                        <span class="keyword">if</span> x_cur <span class="keyword">not</span> <span class="keyword">in</span> visited:</span><br><span class="line">                            visited.add(x_cur)</span><br><span class="line">                            q.put_nowait(x_cur)</span><br><span class="line">                        self.convert(status, m, n, i, j)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> -<span class="number">1</span></span><br></pre></td></tr></table></figure></div>
+
+<p><strong>复杂度分析</strong></p>
+<ul>
+<li><p>时间复杂度：O(2^{MN} * MN)。二维矩阵 <code>mat</code> 中的每个位置可以为 <code>0</code> 或 <code>1</code>，则二维矩阵的总数目为 O(2^{MN})。对于每个矩阵，我们在搜索时都会枚举其中的所有位置进行翻转，枚举的时间复杂度为 O(MN)。因此总的时间复杂度为 O(2^{MN} * MN)。</p>
+</li>
+<li><p>空间复杂度：O(2^{MN})。我们将二维矩阵映射为整数后，空间复杂度在数量级上就等同于矩阵的总数目了。</p>
+</li>
+</ul>
+<p><strong>方法二：深度优先搜索</strong></p>
+<p>假设二维矩阵 <code>mat</code> 经过 <code>k</code> 次翻转操作 <code>T1, T2, ..., Tk</code> 后变成全零矩阵，且 <code>k</code> 是最少的翻转次数，那么我们可以发现如下两个性质：</p>
+<ul>
+<li><p><strong>顺序无关性：</strong> 将这 <code>k</code> 次翻转操作任意打乱顺序，再从二维矩阵 <code>mat</code> 开始依次进行这些翻转操作，最后仍然会得到全零矩阵。证明如下：对于 <code>mat</code> 中的任意位置 <code>(x, y)</code>，假设 <code>T1, T2, ..., Tk</code> 中有 <code>c</code> 次翻转操作会将其进行翻转，那么无论操作的顺序怎么被打乱，位置 <code>(x, y)</code> 被翻转的次数总是为 <code>c</code> 次，即位置 <code>(x, y)</code> 的最终状态不会受到操作顺序的影响。</p>
+</li>
+<li><p><strong>翻转唯一性：</strong> 这 <code>k</code> 次翻转操作中，不会有两次翻转操作选择了相同的位置。证明方法类似：对于 <code>mat</code> 中的任意位置 <code>(x, y)</code>，假设 <code>T1, T2, ..., Tk</code> 中有 <code>c</code> 次翻转操作会将其进行翻转，如果有两次翻转操作选择了相同的位置，那么将它们一起移除后，位置 <code>(x, y)</code> 要么被翻转 <code>c</code> 次，要么被翻转 <code>c - 2</code> 次。而减少一个位置 <code>2</code> 次翻转次数，对该位置不会有任何影响，即位置 <code>(x, y)</code> 的最终状态不会受到移除这两次翻转操作的影响。这样我们只使用 <code>k - 2</code> 次翻转操作，就可以得到全零矩阵，与 <code>k</code> 是最少的翻转次数矛盾。</p>
+</li>
+</ul>
+<p>根据上面两个结论，我们可以发现：对于二维矩阵 <code>mat</code>，如果我们希望它通过最少的翻转操作得到全零矩阵，那么 <code>mat</code> 中每个位置至多被翻转一次，并且翻转的顺序不会影响最终的结果。这样以来，翻转的方法一共只有 2^{MN 种，即对于 <code>mat</code> 中的每个位置，可以选择翻转或不翻转 <code>2</code> 种情况，位置的数量为 MN。</p>
+<p>因此我们可以使用深度优先搜索来枚举所有的翻转方法。我们按照行优先的顺序搜索二维矩阵 <code>mat</code> 中的每个位置，对于当前位置，我们可以选择翻转或不翻转。当搜索完 <code>mat</code> 的所有位置时，如果 <code>mat</code> 变成了全零矩阵，那么我们就找到了一种满足要求的翻转方法。在所有满足要求的方法中，操作次数最少的即为答案。</p>
+<div class="highlight-container" data-rel="C++"><figure class="iseeu highlight c++"><figcaption><span>[sol2]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="type">static</span> <span class="keyword">constexpr</span> <span class="type">int</span> dirs[<span class="number">5</span>][<span class="number">2</span>] = &#123; &#123;<span class="number">-1</span>, <span class="number">0</span>&#125;, &#123;<span class="number">1</span>, <span class="number">0</span>&#125;, &#123;<span class="number">0</span>, <span class="number">-1</span>&#125;, &#123;<span class="number">0</span>, <span class="number">1</span>&#125;, &#123;<span class="number">0</span>, <span class="number">0</span>&#125; &#125;;</span><br><span class="line">    <span class="type">int</span> ans;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">Solution</span>(): <span class="built_in">ans</span>(<span class="number">1e9</span>) &#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">convert</span><span class="params">(vector&lt;vector&lt;<span class="type">int</span>&gt;&gt;&amp; mat, <span class="type">int</span> m, <span class="type">int</span> n, <span class="type">int</span> i, <span class="type">int</span> j)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> k = <span class="number">0</span>; k &lt; <span class="number">5</span>; ++k) &#123;</span><br><span class="line">            <span class="type">int</span> i0 = i + dirs[k][<span class="number">0</span>], j0 = j + dirs[k][<span class="number">1</span>];</span><br><span class="line">            <span class="keyword">if</span> (i0 &gt;= <span class="number">0</span> &amp;&amp; i0 &lt; m &amp;&amp; j0 &gt;= <span class="number">0</span> &amp;&amp; j0 &lt; n) &#123;</span><br><span class="line">                mat[i0][j0] ^= <span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">dfs</span><span class="params">(vector&lt;vector&lt;<span class="type">int</span>&gt;&gt;&amp; mat, <span class="type">int</span> m, <span class="type">int</span> n, <span class="type">int</span> pos, <span class="type">int</span> flip_cnt)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (pos == m * n) &#123;</span><br><span class="line">            <span class="type">bool</span> flag = <span class="literal">true</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; m; ++i) &#123;</span><br><span class="line">                <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt; n; ++j) &#123;</span><br><span class="line">                    <span class="keyword">if</span> (mat[i][j] != <span class="number">0</span>) &#123;</span><br><span class="line">                        flag = <span class="literal">false</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (flag) &#123;</span><br><span class="line">                ans = <span class="built_in">min</span>(ans, flip_cnt);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="type">int</span> x = pos / n, y = pos % n;</span><br><span class="line">        <span class="comment">// not flip</span></span><br><span class="line">        <span class="built_in">dfs</span>(mat, m, n, pos + <span class="number">1</span>, flip_cnt);</span><br><span class="line">        <span class="comment">// flip</span></span><br><span class="line">        <span class="built_in">convert</span>(mat, m, n, x, y);</span><br><span class="line">        <span class="built_in">dfs</span>(mat, m, n, pos + <span class="number">1</span>, flip_cnt + <span class="number">1</span>);</span><br><span class="line">        <span class="built_in">convert</span>(mat, m, n, x, y);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">minFlips</span><span class="params">(vector&lt;vector&lt;<span class="type">int</span>&gt;&gt;&amp; mat)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> m = mat.<span class="built_in">size</span>(), n = mat[<span class="number">0</span>].<span class="built_in">size</span>();</span><br><span class="line">        <span class="built_in">dfs</span>(mat, m, n, <span class="number">0</span>, <span class="number">0</span>);    </span><br><span class="line">        <span class="keyword">return</span> (ans != <span class="number">1e9</span> ? ans : <span class="number">-1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><figcaption><span>[sol2]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">        self.ans = <span class="number">10</span>**<span class="number">9</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">convert</span>(<span class="params">self, mat, m, n, i, j</span>):</span><br><span class="line">        <span class="keyword">for</span> di, dj <span class="keyword">in</span> [(-<span class="number">1</span>, <span class="number">0</span>), (<span class="number">1</span>, <span class="number">0</span>), (<span class="number">0</span>, -<span class="number">1</span>), (<span class="number">0</span>, <span class="number">1</span>), (<span class="number">0</span>, <span class="number">0</span>)]:</span><br><span class="line">            i0, j0 = i + di, j + dj</span><br><span class="line">            <span class="keyword">if</span> <span class="number">0</span> &lt;= i0 &lt; m <span class="keyword">and</span> <span class="number">0</span> &lt;= j0 &lt; n:</span><br><span class="line">                mat[i0][j0] ^= <span class="number">1</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">dfs</span>(<span class="params">self, mat, m, n, pos, flip_cnt</span>):</span><br><span class="line">        <span class="keyword">if</span> pos == m * n:</span><br><span class="line">            <span class="keyword">if</span> <span class="built_in">all</span>(mat[i][j] == <span class="number">0</span> <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(m) <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(n)):</span><br><span class="line">                self.ans = <span class="built_in">min</span>(self.ans, flip_cnt)</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">        x, y = pos // n, pos % n</span><br><span class="line">        <span class="comment"># not flip</span></span><br><span class="line">        self.dfs(mat, m, n, pos + <span class="number">1</span>, flip_cnt)</span><br><span class="line">        <span class="comment"># flip</span></span><br><span class="line">        self.convert(mat, m, n, x, y)</span><br><span class="line">        self.dfs(mat, m, n, pos + <span class="number">1</span>, flip_cnt + <span class="number">1</span>)</span><br><span class="line">        self.convert(mat, m, n, x, y)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">minFlips</span>(<span class="params">self, mat: <span class="type">List</span>[<span class="type">List</span>[<span class="built_in">int</span>]]</span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        m, n = <span class="built_in">len</span>(mat), <span class="built_in">len</span>(mat[<span class="number">0</span>])</span><br><span class="line">        self.dfs(mat, m, n, <span class="number">0</span>, <span class="number">0</span>)</span><br><span class="line">        <span class="keyword">return</span> self.ans <span class="keyword">if</span> self.ans != <span class="number">10</span>**<span class="number">9</span> <span class="keyword">else</span> -<span class="number">1</span></span><br></pre></td></tr></table></figure></div>
+
+<p><strong>复杂度分析</strong></p>
+<ul>
+<li><p>时间复杂度：O(2^{MN} * MN)。翻转的方法一共有 2^{MN 种，在搜索完一种方法后，我们需要用 O(MN) 的时间检查 <code>mat</code> 是否为全零矩阵。因此总时间复杂度为 O(2^{MN} * MN)。</p>
+</li>
+<li><p>空间复杂度：O(MN)。二维矩阵 <code>mat</code> 中有 MN 个位置，那么深度优先搜索的层数（栈的深度）为 MN。在每一层搜索中，我们只使用了常数大小的空间，因此空间复杂度为 O(MN)。</p>
+</li>
+</ul>
+<p><strong>方法三：深度优先搜索 + 可行性判定优化</strong></p>
+<p>在方法二中，我们使用深度优先搜索枚举了所有可能的翻转方法。在这些翻转方法中，满足要求且操作次数最少的即为答案。</p>
+<p>然而真的有必要枚举所有的方法吗？考虑下面这个例子，二维矩阵 <code>mat</code> 的初始值为：</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">010</span><br><span class="line">100</span><br><span class="line">011</span><br></pre></td></tr></table></figure></div>
+
+<p>在某一时刻，我们搜索完了第一行的三个位置：<code>(0, 0)</code> 翻转；<code>(0, 1)</code> 不翻转；<code>(0, 2)</code> 翻转，那么 <code>mat</code> 会变为：</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">  000        110        101</span><br><span class="line">  100   -&gt;   000   -&gt;   001</span><br><span class="line">  011        011        011</span><br><span class="line">初始状态   翻转(0, 0)  翻转(0, 2)</span><br></pre></td></tr></table></figure></div>
+
+<p>我们接下来需要选择位置 <code>(1, 0)</code> 是否翻转。由于位置 <code>(0, 0)</code> 的值为 <code>1</code>，而 <code>(1, 0)</code> 是唯一与位置 <code>(0, 0)</code> 相邻且还没有选择是否翻转的位置。如果位置 <code>(1, 0)</code> 不翻转，那么在接下来的搜索中，位置 <code>(0, 0)</code> 再也没有机会被翻转了，它会保持值为 <code>1</code> 不变。因此我们必须翻转位置 <code>(1, 0)</code>，得到：</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">  000        110        101        001</span><br><span class="line">  100   -&gt;   000   -&gt;   001   -&gt;   111</span><br><span class="line">  011        011        011        111</span><br><span class="line">初始状态   翻转(0, 0)  翻转(0, 2)  翻转(1, 0)</span><br></pre></td></tr></table></figure></div>
+
+<p>同理，当我们选择 <code>(1, 1)</code> 是否翻转时，考虑到位置 <code>(0, 1)</code> 的值为 <code>0</code>，如果翻转位置 <code>(1, 1)</code>，那么位置 <code>(0, 1)</code> 的值会变为 <code>1</code>，并保持到搜索结束。因此我们不能翻转位置 <code>(1, 1)</code>。</p>
+<p>综上所述，我们可以发现，当我们在搜索完第一行之后，剩下的位置就不用进行是否翻转的选择了，因为其是否能翻转就取决于其上方位置的值。如果其上方位置的值为 <code>0</code>，那么该位置不能翻转；如果其上方位置的值为 <code>1</code>，那么该位置必须翻转。因此我们可以优化方法二中的深度优先搜索，得到一种时间复杂度更优的方法：</p>
+<ul>
+<li><p>我们从按照行优先的顺序搜索二维矩阵 <code>mat</code> 中的每个位置；</p>
+</li>
+<li><p>当搜索到第一行的位置时，我们可以选择翻转或不翻转；但当搜索到第二行及以后的位置时，我们是否选择翻转取决于其上方位置的值；</p>
+</li>
+<li><p>当搜索完 <code>mat</code> 的所有位置时，我们需要判断 <code>mat</code> 的最后一行是否为 <code>0</code>。根据我们的优化方法，<code>mat</code> 中除了最后一行外的所有位置此时均为 <code>0</code>，因此只需要判断最后一行是否为 <code>0</code> 即可。</p>
+</li>
+</ul>
+<div class="highlight-container" data-rel="C++"><figure class="iseeu highlight c++"><figcaption><span>[sol3]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="type">static</span> <span class="keyword">constexpr</span> <span class="type">int</span> dirs[<span class="number">5</span>][<span class="number">2</span>] = &#123; &#123;<span class="number">-1</span>, <span class="number">0</span>&#125;, &#123;<span class="number">1</span>, <span class="number">0</span>&#125;, &#123;<span class="number">0</span>, <span class="number">-1</span>&#125;, &#123;<span class="number">0</span>, <span class="number">1</span>&#125;, &#123;<span class="number">0</span>, <span class="number">0</span>&#125; &#125;;</span><br><span class="line">    <span class="type">int</span> ans;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">Solution</span>(): <span class="built_in">ans</span>(<span class="number">1e9</span>) &#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">convert</span><span class="params">(vector&lt;vector&lt;<span class="type">int</span>&gt;&gt;&amp; mat, <span class="type">int</span> m, <span class="type">int</span> n, <span class="type">int</span> i, <span class="type">int</span> j)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> k = <span class="number">0</span>; k &lt; <span class="number">5</span>; ++k) &#123;</span><br><span class="line">            <span class="type">int</span> i0 = i + dirs[k][<span class="number">0</span>], j0 = j + dirs[k][<span class="number">1</span>];</span><br><span class="line">            <span class="keyword">if</span> (i0 &gt;= <span class="number">0</span> &amp;&amp; i0 &lt; m &amp;&amp; j0 &gt;= <span class="number">0</span> &amp;&amp; j0 &lt; n) &#123;</span><br><span class="line">                mat[i0][j0] ^= <span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">dfs</span><span class="params">(vector&lt;vector&lt;<span class="type">int</span>&gt;&gt;&amp; mat, <span class="type">int</span> m, <span class="type">int</span> n, <span class="type">int</span> pos, <span class="type">int</span> flip_cnt)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (pos == m * n) &#123;</span><br><span class="line">            <span class="type">bool</span> flag = <span class="literal">true</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt; n; ++j) &#123;</span><br><span class="line">                <span class="keyword">if</span> (mat[m - <span class="number">1</span>][j] != <span class="number">0</span>) &#123;</span><br><span class="line">                    flag = <span class="literal">false</span>;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (flag) &#123;</span><br><span class="line">                ans = <span class="built_in">min</span>(ans, flip_cnt);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="type">int</span> x = pos / n, y = pos % n;</span><br><span class="line">        <span class="keyword">if</span> (x == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="comment">// in the first line we can choose either flip or not flip</span></span><br><span class="line">            <span class="comment">// not flip</span></span><br><span class="line">            <span class="built_in">dfs</span>(mat, m, n, pos + <span class="number">1</span>, flip_cnt);</span><br><span class="line">            <span class="comment">// flip</span></span><br><span class="line">            <span class="built_in">convert</span>(mat, m, n, x, y);</span><br><span class="line">            <span class="built_in">dfs</span>(mat, m, n, pos + <span class="number">1</span>, flip_cnt + <span class="number">1</span>);</span><br><span class="line">            <span class="built_in">convert</span>(mat, m, n, x, y);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">// otherwise it depends on the upper grid</span></span><br><span class="line">            <span class="keyword">if</span> (mat[x - <span class="number">1</span>][y] == <span class="number">0</span>) &#123;</span><br><span class="line">                <span class="built_in">dfs</span>(mat, m, n, pos + <span class="number">1</span>, flip_cnt);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="built_in">convert</span>(mat, m, n, x, y);</span><br><span class="line">                <span class="built_in">dfs</span>(mat, m, n, pos + <span class="number">1</span>, flip_cnt + <span class="number">1</span>);</span><br><span class="line">                <span class="built_in">convert</span>(mat, m, n, x, y);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">minFlips</span><span class="params">(vector&lt;vector&lt;<span class="type">int</span>&gt;&gt;&amp; mat)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> m = mat.<span class="built_in">size</span>(), n = mat[<span class="number">0</span>].<span class="built_in">size</span>();</span><br><span class="line">        <span class="built_in">dfs</span>(mat, m, n, <span class="number">0</span>, <span class="number">0</span>);    </span><br><span class="line">        <span class="keyword">return</span> (ans != <span class="number">1e9</span> ? ans : <span class="number">-1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><figcaption><span>[sol3]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">        self.ans = <span class="number">10</span>**<span class="number">9</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">convert</span>(<span class="params">self, mat, m, n, i, j</span>):</span><br><span class="line">        <span class="keyword">for</span> di, dj <span class="keyword">in</span> [(-<span class="number">1</span>, <span class="number">0</span>), (<span class="number">1</span>, <span class="number">0</span>), (<span class="number">0</span>, -<span class="number">1</span>), (<span class="number">0</span>, <span class="number">1</span>), (<span class="number">0</span>, <span class="number">0</span>)]:</span><br><span class="line">            i0, j0 = i + di, j + dj</span><br><span class="line">            <span class="keyword">if</span> <span class="number">0</span> &lt;= i0 &lt; m <span class="keyword">and</span> <span class="number">0</span> &lt;= j0 &lt; n:</span><br><span class="line">                mat[i0][j0] ^= <span class="number">1</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">dfs</span>(<span class="params">self, mat, m, n, pos, flip_cnt</span>):</span><br><span class="line">        <span class="keyword">if</span> pos == m * n:</span><br><span class="line">            <span class="keyword">if</span> <span class="built_in">all</span>(mat[m - <span class="number">1</span>][j] == <span class="number">0</span> <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(n)):</span><br><span class="line">                self.ans = <span class="built_in">min</span>(self.ans, flip_cnt)</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">        x, y = pos // n, pos % n</span><br><span class="line">        <span class="keyword">if</span> x == <span class="number">0</span>:</span><br><span class="line">            <span class="comment"># in the first line we can choose either flip or not flip</span></span><br><span class="line">            <span class="comment"># not flip</span></span><br><span class="line">            self.dfs(mat, m, n, pos + <span class="number">1</span>, flip_cnt)</span><br><span class="line">            <span class="comment"># flip</span></span><br><span class="line">            self.convert(mat, m, n, x, y)</span><br><span class="line">            self.dfs(mat, m, n, pos + <span class="number">1</span>, flip_cnt + <span class="number">1</span>)</span><br><span class="line">            self.convert(mat, m, n, x, y)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="comment"># otherwise it depends on the upper grid</span></span><br><span class="line">            <span class="keyword">if</span> mat[x - <span class="number">1</span>][y] == <span class="number">0</span>:</span><br><span class="line">                self.dfs(mat, m, n, pos + <span class="number">1</span>, flip_cnt)</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                self.convert(mat, m, n, x, y)</span><br><span class="line">                self.dfs(mat, m, n, pos + <span class="number">1</span>, flip_cnt + <span class="number">1</span>)</span><br><span class="line">                self.convert(mat, m, n, x, y)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">minFlips</span>(<span class="params">self, mat: <span class="type">List</span>[<span class="type">List</span>[<span class="built_in">int</span>]]</span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        m, n = <span class="built_in">len</span>(mat), <span class="built_in">len</span>(mat[<span class="number">0</span>])</span><br><span class="line">        self.dfs(mat, m, n, <span class="number">0</span>, <span class="number">0</span>)</span><br><span class="line">        <span class="keyword">return</span> self.ans <span class="keyword">if</span> self.ans != <span class="number">10</span>**<span class="number">9</span> <span class="keyword">else</span> -<span class="number">1</span></span><br></pre></td></tr></table></figure></div>
+
+<p><strong>复杂度分析</strong></p>
+<ul>
+<li><p>时间复杂度：O(2^N * MN)。搜索第一行需要的总时间复杂度为 O(2^N)。在搜索第二行以及后的位置时，时间复杂度为 O(MN)。在搜索完一种方法后，我们需要用 O(N) 的时间检查 <code>mat</code> 是否为全零矩阵，由于 O(N) &lt; O(MN)，检查的时间复杂度可忽略不计。因此总时间复杂度为 O(2^{MN} * MN)。</p>
+</li>
+<li><p>空间复杂度：O(MN)。</p>
+</li>
+</ul>
+<p><strong>方法四：另一种写法</strong></p>
+<p>在方法三中，当我们搜索到第二行及以后的位置时，我们的选择已经确定，这其实不能算是 “搜索” 了。因此我们可以在搜索完第一行之后，直接按照行优先的顺序遍历剩下的位置，并根据其上方位置的值来决定是否翻转。然而这样的写法不太和谐。因为我们通常只使用一个函数，通过递归调用的方式实现深度优先搜索，而此时这个函数既要实现 “搜索” 又要实现 “遍历”，显得十分突兀。</p>
+<p>因此我们可以考虑使用非递归的形式对第一行进行搜索。第一行的 <code>N</code> 个位置共有 <code>2^N</code> 种不同的翻转方法。联想到方法一中的映射方式，我们可以把每一种翻转方法看成一个长度为 <code>N</code> 的二进制表示。二进制表示的第 <code>j</code> 位（低位在右侧，最低位为第 <code>0</code> 位）为 <code>1</code>，等价于翻转第一行的第 <code>j</code> 个位置；第 <code>j</code> 位为 <code>0</code>，等价于不翻转第一行的第 <code>j</code> 个位置。</p>
+<p>我们只需要在十进制的意义下枚举区间 <code>[0, 2^N)</code> 中的所有整数，这 <code>2^N</code> 个整数的二进制表示对应着第一行 <code>N</code> 个位置的 <code>2^N</code> 种不同的翻转方法。在枚举了第一行的翻转方法后，我们按照行优先的顺序遍历剩下的位置，并根据其上方位置的值来决定是否翻转，在遍历完成后，判断最后一行是否均为 <code>0</code> 即可。这样以来，我们就实现了与方法三等价，但不需要使用递归的一种新的方法。</p>
+<div class="highlight-container" data-rel="C++"><figure class="iseeu highlight c++"><figcaption><span>[sol4]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="type">static</span> <span class="keyword">constexpr</span> <span class="type">int</span> dirs[<span class="number">5</span>][<span class="number">2</span>] = &#123; &#123;<span class="number">-1</span>, <span class="number">0</span>&#125;, &#123;<span class="number">1</span>, <span class="number">0</span>&#125;, &#123;<span class="number">0</span>, <span class="number">-1</span>&#125;, &#123;<span class="number">0</span>, <span class="number">1</span>&#125;, &#123;<span class="number">0</span>, <span class="number">0</span>&#125; &#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">convert</span><span class="params">(vector&lt;vector&lt;<span class="type">int</span>&gt;&gt;&amp; mat, <span class="type">int</span> m, <span class="type">int</span> n, <span class="type">int</span> i, <span class="type">int</span> j)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> k = <span class="number">0</span>; k &lt; <span class="number">5</span>; ++k) &#123;</span><br><span class="line">            <span class="type">int</span> i0 = i + dirs[k][<span class="number">0</span>], j0 = j + dirs[k][<span class="number">1</span>];</span><br><span class="line">            <span class="keyword">if</span> (i0 &gt;= <span class="number">0</span> &amp;&amp; i0 &lt; m &amp;&amp; j0 &gt;= <span class="number">0</span> &amp;&amp; j0 &lt; n) &#123;</span><br><span class="line">                mat[i0][j0] ^= <span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">minFlips</span><span class="params">(vector&lt;vector&lt;<span class="type">int</span>&gt;&gt;&amp; mat)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> m = mat.<span class="built_in">size</span>(), n = mat[<span class="number">0</span>].<span class="built_in">size</span>();</span><br><span class="line">        <span class="type">int</span> ans = <span class="number">1e9</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> bin = <span class="number">0</span>; bin &lt; (<span class="number">1</span> &lt;&lt; n); ++bin) &#123;</span><br><span class="line">            vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; mat_copy = mat;</span><br><span class="line">            <span class="type">int</span> flip_cnt = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt; n; ++j) &#123;</span><br><span class="line">                <span class="keyword">if</span> (bin &amp; (<span class="number">1</span> &lt;&lt; j)) &#123;</span><br><span class="line">                    ++flip_cnt;</span><br><span class="line">                    <span class="built_in">convert</span>(mat_copy, m, n, <span class="number">0</span>, j);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt; m; ++i) &#123;</span><br><span class="line">                <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt; n; ++j) &#123;</span><br><span class="line">                    <span class="keyword">if</span> (mat_copy[i - <span class="number">1</span>][j] == <span class="number">1</span>) &#123;</span><br><span class="line">                        ++flip_cnt;</span><br><span class="line">                        <span class="built_in">convert</span>(mat_copy, m, n, i, j);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="type">bool</span> flag = <span class="literal">true</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt; n; ++j) &#123;</span><br><span class="line">                <span class="keyword">if</span> (mat_copy[m - <span class="number">1</span>][j] != <span class="number">0</span>) &#123;</span><br><span class="line">                    flag = <span class="literal">false</span>;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (flag) &#123;</span><br><span class="line">                ans = <span class="built_in">min</span>(ans, flip_cnt);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> (ans != <span class="number">1e9</span> ? ans : <span class="number">-1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><figcaption><span>[sol4]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">convert</span>(<span class="params">self, mat, m, n, i, j</span>):</span><br><span class="line">        <span class="keyword">for</span> di, dj <span class="keyword">in</span> [(-<span class="number">1</span>, <span class="number">0</span>), (<span class="number">1</span>, <span class="number">0</span>), (<span class="number">0</span>, -<span class="number">1</span>), (<span class="number">0</span>, <span class="number">1</span>), (<span class="number">0</span>, <span class="number">0</span>)]:</span><br><span class="line">            i0, j0 = i + di, j + dj</span><br><span class="line">            <span class="keyword">if</span> <span class="number">0</span> &lt;= i0 &lt; m <span class="keyword">and</span> <span class="number">0</span> &lt;= j0 &lt; n:</span><br><span class="line">                mat[i0][j0] ^= <span class="number">1</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">minFlips</span>(<span class="params">self, mat: <span class="type">List</span>[<span class="type">List</span>[<span class="built_in">int</span>]]</span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        m, n = <span class="built_in">len</span>(mat), <span class="built_in">len</span>(mat[<span class="number">0</span>])</span><br><span class="line">        ans = <span class="number">1e9</span></span><br><span class="line">        <span class="keyword">for</span> binary <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>, <span class="number">1</span> &lt;&lt; n):</span><br><span class="line">            mat_copy = [line[:] <span class="keyword">for</span> line <span class="keyword">in</span> mat]</span><br><span class="line">            flip_cnt = <span class="number">0</span></span><br><span class="line">            <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(n):</span><br><span class="line">                <span class="keyword">if</span> binary &amp; (<span class="number">1</span> &lt;&lt; j):</span><br><span class="line">                    flip_cnt += <span class="number">1</span></span><br><span class="line">                    self.convert(mat_copy, m, n, <span class="number">0</span>, j)</span><br><span class="line"></span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, m):</span><br><span class="line">                <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(n):</span><br><span class="line">                    <span class="keyword">if</span> mat_copy[i - <span class="number">1</span>][j] == <span class="number">1</span>:</span><br><span class="line">                        flip_cnt += <span class="number">1</span></span><br><span class="line">                        self.convert(mat_copy, m, n, i, j)</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> <span class="built_in">all</span>(mat_copy[m - <span class="number">1</span>][j] == <span class="number">0</span> <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(n)):</span><br><span class="line">                ans = <span class="built_in">min</span>(ans, flip_cnt)</span><br><span class="line">        <span class="keyword">return</span> ans <span class="keyword">if</span> ans != <span class="number">10</span>**<span class="number">9</span> <span class="keyword">else</span> -<span class="number">1</span></span><br></pre></td></tr></table></figure></div>
+
+<p><strong>复杂度分析</strong></p>
+<ul>
+<li><p>时间复杂度：O(2^N * MN)。</p>
+</li>
+<li><p>空间复杂度：O(MN)。</p>
+</li>
+</ul>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <!--<div class="article-copyright-info-container">-->
+    <!--&lt;!&ndash;<ul>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><strong>Title:</strong> 1284-转化为全零矩阵的最少反转次数</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><strong>Author:</strong> Raphael Liu</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><strong>Created at&ndash;&gt;-->
+                <!--&lt;!&ndash;:</strong> 2023-09-13 00:47:26</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;&ndash;&gt;-->
+            <!--&lt;!&ndash;<li>&ndash;&gt;-->
+                <!--&lt;!&ndash;<strong>Updated at&ndash;&gt;-->
+                    <!--&lt;!&ndash;:</strong> 2023-09-13 17:01:06&ndash;&gt;-->
+            <!--&lt;!&ndash;</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;<li>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;<strong>Link:</strong> https://fida.ltd/2023/09/13/1284-转化为全零矩阵的最少反转次数/&ndash;&gt;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;</li>&ndash;&gt;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;<li>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;<strong>&ndash;&gt;&ndash;&gt;-->
+                <!--&lt;!&ndash;&lt;!&ndash;License:&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;</strong>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0</a>.&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;&ndash;&gt;&ndash;&gt;-->
+
+        <!--&lt;!&ndash;&lt;!&ndash;</li>&ndash;&gt;&ndash;&gt;-->
+    <!--&lt;!&ndash;</ul>&ndash;&gt;-->
+<!--</div>-->
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box">
+                
+                    <li class="tag-item">
+                        <a href="/tags/algorithm/">#algorithm</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item">
+                        <a href="/tags/HARD/">#HARD</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                        rel="prev"
+                        href="/2023/09/13/1286-%E5%AD%97%E6%AF%8D%E7%BB%84%E5%90%88%E8%BF%AD%E4%BB%A3%E5%99%A8/"
+                        >
+                            <span class="left arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">1286-字母组合迭代器</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                        rel="next"
+                        href="/2023/09/13/1287-%09%EF%BF%BDp%EF%BF%BD-%EF%BF%BD%EF%BF%BD!p%EF%BF%BD%EF%BF%BD25%25%EF%BF%BDC%20/"
+                        >
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">1287-有序数组中出现次数超过25%的元素</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+
+        
+            <div class="comment-container">
+                <div class="comments-container pjax">
+    <div id="comment-anchor"></div>
+    <div class="comment-area-title">
+        <i class="fa-solid fa-comments"></i>&nbsp;Comments
+    </div>
+    
+
+        
+            
+ 
+    <div id="waline"></div>
+    <script type="module"  data-swup-reload-script>
+        import { init } from 'https://evan.beee.top/js/waline.mjs';
+
+        function loadWaline() {
+            init({
+                el: '#waline',
+                serverURL: 'https://example.example.com',
+                lang: 'zh-CN',
+                dark: 'body[class~="dark-mode"]',
+                requiredMeta: ['nick','mail'], // cannot customize by theme config, change it yourself
+            });
+        }
+
+        if ('true') {
+            const loadWalineTimeout = setTimeout(() => {
+                loadWaline();
+                clearTimeout(loadWalineTimeout);
+            }, 1000);
+        } else {
+            window.addEventListener('DOMContentLoaded', loadWaline);
+        }
+        
+    </script>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+
+    
+        <div class="toc-content-container">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">On this page</div>
+        <div class="page-title">1284-转化为全零矩阵的最少反转次数</div>
+        
+
+    </div>
+</div>
+        </div>
+    
+</div>
+
+
+
+                
+
+            </div>
+
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2022</span>
+              -
+            
+            2023&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">Raphael Liu</a>
+        </div>
+        
+            <script data-swup-reload-script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">UV:</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">PV:</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <!--<div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">-->
+            <!--<span class="lg:block text-sm">powered_by</span>-->
+            <!--&lt;!&ndash;<span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.4.4</a></span>&ndash;&gt;-->
+        <!--</div>-->
+        
+        <!---->
+            <!--<div>-->
+                <!--runtime <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hours <span class="odometer" id="runtime_minutes"></span> minutes <span class="odometer" id="runtime_seconds"></span> seconds-->
+            <!--</div>-->
+        <!---->
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fa-regular fa-comments"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-expand-width flex justify-center items-center">
+            <i class="fa-regular fa-expand"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fa-solid fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa-solid fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa-solid fa-spinner fa-spin-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+    
+<script src="/js/libs/Swup.min.js"></script>
+
+<script src="/js/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/libs/SwupScrollPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+        ],
+        containers: ["#swup"],
+    });
+
+    swup.hooks.on("page:view", () => {
+        Global.refresh();
+    });
+
+    // if (document.readyState === "complete") {
+    //
+    // } else {
+    //     document.addEventListener("DOMContentLoaded", () => init());
+    // }
+</script>
+
+
+
+
+
+
+<script src="/js/utils.js" type="module"></script>
+
+<script src="/js/main.js" type="module"></script>
+
+<script src="/js/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/layouts/categoryList.js" type="module"></script>
+
+
+
+    
+<script src="/js/tools/localSearch.js"></script>
+
+
+
+
+    
+<script src="/js/tools/codeBlock.js"></script>
+
+
+
+
+    
+<script src="/js/layouts/lazyload.js"></script>
+
+
+
+
+    
+<script src="/js/tools/runtime.js"></script>
+
+    
+<script src="/js/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/libs/Typed.min.js"></script>
+
+  
+<script src="/js/plugins/typed.js"></script>
+
+
+
+
+
+
+
+<div class="post-scripts" data-swup-reload-script>
+    
+        
+<script src="/js/libs/anime.min.js"></script>
+
+        
+<script src="/js/tools/tocToggle.js" type="module"></script>
+
+<script src="/js/layouts/toc.js" type="module"></script>
+
+<script src="/js/plugins/tabs.js" type="module"></script>
+
+    
+</div>
+
+
+</body>
+</html>

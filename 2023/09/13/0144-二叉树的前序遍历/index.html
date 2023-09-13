@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="Raphael Liu">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/2023/09/13/0144-二叉树的前序遍历/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="给你二叉树的根节点 root ，返回它节点值的 前序 __ 遍历。 示例 1：  **输入：** root &#x3D; [1,null,2,3] **输出：** [1,2,3]  示例 2： **输入：** root &#x3D; [] **输出：** []  示例 3： **输入：** root &#x3D; [1] **输出：** [1]  示例 4：  **输入：** root &#x3D; [1,2] **输出：** [1,2">
+<meta property="og:type" content="article">
+<meta property="og:title" content="0144-二叉树的前序遍历">
+<meta property="og:url" content="http://example.com/2023/09/13/0144-%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E5%89%8D%E5%BA%8F%E9%81%8D%E5%8E%86/index.html">
+<meta property="og:site_name" content="Raphael&#39;s Blog">
+<meta property="og:description" content="给你二叉树的根节点 root ，返回它节点值的 前序 __ 遍历。 示例 1：  **输入：** root &#x3D; [1,null,2,3] **输出：** [1,2,3]  示例 2： **输入：** root &#x3D; [] **输出：** []  示例 3： **输入：** root &#x3D; [1] **输出：** [1]  示例 4：  **输入：** root &#x3D; [1,2] **输出：** [1,2">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://assets.leetcode.com/uploads/2020/09/15/inorder_1.jpg">
+<meta property="og:image" content="https://assets.leetcode.com/uploads/2020/09/15/inorder_5.jpg">
+<meta property="og:image" content="https://assets.leetcode.com/uploads/2020/09/15/inorder_4.jpg">
+<meta property="og:image" content="https://pic.leetcode-cn.com/6233a9685447d0b4d7b513f739151ca065e5697e24070bcafc1ee5d28f9155a6.png">
+<meta property="og:image" content="https://pic.leetcode-cn.com/06eddcac9277efdbbd338b5069e836bbb2e8eb4c4fbf145025f3ab1a52263912.png">
+<meta property="og:image" content="https://pic.leetcode-cn.com/4b023cabcbfc58580127db3bd244a6b9d7f1060b899faa510c7366a5a51cce45.png">
+<meta property="article:published_time" content="2023-09-12T16:47:26.000Z">
+<meta property="article:modified_time" content="2023-09-13T02:43:02.000Z">
+<meta property="article:author" content="Raphael Liu">
+<meta property="article:tag" content="algorithm">
+<meta property="article:tag" content="EASY">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://assets.leetcode.com/uploads/2020/09/15/inorder_1.jpg">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/redefine-favicon.svg" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/redefine-favicon.svg">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/redefine-favicon.svg">
+    <!--- Page Info-->
+    
+    <title>
+        
+            0144-二叉树的前序遍历 -
+        
+        Raphael&#39;s Blog
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/css/build/styles.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/fonts.css">
+
+    
+<link rel="stylesheet" href="/fonts/Satoshi/satoshi.css">
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+
+    <!--- Inject Part-->
+    
+    <script id="hexo-configurations">
+    let Global = window.Global || {};
+    Global.hexo_config = {"hostname":"example.com","root":"/","language":"zh_CN"};
+    Global.theme_config = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":true,"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"open_graph":true,"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-wqery6-light.webp","dark":"/images/wallhaven-wqery6-dark.webp"},"title":"Raphael's Blog","subtitle":{"text":["格物致知","坚持做正确的事情"],"hitokoto":{"enable":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":false,"links":{"github":"https://github.com/raphael-liu","email":"raphael@buaa.edu.cn# your email"},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.4.4","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"links":{"首页":{"path":"/","icon":"fa-regular fa-house"},"文章":{"path":"/archives","icon":"fa-regular fa-archive"},"关于":{"icon":"fa-regular fa-user","submenus":{"我":"/about/me","Github":"https://github.com/raphael-liu"}}},"search":{"enable":true,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"links":null},"article_date_format":"auto","categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}},"footerStart":"2022/8/17 11:45:14"};
+    Global.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    Global.data_config = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="swup-progress-icon">
+            <i class="fa-solid fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container" id="swup">
+
+    
+
+    <div class="main-content-container">
+
+
+        <div class="main-content-header">
+            <header class="navbar-container">
+    
+    <div class="navbar-content">
+        <div class="left">
+            
+            <a class="logo-title" href="http://example.com/">
+                
+                Raphael&#39;s Blog
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/"  >
+                                    
+                                        
+                                            <i class="fa-regular fa-house"></i>
+                                        
+                                        首页
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/archives"  >
+                                    
+                                        
+                                            <i class="fa-regular fa-archive"></i>
+                                        
+                                        文章
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="has-dropdown" 
+                                    href="#" onClick="return false;">
+                                    
+                                        
+                                            <i class="fa-regular fa-user"></i>
+                                        
+                                        关于&nbsp;<i class="fa-solid fa-chevron-down"></i>
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                                    <ul class="sub-menu">
+                                    
+                                        <li>
+                                        <a href="/about/me">我
+                                        </a>
+                                        </li>
+                                    
+                                        <li>
+                                        <a target="_blank" rel="noopener" href="https://github.com/raphael-liu">GITHUB
+                                        </a>
+                                        </li>
+                                    
+                                    </ul>
+                                
+                            </li>
+                    
+                    
+                        <li class="navbar-item search search-popup-trigger">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fa-solid fa-magnifying-glass"></i></div>
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile drawer -->
+    <div class="navbar-drawer w-full absolute top-0 left-0 bg-background-color">
+        <ul class="drawer-navbar-list flex flex-col justify-start items-center">
+            
+                
+                    <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group " 
+                        href="/"  >
+                             
+                                
+                                    <i class="fa-regular fa-house"></i>
+                                
+                                首页
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+                
+                    <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group " 
+                        href="/archives"  >
+                             
+                                
+                                    <i class="fa-regular fa-archive"></i>
+                                
+                                文章
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+                
+                    <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group has-dropdown" 
+                        href="#" onClick="return false;">
+                            
+                                
+                                    <i class="fa-regular fa-user"></i>
+                                
+                                关于&nbsp;<i class="group-hover:rotate-180 transition-transform fa-solid fa-chevron-down"></i>
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                              
+                        
+                            <li class="text-base flex justify-center items-center hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                <a class="py-0.5" href="/about/me">我</a>
+                            </li>
+                        
+                            <li class="text-base flex justify-center items-center hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                <a class="py-0.5" target="_blank" rel="noopener" href="https://github.com/raphael-liu">GITHUB</a>
+                            </li>
+                        
+                    
+            
+
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="post-page-container">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            
+                <h1 class="article-title-regular">0144-二叉树的前序遍历</h1>
+            
+            </div>
+            
+                    
+        
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">Raphael Liu</span>
+                        
+                            <span class="author-label">Lv10</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2023-09-13 00:47:26</span>
+        <span class="mobile">2023-09-13 00:47:26</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2023-09-13 10:43:02</span>
+            <span class="mobile">2023-09-13 10:43:02</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/algorithm/">algorithm</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/EASY/">EASY</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        
+
+
+        <div class="article-content markdown-body">
+            <p>给你二叉树的根节点 <code>root</code> ，返回它节点值的 <strong>前序</strong> __ 遍历。</p>
+<p><strong>示例 1：</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://assets.leetcode.com/uploads/2020/09/15/inorder_1.jpg"
+                     
+                ></p>
+<pre><code>**输入：** root = [1,null,2,3]
+**输出：** [1,2,3]
+</code></pre>
+<p><strong>示例 2：</strong></p>
+<pre><code>**输入：** root = []
+**输出：** []
+</code></pre>
+<p><strong>示例 3：</strong></p>
+<pre><code>**输入：** root = [1]
+**输出：** [1]
+</code></pre>
+<p><strong>示例 4：</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://assets.leetcode.com/uploads/2020/09/15/inorder_5.jpg"
+                     
+                ></p>
+<pre><code>**输入：** root = [1,2]
+**输出：** [1,2]
+</code></pre>
+<p><strong>示例 5：</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://assets.leetcode.com/uploads/2020/09/15/inorder_4.jpg"
+                     
+                ></p>
+<pre><code>**输入：** root = [1,null,2]
+**输出：** [1,2]
+</code></pre>
+<p><strong>提示：</strong></p>
+<ul>
+<li>树中节点数目在范围 <code>[0, 100]</code> 内</li>
+<li><code>-100 &lt;= Node.val &lt;= 100</code></li>
+</ul>
+<p><strong>进阶：</strong> 递归算法很简单，你可以通过迭代算法完成吗？</p>
+<h4 id="X-遍历二叉树的方法合集"><a href="#X-遍历二叉树的方法合集" class="headerlink" title="X.遍历二叉树的方法合集"></a>X.遍历二叉树的方法合集</h4><ol>
+<li><ol start="94">
+<li>二叉树的中序遍历</li>
+</ol>
+</li>
+<li><ol start="144">
+<li>二叉树的前序遍历</li>
+</ol>
+</li>
+<li><ol start="145">
+<li>二叉树的后序遍历</li>
+</ol>
+</li>
+</ol>
+<p><strong>文章有一点长，代码居多。会给出比较详细的动画演示以及视频讲解请大家耐心阅读。</strong></p>
+<h3 id="递归解法"><a href="#递归解法" class="headerlink" title="递归解法"></a>递归解法</h3><h3 id="前序遍历"><a href="#前序遍历" class="headerlink" title="前序遍历"></a>前序遍历</h3><div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><figcaption><span>[sol1-Java]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">preOrderRecur</span><span class="params">(TreeNode head)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (head == <span class="literal">null</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    System.out.print(head.value + <span class="string">&quot; &quot;</span>);</span><br><span class="line">    preOrderRecur(head.left);</span><br><span class="line">    preOrderRecur(head.right);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+<h3 id="中序遍历"><a href="#中序遍历" class="headerlink" title="中序遍历"></a>中序遍历</h3><div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><figcaption><span>[sol1-Java]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">preOrderRecur</span><span class="params">(TreeNode head)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (head == <span class="literal">null</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    preOrderRecur(head.left);</span><br><span class="line">    System.out.print(head.value + <span class="string">&quot; &quot;</span>);</span><br><span class="line">    preOrderRecur(head.right);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+<h3 id="后序遍历"><a href="#后序遍历" class="headerlink" title="后序遍历"></a>后序遍历</h3><div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><figcaption><span>[sol1-Java]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">postOrderRecur</span><span class="params">(TreeNode head)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (head == <span class="literal">null</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    postOrderRecur(head.left);</span><br><span class="line">    postOrderRecur(head.right);</span><br><span class="line">    System.out.print(head.value + <span class="string">&quot; &quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+<h3 id="代码解释"><a href="#代码解释" class="headerlink" title="代码解释"></a>代码解释</h3><p>这里没有对递归遍历做过多的解释，仅仅给出了简单的动画演示。<br>要理解递归的思路并且熟练的使用它，就是要<em>想清楚你想做什么，什么时候停止</em>。</p>
+<p><strong>如前序遍历：</strong><br>我想先打印头节点对吧？那我打印完了头节点，我现在想打印左边节点了，我只是告诉计算机我想打印左边结点，之后打印右边结点。</p>
+<p><strong>那么后序遍历呢？</strong><br>这个时候你应该知道了，我就是想操作左边然后右边，最后打印中间的元素。</p>
+<h2 id="我们并不需要太过于在意具体的递归过程，而是要想清楚让计算机干什么。-计算机都可能溢出，用人脑去遍历就不现实了。"><a href="#我们并不需要太过于在意具体的递归过程，而是要想清楚让计算机干什么。-计算机都可能溢出，用人脑去遍历就不现实了。" class="headerlink" title="我们并不需要太过于在意具体的递归过程，而是要想清楚让计算机干什么。&gt; 计算机都可能溢出，用人脑去遍历就不现实了。"></a>我们并不需要太过于在意具体的递归过程，而是要想清楚让计算机干什么。<br>&gt; 计算机都可能溢出，用人脑去遍历就不现实了。</h2><h3 id="迭代解法"><a href="#迭代解法" class="headerlink" title="迭代解法"></a>迭代解法</h3><p>本质上是在模拟递归，因为在递归的过程中使用了系统栈，所以在迭代的解法中常用 <code>Stack</code> 来模拟系统栈。</p>
+<h3 id="前序遍历-1"><a href="#前序遍历-1" class="headerlink" title="前序遍历"></a>前序遍历</h3><p>首先我们应该创建一个 <code>Stack</code> 用来存放节点，首先我们想要打印根节点的数据，此时 <code>Stack</code> 里面的内容为空，所以我们优先将头结点加入 <code>Stack</code>，然后打印。</p>
+<p>之后我们应该先打印左子树，然后右子树。所以先加入 <code>Stack</code> 的就是右子树，然后左子树。<br>此时你能得到的流程如下:</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://pic.leetcode-cn.com/6233a9685447d0b4d7b513f739151ca065e5697e24070bcafc1ee5d28f9155a6.png"
+                      alt="中序遍历流程图"
+                >{:width&#x3D;”500px”}{:align&#x3D;”center”} </p>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><figcaption><span>[sol1-Java]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">preOrderIteration</span><span class="params">(TreeNode head)</span> &#123;</span><br><span class="line">	<span class="keyword">if</span> (head == <span class="literal">null</span>) &#123;</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	Stack&lt;TreeNode&gt; stack = <span class="keyword">new</span> <span class="title class_">Stack</span>&lt;&gt;();</span><br><span class="line">	stack.push(head);</span><br><span class="line">	<span class="keyword">while</span> (!stack.isEmpty()) &#123;</span><br><span class="line">		<span class="type">TreeNode</span> <span class="variable">node</span> <span class="operator">=</span> stack.pop();</span><br><span class="line">		System.out.print(node.value + <span class="string">&quot; &quot;</span>);</span><br><span class="line">		<span class="keyword">if</span> (node.right != <span class="literal">null</span>) &#123;</span><br><span class="line">			stack.push(node.right);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span> (node.left != <span class="literal">null</span>) &#123;</span><br><span class="line">			stack.push(node.left);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="中序遍历-1"><a href="#中序遍历-1" class="headerlink" title="中序遍历"></a>中序遍历</h3><ol>
+<li>同理创建一个 <code>Stack</code>，然后按 左 中 右的顺序输出节点。</li>
+<li>尽可能的将这个节点的左子树压入 <code>Stack</code>，此时栈顶的元素是最左侧的元素，<em>其目的是找到一个最小单位的子树(也就是最左侧的一个节点)，并且在寻找的过程中记录了来源，才能返回上层</em>,同时在返回上层的时候已经处理完毕左子树了。。</li>
+<li>当处理完最小单位的子树时，返回到上层处理了中间节点。（如果把整个左中右的遍历都理解成子树的话，就是处理完 <code>左子树-&gt;中间(就是一个节点)-&gt;右子树</code>）</li>
+<li>如果有右节点，其也要进行中序遍历。<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://pic.leetcode-cn.com/06eddcac9277efdbbd338b5069e836bbb2e8eb4c4fbf145025f3ab1a52263912.png"
+                      alt="中序遍历"
+                >{:width&#x3D;”300px”}{:align&#x3D;”left”}<br>当整个左子树退栈的时候这个时候输出了该子树的根节点 2，之后输出中间节点 1。然后处理根节点为3右子树。</li>
+</ol>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><figcaption><span>[sol1-Java]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">inOrderIteration</span><span class="params">(TreeNode head)</span> &#123;</span><br><span class="line">	<span class="keyword">if</span> (head == <span class="literal">null</span>) &#123;</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="type">TreeNode</span> <span class="variable">cur</span> <span class="operator">=</span> head;</span><br><span class="line">	Stack&lt;TreeNode&gt; stack = <span class="keyword">new</span> <span class="title class_">Stack</span>&lt;&gt;();</span><br><span class="line">	<span class="keyword">while</span> (!stack.isEmpty() || cur != <span class="literal">null</span>) &#123;</span><br><span class="line">		<span class="keyword">while</span> (cur != <span class="literal">null</span>) &#123;</span><br><span class="line">			stack.push(cur);</span><br><span class="line">			cur = cur.left;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="type">TreeNode</span> <span class="variable">node</span> <span class="operator">=</span> stack.pop();</span><br><span class="line">		System.out.print(node.value + <span class="string">&quot; &quot;</span>);</span><br><span class="line">		<span class="keyword">if</span> (node.right != <span class="literal">null</span>) &#123;</span><br><span class="line">			cur = node.right;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="后序遍历-1"><a href="#后序遍历-1" class="headerlink" title="后序遍历"></a>后序遍历</h3><h4 id="代码片段-1"><a href="#代码片段-1" class="headerlink" title="代码片段 1"></a>代码片段 1</h4><ol>
+<li>前序遍历的过程 是 中左右。</li>
+<li>将其转化成 中右左。也就是压栈的过程中优先压入左子树，在压入右子树。</li>
+<li>然后将这个结果返回来，这里是利用栈的先进后出倒序打印。<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><figcaption><span>[sol1-Java]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">postOrderIteration</span><span class="params">(TreeNode head)</span> &#123;</span><br><span class="line">		<span class="keyword">if</span> (head == <span class="literal">null</span>) &#123;</span><br><span class="line">			<span class="keyword">return</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		Stack&lt;TreeNode&gt; stack1 = <span class="keyword">new</span> <span class="title class_">Stack</span>&lt;&gt;();</span><br><span class="line">		Stack&lt;TreeNode&gt; stack2 = <span class="keyword">new</span> <span class="title class_">Stack</span>&lt;&gt;();</span><br><span class="line">		stack1.push(head);</span><br><span class="line">		<span class="keyword">while</span> (!stack1.isEmpty()) &#123;</span><br><span class="line">			<span class="type">TreeNode</span> <span class="variable">node</span> <span class="operator">=</span> stack1.pop();</span><br><span class="line">			stack2.push(node);</span><br><span class="line">			<span class="keyword">if</span> (node.left != <span class="literal">null</span>) &#123;</span><br><span class="line">				stack1.push(node.left);</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">if</span> (node.right != <span class="literal">null</span>) &#123;</span><br><span class="line">				stack1.push(node.right);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">while</span> (!stack2.isEmpty()) &#123;</span><br><span class="line">			System.out.print(stack2.pop().value + <span class="string">&quot; &quot;</span>);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure></div></li>
+</ol>
+<h4 id="代码片段-2"><a href="#代码片段-2" class="headerlink" title="代码片段 2"></a>代码片段 2</h4><ol>
+<li>用一个指针 <code>cur</code> 标记当前退出的节点是什么。</li>
+<li>后序遍历的过程中在遍历完左子树跟右子树 <code>cur</code> 都会回到根结点。所以当前不管是从左子树还是右子树回到根结点都不应该再操作了，应该退回上层。</li>
+<li>如果是从右边再返回根结点，应该回到上层。<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><figcaption><span>[sol1-Java]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">postOrderIteration2</span><span class="params">(TreeNode head)</span> &#123; 感谢[<span class="meta">@ben</span>-ben-niu](/u/ben-ben-niu/)指出错误，代码确实存在问题，已经在原文中修复</span><br><span class="line">	<span class="keyword">if</span> (head == <span class="literal">null</span>) &#123;</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="type">TreeNode</span> <span class="variable">cur</span> <span class="operator">=</span> head;</span><br><span class="line">	Stack&lt;TreeNode&gt; stack = <span class="keyword">new</span> <span class="title class_">Stack</span>&lt;&gt;();</span><br><span class="line">	stack.push(head);</span><br><span class="line">	<span class="keyword">while</span> (!stack.isEmpty()) &#123;</span><br><span class="line">		<span class="type">TreeNode</span> <span class="variable">peek</span> <span class="operator">=</span> stack.peek();</span><br><span class="line">		<span class="keyword">if</span> (peek.left != <span class="literal">null</span> &amp;&amp; peek.left != cur &amp;&amp; peek.right != cur) &#123;</span><br><span class="line">			stack.push(peek.left);</span><br><span class="line">		&#125; <span class="keyword">else</span> <span class="keyword">if</span> (peek.right != <span class="literal">null</span> &amp;&amp; peek.right != cur) &#123;</span><br><span class="line">			stack.push(peek.right);</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			System.out.print(stack.pop().val + <span class="string">&quot; &quot;</span>);</span><br><span class="line">			cur = peek;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div></li>
+</ol>
+<hr>
+<h2 id="Morris解法"><a href="#Morris解法" class="headerlink" title="Morris解法"></a>Morris解法</h2><div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><figcaption><span>遍历使用二叉树节点中大量指向 ```null``` 的指针，由 Joseph Morris 于 1979 年发明。</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">时间复杂度：$O(n)$</span><br><span class="line">额外空间复杂度：$O(1)$</span><br><span class="line"></span><br><span class="line">在你阅读以下代码之前，在这边先讲解一下 ```Morris``` 的通用解法过程。</span><br><span class="line">![在这里插入图片描述](https://pic.leetcode-cn.com/143b40666eebb8992b1ed7e6c35d4d5f3b93c6f20ab436e5c9ffa54032c392c0.png)</span><br><span class="line"></span><br><span class="line">```Morris``` 的整体思路就是将 *以某个根结点开始，找到它左子树的最右侧节点之后与这个根结点进行连接*</span><br><span class="line">我们可以从 **图2** 看到，如果这么连接之后，**cur** 这个指针是可以完整的从一个节点顺着下一个节点遍历，将整棵树遍历完毕，直到 **7** 这个节点右侧没有指向。</span><br><span class="line">```Java [sol1-Java]</span><br><span class="line">public static void preOrderMorris(TreeNode head) &#123;</span><br><span class="line">	if (head == null) &#123;</span><br><span class="line">		return;</span><br><span class="line">	&#125;</span><br><span class="line">	TreeNode cur1 = head;//当前开始遍历的节点</span><br><span class="line">	TreeNode cur2 = null;//记录当前结点的左子树</span><br><span class="line">	while (cur1 != null) &#123;</span><br><span class="line">		cur2 = cur1.left;</span><br><span class="line">		if (cur2 != null) &#123;</span><br><span class="line">			while (cur2.right != null &amp;&amp; cur2.right != cur1) &#123;//找到当前左子树的最右侧节点，且这个节点应该在指向根结点之前，否则整个节点又回到了根结点。</span><br><span class="line">				cur2 = cur2.right;</span><br><span class="line">			&#125;</span><br><span class="line">			if (cur2.right == null) &#123;//这个时候如果最右侧这个节点的右指针没有指向根结点，创建连接然后往下一个左子树的根结点进行连接操作。</span><br><span class="line">				cur2.right = cur1;</span><br><span class="line">				cur1 = cur1.left;</span><br><span class="line">				continue;</span><br><span class="line">			&#125; else &#123;//当左子树的最右侧节点有指向根结点，此时说明我们已经回到了根结点并重复了之前的操作，同时在回到根结点的时候我们应该已经处理完 左子树的最右侧节点 了，把路断开。</span><br><span class="line">				cur2.right = null;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125; </span><br><span class="line">		cur1 = cur1.right;//一直往右边走，参考图</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+<h3 id="前序遍历-2"><a href="#前序遍历-2" class="headerlink" title="前序遍历"></a>前序遍历</h3><ol>
+<li>在某个根结点创建连线的时候打印。因为我们是顺着左边的根节点来创建连线，且创建的过程只有一次。</li>
+<li>打印某些自身无法创建连线的节点，也就是叶子节点。</li>
+</ol>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><figcaption><span>[sol1-Java]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">preOrderMorris</span><span class="params">(TreeNode head)</span> &#123;</span><br><span class="line">	<span class="keyword">if</span> (head == <span class="literal">null</span>) &#123;</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="type">TreeNode</span> <span class="variable">cur1</span> <span class="operator">=</span> head;</span><br><span class="line">	<span class="type">TreeNode</span> <span class="variable">cur2</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">	<span class="keyword">while</span> (cur1 != <span class="literal">null</span>) &#123;</span><br><span class="line">		cur2 = cur1.left;</span><br><span class="line">		<span class="keyword">if</span> (cur2 != <span class="literal">null</span>) &#123;</span><br><span class="line">			<span class="keyword">while</span> (cur2.right != <span class="literal">null</span> &amp;&amp; cur2.right != cur1) &#123;</span><br><span class="line">				cur2 = cur2.right;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">if</span> (cur2.right == <span class="literal">null</span>) &#123;</span><br><span class="line">				cur2.right = cur1;</span><br><span class="line">				System.out.print(cur1.value + <span class="string">&quot; &quot;</span>);</span><br><span class="line">				cur1 = cur1.left;</span><br><span class="line">				<span class="keyword">continue</span>;</span><br><span class="line">			&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">				cur2.right = <span class="literal">null</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			System.out.print(cur1.value + <span class="string">&quot; &quot;</span>);</span><br><span class="line">		&#125;</span><br><span class="line">		cur1 = cur1.right;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+<h3 id="中序遍历-2"><a href="#中序遍历-2" class="headerlink" title="中序遍历"></a>中序遍历</h3><p>从最左侧开始顺着右节点打印。也就是在将 <code>cu1</code> 切换到上层节点的时候。</p>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><figcaption><span>[sol1-Java]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">inOrderMorris</span><span class="params">(TreeNode head)</span> &#123;</span><br><span class="line">	<span class="keyword">if</span> (head == <span class="literal">null</span>) &#123;</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="type">TreeNode</span> <span class="variable">cur1</span> <span class="operator">=</span> head;</span><br><span class="line">	<span class="type">TreeNode</span> <span class="variable">cur2</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">	<span class="keyword">while</span> (cur1 != <span class="literal">null</span>) &#123;</span><br><span class="line">		cur2 = cur1.left;</span><br><span class="line">		<span class="comment">//构建连接线</span></span><br><span class="line">		<span class="keyword">if</span> (cur2 != <span class="literal">null</span>) &#123;</span><br><span class="line">			<span class="keyword">while</span> (cur2.right != <span class="literal">null</span> &amp;&amp; cur2.right != cur1) &#123;</span><br><span class="line">				cur2 = cur2.right;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">if</span> (cur2.right == <span class="literal">null</span>) &#123;</span><br><span class="line">				cur2.right = cur1;</span><br><span class="line">				cur1 = cur1.left;</span><br><span class="line">				<span class="keyword">continue</span>;</span><br><span class="line">			&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">				cur2.right = <span class="literal">null</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		System.out.print(cur1.value + <span class="string">&quot; &quot;</span>);</span><br><span class="line">		cur1 = cur1.right;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure></div>
+<h3 id="后序遍历-2"><a href="#后序遍历-2" class="headerlink" title="后序遍历"></a>后序遍历</h3><p>后序遍历就比较复杂了哈，先看一下图<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://pic.leetcode-cn.com/4b023cabcbfc58580127db3bd244a6b9d7f1060b899faa510c7366a5a51cce45.png"
+                      alt="在这里插入图片描述"
+                >{:width&#x3D;”400px”}{:align&#x3D;”center”} </p>
+<p>当我们到达最左侧，也就是左边连线已经创建完毕了。<br>打印 4<br>打印 5 2<br>打印 6<br>打印 7 3 1<br>我们将一个节点的连续右节点当成一个单链表来看待。<br>当我们返回上层之后，也就是将连线断开的时候，打印下层的单链表。<br>比如返回到　２，此时打印　４<br>比如返回到　１，此时打印　５　２<br>比如返回到　３，此时打印　６<br>那么我们只需要将这个单链表逆序打印就行了，下文也给出了 <strong>单链表逆序代码</strong><br><em>这里不应该打印当前层，而是下一层，否则根结点会先与右边打印。</em></p>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><figcaption><span>[sol1-Java]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//后序Morris</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">postOrderMorris</span><span class="params">(TreeNode head)</span> &#123;</span><br><span class="line">	<span class="keyword">if</span> (head == <span class="literal">null</span>) &#123;</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="type">TreeNode</span> <span class="variable">cur1</span> <span class="operator">=</span> head;<span class="comment">//遍历树的指针变量</span></span><br><span class="line">	<span class="type">TreeNode</span> <span class="variable">cur2</span> <span class="operator">=</span> <span class="literal">null</span>;<span class="comment">//当前子树的最右节点</span></span><br><span class="line">	<span class="keyword">while</span> (cur1 != <span class="literal">null</span>) &#123;</span><br><span class="line">		cur2 = cur1.left;</span><br><span class="line">		<span class="keyword">if</span> (cur2 != <span class="literal">null</span>) &#123;</span><br><span class="line">			<span class="keyword">while</span> (cur2.right != <span class="literal">null</span> &amp;&amp; cur2.right != cur1) &#123;</span><br><span class="line">				cur2 = cur2.right;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">if</span> (cur2.right == <span class="literal">null</span>) &#123;</span><br><span class="line">				cur2.right = cur1;</span><br><span class="line">				cur1 = cur1.left;</span><br><span class="line">				<span class="keyword">continue</span>;</span><br><span class="line">			&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">				cur2.right = <span class="literal">null</span>;</span><br><span class="line">				postMorrisPrint(cur1.left);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		cur1 = cur1.right;</span><br><span class="line">	&#125;</span><br><span class="line">	postMorrisPrint(head);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//打印函数</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">postMorrisPrint</span><span class="params">(TreeNode head)</span> &#123;</span><br><span class="line">	<span class="type">TreeNode</span> <span class="variable">reverseList</span> <span class="operator">=</span> postMorrisReverseList(head);</span><br><span class="line">	<span class="type">TreeNode</span> <span class="variable">cur</span> <span class="operator">=</span> reverseList;</span><br><span class="line">	<span class="keyword">while</span> (cur != <span class="literal">null</span>) &#123;</span><br><span class="line">		System.out.print(cur.value + <span class="string">&quot; &quot;</span>);</span><br><span class="line">		cur = cur.right;</span><br><span class="line">	&#125;</span><br><span class="line">	postMorrisReverseList(reverseList);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//翻转单链表</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> TreeNode <span class="title function_">postMorrisReverseList</span><span class="params">(TreeNode head)</span> &#123;</span><br><span class="line">	<span class="type">TreeNode</span> <span class="variable">cur</span> <span class="operator">=</span> head;</span><br><span class="line">	<span class="type">TreeNode</span> <span class="variable">pre</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">	<span class="keyword">while</span> (cur != <span class="literal">null</span>) &#123;</span><br><span class="line">		<span class="type">TreeNode</span> <span class="variable">next</span> <span class="operator">=</span> cur.right;</span><br><span class="line">		cur.right = pre;</span><br><span class="line">		pre = cur;</span><br><span class="line">		cur = next;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> pre;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<hr>
+<p>感谢收看</p>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <!--<div class="article-copyright-info-container">-->
+    <!--&lt;!&ndash;<ul>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><strong>Title:</strong> 0144-二叉树的前序遍历</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><strong>Author:</strong> Raphael Liu</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><strong>Created at&ndash;&gt;-->
+                <!--&lt;!&ndash;:</strong> 2023-09-13 00:47:26</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;&ndash;&gt;-->
+            <!--&lt;!&ndash;<li>&ndash;&gt;-->
+                <!--&lt;!&ndash;<strong>Updated at&ndash;&gt;-->
+                    <!--&lt;!&ndash;:</strong> 2023-09-13 10:43:02&ndash;&gt;-->
+            <!--&lt;!&ndash;</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;<li>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;<strong>Link:</strong> https://fida.ltd/2023/09/13/0144-二叉树的前序遍历/&ndash;&gt;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;</li>&ndash;&gt;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;<li>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;<strong>&ndash;&gt;&ndash;&gt;-->
+                <!--&lt;!&ndash;&lt;!&ndash;License:&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;</strong>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0</a>.&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;&ndash;&gt;&ndash;&gt;-->
+
+        <!--&lt;!&ndash;&lt;!&ndash;</li>&ndash;&gt;&ndash;&gt;-->
+    <!--&lt;!&ndash;</ul>&ndash;&gt;-->
+<!--</div>-->
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box">
+                
+                    <li class="tag-item">
+                        <a href="/tags/algorithm/">#algorithm</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item">
+                        <a href="/tags/EASY/">#EASY</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                        rel="prev"
+                        href="/2023/09/13/0143-%E9%87%8D%E6%8E%92%E9%93%BE%E8%A1%A8/"
+                        >
+                            <span class="left arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">0143-重排链表</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                        rel="next"
+                        href="/2023/09/13/0145-%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E5%90%8E%E5%BA%8F%E9%81%8D%E5%8E%86/"
+                        >
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">0145-二叉树的后序遍历</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+
+        
+            <div class="comment-container">
+                <div class="comments-container pjax">
+    <div id="comment-anchor"></div>
+    <div class="comment-area-title">
+        <i class="fa-solid fa-comments"></i>&nbsp;Comments
+    </div>
+    
+
+        
+            
+ 
+    <div id="waline"></div>
+    <script type="module"  data-swup-reload-script>
+        import { init } from 'https://evan.beee.top/js/waline.mjs';
+
+        function loadWaline() {
+            init({
+                el: '#waline',
+                serverURL: 'https://example.example.com',
+                lang: 'zh-CN',
+                dark: 'body[class~="dark-mode"]',
+                requiredMeta: ['nick','mail'], // cannot customize by theme config, change it yourself
+            });
+        }
+
+        if ('true') {
+            const loadWalineTimeout = setTimeout(() => {
+                loadWaline();
+                clearTimeout(loadWalineTimeout);
+            }, 1000);
+        } else {
+            window.addEventListener('DOMContentLoaded', loadWaline);
+        }
+        
+    </script>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+
+    
+        <div class="toc-content-container">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">On this page</div>
+        <div class="page-title">0144-二叉树的前序遍历</div>
+        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%92%E5%BD%92%E8%A7%A3%E6%B3%95"><span class="nav-text">递归解法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E5%BA%8F%E9%81%8D%E5%8E%86"><span class="nav-text">前序遍历</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%AD%E5%BA%8F%E9%81%8D%E5%8E%86"><span class="nav-text">中序遍历</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%8E%E5%BA%8F%E9%81%8D%E5%8E%86"><span class="nav-text">后序遍历</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E8%A7%A3%E9%87%8A"><span class="nav-text">代码解释</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%88%91%E4%BB%AC%E5%B9%B6%E4%B8%8D%E9%9C%80%E8%A6%81%E5%A4%AA%E8%BF%87%E4%BA%8E%E5%9C%A8%E6%84%8F%E5%85%B7%E4%BD%93%E7%9A%84%E9%80%92%E5%BD%92%E8%BF%87%E7%A8%8B%EF%BC%8C%E8%80%8C%E6%98%AF%E8%A6%81%E6%83%B3%E6%B8%85%E6%A5%9A%E8%AE%A9%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%B9%B2%E4%BB%80%E4%B9%88%E3%80%82-%E8%AE%A1%E7%AE%97%E6%9C%BA%E9%83%BD%E5%8F%AF%E8%83%BD%E6%BA%A2%E5%87%BA%EF%BC%8C%E7%94%A8%E4%BA%BA%E8%84%91%E5%8E%BB%E9%81%8D%E5%8E%86%E5%B0%B1%E4%B8%8D%E7%8E%B0%E5%AE%9E%E4%BA%86%E3%80%82"><span class="nav-text">我们并不需要太过于在意具体的递归过程，而是要想清楚让计算机干什么。&gt; 计算机都可能溢出，用人脑去遍历就不现实了。</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%AD%E4%BB%A3%E8%A7%A3%E6%B3%95"><span class="nav-text">迭代解法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E5%BA%8F%E9%81%8D%E5%8E%86-1"><span class="nav-text">前序遍历</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%AD%E5%BA%8F%E9%81%8D%E5%8E%86-1"><span class="nav-text">中序遍历</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%8E%E5%BA%8F%E9%81%8D%E5%8E%86-1"><span class="nav-text">后序遍历</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Morris%E8%A7%A3%E6%B3%95"><span class="nav-text">Morris解法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E5%BA%8F%E9%81%8D%E5%8E%86-2"><span class="nav-text">前序遍历</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%AD%E5%BA%8F%E9%81%8D%E5%8E%86-2"><span class="nav-text">中序遍历</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%8E%E5%BA%8F%E9%81%8D%E5%8E%86-2"><span class="nav-text">后序遍历</span></a></li></ol>
+
+    </div>
+</div>
+        </div>
+    
+</div>
+
+
+
+                
+
+            </div>
+
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2022</span>
+              -
+            
+            2023&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">Raphael Liu</a>
+        </div>
+        
+            <script data-swup-reload-script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">UV:</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">PV:</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <!--<div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">-->
+            <!--<span class="lg:block text-sm">powered_by</span>-->
+            <!--&lt;!&ndash;<span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.4.4</a></span>&ndash;&gt;-->
+        <!--</div>-->
+        
+        <!---->
+            <!--<div>-->
+                <!--runtime <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hours <span class="odometer" id="runtime_minutes"></span> minutes <span class="odometer" id="runtime_seconds"></span> seconds-->
+            <!--</div>-->
+        <!---->
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fa-regular fa-comments"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-expand-width flex justify-center items-center">
+            <i class="fa-regular fa-expand"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fa-solid fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa-solid fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa-solid fa-spinner fa-spin-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+    
+<script src="/js/libs/Swup.min.js"></script>
+
+<script src="/js/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/libs/SwupScrollPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+        ],
+        containers: ["#swup"],
+    });
+
+    swup.hooks.on("page:view", () => {
+        Global.refresh();
+    });
+
+    // if (document.readyState === "complete") {
+    //
+    // } else {
+    //     document.addEventListener("DOMContentLoaded", () => init());
+    // }
+</script>
+
+
+
+
+
+
+<script src="/js/utils.js" type="module"></script>
+
+<script src="/js/main.js" type="module"></script>
+
+<script src="/js/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/layouts/categoryList.js" type="module"></script>
+
+
+
+    
+<script src="/js/tools/localSearch.js"></script>
+
+
+
+
+    
+<script src="/js/tools/codeBlock.js"></script>
+
+
+
+
+    
+<script src="/js/layouts/lazyload.js"></script>
+
+
+
+
+    
+<script src="/js/tools/runtime.js"></script>
+
+    
+<script src="/js/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/libs/Typed.min.js"></script>
+
+  
+<script src="/js/plugins/typed.js"></script>
+
+
+
+
+
+
+
+<div class="post-scripts" data-swup-reload-script>
+    
+        
+<script src="/js/libs/anime.min.js"></script>
+
+        
+<script src="/js/tools/tocToggle.js" type="module"></script>
+
+<script src="/js/layouts/toc.js" type="module"></script>
+
+<script src="/js/plugins/tabs.js" type="module"></script>
+
+    
+</div>
+
+
+</body>
+</html>

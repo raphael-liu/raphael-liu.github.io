@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="Raphael Liu">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/2023/09/13/lcr 058-我的日程安排表 i/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="请实现一个 MyCalendar 类来存放你的日程安排。如果要添加的时间内没有其他安排，则可以存储这个新的日程安排。 MyCalendar 有一个 book(int start, int end)方法。它意味着在 start 到 end时间内增加一个日程安排，注意，这里的时间是半开区间，即 [start, end), 实数 x 的范围为，  start &lt;&#x3D; x &lt; end。 当两个日">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LCR 058-我的日程安排表 I">
+<meta property="og:url" content="http://example.com/2023/09/13/LCR%20058-%E6%88%91%E7%9A%84%E6%97%A5%E7%A8%8B%E5%AE%89%E6%8E%92%E8%A1%A8%20I/index.html">
+<meta property="og:site_name" content="Raphael&#39;s Blog">
+<meta property="og:description" content="请实现一个 MyCalendar 类来存放你的日程安排。如果要添加的时间内没有其他安排，则可以存储这个新的日程安排。 MyCalendar 有一个 book(int start, int end)方法。它意味着在 start 到 end时间内增加一个日程安排，注意，这里的时间是半开区间，即 [start, end), 实数 x 的范围为，  start &lt;&#x3D; x &lt; end。 当两个日">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-09-12T16:47:26.000Z">
+<meta property="article:modified_time" content="2023-09-13T09:01:07.060Z">
+<meta property="article:author" content="Raphael Liu">
+<meta property="article:tag" content="algorithm">
+<meta property="article:tag" content="MEDIUM">
+<meta name="twitter:card" content="summary">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/redefine-favicon.svg" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/redefine-favicon.svg">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/redefine-favicon.svg">
+    <!--- Page Info-->
+    
+    <title>
+        
+            LCR 058-我的日程安排表 I -
+        
+        Raphael&#39;s Blog
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/css/build/styles.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/fonts.css">
+
+    
+<link rel="stylesheet" href="/fonts/Satoshi/satoshi.css">
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+
+    <!--- Inject Part-->
+    
+    <script id="hexo-configurations">
+    let Global = window.Global || {};
+    Global.hexo_config = {"hostname":"example.com","root":"/","language":"zh_CN"};
+    Global.theme_config = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":true,"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"open_graph":true,"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-wqery6-light.webp","dark":"/images/wallhaven-wqery6-dark.webp"},"title":"Raphael's Blog","subtitle":{"text":["格物致知","坚持做正确的事情"],"hitokoto":{"enable":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":false,"links":{"github":"https://github.com/raphael-liu","email":"raphael@buaa.edu.cn# your email"},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.4.4","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"links":{"首页":{"path":"/","icon":"fa-regular fa-house"},"文章":{"path":"/archives","icon":"fa-regular fa-archive"},"关于":{"icon":"fa-regular fa-user","submenus":{"我":"/about/me","Github":"https://github.com/raphael-liu"}}},"search":{"enable":true,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"links":null},"article_date_format":"auto","categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}},"footerStart":"2022/8/17 11:45:14"};
+    Global.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    Global.data_config = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="swup-progress-icon">
+            <i class="fa-solid fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container" id="swup">
+
+    
+
+    <div class="main-content-container">
+
+
+        <div class="main-content-header">
+            <header class="navbar-container">
+    
+    <div class="navbar-content">
+        <div class="left">
+            
+            <a class="logo-title" href="http://example.com/">
+                
+                Raphael&#39;s Blog
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/"  >
+                                    
+                                        
+                                            <i class="fa-regular fa-house"></i>
+                                        
+                                        首页
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/archives"  >
+                                    
+                                        
+                                            <i class="fa-regular fa-archive"></i>
+                                        
+                                        文章
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="has-dropdown" 
+                                    href="#" onClick="return false;">
+                                    
+                                        
+                                            <i class="fa-regular fa-user"></i>
+                                        
+                                        关于&nbsp;<i class="fa-solid fa-chevron-down"></i>
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                                    <ul class="sub-menu">
+                                    
+                                        <li>
+                                        <a href="/about/me">我
+                                        </a>
+                                        </li>
+                                    
+                                        <li>
+                                        <a target="_blank" rel="noopener" href="https://github.com/raphael-liu">GITHUB
+                                        </a>
+                                        </li>
+                                    
+                                    </ul>
+                                
+                            </li>
+                    
+                    
+                        <li class="navbar-item search search-popup-trigger">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fa-solid fa-magnifying-glass"></i></div>
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile drawer -->
+    <div class="navbar-drawer w-full absolute top-0 left-0 bg-background-color">
+        <ul class="drawer-navbar-list flex flex-col justify-start items-center">
+            
+                
+                    <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group " 
+                        href="/"  >
+                             
+                                
+                                    <i class="fa-regular fa-house"></i>
+                                
+                                首页
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+                
+                    <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group " 
+                        href="/archives"  >
+                             
+                                
+                                    <i class="fa-regular fa-archive"></i>
+                                
+                                文章
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+                
+                    <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group has-dropdown" 
+                        href="#" onClick="return false;">
+                            
+                                
+                                    <i class="fa-regular fa-user"></i>
+                                
+                                关于&nbsp;<i class="group-hover:rotate-180 transition-transform fa-solid fa-chevron-down"></i>
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                              
+                        
+                            <li class="text-base flex justify-center items-center hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                <a class="py-0.5" href="/about/me">我</a>
+                            </li>
+                        
+                            <li class="text-base flex justify-center items-center hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                <a class="py-0.5" target="_blank" rel="noopener" href="https://github.com/raphael-liu">GITHUB</a>
+                            </li>
+                        
+                    
+            
+
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="post-page-container">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            
+                <h1 class="article-title-regular">LCR 058-我的日程安排表 I</h1>
+            
+            </div>
+            
+                    
+        
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">Raphael Liu</span>
+                        
+                            <span class="author-label">Lv10</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2023-09-13 00:47:26</span>
+        <span class="mobile">2023-09-13 00:47:26</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2023-09-13 17:01:07</span>
+            <span class="mobile">2023-09-13 17:01:07</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/algorithm/">algorithm</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/MEDIUM/">MEDIUM</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        
+
+
+        <div class="article-content markdown-body">
+            <p>请实现一个 <code>MyCalendar</code> 类来存放你的日程安排。如果要添加的时间内没有其他安排，则可以存储这个新的日程安排。</p>
+<p><code>MyCalendar</code> 有一个 <code>book(int start, int end)</code>方法。它意味着在 start 到 end<br>时间内增加一个日程安排，注意，这里的时间是半开区间，即 <code>[start, end)</code>, 实数 <code>x</code> 的范围为，  <code>start &lt;= x &lt; end</code>。</p>
+<p>当两个日程安排有一些时间上的交叉时（例如两个日程安排都在同一时间内），就会产生重复预订。</p>
+<p>每次调用 <code>MyCalendar.book</code>方法时，如果可以将日程安排成功添加到日历中而不会导致重复预订，返回 <code>true</code>。否则，返回 <code>false</code><br>并且不要将该日程安排添加到日历中。</p>
+<p>请按照以下步骤调用 <code>MyCalendar</code> 类: <code>MyCalendar cal = new MyCalendar();</code><br><code>MyCalendar.book(start, end)</code></p>
+<p><strong>示例:</strong></p>
+<pre><code>**输入:** [&quot;MyCalendar&quot;,&quot;book&quot;,&quot;book&quot;,&quot;book&quot;]
+[[],[10,20],[15,25],[20,30]]
+**输出:** [null,true,false,true]
+**解释:** 
+MyCalendar myCalendar = new MyCalendar();
+MyCalendar.book(10, 20); // returns true 
+MyCalendar.book(15, 25); // returns false ，第二个日程安排不能添加到日历中，因为时间 15 已经被第一个日程安排预定了
+MyCalendar.book(20, 30); // returns true ，第三个日程安排可以添加到日历中，因为第一个日程安排并不包含时间 20 
+</code></pre>
+<p><strong>提示：</strong></p>
+<ul>
+<li>每个测试用例，调用 <code>MyCalendar.book</code> 函数最多不超过 <code>1000</code>次。</li>
+<li><code>0 &lt;= start &lt; end &lt;= 109</code></li>
+</ul>
+<p>注意：本题与主站 729 题相同： <a class="link"   target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/my-calendar-i/" >https://leetcode-cn.com/problems/my-calendar-i/ <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<h4 id="方法一：直接遍历"><a href="#方法一：直接遍历" class="headerlink" title="方法一：直接遍历"></a>方法一：直接遍历</h4><p>我们记录下所有已经预订的课程安排区间，当我们预订新的区间 [\textit{start}, \textit{end}) 时，此时检查当前已经预订的每个日程安排是否与新日程安排冲突。若不冲突，则可以添加新的日程安排。</p>
+<ul>
+<li>对于两个区间 [s_1, e_1) 和 [s_2, e_2)，如果二者没有交集，则此时应当满足 s_1 \ge e_2 或者 s_2 \ge e_1，这就意味着如果满足 s_1 &lt; e_2 并且 s_2 &lt; e_1，则两者会产生交集。</li>
+</ul>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><figcaption><span>[sol1-Python3]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyCalendar</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">        self.booked = []</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">book</span>(<span class="params">self, start: <span class="built_in">int</span>, end: <span class="built_in">int</span></span>) -&gt; <span class="built_in">bool</span>:</span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">any</span>(l &lt; end <span class="keyword">and</span> start &lt; r <span class="keyword">for</span> l, r <span class="keyword">in</span> self.booked):</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">        self.booked.append((start, end))</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">True</span></span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="C++"><figure class="iseeu highlight c++"><figcaption><span>[sol1-C++]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyCalendar</span> &#123;</span><br><span class="line">    vector&lt;pair&lt;<span class="type">int</span>, <span class="type">int</span>&gt;&gt; booked;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">bool</span> <span class="title">book</span><span class="params">(<span class="type">int</span> start, <span class="type">int</span> end)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span> &amp;[l, r] : booked) &#123;</span><br><span class="line">            <span class="keyword">if</span> (l &lt; end &amp;&amp; start &lt; r) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        booked.<span class="built_in">emplace_back</span>(start, end);</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><figcaption><span>[sol1-Java]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyCalendar</span> &#123;</span><br><span class="line">    List&lt;<span class="type">int</span>[]&gt; booked;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">MyCalendar</span><span class="params">()</span> &#123;</span><br><span class="line">        booked = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;<span class="type">int</span>[]&gt;();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">book</span><span class="params">(<span class="type">int</span> start, <span class="type">int</span> end)</span> &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span>[] arr : booked) &#123;</span><br><span class="line">            <span class="type">int</span> <span class="variable">l</span> <span class="operator">=</span> arr[<span class="number">0</span>], r = arr[<span class="number">1</span>];</span><br><span class="line">            <span class="keyword">if</span> (l &lt; end &amp;&amp; start &lt; r) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        booked.add(<span class="keyword">new</span> <span class="title class_">int</span>[]&#123;start, end&#125;);</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="C#"><figure class="iseeu highlight c#"><figcaption><span>[sol1-C#]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">MyCalendar</span> &#123;</span><br><span class="line">    IList&lt;Tuple&lt;<span class="built_in">int</span>, <span class="built_in">int</span>&gt;&gt; booked;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MyCalendar</span>()</span> &#123;</span><br><span class="line">        booked = <span class="keyword">new</span> List&lt;Tuple&lt;<span class="built_in">int</span>, <span class="built_in">int</span>&gt;&gt;();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="built_in">bool</span> <span class="title">Book</span>(<span class="params"><span class="built_in">int</span> start, <span class="built_in">int</span> end</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">foreach</span> (Tuple&lt;<span class="built_in">int</span>, <span class="built_in">int</span>&gt; tuple <span class="keyword">in</span> booked) &#123;</span><br><span class="line">            <span class="built_in">int</span> l = tuple.Item1, r = tuple.Item2;</span><br><span class="line">            <span class="keyword">if</span> (l &lt; end &amp;&amp; start &lt; r) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        booked.Add(<span class="keyword">new</span> Tuple&lt;<span class="built_in">int</span>, <span class="built_in">int</span>&gt;(start, end));</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="C"><figure class="iseeu highlight c"><figcaption><span>[sol1-C]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> &#123;</span></span><br><span class="line">    <span class="type">int</span> *booked;</span><br><span class="line">    <span class="type">int</span> bookedSize;</span><br><span class="line">&#125; MyCalendar;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> MAX_BOOK_SIZE 1001</span></span><br><span class="line"></span><br><span class="line">MyCalendar* <span class="title function_">myCalendarCreate</span><span class="params">()</span> &#123;</span><br><span class="line">    MyCalendar *obj = (MyCalendar *)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(MyCalendar));</span><br><span class="line">    obj-&gt;booked = (<span class="type">int</span> *)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="type">int</span>) * <span class="number">2</span> * MAX_BOOK_SIZE);</span><br><span class="line">    obj-&gt;bookedSize = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">return</span> obj;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">bool</span> <span class="title function_">myCalendarBook</span><span class="params">(MyCalendar* obj, <span class="type">int</span> start, <span class="type">int</span> end)</span> &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; obj-&gt;bookedSize; i++) &#123;</span><br><span class="line">        <span class="type">int</span> l = obj-&gt;booked[<span class="number">2</span> * i];</span><br><span class="line">        <span class="type">int</span> r = obj-&gt;booked[<span class="number">2</span> * i + <span class="number">1</span>];</span><br><span class="line">        <span class="keyword">if</span> (l &lt; end &amp;&amp; start &lt; r) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    obj-&gt;booked[obj-&gt;bookedSize * <span class="number">2</span>] = start;</span><br><span class="line">    obj-&gt;booked[obj-&gt;bookedSize * <span class="number">2</span> + <span class="number">1</span>] = end;</span><br><span class="line">    obj-&gt;bookedSize++;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">myCalendarFree</span><span class="params">(MyCalendar* obj)</span> &#123;</span><br><span class="line">    <span class="built_in">free</span>(obj-&gt;booked);</span><br><span class="line">    <span class="built_in">free</span>(obj);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><figcaption><span>[sol1-JavaScript]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> <span class="title class_">MyCalendar</span> = <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">booked</span> = [];</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="title class_">MyCalendar</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">book</span> = <span class="keyword">function</span>(<span class="params">start, end</span>) &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">const</span> arr <span class="keyword">of</span> <span class="variable language_">this</span>.<span class="property">booked</span>) &#123;</span><br><span class="line">        <span class="keyword">let</span> l = arr[<span class="number">0</span>], r = arr[<span class="number">1</span>];</span><br><span class="line">        <span class="keyword">if</span> (l &lt; end &amp;&amp; start &lt; r) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">booked</span>.<span class="title function_">push</span>([start, end]);</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Go"><figure class="iseeu highlight go"><figcaption><span>[sol1-Golang]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> pair <span class="keyword">struct</span>&#123; start, end <span class="type">int</span> &#125;</span><br><span class="line"><span class="keyword">type</span> MyCalendar []pair</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Constructor</span><span class="params">()</span></span> MyCalendar &#123;</span><br><span class="line">    <span class="keyword">return</span> MyCalendar&#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(c *MyCalendar)</span></span> Book(start, end <span class="type">int</span>) <span class="type">bool</span> &#123;</span><br><span class="line">    <span class="keyword">for</span> _, p := <span class="keyword">range</span> *c &#123;</span><br><span class="line">        <span class="keyword">if</span> p.start &lt; end &amp;&amp; start &lt; p.end &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    *c = <span class="built_in">append</span>(*c, pair&#123;start, end&#125;)</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>复杂度分析</strong></p>
+<ul>
+<li><p>时间复杂度：O(n^2), 其中 n 表示日程安排的数量。由于每次在进行预订时，都需要遍历所有已经预订的行程安排。</p>
+</li>
+<li><p>空间复杂度：O(n)，其中 n 表示日程安排的数量。需要保存所有已经预订的行程。</p>
+</li>
+</ul>
+<h4 id="方法二：二分查找"><a href="#方法二：二分查找" class="headerlink" title="方法二：二分查找"></a>方法二：二分查找</h4><p>如果我们按时间顺序维护日程安排，则可以通过二分查找日程安排的情况来检查新日程安排是否可以预订，若可以预订则在排序结构中更新插入日程安排。</p>
+<ul>
+<li>需要一个数据结构能够保持元素排序和支持快速插入，可以用 TreeSet 来构建。对于给定的区间 [\textit{start}, \textit{end})，我们每次查找起点大于等于 end 的第一个区间 [l_1,r_1)，同时紧挨着 [l_1,r_1) 的前一个区间为 [l_2,r_2)，此时如果满足 r_2 \le \textit{start} &lt; \textit{end} \le l_1，则该区间可以预订。</li>
+</ul>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><figcaption><span>[sol2-Python3]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sortedcontainers <span class="keyword">import</span> SortedDict</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MyCalendar</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">        self.booked = SortedDict()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">book</span>(<span class="params">self, start: <span class="built_in">int</span>, end: <span class="built_in">int</span></span>) -&gt; <span class="built_in">bool</span>:</span><br><span class="line">        i = self.booked.bisect_left(end)</span><br><span class="line">        <span class="keyword">if</span> i == <span class="number">0</span> <span class="keyword">or</span> self.booked.items()[i - <span class="number">1</span>][<span class="number">1</span>] &lt;= start:</span><br><span class="line">            self.booked[start] = end</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">False</span></span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="C++"><figure class="iseeu highlight c++"><figcaption><span>[sol2-C++]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyCalendar</span> &#123;</span><br><span class="line">    set&lt;pair&lt;<span class="type">int</span>, <span class="type">int</span>&gt;&gt; booked;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">bool</span> <span class="title">book</span><span class="params">(<span class="type">int</span> start, <span class="type">int</span> end)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">auto</span> it = booked.<span class="built_in">lower_bound</span>(&#123;end, <span class="number">0</span>&#125;);</span><br><span class="line">        <span class="keyword">if</span> (it == booked.<span class="built_in">begin</span>() || (--it)-&gt;second &lt;= start) &#123;</span><br><span class="line">            booked.<span class="built_in">emplace</span>(start, end);</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><figcaption><span>[sol2-Java]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyCalendar</span> &#123;</span><br><span class="line">    TreeSet&lt;<span class="type">int</span>[]&gt; booked;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">MyCalendar</span><span class="params">()</span> &#123;</span><br><span class="line">        booked = <span class="keyword">new</span> <span class="title class_">TreeSet</span>&lt;<span class="type">int</span>[]&gt;((a, b) -&gt; a[<span class="number">0</span>] - b[<span class="number">0</span>]);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">book</span><span class="params">(<span class="type">int</span> start, <span class="type">int</span> end)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (booked.isEmpty()) &#123;</span><br><span class="line">            booked.add(<span class="keyword">new</span> <span class="title class_">int</span>[]&#123;start, end&#125;);</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">int</span>[] tmp = &#123;end, <span class="number">0</span>&#125;;</span><br><span class="line">        <span class="type">int</span>[] arr = booked.ceiling(tmp);</span><br><span class="line">        <span class="type">int</span>[] prev = arr == <span class="literal">null</span> ? booked.last() : booked.lower(arr);</span><br><span class="line">        <span class="keyword">if</span> (arr == booked.first() || booked.lower(tmp)[<span class="number">1</span>] &lt;= start) &#123;</span><br><span class="line">            booked.add(<span class="keyword">new</span> <span class="title class_">int</span>[]&#123;start, end&#125;);</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Go"><figure class="iseeu highlight go"><figcaption><span>[sol2-Golang]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> MyCalendar <span class="keyword">struct</span> &#123;</span><br><span class="line">    *redblacktree.Tree</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Constructor</span><span class="params">()</span></span> MyCalendar &#123;</span><br><span class="line">    t := redblacktree.NewWithIntComparator()</span><br><span class="line">    t.Put(math.MaxInt32, <span class="literal">nil</span>) <span class="comment">// 哨兵，简化代码</span></span><br><span class="line">    <span class="keyword">return</span> MyCalendar&#123;t&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(c MyCalendar)</span></span> Book(start, end <span class="type">int</span>) <span class="type">bool</span> &#123;</span><br><span class="line">    node, _ := c.Ceiling(end)</span><br><span class="line">    it := c.IteratorAt(node)</span><br><span class="line">    <span class="keyword">if</span> !it.Prev() || it.Value().(<span class="type">int</span>) &lt;= start &#123;</span><br><span class="line">        c.Put(start, end)</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>复杂度分析</strong></p>
+<ul>
+<li><p>时间复杂度：O(n \log n), 其中 n 表示日程安排的数量。由于每次在进行预订时，都需要进行二分查找，需要的时间为 O(\log n)。</p>
+</li>
+<li><p>空间复杂度：O(n)，其中 n 表示日程安排的数量。需要保存所有已经预订的行程。</p>
+</li>
+</ul>
+<h4 id="方法三：线段树"><a href="#方法三：线段树" class="headerlink" title="方法三：线段树"></a>方法三：线段树</h4><p>利用线段树，假设我们开辟了数组 arr}[0,\cdots, 10^9]，初始时每个元素的值都为 0，对于每次行程预订的区间 [\textit{start}, \textit{end}) ，则我们将区间中的元素 arr}[\textit{start},\cdots,\textit{end}-1] 中的每个元素都标记为 1，每次调用 book 时，我们只需要检测 arr}[\textit{start},\cdots,\textit{end}-1] 区间内是否有元素被标记为 1。实际我们不必实际开辟数组 arr，可采用动态线段树，懒标记 lazy 标记区间 [l,r] 已经被预订，tree 记录区间 [l,r] 的是否存在标记为 1 的元素。</p>
+<ul>
+<li>每次进行 book 操作时，首先判断区间 [\textit{start},\cdots,\textit{end}-1] 是否存在元素被标记，如果存在被标记为 1 的元素，则表明该区间不可预订；否则，则将可以预订。预订完成后，将 arr}[\textit{start},\cdots,\textit{end}-1] 进行标记为 1，并同时更新线段树。</li>
+</ul>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><figcaption><span>[sol3-Python3]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyCalendar</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">        self.tree = <span class="built_in">set</span>()</span><br><span class="line">        self.lazy = <span class="built_in">set</span>()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">query</span>(<span class="params">self, start: <span class="built_in">int</span>, end: <span class="built_in">int</span>, l: <span class="built_in">int</span>, r: <span class="built_in">int</span>, idx: <span class="built_in">int</span></span>) -&gt; <span class="built_in">bool</span>:</span><br><span class="line">        <span class="keyword">if</span> r &lt; start <span class="keyword">or</span> end &lt; l:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">        <span class="keyword">if</span> idx <span class="keyword">in</span> self.lazy:  <span class="comment"># 如果该区间已被预订，则直接返回</span></span><br><span class="line">            <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line">        <span class="keyword">if</span> start &lt;= l <span class="keyword">and</span> r &lt;= end:</span><br><span class="line">            <span class="keyword">return</span> idx <span class="keyword">in</span> self.tree</span><br><span class="line">        mid = (l + r) // <span class="number">2</span></span><br><span class="line">        <span class="keyword">return</span> self.query(start, end, l, mid, <span class="number">2</span> * idx) <span class="keyword">or</span> \</span><br><span class="line">               self.query(start, end, mid + <span class="number">1</span>, r, <span class="number">2</span> * idx + <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">update</span>(<span class="params">self, start: <span class="built_in">int</span>, end: <span class="built_in">int</span>, l: <span class="built_in">int</span>, r: <span class="built_in">int</span>, idx: <span class="built_in">int</span></span>) -&gt; <span class="literal">None</span>:</span><br><span class="line">        <span class="keyword">if</span> r &lt; start <span class="keyword">or</span> end &lt; l:</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">        <span class="keyword">if</span> start &lt;= l <span class="keyword">and</span> r &lt;= end:</span><br><span class="line">            self.tree.add(idx)</span><br><span class="line">            self.lazy.add(idx)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            mid = (l + r) // <span class="number">2</span></span><br><span class="line">            self.update(start, end, l, mid, <span class="number">2</span> * idx)</span><br><span class="line">            self.update(start, end, mid + <span class="number">1</span>, r, <span class="number">2</span> * idx + <span class="number">1</span>)</span><br><span class="line">            self.tree.add(idx)</span><br><span class="line">            <span class="keyword">if</span> <span class="number">2</span> * idx <span class="keyword">in</span> self.lazy <span class="keyword">and</span> <span class="number">2</span> * idx + <span class="number">1</span> <span class="keyword">in</span> self.lazy:</span><br><span class="line">                self.lazy.add(idx)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">book</span>(<span class="params">self, start: <span class="built_in">int</span>, end: <span class="built_in">int</span></span>) -&gt; <span class="built_in">bool</span>:</span><br><span class="line">        <span class="keyword">if</span> self.query(start, end - <span class="number">1</span>, <span class="number">0</span>, <span class="number">10</span> ** <span class="number">9</span>, <span class="number">1</span>):</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">        self.update(start, end - <span class="number">1</span>, <span class="number">0</span>, <span class="number">10</span> ** <span class="number">9</span>, <span class="number">1</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">True</span></span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="C++"><figure class="iseeu highlight c++"><figcaption><span>[sol3-C++]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyCalendar</span> &#123;</span><br><span class="line">    unordered_set&lt;<span class="type">int</span>&gt; tree, lazy;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">bool</span> <span class="title">query</span><span class="params">(<span class="type">int</span> start, <span class="type">int</span> end, <span class="type">int</span> l, <span class="type">int</span> r, <span class="type">int</span> idx)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (r &lt; start || end &lt; l) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">/* 如果该区间已被预订，则直接返回 */</span></span><br><span class="line">        <span class="keyword">if</span> (lazy.<span class="built_in">count</span>(idx)) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (start &lt;= l &amp;&amp; r &lt;= end) &#123;</span><br><span class="line">            <span class="keyword">return</span> tree.<span class="built_in">count</span>(idx);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">int</span> mid = (l + r) &gt;&gt; <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">query</span>(start, end, l, mid, <span class="number">2</span> * idx) ||</span><br><span class="line">               <span class="built_in">query</span>(start, end, mid + <span class="number">1</span>, r, <span class="number">2</span> * idx + <span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">update</span><span class="params">(<span class="type">int</span> start, <span class="type">int</span> end, <span class="type">int</span> l, <span class="type">int</span> r, <span class="type">int</span> idx)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (r &lt; start || end &lt; l) &#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (start &lt;= l &amp;&amp; r &lt;= end) &#123;</span><br><span class="line">            tree.<span class="built_in">emplace</span>(idx);</span><br><span class="line">            lazy.<span class="built_in">emplace</span>(idx);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="type">int</span> mid = (l + r) &gt;&gt; <span class="number">1</span>;</span><br><span class="line">            <span class="built_in">update</span>(start, end, l, mid, <span class="number">2</span> * idx);</span><br><span class="line">            <span class="built_in">update</span>(start, end, mid + <span class="number">1</span>, r, <span class="number">2</span> * idx + <span class="number">1</span>);</span><br><span class="line">            tree.<span class="built_in">emplace</span>(idx);</span><br><span class="line">            <span class="keyword">if</span> (lazy.<span class="built_in">count</span>(<span class="number">2</span> * idx) &amp;&amp; lazy.<span class="built_in">count</span>(<span class="number">2</span> * idx + <span class="number">1</span>)) &#123;</span><br><span class="line">                lazy.<span class="built_in">emplace</span>(idx);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">bool</span> <span class="title">book</span><span class="params">(<span class="type">int</span> start, <span class="type">int</span> end)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">query</span>(start, end - <span class="number">1</span>, <span class="number">0</span>, <span class="number">1e9</span>, <span class="number">1</span>)) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">update</span>(start, end - <span class="number">1</span>, <span class="number">0</span>, <span class="number">1e9</span>, <span class="number">1</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><figcaption><span>[sol3-Java]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyCalendar</span> &#123;</span><br><span class="line">    Set&lt;Integer&gt; tree;</span><br><span class="line">    Set&lt;Integer&gt; lazy;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">MyCalendar</span><span class="params">()</span> &#123;</span><br><span class="line">        tree = <span class="keyword">new</span> <span class="title class_">HashSet</span>&lt;Integer&gt;();</span><br><span class="line">        lazy = <span class="keyword">new</span> <span class="title class_">HashSet</span>&lt;Integer&gt;();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">book</span><span class="params">(<span class="type">int</span> start, <span class="type">int</span> end)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (query(start, end - <span class="number">1</span>, <span class="number">0</span>, <span class="number">1000000000</span>, <span class="number">1</span>)) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        update(start, end - <span class="number">1</span>, <span class="number">0</span>, <span class="number">1000000000</span>, <span class="number">1</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">query</span><span class="params">(<span class="type">int</span> start, <span class="type">int</span> end, <span class="type">int</span> l, <span class="type">int</span> r, <span class="type">int</span> idx)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (start &gt; r || end &lt; l) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">/* 如果该区间已被预订，则直接返回 */</span></span><br><span class="line">        <span class="keyword">if</span> (lazy.contains(idx)) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (start &lt;= l &amp;&amp; r &lt;= end) &#123;</span><br><span class="line">            <span class="keyword">return</span> tree.contains(idx);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="type">int</span> <span class="variable">mid</span> <span class="operator">=</span> (l + r) &gt;&gt; <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">if</span> (end &lt;= mid) &#123;</span><br><span class="line">                <span class="keyword">return</span> query(start, end, l, mid, <span class="number">2</span> * idx);</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (start &gt; mid) &#123;</span><br><span class="line">                <span class="keyword">return</span> query(start, end, mid + <span class="number">1</span>, r, <span class="number">2</span> * idx + <span class="number">1</span>);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">return</span> query(start, end, l, mid, <span class="number">2</span> * idx) | query(start, end, mid + <span class="number">1</span>, r, <span class="number">2</span> * idx + <span class="number">1</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">update</span><span class="params">(<span class="type">int</span> start, <span class="type">int</span> end, <span class="type">int</span> l, <span class="type">int</span> r, <span class="type">int</span> idx)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (r &lt; start || end &lt; l) &#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125; </span><br><span class="line">        <span class="keyword">if</span> (start &lt;= l &amp;&amp; r &lt;= end) &#123;</span><br><span class="line">            tree.add(idx);</span><br><span class="line">            lazy.add(idx);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="type">int</span> <span class="variable">mid</span> <span class="operator">=</span> (l + r) &gt;&gt; <span class="number">1</span>;</span><br><span class="line">            update(start, end, l, mid, <span class="number">2</span> * idx);</span><br><span class="line">            update(start, end, mid + <span class="number">1</span>, r, <span class="number">2</span> * idx + <span class="number">1</span>);</span><br><span class="line">            tree.add(idx);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="C#"><figure class="iseeu highlight c#"><figcaption><span>[sol3-C#]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">MyCalendar</span> &#123;</span><br><span class="line">    ISet&lt;<span class="built_in">int</span>&gt; tree;</span><br><span class="line">    ISet&lt;<span class="built_in">int</span>&gt; lazy;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MyCalendar</span>()</span> &#123;</span><br><span class="line">        tree = <span class="keyword">new</span> HashSet&lt;<span class="built_in">int</span>&gt;();</span><br><span class="line">        lazy = <span class="keyword">new</span> HashSet&lt;<span class="built_in">int</span>&gt;();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="built_in">bool</span> <span class="title">Book</span>(<span class="params"><span class="built_in">int</span> start, <span class="built_in">int</span> end</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (Query(start, end - <span class="number">1</span>, <span class="number">0</span>, <span class="number">1000000000</span>, <span class="number">1</span>)) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        Update(start, end - <span class="number">1</span>, <span class="number">0</span>, <span class="number">1000000000</span>, <span class="number">1</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="built_in">bool</span> <span class="title">Query</span>(<span class="params"><span class="built_in">int</span> start, <span class="built_in">int</span> end, <span class="built_in">int</span> l, <span class="built_in">int</span> r, <span class="built_in">int</span> idx</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (start &gt; r || end &lt; l) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">/* 如果该区间已被预订，则直接返回 */</span></span><br><span class="line">        <span class="keyword">if</span> (lazy.Contains(idx)) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (start &lt;= l &amp;&amp; r &lt;= end) &#123;</span><br><span class="line">            <span class="keyword">return</span> tree.Contains(idx);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="built_in">int</span> mid = (l + r) &gt;&gt; <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">if</span> (end &lt;= mid) &#123;</span><br><span class="line">                <span class="keyword">return</span> Query(start, end, l, mid, <span class="number">2</span> * idx);</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (start &gt; mid) &#123;</span><br><span class="line">                <span class="keyword">return</span> Query(start, end, mid + <span class="number">1</span>, r, <span class="number">2</span> * idx + <span class="number">1</span>);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">return</span> Query(start, end, l, mid, <span class="number">2</span> * idx) | Query(start, end, mid + <span class="number">1</span>, r, <span class="number">2</span> * idx + <span class="number">1</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Update</span>(<span class="params"><span class="built_in">int</span> start, <span class="built_in">int</span> end, <span class="built_in">int</span> l, <span class="built_in">int</span> r, <span class="built_in">int</span> idx</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (r &lt; start || end &lt; l) &#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125; </span><br><span class="line">        <span class="keyword">if</span> (start &lt;= l &amp;&amp; r &lt;= end) &#123;</span><br><span class="line">            tree.Add(idx);</span><br><span class="line">            lazy.Add(idx);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="built_in">int</span> mid = (l + r) &gt;&gt; <span class="number">1</span>;</span><br><span class="line">            Update(start, end, l, mid, <span class="number">2</span> * idx);</span><br><span class="line">            Update(start, end, mid + <span class="number">1</span>, r, <span class="number">2</span> * idx + <span class="number">1</span>);</span><br><span class="line">            tree.Add(idx);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="C"><figure class="iseeu highlight c"><figcaption><span>[sol3-C]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">HashItem</span> &#123;</span></span><br><span class="line">    <span class="type">int</span> key;</span><br><span class="line">    <span class="type">bool</span> hasBooked;</span><br><span class="line">    <span class="type">bool</span> lazy;</span><br><span class="line">    UT_hash_handle hh;</span><br><span class="line">&#125; HashItem;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> &#123;</span></span><br><span class="line">    HashItem *tree;</span><br><span class="line">&#125; MyCalendar;</span><br><span class="line"></span><br><span class="line">MyCalendar* <span class="title function_">myCalendarCreate</span><span class="params">()</span> &#123;</span><br><span class="line">    MyCalendar *obj = (MyCalendar *)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(MyCalendar));</span><br><span class="line">    obj-&gt;tree = <span class="literal">NULL</span>;</span><br><span class="line">    <span class="keyword">return</span> obj;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">bool</span> <span class="title function_">query</span><span class="params">(MyCalendar* obj, <span class="type">int</span> start, <span class="type">int</span> end, <span class="type">int</span> l, <span class="type">int</span> r, <span class="type">int</span> idx)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (r &lt; start || end &lt; l) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125; </span><br><span class="line">    HashItem *pEntry = <span class="literal">NULL</span>;</span><br><span class="line">    HASH_FIND_INT(obj-&gt;tree, &amp;idx, pEntry);</span><br><span class="line">    <span class="comment">/* 如果该区间已被预订，则直接返回 */</span></span><br><span class="line">    <span class="keyword">if</span> (pEntry &amp;&amp; pEntry-&gt;lazy) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (start &lt;= l &amp;&amp; r &lt;= end) &#123;</span><br><span class="line">        <span class="keyword">if</span> (pEntry) &#123;</span><br><span class="line">            <span class="keyword">return</span> pEntry-&gt;hasBooked;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="type">int</span> mid = (l + r) &gt;&gt; <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">if</span> (end &lt;= mid) &#123;</span><br><span class="line">            <span class="keyword">return</span> query(obj, start, end, l, mid, <span class="number">2</span> * idx);</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (start &gt; mid) &#123;</span><br><span class="line">            <span class="keyword">return</span> query(obj, start, end, mid + <span class="number">1</span>, r, <span class="number">2</span> * idx + <span class="number">1</span>);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> query(obj, start, end, l, mid, <span class="number">2</span> * idx) | \</span><br><span class="line">                   query(obj, start, end, mid + <span class="number">1</span>, r, <span class="number">2</span> * idx + <span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">update</span><span class="params">(MyCalendar* obj, <span class="type">int</span> start, <span class="type">int</span> end, <span class="type">int</span> l, <span class="type">int</span> r, <span class="type">int</span> idx)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (r &lt; start || end &lt; l) &#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125; </span><br><span class="line">    <span class="keyword">if</span> (start &lt;= l &amp;&amp; r &lt;= end) &#123;</span><br><span class="line">        HashItem *pEntry = <span class="literal">NULL</span>;</span><br><span class="line">        HASH_FIND_INT(obj-&gt;tree, &amp;idx, pEntry);</span><br><span class="line">        <span class="keyword">if</span> (!pEntry) &#123;</span><br><span class="line">            pEntry = (HashItem *)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(HashItem));</span><br><span class="line">            pEntry-&gt;key = idx;</span><br><span class="line">            HASH_ADD_INT(obj-&gt;tree, key, pEntry);</span><br><span class="line">        &#125;</span><br><span class="line">        pEntry-&gt;hasBooked = <span class="literal">true</span>;</span><br><span class="line">        pEntry-&gt;lazy = <span class="literal">true</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="type">int</span> mid = (l + r) &gt;&gt; <span class="number">1</span>;</span><br><span class="line">        update(obj, start, end, l, mid, <span class="number">2</span> * idx);</span><br><span class="line">        update(obj, start, end, mid + <span class="number">1</span>, r, <span class="number">2</span> * idx + <span class="number">1</span>);</span><br><span class="line">        HashItem *pEntry = <span class="literal">NULL</span>;</span><br><span class="line">        HASH_FIND_INT(obj-&gt;tree, &amp;idx, pEntry);</span><br><span class="line">        <span class="keyword">if</span> (!pEntry) &#123;</span><br><span class="line">            pEntry = (HashItem *)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(HashItem));</span><br><span class="line">            pEntry-&gt;key = idx;</span><br><span class="line">            HASH_ADD_INT(obj-&gt;tree, key, pEntry);</span><br><span class="line">        &#125;   </span><br><span class="line">        pEntry-&gt;hasBooked = <span class="literal">true</span>;</span><br><span class="line">        pEntry-&gt;lazy = <span class="literal">false</span>;</span><br><span class="line">        HashItem *pEntry1 = <span class="literal">NULL</span>, *pEntry2 = <span class="literal">NULL</span>;</span><br><span class="line">        <span class="type">int</span> lchild = <span class="number">2</span> * idx, rchild = <span class="number">2</span> * idx + <span class="number">1</span>;</span><br><span class="line">        HASH_FIND_INT(obj-&gt;tree, &amp;lchild, pEntry1);</span><br><span class="line">        HASH_FIND_INT(obj-&gt;tree, &amp;rchild, pEntry2);</span><br><span class="line">        <span class="keyword">if</span> (pEntry1 &amp;&amp; pEntry1-&gt;lazy &amp;&amp; pEntry2 &amp;&amp; pEntry2-&gt;lazy) &#123;</span><br><span class="line">            pEntry-&gt;lazy = <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">bool</span> <span class="title function_">myCalendarBook</span><span class="params">(MyCalendar* obj, <span class="type">int</span> start, <span class="type">int</span> end)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (query(obj, start, end - <span class="number">1</span>, <span class="number">0</span>, <span class="number">1e9</span>, <span class="number">1</span>)) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    update(obj, start, end - <span class="number">1</span>, <span class="number">0</span>, <span class="number">1e9</span>, <span class="number">1</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">myCalendarFree</span><span class="params">(MyCalendar* obj)</span> &#123;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">HashItem</span> *<span class="title">curr</span>, *<span class="title">tmp</span>;</span></span><br><span class="line">    HASH_ITER(hh, obj-&gt;tree, curr, tmp) &#123;</span><br><span class="line">        HASH_DEL(obj-&gt;tree, curr); </span><br><span class="line">        <span class="built_in">free</span>(curr);             </span><br><span class="line">    &#125; </span><br><span class="line">    <span class="built_in">free</span>(obj);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Go"><figure class="iseeu highlight go"><figcaption><span>[sol3-Golang]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> MyCalendar <span class="keyword">struct</span> &#123;</span><br><span class="line">    tree, lazy <span class="keyword">map</span>[<span class="type">int</span>]<span class="type">bool</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Constructor</span><span class="params">()</span></span> MyCalendar &#123;</span><br><span class="line">    <span class="keyword">return</span> MyCalendar&#123;<span class="keyword">map</span>[<span class="type">int</span>]<span class="type">bool</span>&#123;&#125;, <span class="keyword">map</span>[<span class="type">int</span>]<span class="type">bool</span>&#123;&#125; &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(c MyCalendar)</span></span> query(start, end, l, r, idx <span class="type">int</span>) <span class="type">bool</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> r &lt; start || end &lt; l &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> c.lazy[idx] &#123; <span class="comment">// 如果该区间已被预订，则直接返回</span></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> start &lt;= l &amp;&amp; r &lt;= end &#123;</span><br><span class="line">        <span class="keyword">return</span> c.tree[idx]</span><br><span class="line">    &#125;</span><br><span class="line">    mid := (l + r) &gt;&gt; <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> c.query(start, end, l, mid, <span class="number">2</span>*idx) ||</span><br><span class="line">        c.query(start, end, mid+<span class="number">1</span>, r, <span class="number">2</span>*idx+<span class="number">1</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(c MyCalendar)</span></span> update(start, end, l, r, idx <span class="type">int</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> r &lt; start || end &lt; l &#123;</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> start &lt;= l &amp;&amp; r &lt;= end &#123;</span><br><span class="line">        c.tree[idx] = <span class="literal">true</span></span><br><span class="line">        c.lazy[idx] = <span class="literal">true</span></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        mid := (l + r) &gt;&gt; <span class="number">1</span></span><br><span class="line">        c.update(start, end, l, mid, <span class="number">2</span>*idx)</span><br><span class="line">        c.update(start, end, mid+<span class="number">1</span>, r, <span class="number">2</span>*idx+<span class="number">1</span>)</span><br><span class="line">        c.tree[idx] = <span class="literal">true</span></span><br><span class="line">        <span class="keyword">if</span> c.lazy[<span class="number">2</span>*idx] &amp;&amp; c.lazy[<span class="number">2</span>*idx+<span class="number">1</span>] &#123;</span><br><span class="line">            c.lazy[idx] = <span class="literal">true</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(c MyCalendar)</span></span> Book(start, end <span class="type">int</span>) <span class="type">bool</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> c.query(start, end<span class="number">-1</span>, <span class="number">0</span>, <span class="number">1e9</span>, <span class="number">1</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">    &#125;</span><br><span class="line">    c.update(start, end<span class="number">-1</span>, <span class="number">0</span>, <span class="number">1e9</span>, <span class="number">1</span>)</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><figcaption><span>[sol3-JavaScript]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> <span class="title class_">MyCalendar</span> = <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">tree</span> = <span class="keyword">new</span> <span class="title class_">Set</span>();</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">lazy</span> = <span class="keyword">new</span> <span class="title class_">Set</span>();</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="title class_">MyCalendar</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">book</span> = <span class="keyword">function</span>(<span class="params">start, end</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="variable language_">this</span>.<span class="title function_">query</span>(start, end - <span class="number">1</span>, <span class="number">0</span>, <span class="number">1000000000</span>, <span class="number">1</span>)) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="title function_">update</span>(start, end - <span class="number">1</span>, <span class="number">0</span>, <span class="number">1000000000</span>, <span class="number">1</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="title class_">MyCalendar</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">query</span> = <span class="keyword">function</span>(<span class="params">start, end, l, r, idx</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (start &gt; r || end &lt; l) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">/* 如果该区间已被预订，则直接返回 */</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="variable language_">this</span>.<span class="property">lazy</span>.<span class="title function_">has</span>(idx)) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (start &lt;= l &amp;&amp; r &lt;= end) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">tree</span>.<span class="title function_">has</span>(idx);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">const</span> mid = (l + r) &gt;&gt; <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">if</span> (end &lt;= mid) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="title function_">query</span>(start, end, l, mid, <span class="number">2</span> * idx);</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (start &gt; mid) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="title function_">query</span>(start, end, mid + <span class="number">1</span>, r, <span class="number">2</span> * idx + <span class="number">1</span>);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="title function_">query</span>(start, end, l, mid, <span class="number">2</span> * idx) | <span class="variable language_">this</span>.<span class="title function_">query</span>(start, end, mid + <span class="number">1</span>, r, <span class="number">2</span> * idx + <span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title class_">MyCalendar</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">update</span> = <span class="keyword">function</span>(<span class="params">start, end, l, r, idx</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (r &lt; start || end &lt; l) &#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125; </span><br><span class="line">    <span class="keyword">if</span> (start &lt;= l &amp;&amp; r &lt;= end) &#123;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">tree</span>.<span class="title function_">add</span>(idx);</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">lazy</span>.<span class="title function_">add</span>(idx);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">const</span> mid = (l + r) &gt;&gt; <span class="number">1</span>;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="title function_">update</span>(start, end, l, mid, <span class="number">2</span> * idx);</span><br><span class="line">        <span class="variable language_">this</span>.<span class="title function_">update</span>(start, end, mid + <span class="number">1</span>, r, <span class="number">2</span> * idx + <span class="number">1</span>);</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">tree</span>.<span class="title function_">add</span>(idx);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>复杂度分析</strong></p>
+<ul>
+<li><p>时间复杂度：O(n \log C)，其中 n 为日程安排的数量。由于使用了线段树查询，线段树的最大深度为 \log C，每次最多会查询 \log C 个节点，每次求最大的预订需的时间复杂度为 O(\log C + \log C)，因此时间复杂度为 O(n \log C)，在此 C 取固定值 10^9。</p>
+</li>
+<li><p>空间复杂度：O(n \log C)，其中 n 为日程安排的数量。由于该解法采用的为动态线段树，线段树的最大深度为 \log C，每次预订最多会在线段树上增加 \log C 个节点，因此空间复杂度为 O(n \log C)，在此 C 取固定值 10^9。</p>
+</li>
+</ul>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <!--<div class="article-copyright-info-container">-->
+    <!--&lt;!&ndash;<ul>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><strong>Title:</strong> LCR 058-我的日程安排表 I</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><strong>Author:</strong> Raphael Liu</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><strong>Created at&ndash;&gt;-->
+                <!--&lt;!&ndash;:</strong> 2023-09-13 00:47:26</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;&ndash;&gt;-->
+            <!--&lt;!&ndash;<li>&ndash;&gt;-->
+                <!--&lt;!&ndash;<strong>Updated at&ndash;&gt;-->
+                    <!--&lt;!&ndash;:</strong> 2023-09-13 17:01:07&ndash;&gt;-->
+            <!--&lt;!&ndash;</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;<li>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;<strong>Link:</strong> https://fida.ltd/2023/09/13/LCR 058-我的日程安排表 I/&ndash;&gt;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;</li>&ndash;&gt;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;<li>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;<strong>&ndash;&gt;&ndash;&gt;-->
+                <!--&lt;!&ndash;&lt;!&ndash;License:&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;</strong>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0</a>.&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;&ndash;&gt;&ndash;&gt;-->
+
+        <!--&lt;!&ndash;&lt;!&ndash;</li>&ndash;&gt;&ndash;&gt;-->
+    <!--&lt;!&ndash;</ul>&ndash;&gt;-->
+<!--</div>-->
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box">
+                
+                    <li class="tag-item">
+                        <a href="/tags/algorithm/">#algorithm</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item">
+                        <a href="/tags/MEDIUM/">#MEDIUM</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                        rel="prev"
+                        href="/2023/09/13/LCR%20057-%E5%AD%98%E5%9C%A8%E9%87%8D%E5%A4%8D%E5%85%83%E7%B4%A0%20III/"
+                        >
+                            <span class="left arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">LCR 057-存在重复元素 III</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                        rel="next"
+                        href="/2023/09/13/LCR%20060-%E5%89%8D%20K%20%E4%B8%AA%E9%AB%98%E9%A2%91%E5%85%83%E7%B4%A0/"
+                        >
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">LCR 060-前 K 个高频元素</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+
+        
+            <div class="comment-container">
+                <div class="comments-container pjax">
+    <div id="comment-anchor"></div>
+    <div class="comment-area-title">
+        <i class="fa-solid fa-comments"></i>&nbsp;Comments
+    </div>
+    
+
+        
+            
+ 
+    <div id="waline"></div>
+    <script type="module"  data-swup-reload-script>
+        import { init } from 'https://evan.beee.top/js/waline.mjs';
+
+        function loadWaline() {
+            init({
+                el: '#waline',
+                serverURL: 'https://example.example.com',
+                lang: 'zh-CN',
+                dark: 'body[class~="dark-mode"]',
+                requiredMeta: ['nick','mail'], // cannot customize by theme config, change it yourself
+            });
+        }
+
+        if ('true') {
+            const loadWalineTimeout = setTimeout(() => {
+                loadWaline();
+                clearTimeout(loadWalineTimeout);
+            }, 1000);
+        } else {
+            window.addEventListener('DOMContentLoaded', loadWaline);
+        }
+        
+    </script>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+
+    
+        <div class="toc-content-container">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">On this page</div>
+        <div class="page-title">LCR 058-我的日程安排表 I</div>
+        
+
+    </div>
+</div>
+        </div>
+    
+</div>
+
+
+
+                
+
+            </div>
+
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2022</span>
+              -
+            
+            2023&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">Raphael Liu</a>
+        </div>
+        
+            <script data-swup-reload-script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">UV:</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">PV:</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <!--<div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">-->
+            <!--<span class="lg:block text-sm">powered_by</span>-->
+            <!--&lt;!&ndash;<span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.4.4</a></span>&ndash;&gt;-->
+        <!--</div>-->
+        
+        <!---->
+            <!--<div>-->
+                <!--runtime <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hours <span class="odometer" id="runtime_minutes"></span> minutes <span class="odometer" id="runtime_seconds"></span> seconds-->
+            <!--</div>-->
+        <!---->
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fa-regular fa-comments"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-expand-width flex justify-center items-center">
+            <i class="fa-regular fa-expand"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fa-solid fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa-solid fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa-solid fa-spinner fa-spin-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+    
+<script src="/js/libs/Swup.min.js"></script>
+
+<script src="/js/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/libs/SwupScrollPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+        ],
+        containers: ["#swup"],
+    });
+
+    swup.hooks.on("page:view", () => {
+        Global.refresh();
+    });
+
+    // if (document.readyState === "complete") {
+    //
+    // } else {
+    //     document.addEventListener("DOMContentLoaded", () => init());
+    // }
+</script>
+
+
+
+
+
+
+<script src="/js/utils.js" type="module"></script>
+
+<script src="/js/main.js" type="module"></script>
+
+<script src="/js/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/layouts/categoryList.js" type="module"></script>
+
+
+
+    
+<script src="/js/tools/localSearch.js"></script>
+
+
+
+
+    
+<script src="/js/tools/codeBlock.js"></script>
+
+
+
+
+    
+<script src="/js/layouts/lazyload.js"></script>
+
+
+
+
+    
+<script src="/js/tools/runtime.js"></script>
+
+    
+<script src="/js/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/libs/Typed.min.js"></script>
+
+  
+<script src="/js/plugins/typed.js"></script>
+
+
+
+
+
+
+
+<div class="post-scripts" data-swup-reload-script>
+    
+        
+<script src="/js/libs/anime.min.js"></script>
+
+        
+<script src="/js/tools/tocToggle.js" type="module"></script>
+
+<script src="/js/layouts/toc.js" type="module"></script>
+
+<script src="/js/plugins/tabs.js" type="module"></script>
+
+    
+</div>
+
+
+</body>
+</html>

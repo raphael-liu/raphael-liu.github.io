@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="Raphael Liu">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/2023/09/13/2286-以组为单位订音乐会的门票/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="一个音乐会总共有 n 排座位，编号从 0 到 n - 1 ，每一排有 m 个座椅，编号为 0 到 m - 1。你需要设计一个买票系统，针对以下情况进行座位安排：  同一组的 k 位观众坐在 同一排座位，且座位连续 。 k 位观众中 每一位  都有座位坐，但他们 不一定  坐在一起。  由于观众非常挑剔，所以：  只有当一个组里所有成员座位的排数都 小于等于  maxRow ，这个组才能订座位。每一">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2286-以组为单位订音乐会的门票">
+<meta property="og:url" content="http://example.com/2023/09/13/2286-%E4%BB%A5%E7%BB%84%E4%B8%BA%E5%8D%95%E4%BD%8D%E8%AE%A2%E9%9F%B3%E4%B9%90%E4%BC%9A%E7%9A%84%E9%97%A8%E7%A5%A8/index.html">
+<meta property="og:site_name" content="Raphael&#39;s Blog">
+<meta property="og:description" content="一个音乐会总共有 n 排座位，编号从 0 到 n - 1 ，每一排有 m 个座椅，编号为 0 到 m - 1。你需要设计一个买票系统，针对以下情况进行座位安排：  同一组的 k 位观众坐在 同一排座位，且座位连续 。 k 位观众中 每一位  都有座位坐，但他们 不一定  坐在一起。  由于观众非常挑剔，所以：  只有当一个组里所有成员座位的排数都 小于等于  maxRow ，这个组才能订座位。每一">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-09-12T16:47:26.000Z">
+<meta property="article:modified_time" content="2023-09-13T08:06:24.514Z">
+<meta property="article:author" content="Raphael Liu">
+<meta property="article:tag" content="algorithm">
+<meta property="article:tag" content="HARD">
+<meta name="twitter:card" content="summary">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/redefine-favicon.svg" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/redefine-favicon.svg">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/redefine-favicon.svg">
+    <!--- Page Info-->
+    
+    <title>
+        
+            2286-以组为单位订音乐会的门票 -
+        
+        Raphael&#39;s Blog
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/css/build/styles.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/fonts.css">
+
+    
+<link rel="stylesheet" href="/fonts/Satoshi/satoshi.css">
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+
+    <!--- Inject Part-->
+    
+    <script id="hexo-configurations">
+    let Global = window.Global || {};
+    Global.hexo_config = {"hostname":"example.com","root":"/","language":"zh_CN"};
+    Global.theme_config = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":true,"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"open_graph":true,"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-wqery6-light.webp","dark":"/images/wallhaven-wqery6-dark.webp"},"title":"Raphael's Blog","subtitle":{"text":["格物致知","坚持做正确的事情"],"hitokoto":{"enable":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":false,"links":{"github":"https://github.com/raphael-liu","email":"raphael@buaa.edu.cn# your email"},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.4.4","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"links":{"首页":{"path":"/","icon":"fa-regular fa-house"},"文章":{"path":"/archives","icon":"fa-regular fa-archive"},"关于":{"icon":"fa-regular fa-user","submenus":{"我":"/about/me","Github":"https://github.com/raphael-liu"}}},"search":{"enable":true,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"links":null},"article_date_format":"auto","categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}},"footerStart":"2022/8/17 11:45:14"};
+    Global.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    Global.data_config = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="swup-progress-icon">
+            <i class="fa-solid fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container" id="swup">
+
+    
+
+    <div class="main-content-container">
+
+
+        <div class="main-content-header">
+            <header class="navbar-container">
+    
+    <div class="navbar-content">
+        <div class="left">
+            
+            <a class="logo-title" href="http://example.com/">
+                
+                Raphael&#39;s Blog
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/"  >
+                                    
+                                        
+                                            <i class="fa-regular fa-house"></i>
+                                        
+                                        首页
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/archives"  >
+                                    
+                                        
+                                            <i class="fa-regular fa-archive"></i>
+                                        
+                                        文章
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="has-dropdown" 
+                                    href="#" onClick="return false;">
+                                    
+                                        
+                                            <i class="fa-regular fa-user"></i>
+                                        
+                                        关于&nbsp;<i class="fa-solid fa-chevron-down"></i>
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                                    <ul class="sub-menu">
+                                    
+                                        <li>
+                                        <a href="/about/me">我
+                                        </a>
+                                        </li>
+                                    
+                                        <li>
+                                        <a target="_blank" rel="noopener" href="https://github.com/raphael-liu">GITHUB
+                                        </a>
+                                        </li>
+                                    
+                                    </ul>
+                                
+                            </li>
+                    
+                    
+                        <li class="navbar-item search search-popup-trigger">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fa-solid fa-magnifying-glass"></i></div>
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile drawer -->
+    <div class="navbar-drawer w-full absolute top-0 left-0 bg-background-color">
+        <ul class="drawer-navbar-list flex flex-col justify-start items-center">
+            
+                
+                    <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group " 
+                        href="/"  >
+                             
+                                
+                                    <i class="fa-regular fa-house"></i>
+                                
+                                首页
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+                
+                    <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group " 
+                        href="/archives"  >
+                             
+                                
+                                    <i class="fa-regular fa-archive"></i>
+                                
+                                文章
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+                
+                    <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group has-dropdown" 
+                        href="#" onClick="return false;">
+                            
+                                
+                                    <i class="fa-regular fa-user"></i>
+                                
+                                关于&nbsp;<i class="group-hover:rotate-180 transition-transform fa-solid fa-chevron-down"></i>
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                              
+                        
+                            <li class="text-base flex justify-center items-center hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                <a class="py-0.5" href="/about/me">我</a>
+                            </li>
+                        
+                            <li class="text-base flex justify-center items-center hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                <a class="py-0.5" target="_blank" rel="noopener" href="https://github.com/raphael-liu">GITHUB</a>
+                            </li>
+                        
+                    
+            
+
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="post-page-container">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            
+                <h1 class="article-title-regular">2286-以组为单位订音乐会的门票</h1>
+            
+            </div>
+            
+                    
+        
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">Raphael Liu</span>
+                        
+                            <span class="author-label">Lv10</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2023-09-13 00:47:26</span>
+        <span class="mobile">2023-09-13 00:47:26</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2023-09-13 16:06:24</span>
+            <span class="mobile">2023-09-13 16:06:24</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/algorithm/">algorithm</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/HARD/">HARD</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        
+
+
+        <div class="article-content markdown-body">
+            <p>一个音乐会总共有 <code>n</code> 排座位，编号从 <code>0</code> 到 <code>n - 1</code> ，每一排有 <code>m</code> 个座椅，编号为 <code>0</code> 到 <code>m - 1</code><br>。你需要设计一个买票系统，针对以下情况进行座位安排：</p>
+<ul>
+<li>同一组的 <code>k</code> 位观众坐在 <strong>同一排座位，且座位连续</strong> 。</li>
+<li><code>k</code> 位观众中 <strong>每一位</strong>  都有座位坐，但他们 <strong>不一定</strong>  坐在一起。</li>
+</ul>
+<p>由于观众非常挑剔，所以：</p>
+<ul>
+<li>只有当一个组里所有成员座位的排数都 <strong>小于等于</strong>  <code>maxRow</code> ，这个组才能订座位。每一组的 <code>maxRow</code> 可能 <strong>不同</strong>  。</li>
+<li>如果有多排座位可以选择，优先选择 <strong>最小</strong>  的排数。如果同一排中有多个座位可以坐，优先选择号码 <strong>最小</strong>  的。</li>
+</ul>
+<p>请你实现 <code>BookMyShow</code> 类：</p>
+<ul>
+<li><code>BookMyShow(int n, int m)</code> ，初始化对象，<code>n</code> 是排数，<code>m</code> 是每一排的座位数。</li>
+<li><code>int[] gather(int k, int maxRow)</code> 返回长度为 <code>2</code> 的数组，表示 <code>k</code> 个成员中 <strong>第一个座位</strong>  的排数和座位编号，这 <code>k</code> 位成员必须坐在 <strong>同一排座位，且座位连续</strong> 。换言之，返回最小可能的 <code>r</code> 和 <code>c</code> 满足第 <code>r</code> 排中 <code>[c, c + k - 1]</code> 的座位都是空的，且 <code>r &lt;= maxRow</code> 。如果  <strong>无法</strong>  安排座位，返回 <code>[]</code> 。</li>
+<li><code>boolean scatter(int k, int maxRow)</code> 如果组里所有 <code>k</code> 个成员  <strong>不一定</strong>  要坐在一起的前提下，都能在第 <code>0</code> 排到第 <code>maxRow</code> 排之间找到座位，那么请返回 <code>true</code> 。这种情况下，每个成员都优先找排数  <strong>最小</strong>  ，然后是座位编号最小的座位。如果不能安排所有 <code>k</code> 个成员的座位，请返回 <code>false</code> 。</li>
+</ul>
+<p><strong>示例 1：</strong></p>
+<pre><code>**输入：**
+[&quot;BookMyShow&quot;, &quot;gather&quot;, &quot;gather&quot;, &quot;scatter&quot;, &quot;scatter&quot;]
+[[2, 5], [4, 0], [2, 0], [5, 1], [5, 1]]
+**输出：**
+[null, [0, 0], [], true, false]
+
+**解释：**
+BookMyShow bms = new BookMyShow(2, 5); // 总共有 2 排，每排 5 个座位。
+bms.gather(4, 0); // 返回 [0, 0]
+                  // 这一组安排第 0 排 [0, 3] 的座位。
+bms.gather(2, 0); // 返回 []
+                  // 第 0 排只剩下 1 个座位。
+                  // 所以无法安排 2 个连续座位。
+bms.scatter(5, 1); // 返回 True
+                   // 这一组安排第 0 排第 4 个座位和第 1 排 [0, 3] 的座位。
+bms.scatter(5, 1); // 返回 False
+                   // 总共只剩下 2 个座位。
+</code></pre>
+<p><strong>提示：</strong></p>
+<ul>
+<li><code>1 &lt;= n &lt;= 5 * 104</code></li>
+<li><code>1 &lt;= m, k &lt;= 109</code></li>
+<li><code>0 &lt;= maxRow &lt;= n - 1</code></li>
+<li><code>gather</code> 和 <code>scatter</code>  <strong>总</strong> 调用次数不超过 <code>5 * 104</code> 次。</li>
+</ul>
+<h1 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h1><h2 id="思路和算法"><a href="#思路和算法" class="headerlink" title="思路和算法"></a>思路和算法</h2><p>这道题要求对于 n 排 m 列的音乐厅设计一个音乐会买票系统，支持两种买票方式。</p>
+<ul>
+<li><p>同一组的 k 位观众在同一排坐在一起。该方式对应 gather，称为聚集买票。</p>
+</li>
+<li><p>同一组的 k 位观众不一定坐在一起。该方式对应 scatter，称为分散买票。</p>
+</li>
+</ul>
+<p>由于两种买票方式都应满足对于特定排选择编号最小的座位，因此任何时候总是满足每一排订的座位是这一排的编号最小的连续座位。如果有一排已经订了 s 个座位，其中 0 &lt; s \le m，则一定满足这一排的编号 0 到 s - 1 的座位被订座，编号 s 到 m - 1 的座位没有被订座。因此对于每一排，被订座的座位数量与座位编号可以互相换算。</p>
+<p>两种买票方式的要求分别如下。</p>
+<ul>
+<li><p>聚集买票要求在排数不超过 maxRow 的范围判断是否存在有 k 个空座位的排，如果存在则需要计算排数最小的排的编号和这一排第一个空座位的编号，完成买票。</p>
+</li>
+<li><p>分散买票要求在排数不超过 maxRow 的范围判断是否有至少 k 个空座位的票，如果存在则需要计算买票的所有座位，完成买票。</p>
+</li>
+</ul>
+<p>为了实现两种买票方式，需要维护每一排的第一个空座位的编号与空座位数量，并需要支持快速计算特定排数范围的空座位的数量与第一个空座位的编号。可以使用线段树实现，线段树需要维护每个区间的被订座的座位数量与第一个空座位的编号。</p>
+<p>聚集买票的做法如下。</p>
+<ol>
+<li><p>如果一排可以买 k 个连续座位的票，则这一排的编号 m - k 到 m - 1 的座位一定都是空座位，因此这一排第一个空座位的编号不超过 m - k。计算排数不超过 maxRow 的范围的第一个空座位的编号不超过 m - k 的最小排数 row，如果排数不超过 maxRow 的范围的每一排的第一个空座位的编号都超过 m - k 则 row} &#x3D; -1。将一个区间分成两个子区间之后，由于原始区间的第一个空座位编号的最小值等于两个子区间的第一个空座位编号的最小值中的最小值，因此可以使用二分查找计算最小排数。</p>
+</li>
+<li><p>如果 row} &lt; 0，则排数不超过 maxRow 的范围不存在第一个空座位的编号不超过 m - k 的排，返回空数组。</p>
+</li>
+<li><p>如果 row} \ge 0，则 row 是第一个空座位的编号不超过 m - k 的最小排数。计算第 row 排的被订座的座位数量 seats，则第 row 排的第一个空座位的编号是 seats。将第 row 排的被订座的座位数量增加 k，然后返回 [\textit{row}, \textit{seats}]。</p>
+</li>
+</ol>
+<p>分散买票的做法如下。</p>
+<ol>
+<li><p>排数不超过 maxRow 的范围的座位总数是 (\textit{maxRow} + 1) \times m。计算排数不超过 maxRow 的范围的被订座的座位数量，根据座位总数与被订座的座位数量之差得到排数不超过 maxRow 的范围的空座位数量 remain。</p>
+</li>
+<li><p>如果 remain} &lt; k，则空座位数量小于 k，不能安排座位，返回 false。</p>
+</li>
+<li><p>如果 remain} \ge k，则空座位数量大于等于 k，可以安排座位。定位到有空座位的最小排数 row，从第 row 排开始依次计算每一排的空座位数量并完成订座，直到安排 k 个座位时订座结束。订座结束之后，返回 true。</p>
+</li>
+</ol>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><figcaption><span>[sol1-Java]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">BookMyShow</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> n, m;</span><br><span class="line">    <span class="keyword">private</span> SegmentTree st;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">BookMyShow</span><span class="params">(<span class="type">int</span> n, <span class="type">int</span> m)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.n = n;</span><br><span class="line">        <span class="built_in">this</span>.m = m;</span><br><span class="line">        <span class="built_in">this</span>.st = <span class="keyword">new</span> <span class="title class_">SegmentTree</span>(n);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span>[] gather(<span class="type">int</span> k, <span class="type">int</span> maxRow) &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">row</span> <span class="operator">=</span> st.searchRow(m - k, maxRow);</span><br><span class="line">        <span class="keyword">if</span> (row &lt; <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">int</span>[<span class="number">0</span>];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">int</span> <span class="variable">seats</span> <span class="operator">=</span> (<span class="type">int</span>) st.getSum(row, row);</span><br><span class="line">        st.add(row, k);</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">int</span>[]&#123;row, seats&#125;;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">scatter</span><span class="params">(<span class="type">int</span> k, <span class="type">int</span> maxRow)</span> &#123;</span><br><span class="line">        <span class="type">long</span> <span class="variable">remain</span> <span class="operator">=</span> (<span class="type">long</span>) (maxRow + <span class="number">1</span>) * m - st.getSum(<span class="number">0</span>, maxRow);</span><br><span class="line">        <span class="keyword">if</span> (remain &lt; k) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">int</span> <span class="variable">row</span> <span class="operator">=</span> st.searchRow(m - <span class="number">1</span>, maxRow);</span><br><span class="line">        <span class="keyword">while</span> (k &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="type">int</span> <span class="variable">currRemain</span> <span class="operator">=</span> m - (<span class="type">int</span>) st.getSum(row, row);</span><br><span class="line">            <span class="type">int</span> <span class="variable">currSeats</span> <span class="operator">=</span> Math.min(currRemain, k);</span><br><span class="line">            st.add(row, currSeats);</span><br><span class="line">            k -= currSeats;</span><br><span class="line">            row++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">SegmentTree</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> n;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">long</span>[] sumTree;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span>[] minTree;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">SegmentTree</span><span class="params">(<span class="type">int</span> n)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.n = n;</span><br><span class="line">        <span class="built_in">this</span>.sumTree = <span class="keyword">new</span> <span class="title class_">long</span>[n * <span class="number">4</span>];</span><br><span class="line">        <span class="built_in">this</span>.minTree = <span class="keyword">new</span> <span class="title class_">int</span>[n * <span class="number">4</span>];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">long</span> <span class="title function_">getSum</span><span class="params">(<span class="type">int</span> start, <span class="type">int</span> end)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> getSum(start, end, <span class="number">0</span>, <span class="number">0</span>, n - <span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">add</span><span class="params">(<span class="type">int</span> index, <span class="type">int</span> value)</span> &#123;</span><br><span class="line">        add(index, value, <span class="number">0</span>, <span class="number">0</span>, n - <span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">searchRow</span><span class="params">(<span class="type">int</span> target, <span class="type">int</span> maxRow)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> searchRow(target, maxRow, <span class="number">0</span>, <span class="number">0</span>, n - <span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="type">long</span> <span class="title function_">getSum</span><span class="params">(<span class="type">int</span> rangeStart, <span class="type">int</span> rangeEnd, <span class="type">int</span> treeIndex, <span class="type">int</span> treeStart, <span class="type">int</span> treeEnd)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (rangeStart == treeStart &amp;&amp; rangeEnd == treeEnd) &#123;</span><br><span class="line">            <span class="keyword">return</span> sumTree[treeIndex];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">int</span> <span class="variable">mid</span> <span class="operator">=</span> treeStart + (treeEnd - treeStart) / <span class="number">2</span>;</span><br><span class="line">        <span class="keyword">if</span> (rangeEnd &lt;= mid) &#123;</span><br><span class="line">            <span class="keyword">return</span> getSum(rangeStart, rangeEnd, treeIndex * <span class="number">2</span> + <span class="number">1</span>, treeStart, mid);</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (rangeStart &gt; mid) &#123;</span><br><span class="line">            <span class="keyword">return</span> getSum(rangeStart, rangeEnd, treeIndex * <span class="number">2</span> + <span class="number">2</span>, mid + <span class="number">1</span>, treeEnd);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> getSum(rangeStart, mid, treeIndex * <span class="number">2</span> + <span class="number">1</span>, treeStart, mid) + getSum(mid + <span class="number">1</span>, rangeEnd, treeIndex * <span class="number">2</span> + <span class="number">2</span>, mid + <span class="number">1</span>, treeEnd);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">add</span><span class="params">(<span class="type">int</span> rangeIndex, <span class="type">int</span> value, <span class="type">int</span> treeIndex, <span class="type">int</span> start, <span class="type">int</span> end)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (start == end) &#123;</span><br><span class="line">            sumTree[treeIndex] += value;</span><br><span class="line">            minTree[treeIndex] += value;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">int</span> <span class="variable">mid</span> <span class="operator">=</span> start + (end - start) / <span class="number">2</span>;</span><br><span class="line">        <span class="keyword">if</span> (rangeIndex &lt;= mid) &#123;</span><br><span class="line">            add(rangeIndex, value, treeIndex * <span class="number">2</span> + <span class="number">1</span>, start, mid);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            add(rangeIndex, value, treeIndex * <span class="number">2</span> + <span class="number">2</span>, mid + <span class="number">1</span>, end);</span><br><span class="line">        &#125;</span><br><span class="line">        sumTree[treeIndex] = sumTree[treeIndex * <span class="number">2</span> + <span class="number">1</span>] + sumTree[treeIndex * <span class="number">2</span> + <span class="number">2</span>];</span><br><span class="line">        minTree[treeIndex] = Math.min(minTree[treeIndex * <span class="number">2</span> + <span class="number">1</span>], minTree[treeIndex * <span class="number">2</span> + <span class="number">2</span>]);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> <span class="title function_">searchRow</span><span class="params">(<span class="type">int</span> target, <span class="type">int</span> maxRow, <span class="type">int</span> treeIndex, <span class="type">int</span> start, <span class="type">int</span> end)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (minTree[treeIndex] &gt; target) &#123;</span><br><span class="line">            <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (start == end) &#123;</span><br><span class="line">            <span class="keyword">return</span> start;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">int</span> <span class="variable">mid</span> <span class="operator">=</span> start + (end - start) / <span class="number">2</span>;</span><br><span class="line">        <span class="keyword">if</span> (minTree[treeIndex * <span class="number">2</span> + <span class="number">1</span>] &lt;= target) &#123;</span><br><span class="line">            <span class="keyword">return</span> searchRow(target, maxRow, treeIndex * <span class="number">2</span> + <span class="number">1</span>, start, mid);</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (mid + <span class="number">1</span> &lt;= maxRow) &#123;</span><br><span class="line">            <span class="keyword">return</span> searchRow(target, maxRow, treeIndex * <span class="number">2</span> + <span class="number">2</span>, mid + <span class="number">1</span>, end);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="C#"><figure class="iseeu highlight c#"><figcaption><span>[sol1-C#]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">BookMyShow</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="built_in">int</span> n, m;</span><br><span class="line">    <span class="keyword">private</span> SegmentTree st;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">BookMyShow</span>(<span class="params"><span class="built_in">int</span> n, <span class="built_in">int</span> m</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">this</span>.n = n;</span><br><span class="line">        <span class="keyword">this</span>.m = m;</span><br><span class="line">        <span class="keyword">this</span>.st = <span class="keyword">new</span> SegmentTree(n);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="built_in">int</span>[] <span class="title">Gather</span>(<span class="params"><span class="built_in">int</span> k, <span class="built_in">int</span> maxRow</span>)</span> &#123;</span><br><span class="line">        <span class="built_in">int</span> row = st.SearchRow(m - k, maxRow);</span><br><span class="line">        <span class="keyword">if</span> (row &lt; <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">int</span>[<span class="number">0</span>];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">int</span> seats = (<span class="built_in">int</span>) st.GetSum(row, row);</span><br><span class="line">        st.Add(row, k);</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">int</span>[]&#123;row, seats&#125;;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="built_in">bool</span> <span class="title">Scatter</span>(<span class="params"><span class="built_in">int</span> k, <span class="built_in">int</span> maxRow</span>)</span> &#123;</span><br><span class="line">        <span class="built_in">long</span> remain = (<span class="built_in">long</span>) (maxRow + <span class="number">1</span>) * m - st.GetSum(<span class="number">0</span>, maxRow);</span><br><span class="line">        <span class="keyword">if</span> (remain &lt; k) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">int</span> row = st.SearchRow(m - <span class="number">1</span>, maxRow);</span><br><span class="line">        <span class="keyword">while</span> (k &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="built_in">int</span> currRemain = m - (<span class="built_in">int</span>) st.GetSum(row, row);</span><br><span class="line">            <span class="built_in">int</span> currSeats = Math.Min(currRemain, k);</span><br><span class="line">            st.Add(row, currSeats);</span><br><span class="line">            k -= currSeats;</span><br><span class="line">            row++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title">SegmentTree</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="built_in">int</span> n;</span><br><span class="line">    <span class="keyword">private</span> <span class="built_in">long</span>[] sumTree;</span><br><span class="line">    <span class="keyword">private</span> <span class="built_in">int</span>[] minTree;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">SegmentTree</span>(<span class="params"><span class="built_in">int</span> n</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">this</span>.n = n;</span><br><span class="line">        <span class="keyword">this</span>.sumTree = <span class="keyword">new</span> <span class="built_in">long</span>[n * <span class="number">4</span>];</span><br><span class="line">        <span class="keyword">this</span>.minTree = <span class="keyword">new</span> <span class="built_in">int</span>[n * <span class="number">4</span>];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="built_in">long</span> <span class="title">GetSum</span>(<span class="params"><span class="built_in">int</span> start, <span class="built_in">int</span> end</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> GetSum(start, end, <span class="number">0</span>, <span class="number">0</span>, n - <span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Add</span>(<span class="params"><span class="built_in">int</span> index, <span class="built_in">int</span> <span class="keyword">value</span></span>)</span> &#123;</span><br><span class="line">        Add(index, <span class="keyword">value</span>, <span class="number">0</span>, <span class="number">0</span>, n - <span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="built_in">int</span> <span class="title">SearchRow</span>(<span class="params"><span class="built_in">int</span> target, <span class="built_in">int</span> maxRow</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> SearchRow(target, maxRow, <span class="number">0</span>, <span class="number">0</span>, n - <span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="built_in">long</span> <span class="title">GetSum</span>(<span class="params"><span class="built_in">int</span> rangeStart, <span class="built_in">int</span> rangeEnd, <span class="built_in">int</span> treeIndex, <span class="built_in">int</span> treeStart, <span class="built_in">int</span> treeEnd</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (rangeStart == treeStart &amp;&amp; rangeEnd == treeEnd) &#123;</span><br><span class="line">            <span class="keyword">return</span> sumTree[treeIndex];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">int</span> mid = treeStart + (treeEnd - treeStart) / <span class="number">2</span>;</span><br><span class="line">        <span class="keyword">if</span> (rangeEnd &lt;= mid) &#123;</span><br><span class="line">            <span class="keyword">return</span> GetSum(rangeStart, rangeEnd, treeIndex * <span class="number">2</span> + <span class="number">1</span>, treeStart, mid);</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (rangeStart &gt; mid) &#123;</span><br><span class="line">            <span class="keyword">return</span> GetSum(rangeStart, rangeEnd, treeIndex * <span class="number">2</span> + <span class="number">2</span>, mid + <span class="number">1</span>, treeEnd);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> GetSum(rangeStart, mid, treeIndex * <span class="number">2</span> + <span class="number">1</span>, treeStart, mid) + GetSum(mid + <span class="number">1</span>, rangeEnd, treeIndex * <span class="number">2</span> + <span class="number">2</span>, mid + <span class="number">1</span>, treeEnd);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Add</span>(<span class="params"><span class="built_in">int</span> rangeIndex, <span class="built_in">int</span> <span class="keyword">value</span>, <span class="built_in">int</span> treeIndex, <span class="built_in">int</span> start, <span class="built_in">int</span> end</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (start == end) &#123;</span><br><span class="line">            sumTree[treeIndex] += <span class="keyword">value</span>;</span><br><span class="line">            minTree[treeIndex] += <span class="keyword">value</span>;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">int</span> mid = start + (end - start) / <span class="number">2</span>;</span><br><span class="line">        <span class="keyword">if</span> (rangeIndex &lt;= mid) &#123;</span><br><span class="line">            Add(rangeIndex, <span class="keyword">value</span>, treeIndex * <span class="number">2</span> + <span class="number">1</span>, start, mid);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            Add(rangeIndex, <span class="keyword">value</span>, treeIndex * <span class="number">2</span> + <span class="number">2</span>, mid + <span class="number">1</span>, end);</span><br><span class="line">        &#125;</span><br><span class="line">        sumTree[treeIndex] = sumTree[treeIndex * <span class="number">2</span> + <span class="number">1</span>] + sumTree[treeIndex * <span class="number">2</span> + <span class="number">2</span>];</span><br><span class="line">        minTree[treeIndex] = Math.Min(minTree[treeIndex * <span class="number">2</span> + <span class="number">1</span>], minTree[treeIndex * <span class="number">2</span> + <span class="number">2</span>]);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="built_in">int</span> <span class="title">SearchRow</span>(<span class="params"><span class="built_in">int</span> target, <span class="built_in">int</span> maxRow, <span class="built_in">int</span> treeIndex, <span class="built_in">int</span> start, <span class="built_in">int</span> end</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (minTree[treeIndex] &gt; target) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (start == end) &#123;</span><br><span class="line">            <span class="keyword">return</span> start;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">int</span> mid = start + (end - start) / <span class="number">2</span>;</span><br><span class="line">        <span class="keyword">if</span> (minTree[treeIndex * <span class="number">2</span> + <span class="number">1</span>] &lt;= target) &#123;</span><br><span class="line">            <span class="keyword">return</span> SearchRow(target, maxRow, treeIndex * <span class="number">2</span> + <span class="number">1</span>, start, mid);</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (mid + <span class="number">1</span> &lt;= maxRow) &#123;</span><br><span class="line">            <span class="keyword">return</span> SearchRow(target, maxRow, treeIndex * <span class="number">2</span> + <span class="number">2</span>, mid + <span class="number">1</span>, end);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="复杂度分析"><a href="#复杂度分析" class="headerlink" title="复杂度分析"></a>复杂度分析</h2><ul>
+<li><p>时间复杂度：构造方法的时间复杂度是 O(n)，方法 gather 的单次时间复杂度是 O(\log n)，方法 scatter 的总体时间复杂度是 O((n + r) \log n)，其中 n 和 m 分别是音乐厅的排数和列数，r 是方法 gather 和 scatter 的调用总次数。<br>构造方法创建线段树的时间复杂度是 O(n)。<br>每次聚集买票操作需要执行二分查找、线段树计算区间和与线段树更新，因此单次时间复杂度是 O(\log n)。<br>每次分散买票操作都会定位到有空座位的最小排数，因此所有分散买票操作对于所有排的遍历总次数是 O(n + r)，每一排的操作时间是 O(\log n)，因此总体时间复杂度是 O((n + r) \log n)。</p>
+</li>
+<li><p>空间复杂度：O(n)，其中 n 是音乐厅的排数。线段树需要 O(n) 的空间。</p>
+</li>
+</ul>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <!--<div class="article-copyright-info-container">-->
+    <!--&lt;!&ndash;<ul>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><strong>Title:</strong> 2286-以组为单位订音乐会的门票</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><strong>Author:</strong> Raphael Liu</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><strong>Created at&ndash;&gt;-->
+                <!--&lt;!&ndash;:</strong> 2023-09-13 00:47:26</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;&ndash;&gt;-->
+            <!--&lt;!&ndash;<li>&ndash;&gt;-->
+                <!--&lt;!&ndash;<strong>Updated at&ndash;&gt;-->
+                    <!--&lt;!&ndash;:</strong> 2023-09-13 16:06:24&ndash;&gt;-->
+            <!--&lt;!&ndash;</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;<li>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;<strong>Link:</strong> https://fida.ltd/2023/09/13/2286-以组为单位订音乐会的门票/&ndash;&gt;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;</li>&ndash;&gt;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;<li>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;<strong>&ndash;&gt;&ndash;&gt;-->
+                <!--&lt;!&ndash;&lt;!&ndash;License:&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;</strong>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0</a>.&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;&ndash;&gt;&ndash;&gt;-->
+
+        <!--&lt;!&ndash;&lt;!&ndash;</li>&ndash;&gt;&ndash;&gt;-->
+    <!--&lt;!&ndash;</ul>&ndash;&gt;-->
+<!--</div>-->
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box">
+                
+                    <li class="tag-item">
+                        <a href="/tags/algorithm/">#algorithm</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item">
+                        <a href="/tags/HARD/">#HARD</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                        rel="prev"
+                        href="/2023/09/13/2285-%E9%81%93%E8%B7%AF%E7%9A%84%E6%9C%80%E5%A4%A7%E6%80%BB%E9%87%8D%E8%A6%81%E6%80%A7/"
+                        >
+                            <span class="left arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">2285-道路的最大总重要性</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                        rel="next"
+                        href="/2023/09/13/2287-%E9%87%8D%E6%8E%92%E5%AD%97%E7%AC%A6%E5%BD%A2%E6%88%90%E7%9B%AE%E6%A0%87%E5%AD%97%E7%AC%A6%E4%B8%B2/"
+                        >
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">2287-重排字符形成目标字符串</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+
+        
+            <div class="comment-container">
+                <div class="comments-container pjax">
+    <div id="comment-anchor"></div>
+    <div class="comment-area-title">
+        <i class="fa-solid fa-comments"></i>&nbsp;Comments
+    </div>
+    
+
+        
+            
+ 
+    <div id="waline"></div>
+    <script type="module"  data-swup-reload-script>
+        import { init } from 'https://evan.beee.top/js/waline.mjs';
+
+        function loadWaline() {
+            init({
+                el: '#waline',
+                serverURL: 'https://example.example.com',
+                lang: 'zh-CN',
+                dark: 'body[class~="dark-mode"]',
+                requiredMeta: ['nick','mail'], // cannot customize by theme config, change it yourself
+            });
+        }
+
+        if ('true') {
+            const loadWalineTimeout = setTimeout(() => {
+                loadWaline();
+                clearTimeout(loadWalineTimeout);
+            }, 1000);
+        } else {
+            window.addEventListener('DOMContentLoaded', loadWaline);
+        }
+        
+    </script>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+
+    
+        <div class="toc-content-container">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">On this page</div>
+        <div class="page-title">2286-以组为单位订音乐会的门票</div>
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%A7%A3%E6%B3%95"><span class="nav-text">解法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%9D%E8%B7%AF%E5%92%8C%E7%AE%97%E6%B3%95"><span class="nav-text">思路和算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81"><span class="nav-text">代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%8D%E6%9D%82%E5%BA%A6%E5%88%86%E6%9E%90"><span class="nav-text">复杂度分析</span></a></li></ol></li></ol>
+
+    </div>
+</div>
+        </div>
+    
+</div>
+
+
+
+                
+
+            </div>
+
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2022</span>
+              -
+            
+            2023&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">Raphael Liu</a>
+        </div>
+        
+            <script data-swup-reload-script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">UV:</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">PV:</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <!--<div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">-->
+            <!--<span class="lg:block text-sm">powered_by</span>-->
+            <!--&lt;!&ndash;<span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.4.4</a></span>&ndash;&gt;-->
+        <!--</div>-->
+        
+        <!---->
+            <!--<div>-->
+                <!--runtime <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hours <span class="odometer" id="runtime_minutes"></span> minutes <span class="odometer" id="runtime_seconds"></span> seconds-->
+            <!--</div>-->
+        <!---->
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fa-regular fa-comments"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-expand-width flex justify-center items-center">
+            <i class="fa-regular fa-expand"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fa-solid fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa-solid fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa-solid fa-spinner fa-spin-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+    
+<script src="/js/libs/Swup.min.js"></script>
+
+<script src="/js/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/libs/SwupScrollPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+        ],
+        containers: ["#swup"],
+    });
+
+    swup.hooks.on("page:view", () => {
+        Global.refresh();
+    });
+
+    // if (document.readyState === "complete") {
+    //
+    // } else {
+    //     document.addEventListener("DOMContentLoaded", () => init());
+    // }
+</script>
+
+
+
+
+
+
+<script src="/js/utils.js" type="module"></script>
+
+<script src="/js/main.js" type="module"></script>
+
+<script src="/js/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/layouts/categoryList.js" type="module"></script>
+
+
+
+    
+<script src="/js/tools/localSearch.js"></script>
+
+
+
+
+    
+<script src="/js/tools/codeBlock.js"></script>
+
+
+
+
+    
+<script src="/js/layouts/lazyload.js"></script>
+
+
+
+
+    
+<script src="/js/tools/runtime.js"></script>
+
+    
+<script src="/js/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/libs/Typed.min.js"></script>
+
+  
+<script src="/js/plugins/typed.js"></script>
+
+
+
+
+
+
+
+<div class="post-scripts" data-swup-reload-script>
+    
+        
+<script src="/js/libs/anime.min.js"></script>
+
+        
+<script src="/js/tools/tocToggle.js" type="module"></script>
+
+<script src="/js/layouts/toc.js" type="module"></script>
+
+<script src="/js/plugins/tabs.js" type="module"></script>
+
+    
+</div>
+
+
+</body>
+</html>

@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="Raphael Liu">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/2023/09/13/0833-字符串中的查找与替换/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="你会得到一个字符串 s (索引从 0 开始)，你必须对它执行 k 个替换操作。替换操作以三个长度均为 k 的并行数组给出：indices,sources,  targets。 要完成第 i 个替换操作:  检查 子字符串  sources[i] 是否出现在 原字符串 s 的索引 indices[i] 处。 如果没有出现，  什么也不做  。 如果出现，则用 targets[i]  替换  该子字符">
+<meta property="og:type" content="article">
+<meta property="og:title" content="0833-字符串中的查找与替换">
+<meta property="og:url" content="http://example.com/2023/09/13/0833-%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E7%9A%84%E6%9F%A5%E6%89%BE%E4%B8%8E%E6%9B%BF%E6%8D%A2/index.html">
+<meta property="og:site_name" content="Raphael&#39;s Blog">
+<meta property="og:description" content="你会得到一个字符串 s (索引从 0 开始)，你必须对它执行 k 个替换操作。替换操作以三个长度均为 k 的并行数组给出：indices,sources,  targets。 要完成第 i 个替换操作:  检查 子字符串  sources[i] 是否出现在 原字符串 s 的索引 indices[i] 处。 如果没有出现，  什么也不做  。 如果出现，则用 targets[i]  替换  该子字符">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://assets.leetcode.com/uploads/2021/06/12/833-ex1.png">
+<meta property="og:image" content="https://assets.leetcode.com/uploads/2021/06/12/833-ex2-1.png">
+<meta property="article:published_time" content="2023-09-12T16:47:26.000Z">
+<meta property="article:modified_time" content="2023-09-13T08:06:24.603Z">
+<meta property="article:author" content="Raphael Liu">
+<meta property="article:tag" content="algorithm">
+<meta property="article:tag" content="MEDIUM">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://assets.leetcode.com/uploads/2021/06/12/833-ex1.png">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/redefine-favicon.svg" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/redefine-favicon.svg">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/redefine-favicon.svg">
+    <!--- Page Info-->
+    
+    <title>
+        
+            0833-字符串中的查找与替换 -
+        
+        Raphael&#39;s Blog
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/css/build/styles.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/fonts.css">
+
+    
+<link rel="stylesheet" href="/fonts/Satoshi/satoshi.css">
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+
+    <!--- Inject Part-->
+    
+    <script id="hexo-configurations">
+    let Global = window.Global || {};
+    Global.hexo_config = {"hostname":"example.com","root":"/","language":"zh_CN"};
+    Global.theme_config = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":true,"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"open_graph":true,"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-wqery6-light.webp","dark":"/images/wallhaven-wqery6-dark.webp"},"title":"Raphael's Blog","subtitle":{"text":["格物致知","坚持做正确的事情"],"hitokoto":{"enable":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":false,"links":{"github":"https://github.com/raphael-liu","email":"raphael@buaa.edu.cn# your email"},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.4.4","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"links":{"首页":{"path":"/","icon":"fa-regular fa-house"},"文章":{"path":"/archives","icon":"fa-regular fa-archive"},"关于":{"icon":"fa-regular fa-user","submenus":{"我":"/about/me","Github":"https://github.com/raphael-liu"}}},"search":{"enable":true,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"links":null},"article_date_format":"auto","categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}},"footerStart":"2022/8/17 11:45:14"};
+    Global.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    Global.data_config = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="swup-progress-icon">
+            <i class="fa-solid fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container" id="swup">
+
+    
+
+    <div class="main-content-container">
+
+
+        <div class="main-content-header">
+            <header class="navbar-container">
+    
+    <div class="navbar-content">
+        <div class="left">
+            
+            <a class="logo-title" href="http://example.com/">
+                
+                Raphael&#39;s Blog
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/"  >
+                                    
+                                        
+                                            <i class="fa-regular fa-house"></i>
+                                        
+                                        首页
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/archives"  >
+                                    
+                                        
+                                            <i class="fa-regular fa-archive"></i>
+                                        
+                                        文章
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="has-dropdown" 
+                                    href="#" onClick="return false;">
+                                    
+                                        
+                                            <i class="fa-regular fa-user"></i>
+                                        
+                                        关于&nbsp;<i class="fa-solid fa-chevron-down"></i>
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                                    <ul class="sub-menu">
+                                    
+                                        <li>
+                                        <a href="/about/me">我
+                                        </a>
+                                        </li>
+                                    
+                                        <li>
+                                        <a target="_blank" rel="noopener" href="https://github.com/raphael-liu">GITHUB
+                                        </a>
+                                        </li>
+                                    
+                                    </ul>
+                                
+                            </li>
+                    
+                    
+                        <li class="navbar-item search search-popup-trigger">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fa-solid fa-magnifying-glass"></i></div>
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile drawer -->
+    <div class="navbar-drawer w-full absolute top-0 left-0 bg-background-color">
+        <ul class="drawer-navbar-list flex flex-col justify-start items-center">
+            
+                
+                    <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group " 
+                        href="/"  >
+                             
+                                
+                                    <i class="fa-regular fa-house"></i>
+                                
+                                首页
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+                
+                    <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group " 
+                        href="/archives"  >
+                             
+                                
+                                    <i class="fa-regular fa-archive"></i>
+                                
+                                文章
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+                
+                    <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group has-dropdown" 
+                        href="#" onClick="return false;">
+                            
+                                
+                                    <i class="fa-regular fa-user"></i>
+                                
+                                关于&nbsp;<i class="group-hover:rotate-180 transition-transform fa-solid fa-chevron-down"></i>
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                              
+                        
+                            <li class="text-base flex justify-center items-center hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                <a class="py-0.5" href="/about/me">我</a>
+                            </li>
+                        
+                            <li class="text-base flex justify-center items-center hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                <a class="py-0.5" target="_blank" rel="noopener" href="https://github.com/raphael-liu">GITHUB</a>
+                            </li>
+                        
+                    
+            
+
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="post-page-container">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            
+                <h1 class="article-title-regular">0833-字符串中的查找与替换</h1>
+            
+            </div>
+            
+                    
+        
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">Raphael Liu</span>
+                        
+                            <span class="author-label">Lv10</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2023-09-13 00:47:26</span>
+        <span class="mobile">2023-09-13 00:47:26</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2023-09-13 16:06:24</span>
+            <span class="mobile">2023-09-13 16:06:24</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/algorithm/">algorithm</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/MEDIUM/">MEDIUM</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        
+
+
+        <div class="article-content markdown-body">
+            <p>你会得到一个字符串 <code>s</code> (索引从 0 开始)，你必须对它执行 <code>k</code> 个替换操作。替换操作以三个长度均为 <code>k</code> 的并行数组给出：<code>indices</code>,<br><code>sources</code>,  <code>targets</code>。</p>
+<p>要完成第 <code>i</code> 个替换操作:</p>
+<ol>
+<li>检查 <strong>子字符串</strong>  <code>sources[i]</code> 是否出现在 <strong>原字符串</strong> <code>s</code> 的索引 <code>indices[i]</code> 处。</li>
+<li>如果没有出现，  <strong>什么也不做</strong>  。</li>
+<li>如果出现，则用 <code>targets[i]</code>  <strong>替换</strong>  该子字符串。</li>
+</ol>
+<p>例如，如果 <code>s = &quot;abcd&quot;</code> ， <code>indices[i] = 0</code> , <code>sources[i] = &quot;ab&quot;</code>， <code>targets[i] = &quot;eee&quot;</code> ，那么替换的结果将是 <code>&quot; _eee_ cd&quot;</code> 。</p>
+<p>所有替换操作必须 <strong>同时</strong> 发生，这意味着替换操作不应该影响彼此的索引。测试用例保证元素间 <strong>不会重叠</strong> 。</p>
+<ul>
+<li>例如，一个 <code>s = &quot;abc&quot;</code> ，  <code>indices = [0,1]</code> ， <code>sources = [&quot;ab&quot;，&quot;bc&quot;]</code> 的测试用例将不会生成，因为 <code>&quot;ab&quot;</code> 和 <code>&quot;bc&quot;</code> 替换重叠。</li>
+</ul>
+<p><em>在对<code>s</code> 执行所有替换操作后返回 <strong>结果字符串</strong> 。</em></p>
+<p><strong>子字符串</strong> 是字符串中连续的字符序列。</p>
+<p><strong>示例 1：</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://assets.leetcode.com/uploads/2021/06/12/833-ex1.png"
+                     
+                ></p>
+<pre><code>**输入：** s = &quot;abcd&quot;, indices = [0,2], sources = [&quot;a&quot;,&quot;cd&quot;], targets = [&quot;eee&quot;,&quot;ffff&quot;]
+**输出：** &quot;eeebffff&quot;
+**解释：** &quot;a&quot; 从 s 中的索引 0 开始，所以它被替换为 &quot;eee&quot;。
+&quot;cd&quot; 从 s 中的索引 2 开始，所以它被替换为 &quot;ffff&quot;。
+</code></pre>
+<p><strong>示例 2：</strong><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://assets.leetcode.com/uploads/2021/06/12/833-ex2-1.png"
+                     
+                ></p>
+<pre><code>**输入：** s = &quot;abcd&quot;, indices = [0,2], sources = [&quot;ab&quot;,&quot;ec&quot;], targets = [&quot;eee&quot;,&quot;ffff&quot;]
+**输出：** &quot;eeecd&quot;
+**解释：** &quot;ab&quot; 从 s 中的索引 0 开始，所以它被替换为 &quot;eee&quot;。
+&quot;ec&quot; 没有从 **原始的** S 中的索引 2 开始，所以它没有被替换。
+</code></pre>
+<p><strong>提示：</strong></p>
+<ul>
+<li><code>1 &lt;= s.length &lt;= 1000</code></li>
+<li><code>k == indices.length == sources.length == targets.length</code></li>
+<li><code>1 &lt;= k &lt;= 100</code></li>
+<li><code>0 &lt;= indices[i] &lt; s.length</code></li>
+<li><code>1 &lt;= sources[i].length, targets[i].length &lt;= 50</code></li>
+<li><code>s</code> 仅由小写英文字母组成</li>
+<li><code>sources[i]</code> 和 <code>targets[i]</code> 仅由小写英文字母组成</li>
+</ul>
+<h4 id="方法一：按照下标排序-模拟"><a href="#方法一：按照下标排序-模拟" class="headerlink" title="方法一：按照下标排序 + 模拟"></a>方法一：按照下标排序 + 模拟</h4><p><strong>思路与算法</strong></p>
+<p>我们直接按照题目的要求进行模拟即可。</p>
+<p>首先我们根据数组 indices，将所有的替换操作进行升序排序。在这一步中，同时对 indices，sources，targets 这三个数组进行排序较为困难，我们可以使用一个长度（记为 m）与它们相同的数组 ops，存储 0 到 m-1 这 m 个下标，随后对 ops 本身按照 indices 作为第一关键字进行排序即可。</p>
+<p>在排序完成后，我们就可以遍历给定的字符串 s 进行操作了。我们使用另一个指针 pt 指向 ops 的首个元素，表示当前需要进行的操作。当我们遍历到第 i 个字符时，我们首先不断往右移动 pt，直到其移出边界，或者第 ops}[\textit{pt}] 个操作的下标不小于 i。此时，会有如下的两种情况：</p>
+<ul>
+<li><p>如果这个下标大于 i，说明不存在下标为 i 的操作。我们可以直接将第 i 个字符放入答案中；</p>
+</li>
+<li><p>如果这个下标等于 i，说明存在下标为 i 的操作。我们将 s 从位置 i 开始的长度与 sources}[\textit{ops}[i]] 的子串与 sources}[\textit{ops}[i]] 进行比较：</p>
+<ul>
+<li><p>如果相等，那么替换操作成功，我们将 targets}[\textit{ops}[i]] 放入答案中。由于替换操作不可能重叠，因此我们可以直接跳过 sources}[\textit{ops}[i]] 长度那么多数量的字符；</p>
+</li>
+<li><p>否则，替换操作失败，我们可以直接将第 i 个字符放入答案中。</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>需要注意的是，题目中只保证了成功的替换操作不会重叠，而不保证失败的替换操作不会重叠。因此当这个下标等于 i 时，可能会有多个替换操作需要进行尝试，即我们需要不断往右移动 pt，直到其移出边界，或者第 ops}[\textit{pt}] 个操作的下标严格大于 i。遍历到的替换操作需要依次进行尝试，如果其中一个成功，那么剩余的不必尝试，可以直接退出。</p>
+<p><strong>代码</strong></p>
+<div class="highlight-container" data-rel="C++"><figure class="iseeu highlight c++"><figcaption><span>[sol1-C++]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">string <span class="title">findReplaceString</span><span class="params">(string s, vector&lt;<span class="type">int</span>&gt;&amp; indices, vector&lt;string&gt;&amp; sources, vector&lt;string&gt;&amp; targets)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> n = s.<span class="built_in">size</span>(), m = indices.<span class="built_in">size</span>();</span><br><span class="line"></span><br><span class="line">        <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">ops</span><span class="params">(m)</span></span>;</span><br><span class="line">        <span class="built_in">iota</span>(ops.<span class="built_in">begin</span>(), ops.<span class="built_in">end</span>(), <span class="number">0</span>);</span><br><span class="line">        <span class="built_in">sort</span>(ops.<span class="built_in">begin</span>(), ops.<span class="built_in">end</span>(), [&amp;](<span class="type">int</span> i, <span class="type">int</span> j) &#123; <span class="keyword">return</span> indices[i] &lt; indices[j]; &#125;);</span><br><span class="line"></span><br><span class="line">        string ans;</span><br><span class="line">        <span class="type">int</span> pt = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n;) &#123;</span><br><span class="line">            <span class="keyword">while</span> (pt &lt; m &amp;&amp; indices[ops[pt]] &lt; i) &#123;</span><br><span class="line">                ++pt;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="type">bool</span> succeed = <span class="literal">false</span>;</span><br><span class="line">            <span class="keyword">while</span> (pt &lt; m &amp;&amp; indices[ops[pt]] == i) &#123;</span><br><span class="line">                <span class="keyword">if</span> (s.<span class="built_in">substr</span>(i, sources[ops[pt]].<span class="built_in">size</span>()) == sources[ops[pt]]) &#123;</span><br><span class="line">                    succeed = <span class="literal">true</span>;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                ++pt;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (succeed) &#123;</span><br><span class="line">                ans += targets[ops[pt]];</span><br><span class="line">                i += sources[ops[pt]].<span class="built_in">size</span>();</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> &#123;</span><br><span class="line">                ans += s[i];</span><br><span class="line">                ++i;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><figcaption><span>[sol1-Java]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">findReplaceString</span><span class="params">(String s, <span class="type">int</span>[] indices, String[] sources, String[] targets)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">n</span> <span class="operator">=</span> s.length(), m = indices.length;</span><br><span class="line"></span><br><span class="line">        List&lt;Integer&gt; ops = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; m; i++) &#123;</span><br><span class="line">            ops.add(i);</span><br><span class="line">        &#125;</span><br><span class="line">        ops.sort((i, j) -&gt; indices[i] - indices[j]);</span><br><span class="line"></span><br><span class="line">        <span class="type">StringBuilder</span> <span class="variable">ans</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringBuilder</span>();</span><br><span class="line">        <span class="type">int</span> <span class="variable">pt</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; n;) &#123;</span><br><span class="line">            <span class="keyword">while</span> (pt &lt; m &amp;&amp; indices[ops.get(pt)] &lt; i) &#123;</span><br><span class="line">                pt++;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="type">boolean</span> <span class="variable">succeed</span> <span class="operator">=</span> <span class="literal">false</span>;</span><br><span class="line">            <span class="keyword">while</span> (pt &lt; m &amp;&amp; indices[ops.get(pt)] == i) &#123;</span><br><span class="line">                <span class="keyword">if</span> (s.substring(i, Math.min(i + sources[ops.get(pt)].length(), n)).equals(sources[ops.get(pt)])) &#123;</span><br><span class="line">                    succeed = <span class="literal">true</span>;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                pt++;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (succeed) &#123;</span><br><span class="line">                ans.append(targets[ops.get(pt)]);</span><br><span class="line">                i += sources[ops.get(pt)].length();</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                ans.append(s.charAt(i));</span><br><span class="line">                i++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans.toString();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="C#"><figure class="iseeu highlight c#"><figcaption><span>[sol1-C#]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Solution</span> &#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="built_in">string</span> <span class="title">FindReplaceString</span>(<span class="params"><span class="built_in">string</span> s, <span class="built_in">int</span>[] indices, <span class="built_in">string</span>[] sources, <span class="built_in">string</span>[] targets</span>)</span> &#123;</span><br><span class="line">        <span class="built_in">int</span> n = s.Length, m = indices.Length;</span><br><span class="line"></span><br><span class="line">        IList&lt;<span class="built_in">int</span>&gt; ops = <span class="keyword">new</span> List&lt;<span class="built_in">int</span>&gt;();</span><br><span class="line">        <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; m; i++) &#123;</span><br><span class="line">            ops.Add(i);</span><br><span class="line">        &#125;</span><br><span class="line">        ((List&lt;<span class="built_in">int</span>&gt;) ops).Sort((i, j) =&gt; indices[i] - indices[j]);</span><br><span class="line"></span><br><span class="line">        StringBuilder ans = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">        <span class="built_in">int</span> pt = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; n;) &#123;</span><br><span class="line">            <span class="keyword">while</span> (pt &lt; m &amp;&amp; indices[ops[pt]] &lt; i) &#123;</span><br><span class="line">                pt++;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="built_in">bool</span> succeed = <span class="literal">false</span>;</span><br><span class="line">            <span class="keyword">while</span> (pt &lt; m &amp;&amp; indices[ops[pt]] == i) &#123;</span><br><span class="line">                <span class="keyword">if</span> (s.Substring(i, Math.Min(sources[ops[pt]].Length, n - i)).Equals(sources[ops[pt]])) &#123;</span><br><span class="line">                    succeed = <span class="literal">true</span>;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                pt++;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (succeed) &#123;</span><br><span class="line">                ans.Append(targets[ops[pt]]);</span><br><span class="line">                i += sources[ops[pt]].Length;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                ans.Append(s[i]);</span><br><span class="line">                i++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans.ToString();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><figcaption><span>[sol1-Python3]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">findReplaceString</span>(<span class="params">self, s: <span class="built_in">str</span>, indices: <span class="type">List</span>[<span class="built_in">int</span>], sources: <span class="type">List</span>[<span class="built_in">str</span>], targets: <span class="type">List</span>[<span class="built_in">str</span>]</span>) -&gt; <span class="built_in">str</span>:</span><br><span class="line">        n, m = <span class="built_in">len</span>(s), <span class="built_in">len</span>(indices)</span><br><span class="line"></span><br><span class="line">        ops = <span class="built_in">list</span>(<span class="built_in">range</span>(m))</span><br><span class="line">        ops.sort(key=<span class="keyword">lambda</span> x: indices[x])</span><br><span class="line"></span><br><span class="line">        ans = <span class="built_in">list</span>()</span><br><span class="line">        i = pt = <span class="number">0</span></span><br><span class="line">        <span class="keyword">while</span> i &lt; n:</span><br><span class="line">            <span class="keyword">while</span> pt &lt; m <span class="keyword">and</span> indices[ops[pt]] &lt; i:</span><br><span class="line">                pt += <span class="number">1</span></span><br><span class="line">            succeed = <span class="literal">False</span></span><br><span class="line">            <span class="keyword">while</span> pt &lt; m <span class="keyword">and</span> indices[ops[pt]] == i:</span><br><span class="line">                <span class="keyword">if</span> s[i:i + <span class="built_in">len</span>(sources[ops[pt]])] == sources[ops[pt]]:</span><br><span class="line">                    succeed = <span class="literal">True</span></span><br><span class="line">                    <span class="keyword">break</span></span><br><span class="line">                pt += <span class="number">1</span></span><br><span class="line">            <span class="keyword">if</span> succeed:</span><br><span class="line">                ans.append(targets[ops[pt]])</span><br><span class="line">                i += <span class="built_in">len</span>(sources[ops[pt]])</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                ans.append(s[i])</span><br><span class="line">                i += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;&quot;</span>.join(ans)</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><figcaption><span>[sol1-JavaScript]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> findReplaceString = <span class="keyword">function</span>(<span class="params">s, indices, sources, targets</span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> n = s.<span class="property">length</span>;</span><br><span class="line">    <span class="keyword">const</span> m = indices.<span class="property">length</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> ops = <span class="keyword">new</span> <span class="title class_">Array</span>(m);</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; m; i++) &#123;</span><br><span class="line">        ops[i] = i;</span><br><span class="line">    &#125;</span><br><span class="line">    ops.<span class="title function_">sort</span>(<span class="function">(<span class="params">i, j</span>) =&gt;</span> indices[i] - indices[j]);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> ans = <span class="string">&quot;&quot;</span>;</span><br><span class="line">    <span class="keyword">let</span> pt = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; n; ) &#123;</span><br><span class="line">        <span class="keyword">while</span> (pt &lt; m &amp;&amp; indices[ops[pt]] &lt; i) &#123;</span><br><span class="line">            pt++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">let</span> found = <span class="literal">false</span>;</span><br><span class="line">        <span class="keyword">while</span> (pt &lt; m &amp;&amp; indices[ops[pt]] == i) &#123;</span><br><span class="line">            <span class="keyword">if</span> (s.<span class="title function_">substring</span>(i, i + sources[ops[pt]].<span class="property">length</span>) === sources[ops[pt]]) &#123;</span><br><span class="line">                found = <span class="literal">true</span>;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            pt++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (found) &#123;</span><br><span class="line">            ans += targets[ops[pt]];</span><br><span class="line">            i += sources[ops[pt]].<span class="property">length</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            ans += s[i];</span><br><span class="line">            i++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ans;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="C"><figure class="iseeu highlight c"><figcaption><span>[sol1-C]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">static</span> <span class="type">int</span> <span class="title function_">cmp</span><span class="params">(<span class="type">const</span> <span class="type">void</span> *a, <span class="type">const</span> <span class="type">void</span> *b)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> ((<span class="type">int</span> *)a)[<span class="number">1</span>] - ((<span class="type">int</span> *)b)[<span class="number">1</span>];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">char</span> * <span class="title function_">findReplaceString</span><span class="params">(<span class="type">char</span> * s, <span class="type">int</span>* indices, <span class="type">int</span> indicesSize, <span class="type">char</span> ** sources, <span class="type">int</span> sourcesSize, <span class="type">char</span> ** targets, <span class="type">int</span> targetsSize)</span> &#123;</span><br><span class="line">    <span class="type">int</span> n = <span class="built_in">strlen</span>(s), m = indicesSize;</span><br><span class="line"></span><br><span class="line">    <span class="type">int</span> ops[m][<span class="number">2</span>];</span><br><span class="line">    <span class="type">int</span> sourcesLen[sourcesSize];</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; m; i++) &#123;</span><br><span class="line">        ops[i][<span class="number">0</span>] = i;</span><br><span class="line">        ops[i][<span class="number">1</span>] = indices[i];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; sourcesSize; i++) &#123;</span><br><span class="line">        sourcesLen[i] = <span class="built_in">strlen</span>(sources[i]);</span><br><span class="line">    &#125;</span><br><span class="line">    qsort(ops, m, <span class="keyword">sizeof</span>(ops[<span class="number">0</span>]), cmp);</span><br><span class="line"></span><br><span class="line">    <span class="type">char</span> *ans = (<span class="type">char</span> *)<span class="built_in">calloc</span>(<span class="number">1024</span>, <span class="keyword">sizeof</span>(<span class="type">char</span>));</span><br><span class="line">    <span class="type">int</span> pt = <span class="number">0</span>, pos = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n;) &#123;</span><br><span class="line">        <span class="keyword">while</span> (pt &lt; m &amp;&amp; indices[ops[pt][<span class="number">0</span>]] &lt; i) &#123;</span><br><span class="line">            ++pt;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">bool</span> succeed = <span class="literal">false</span>;</span><br><span class="line">        <span class="keyword">while</span> (pt &lt; m &amp;&amp; indices[ops[pt][<span class="number">0</span>]] == i) &#123;</span><br><span class="line">            <span class="keyword">if</span> (<span class="built_in">strncmp</span>(s + i, sources[ops[pt][<span class="number">0</span>]], sourcesLen[ops[pt][<span class="number">0</span>]]) == <span class="number">0</span>) &#123;</span><br><span class="line">                succeed = <span class="literal">true</span>;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            ++pt;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (succeed) &#123;</span><br><span class="line">            pos += <span class="built_in">sprintf</span>(ans + pos, <span class="string">&quot;%s&quot;</span>, targets[ops[pt][<span class="number">0</span>]]);</span><br><span class="line">            i += sourcesLen[ops[pt][<span class="number">0</span>]];</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            ans[pos++] = s[i];</span><br><span class="line">            ++i;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Go"><figure class="iseeu highlight go"><figcaption><span>[sol1-Go]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">findReplaceString</span><span class="params">(s <span class="type">string</span>, indices []<span class="type">int</span>, sources []<span class="type">string</span>, targets []<span class="type">string</span>)</span></span> <span class="type">string</span> &#123;</span><br><span class="line">    n, m := <span class="built_in">len</span>(s), <span class="built_in">len</span>(indices)</span><br><span class="line"></span><br><span class="line">    ops := <span class="built_in">make</span>([][]<span class="type">int</span>, m)</span><br><span class="line">    <span class="keyword">for</span> i := <span class="number">0</span>; i &lt; m; i++ &#123;</span><br><span class="line">        ops[i] = []<span class="type">int</span>&#123;i, indices[i]&#125;</span><br><span class="line">    &#125;</span><br><span class="line">    sort.Slice(ops, <span class="function"><span class="keyword">func</span><span class="params">(i <span class="type">int</span>, j <span class="type">int</span>)</span></span> <span class="type">bool</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> ops[i][<span class="number">1</span>] &lt; ops[j][<span class="number">1</span>]</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    ans := <span class="string">&quot;&quot;</span></span><br><span class="line">    pt := <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> i := <span class="number">0</span>; i &lt; n; &#123;</span><br><span class="line">        <span class="keyword">for</span> pt &lt; m &amp;&amp; indices[ops[pt][<span class="number">0</span>]] &lt; i &#123;</span><br><span class="line">            pt++</span><br><span class="line">        &#125;</span><br><span class="line">        succeed := <span class="literal">false</span></span><br><span class="line">        <span class="keyword">for</span> pt &lt; m &amp;&amp; indices[ops[pt][<span class="number">0</span>]] == i &#123;</span><br><span class="line">            <span class="keyword">if</span> s[i : i + min(<span class="built_in">len</span>(sources[ops[pt][<span class="number">0</span>]]), n - i)] == sources[ops[pt][<span class="number">0</span>]] &#123;</span><br><span class="line">                succeed = <span class="literal">true</span></span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">            &#125;</span><br><span class="line">            pt++</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> succeed &#123;</span><br><span class="line">            ans += targets[ops[pt][<span class="number">0</span>]]</span><br><span class="line">            i += <span class="built_in">len</span>(sources[ops[pt][<span class="number">0</span>]])</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            ans += <span class="type">string</span>(s[i])</span><br><span class="line">            i++</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ans</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">min</span><span class="params">(x <span class="type">int</span>, y <span class="type">int</span>)</span></span> <span class="type">int</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> x &gt; y &#123;</span><br><span class="line">        <span class="keyword">return</span> y</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> x</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>复杂度分析</strong></p>
+<ul>
+<li><p>时间复杂度：O(n + m \log m + ml)，其中 n 是字符串 s 的长度，m 是数组 indices 的长度，l 是数组 sources 和 targets 中字符串的平均长度。</p>
+<ul>
+<li><p>排序需要的时间为 O(m \log m)；</p>
+</li>
+<li><p>在使用双指针进行遍历的过程中，遍历字符串需要的时间为 O(n)，遍历数组 ops 需要的时间为 O(m)，在最坏情况下需要尝试每一个替换操作，比较和构造最终答案需要的时间为 O(ml)。</p>
+</li>
+</ul>
+<p>  相加即可得到总时间复杂度 O(n + m \log m + ml)。</p>
+</li>
+<li><p>空间复杂度：O(n + ml)。</p>
+<ul>
+<li><p>数组 ops 需要的空间为 O(m)；</p>
+</li>
+<li><p>排序需要的栈空间为 O(\log m)；</p>
+</li>
+<li><p>在替换操作中进行比较时，如果使用的语言支持无拷贝的切片操作，那么需要的空间为 O(1)，否则为 O(l)；</p>
+</li>
+<li><p>在构造最终答案时，如果使用的语言支持带修改的字符串，那么需要的空间为 O(1)（不考虑最终答案占用的空间），否则需要 O(n + ml) 的辅助空间。</p>
+</li>
+</ul>
+<p>  对于不同语言，上述需要的空间会有所变化。这里取每一种可能的最大值，相加即可得到总空间复杂度 O(n + ml)。</p>
+</li>
+</ul>
+<h4 id="方法二：哈希表-模拟"><a href="#方法二：哈希表-模拟" class="headerlink" title="方法二：哈希表 + 模拟"></a>方法二：哈希表 + 模拟</h4><p><strong>思路与算法</strong></p>
+<p>我们也可以将方法一中的数组 ops 换成哈希映射，其中的键表示字符串中的下标，值是一个数组，存储了所有操作该下标的操作编号。我们只需要对数组 indices 进行一次遍历，就可以得到这个哈希表。</p>
+<p>在这之后，当我们对字符串 s 进行遍历时，如果遍历到位置 i，那么哈希表中键 i 对应的数组，就是所有对位置 i 进行的操作。我们使用与方法一相同的方法处理这些操作即可。</p>
+<p><strong>代码</strong></p>
+<div class="highlight-container" data-rel="C++"><figure class="iseeu highlight c++"><figcaption><span>[sol2-C++]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">string <span class="title">findReplaceString</span><span class="params">(string s, vector&lt;<span class="type">int</span>&gt;&amp; indices, vector&lt;string&gt;&amp; sources, vector&lt;string&gt;&amp; targets)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> n = s.<span class="built_in">size</span>(), m = indices.<span class="built_in">size</span>();</span><br><span class="line"></span><br><span class="line">        unordered_map&lt;<span class="type">int</span>, vector&lt;<span class="type">int</span>&gt;&gt; ops;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; m; ++i) &#123;</span><br><span class="line">            ops[indices[i]].<span class="built_in">push_back</span>(i);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        string ans;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n;) &#123;</span><br><span class="line">            <span class="type">bool</span> succeed = <span class="literal">false</span>;</span><br><span class="line">            <span class="keyword">if</span> (ops.<span class="built_in">count</span>(i)) &#123;</span><br><span class="line">                <span class="keyword">for</span> (<span class="type">int</span> pt: ops[i]) &#123;</span><br><span class="line">                    <span class="keyword">if</span> (s.<span class="built_in">substr</span>(i, sources[pt].<span class="built_in">size</span>()) == sources[pt]) &#123;</span><br><span class="line">                        succeed = <span class="literal">true</span>;</span><br><span class="line">                        ans += targets[pt];</span><br><span class="line">                        i += sources[pt].<span class="built_in">size</span>();</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (!succeed) &#123;</span><br><span class="line">                ans += s[i];</span><br><span class="line">                ++i;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><figcaption><span>[sol2-Java]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">findReplaceString</span><span class="params">(String s, <span class="type">int</span>[] indices, String[] sources, String[] targets)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">n</span> <span class="operator">=</span> s.length(), m = indices.length;</span><br><span class="line"></span><br><span class="line">        Map&lt;Integer, List&lt;Integer&gt;&gt; ops = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;Integer, List&lt;Integer&gt;&gt;();</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; m; ++i) &#123;</span><br><span class="line">            ops.putIfAbsent(indices[i], <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;Integer&gt;());</span><br><span class="line">            ops.get(indices[i]).add(i);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="type">StringBuilder</span> <span class="variable">ans</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringBuilder</span>();</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; n;) &#123;</span><br><span class="line">            <span class="type">boolean</span> <span class="variable">succeed</span> <span class="operator">=</span> <span class="literal">false</span>;</span><br><span class="line">            <span class="keyword">if</span> (ops.containsKey(i)) &#123;</span><br><span class="line">                <span class="keyword">for</span> (<span class="type">int</span> pt : ops.get(i)) &#123;</span><br><span class="line">                    <span class="keyword">if</span> (s.substring(i, Math.min(i + sources[pt].length(), n)).equals(sources[pt])) &#123;</span><br><span class="line">                        succeed = <span class="literal">true</span>;</span><br><span class="line">                        ans.append(targets[pt]);</span><br><span class="line">                        i += sources[pt].length();</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (!succeed) &#123;</span><br><span class="line">                ans.append(s.charAt(i));</span><br><span class="line">                ++i;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans.toString();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="C#"><figure class="iseeu highlight c#"><figcaption><span>[sol2-C#]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Solution</span> &#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="built_in">string</span> <span class="title">FindReplaceString</span>(<span class="params"><span class="built_in">string</span> s, <span class="built_in">int</span>[] indices, <span class="built_in">string</span>[] sources, <span class="built_in">string</span>[] targets</span>)</span> &#123;</span><br><span class="line">        <span class="built_in">int</span> n = s.Length, m = indices.Length;</span><br><span class="line"></span><br><span class="line">        IDictionary&lt;<span class="built_in">int</span>, IList&lt;<span class="built_in">int</span>&gt;&gt; ops = <span class="keyword">new</span> Dictionary&lt;<span class="built_in">int</span>, IList&lt;<span class="built_in">int</span>&gt;&gt;();</span><br><span class="line">        <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; m; ++i) &#123;</span><br><span class="line">            ops.TryAdd(indices[i], <span class="keyword">new</span> List&lt;<span class="built_in">int</span>&gt;());</span><br><span class="line">            ops[indices[i]].Add(i);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        StringBuilder ans = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">        <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; n;) &#123;</span><br><span class="line">            <span class="built_in">bool</span> succeed = <span class="literal">false</span>;</span><br><span class="line">            <span class="keyword">if</span> (ops.ContainsKey(i)) &#123;</span><br><span class="line">                <span class="keyword">foreach</span> (<span class="built_in">int</span> pt <span class="keyword">in</span> ops[i]) &#123;</span><br><span class="line">                    <span class="keyword">if</span> (s.Substring(i, Math.Min(i + sources[pt].Length, n) - i).Equals(sources[pt])) &#123;</span><br><span class="line">                        succeed = <span class="literal">true</span>;</span><br><span class="line">                        ans.Append(targets[pt]);</span><br><span class="line">                        i += sources[pt].Length;</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (!succeed) &#123;</span><br><span class="line">                ans.Append(s[i]);</span><br><span class="line">                ++i;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans.ToString();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><figcaption><span>[sol2-Python3]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">findReplaceString</span>(<span class="params">self, s: <span class="built_in">str</span>, indices: <span class="type">List</span>[<span class="built_in">int</span>], sources: <span class="type">List</span>[<span class="built_in">str</span>], targets: <span class="type">List</span>[<span class="built_in">str</span>]</span>) -&gt; <span class="built_in">str</span>:</span><br><span class="line">        n, m = <span class="built_in">len</span>(s), <span class="built_in">len</span>(indices)</span><br><span class="line"></span><br><span class="line">        ops = defaultdict(<span class="built_in">list</span>)</span><br><span class="line">        <span class="keyword">for</span> i, idx <span class="keyword">in</span> <span class="built_in">enumerate</span>(indices):</span><br><span class="line">            ops[idx].append(i)</span><br><span class="line"></span><br><span class="line">        ans = <span class="built_in">list</span>()</span><br><span class="line">        i = <span class="number">0</span></span><br><span class="line">        <span class="keyword">while</span> i &lt; n:</span><br><span class="line">            succeed = <span class="literal">False</span></span><br><span class="line">            <span class="keyword">if</span> i <span class="keyword">in</span> ops:</span><br><span class="line">                <span class="keyword">for</span> pt <span class="keyword">in</span> ops[i]:</span><br><span class="line">                    <span class="keyword">if</span> s[i:i+<span class="built_in">len</span>(sources[pt])] == sources[pt]:</span><br><span class="line">                        succeed = <span class="literal">True</span></span><br><span class="line">                        ans.append(targets[pt])</span><br><span class="line">                        i += <span class="built_in">len</span>(sources[pt])</span><br><span class="line">                        <span class="keyword">break</span></span><br><span class="line">            <span class="keyword">if</span> <span class="keyword">not</span> succeed:</span><br><span class="line">                ans.append(s[i])</span><br><span class="line">                i += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;&quot;</span>.join(ans)</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><figcaption><span>[sol2-JavaScript]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> findReplaceString = <span class="keyword">function</span>(<span class="params">s, indices, sources, targets</span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> n = s.<span class="property">length</span>, m = indices.<span class="property">length</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> ops = <span class="keyword">new</span> <span class="title class_">Map</span>();</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; m; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (!ops.<span class="title function_">has</span>(indices[i])) &#123;</span><br><span class="line">            ops.<span class="title function_">set</span>(indices[i], []);</span><br><span class="line">        &#125;</span><br><span class="line">        ops.<span class="title function_">get</span>(indices[i]).<span class="title function_">push</span>(i);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> ans = <span class="string">&quot;&quot;</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; n; ) &#123;</span><br><span class="line">        <span class="keyword">let</span> succeed = <span class="literal">false</span>;</span><br><span class="line">        <span class="keyword">if</span> (ops.<span class="title function_">has</span>(i)) &#123;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(ops.<span class="title function_">get</span>(i))</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">const</span> pt <span class="keyword">of</span> ops.<span class="title function_">get</span>(i)) &#123;</span><br><span class="line">                <span class="keyword">if</span> (s.<span class="title function_">substring</span>(i, <span class="title class_">Math</span>.<span class="title function_">min</span>(i + sources[pt].<span class="property">length</span>, n)) === sources[pt]) &#123;</span><br><span class="line">                    succeed = <span class="literal">true</span>;</span><br><span class="line">                    ans += targets[pt];</span><br><span class="line">                    i += sources[pt].<span class="property">length</span>;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (!succeed) &#123;</span><br><span class="line">            ans += s[i];</span><br><span class="line">            ++i;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ans;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="C"><figure class="iseeu highlight c"><figcaption><span>[sol2-C]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> &#123;</span></span><br><span class="line">    <span class="type">int</span> key;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span> *<span class="title">list</span>;</span></span><br><span class="line">    UT_hash_handle hh;</span><br><span class="line">&#125; HashItem;</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> ListNode *<span class="title function_">creatListNode</span><span class="params">(<span class="type">int</span> val)</span> &#123;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span> *<span class="title">obj</span> =</span> (<span class="keyword">struct</span> ListNode *)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">struct</span> ListNode));</span><br><span class="line">    obj-&gt;val = val;</span><br><span class="line">    obj-&gt;next = <span class="literal">NULL</span>;</span><br><span class="line">    <span class="keyword">return</span> obj;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">freeLinkList</span><span class="params">(<span class="keyword">struct</span> ListNode *<span class="built_in">list</span>)</span> &#123;</span><br><span class="line">    <span class="keyword">while</span> (<span class="built_in">list</span>) &#123;</span><br><span class="line">        <span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span> *<span class="title">curr</span> =</span> <span class="built_in">list</span>;</span><br><span class="line">        <span class="built_in">list</span> = <span class="built_in">list</span>-&gt;next;</span><br><span class="line">        <span class="built_in">free</span>(curr);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">HashItem *<span class="title function_">hashFindItem</span><span class="params">(HashItem **obj, <span class="type">int</span> key)</span> &#123;</span><br><span class="line">    HashItem *pEntry = <span class="literal">NULL</span>;</span><br><span class="line">    HASH_FIND_INT(*obj, &amp;key, pEntry);</span><br><span class="line">    <span class="keyword">return</span> pEntry;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">bool</span> <span class="title function_">hashAddItem</span><span class="params">(HashItem **obj, <span class="type">int</span> key, <span class="type">int</span> val)</span> &#123;</span><br><span class="line">    HashItem *pEntry = hashFindItem(obj, key);</span><br><span class="line">    <span class="keyword">if</span> (pEntry) &#123;</span><br><span class="line">        <span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span> *<span class="title">node</span> =</span> creatListNode(val);</span><br><span class="line">        node-&gt;next = pEntry-&gt;<span class="built_in">list</span>;</span><br><span class="line">        pEntry-&gt;<span class="built_in">list</span> = node;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        HashItem *pEntry = (HashItem *)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(HashItem));</span><br><span class="line">        pEntry-&gt;key = key;</span><br><span class="line">        pEntry-&gt;<span class="built_in">list</span> = creatListNode(val);</span><br><span class="line">        HASH_ADD_INT(*obj, key, pEntry);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">hashFree</span><span class="params">(HashItem **obj)</span> &#123;</span><br><span class="line">    HashItem *curr = <span class="literal">NULL</span>, *tmp = <span class="literal">NULL</span>;</span><br><span class="line">    HASH_ITER(hh, *obj, curr, tmp) &#123;</span><br><span class="line">        HASH_DEL(*obj, curr);</span><br><span class="line">        freeLinkList(curr-&gt;<span class="built_in">list</span>);</span><br><span class="line">        <span class="built_in">free</span>(curr);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">char</span> * <span class="title function_">findReplaceString</span><span class="params">(<span class="type">char</span> * s, <span class="type">int</span>* indices, <span class="type">int</span> indicesSize, <span class="type">char</span> ** sources, <span class="type">int</span> sourcesSize, <span class="type">char</span> ** targets, <span class="type">int</span> targetsSize)</span> &#123;</span><br><span class="line">    <span class="type">int</span> n = <span class="built_in">strlen</span>(s), m = indicesSize;</span><br><span class="line"></span><br><span class="line">    HashItem *ops = <span class="literal">NULL</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; m; ++i) &#123;</span><br><span class="line">        hashAddItem(&amp;ops, indices[i], i);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="type">char</span> *ans = (<span class="type">char</span> *)<span class="built_in">calloc</span>(n * <span class="number">50</span> + <span class="number">1</span>, <span class="keyword">sizeof</span>(<span class="type">char</span>));</span><br><span class="line">    <span class="type">int</span> pos = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n;) &#123;</span><br><span class="line">        <span class="type">bool</span> succeed = <span class="literal">false</span>;</span><br><span class="line">        HashItem *pEntry = hashFindItem(&amp;ops, i);</span><br><span class="line">        <span class="keyword">if</span> (pEntry) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">struct</span> ListNode *node = pEntry-&gt;<span class="built_in">list</span>; node; node = node-&gt;next) &#123;</span><br><span class="line">                <span class="type">int</span> pt = node-&gt;val;</span><br><span class="line">                <span class="keyword">if</span> (!<span class="built_in">strncmp</span>(s + i, sources[pt], <span class="built_in">strlen</span>(sources[pt]))) &#123;</span><br><span class="line">                    succeed = <span class="literal">true</span>;</span><br><span class="line">                    pos += <span class="built_in">sprintf</span>(ans + pos, <span class="string">&quot;%s&quot;</span>, targets[pt]);</span><br><span class="line">                    i += <span class="built_in">strlen</span>(sources[pt]);</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (!succeed) &#123;</span><br><span class="line">            ans[pos++] = s[i++];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    hashFree(&amp;ops);</span><br><span class="line">    <span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Go"><figure class="iseeu highlight go"><figcaption><span>[sol2-Go]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">findReplaceString</span><span class="params">(s <span class="type">string</span>, indices []<span class="type">int</span>, sources []<span class="type">string</span>, targets []<span class="type">string</span>)</span></span> <span class="type">string</span> &#123;</span><br><span class="line">    n, m := <span class="built_in">len</span>(s), <span class="built_in">len</span>(indices)</span><br><span class="line"></span><br><span class="line">    ops := <span class="keyword">map</span>[<span class="type">int</span>][]<span class="type">int</span>&#123;&#125;</span><br><span class="line">    <span class="keyword">for</span> i := <span class="number">0</span>; i &lt; m; i++ &#123;</span><br><span class="line">        ops[indices[i]] = <span class="built_in">append</span>(ops[i], i)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    ans := <span class="string">&quot;&quot;</span></span><br><span class="line">    <span class="keyword">for</span> i := <span class="number">0</span>; i &lt; n; &#123;</span><br><span class="line">        succeed := <span class="literal">false</span></span><br><span class="line">        _, ok := ops[i]</span><br><span class="line">        <span class="keyword">if</span> ok &#123;</span><br><span class="line">            <span class="keyword">for</span> _, pt := <span class="keyword">range</span> ops[i] &#123;</span><br><span class="line">                <span class="keyword">if</span> s[i : i + min(<span class="built_in">len</span>(sources[pt]), n - i)] == sources[pt] &#123;</span><br><span class="line">                    succeed = <span class="literal">true</span></span><br><span class="line">                    ans += targets[pt]</span><br><span class="line">                    i += <span class="built_in">len</span>(sources[pt])</span><br><span class="line">                    <span class="keyword">break</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> !succeed &#123;</span><br><span class="line">            ans += <span class="type">string</span>(s[i])</span><br><span class="line">            i++</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ans</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">min</span><span class="params">(x <span class="type">int</span>, y <span class="type">int</span>)</span></span> <span class="type">int</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> x &gt; y &#123;</span><br><span class="line">        <span class="keyword">return</span> y</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> x</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>复杂度分析</strong></p>
+<ul>
+<li><p>时间复杂度：O(n + ml)，其中 n 是字符串 s 的长度，m 是数组 indices 的长度，l 是数组 sources 和 targets 中字符串的平均长度。</p>
+<ul>
+<li><p>将操作放入哈希表需要的时间为 O(m)；</p>
+</li>
+<li><p>在使用双指针进行遍历的过程中，遍历字符串需要的时间为 O(n)，遍历哈希表需要的时间为 O(m)，在最坏情况下需要尝试每一个替换操作，比较和构造最终答案需要的时间为 O(ml)。</p>
+</li>
+</ul>
+<p>  相加即可得到总时间复杂度 O(n + ml)。</p>
+</li>
+<li><p>空间复杂度：O(n + ml)。</p>
+<ul>
+<li><p>哈希表需要的空间为 O(m)；</p>
+</li>
+<li><p>在替换操作中进行比较时，如果使用的语言支持无拷贝的切片操作，那么需要的空间为 O(1)，否则为 O(l)；</p>
+</li>
+<li><p>在构造最终答案时，如果使用的语言支持带修改的字符串，那么需要的空间为 O(1)（不考虑最终答案占用的空间），否则需要 O(n + ml) 的辅助空间。</p>
+</li>
+</ul>
+<p>  对于不同语言，上述需要的空间会有所变化。这里取每一种可能的最大值，相加即可得到总空间复杂度 O(n + ml)。</p>
+</li>
+</ul>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <!--<div class="article-copyright-info-container">-->
+    <!--&lt;!&ndash;<ul>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><strong>Title:</strong> 0833-字符串中的查找与替换</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><strong>Author:</strong> Raphael Liu</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><strong>Created at&ndash;&gt;-->
+                <!--&lt;!&ndash;:</strong> 2023-09-13 00:47:26</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;&ndash;&gt;-->
+            <!--&lt;!&ndash;<li>&ndash;&gt;-->
+                <!--&lt;!&ndash;<strong>Updated at&ndash;&gt;-->
+                    <!--&lt;!&ndash;:</strong> 2023-09-13 16:06:24&ndash;&gt;-->
+            <!--&lt;!&ndash;</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;<li>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;<strong>Link:</strong> https://fida.ltd/2023/09/13/0833-字符串中的查找与替换/&ndash;&gt;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;</li>&ndash;&gt;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;<li>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;<strong>&ndash;&gt;&ndash;&gt;-->
+                <!--&lt;!&ndash;&lt;!&ndash;License:&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;</strong>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0</a>.&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;&ndash;&gt;&ndash;&gt;-->
+
+        <!--&lt;!&ndash;&lt;!&ndash;</li>&ndash;&gt;&ndash;&gt;-->
+    <!--&lt;!&ndash;</ul>&ndash;&gt;-->
+<!--</div>-->
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box">
+                
+                    <li class="tag-item">
+                        <a href="/tags/algorithm/">#algorithm</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item">
+                        <a href="/tags/MEDIUM/">#MEDIUM</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                        rel="prev"
+                        href="/2023/09/13/0832-%E7%BF%BB%E8%BD%AC%E5%9B%BE%E5%83%8F/"
+                        >
+                            <span class="left arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">0832-翻转图像</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                        rel="next"
+                        href="/2023/09/13/0834-%E6%A0%91%E4%B8%AD%E8%B7%9D%E7%A6%BB%E4%B9%8B%E5%92%8C/"
+                        >
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">0834-树中距离之和</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+
+        
+            <div class="comment-container">
+                <div class="comments-container pjax">
+    <div id="comment-anchor"></div>
+    <div class="comment-area-title">
+        <i class="fa-solid fa-comments"></i>&nbsp;Comments
+    </div>
+    
+
+        
+            
+ 
+    <div id="waline"></div>
+    <script type="module"  data-swup-reload-script>
+        import { init } from 'https://evan.beee.top/js/waline.mjs';
+
+        function loadWaline() {
+            init({
+                el: '#waline',
+                serverURL: 'https://example.example.com',
+                lang: 'zh-CN',
+                dark: 'body[class~="dark-mode"]',
+                requiredMeta: ['nick','mail'], // cannot customize by theme config, change it yourself
+            });
+        }
+
+        if ('true') {
+            const loadWalineTimeout = setTimeout(() => {
+                loadWaline();
+                clearTimeout(loadWalineTimeout);
+            }, 1000);
+        } else {
+            window.addEventListener('DOMContentLoaded', loadWaline);
+        }
+        
+    </script>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+
+    
+        <div class="toc-content-container">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">On this page</div>
+        <div class="page-title">0833-字符串中的查找与替换</div>
+        
+
+    </div>
+</div>
+        </div>
+    
+</div>
+
+
+
+                
+
+            </div>
+
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2022</span>
+              -
+            
+            2023&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">Raphael Liu</a>
+        </div>
+        
+            <script data-swup-reload-script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">UV:</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">PV:</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <!--<div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">-->
+            <!--<span class="lg:block text-sm">powered_by</span>-->
+            <!--&lt;!&ndash;<span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.4.4</a></span>&ndash;&gt;-->
+        <!--</div>-->
+        
+        <!---->
+            <!--<div>-->
+                <!--runtime <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hours <span class="odometer" id="runtime_minutes"></span> minutes <span class="odometer" id="runtime_seconds"></span> seconds-->
+            <!--</div>-->
+        <!---->
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fa-regular fa-comments"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-expand-width flex justify-center items-center">
+            <i class="fa-regular fa-expand"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fa-solid fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa-solid fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa-solid fa-spinner fa-spin-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+    
+<script src="/js/libs/Swup.min.js"></script>
+
+<script src="/js/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/libs/SwupScrollPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+        ],
+        containers: ["#swup"],
+    });
+
+    swup.hooks.on("page:view", () => {
+        Global.refresh();
+    });
+
+    // if (document.readyState === "complete") {
+    //
+    // } else {
+    //     document.addEventListener("DOMContentLoaded", () => init());
+    // }
+</script>
+
+
+
+
+
+
+<script src="/js/utils.js" type="module"></script>
+
+<script src="/js/main.js" type="module"></script>
+
+<script src="/js/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/layouts/categoryList.js" type="module"></script>
+
+
+
+    
+<script src="/js/tools/localSearch.js"></script>
+
+
+
+
+    
+<script src="/js/tools/codeBlock.js"></script>
+
+
+
+
+    
+<script src="/js/layouts/lazyload.js"></script>
+
+
+
+
+    
+<script src="/js/tools/runtime.js"></script>
+
+    
+<script src="/js/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/libs/Typed.min.js"></script>
+
+  
+<script src="/js/plugins/typed.js"></script>
+
+
+
+
+
+
+
+<div class="post-scripts" data-swup-reload-script>
+    
+        
+<script src="/js/libs/anime.min.js"></script>
+
+        
+<script src="/js/tools/tocToggle.js" type="module"></script>
+
+<script src="/js/layouts/toc.js" type="module"></script>
+
+<script src="/js/plugins/tabs.js" type="module"></script>
+
+    
+</div>
+
+
+</body>
+</html>

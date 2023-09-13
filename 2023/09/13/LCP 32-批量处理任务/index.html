@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="Raphael Liu">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/2023/09/13/lcp 32-批量处理任务/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="某实验室计算机待处理任务以 [start,end,period] 格式记于二维数组 tasks，表示完成该任务的时间范围为起始时间 start至结束时间 end 之间，需要计算机投入 period 的时长，注意： 1. period 可为不连续时间 2. 首尾时间均包含在内处于开机状态的计算机可同时处理任意多个任务，请返回电脑最少开机多久，可处理完所有任务。 示例 1： &gt;输入：tasks">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LCP 32-批量处理任务">
+<meta property="og:url" content="http://example.com/2023/09/13/LCP%2032-%E6%89%B9%E9%87%8F%E5%A4%84%E7%90%86%E4%BB%BB%E5%8A%A1/index.html">
+<meta property="og:site_name" content="Raphael&#39;s Blog">
+<meta property="og:description" content="某实验室计算机待处理任务以 [start,end,period] 格式记于二维数组 tasks，表示完成该任务的时间范围为起始时间 start至结束时间 end 之间，需要计算机投入 period 的时长，注意： 1. period 可为不连续时间 2. 首尾时间均包含在内处于开机状态的计算机可同时处理任意多个任务，请返回电脑最少开机多久，可处理完所有任务。 示例 1： &gt;输入：tasks">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-09-12T16:47:26.000Z">
+<meta property="article:modified_time" content="2023-09-13T09:01:06.822Z">
+<meta property="article:author" content="Raphael Liu">
+<meta property="article:tag" content="algorithm">
+<meta property="article:tag" content="HARD">
+<meta name="twitter:card" content="summary">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/redefine-favicon.svg" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/redefine-favicon.svg">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/redefine-favicon.svg">
+    <!--- Page Info-->
+    
+    <title>
+        
+            LCP 32-批量处理任务 -
+        
+        Raphael&#39;s Blog
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/css/build/styles.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/fonts.css">
+
+    
+<link rel="stylesheet" href="/fonts/Satoshi/satoshi.css">
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+
+    <!--- Inject Part-->
+    
+    <script id="hexo-configurations">
+    let Global = window.Global || {};
+    Global.hexo_config = {"hostname":"example.com","root":"/","language":"zh_CN"};
+    Global.theme_config = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":true,"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"open_graph":true,"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-wqery6-light.webp","dark":"/images/wallhaven-wqery6-dark.webp"},"title":"Raphael's Blog","subtitle":{"text":["格物致知","坚持做正确的事情"],"hitokoto":{"enable":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":false,"links":{"github":"https://github.com/raphael-liu","email":"raphael@buaa.edu.cn# your email"},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.4.4","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"links":{"首页":{"path":"/","icon":"fa-regular fa-house"},"文章":{"path":"/archives","icon":"fa-regular fa-archive"},"关于":{"icon":"fa-regular fa-user","submenus":{"我":"/about/me","Github":"https://github.com/raphael-liu"}}},"search":{"enable":true,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"links":null},"article_date_format":"auto","categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}},"footerStart":"2022/8/17 11:45:14"};
+    Global.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    Global.data_config = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="swup-progress-icon">
+            <i class="fa-solid fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container" id="swup">
+
+    
+
+    <div class="main-content-container">
+
+
+        <div class="main-content-header">
+            <header class="navbar-container">
+    
+    <div class="navbar-content">
+        <div class="left">
+            
+            <a class="logo-title" href="http://example.com/">
+                
+                Raphael&#39;s Blog
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/"  >
+                                    
+                                        
+                                            <i class="fa-regular fa-house"></i>
+                                        
+                                        首页
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/archives"  >
+                                    
+                                        
+                                            <i class="fa-regular fa-archive"></i>
+                                        
+                                        文章
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="has-dropdown" 
+                                    href="#" onClick="return false;">
+                                    
+                                        
+                                            <i class="fa-regular fa-user"></i>
+                                        
+                                        关于&nbsp;<i class="fa-solid fa-chevron-down"></i>
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                                    <ul class="sub-menu">
+                                    
+                                        <li>
+                                        <a href="/about/me">我
+                                        </a>
+                                        </li>
+                                    
+                                        <li>
+                                        <a target="_blank" rel="noopener" href="https://github.com/raphael-liu">GITHUB
+                                        </a>
+                                        </li>
+                                    
+                                    </ul>
+                                
+                            </li>
+                    
+                    
+                        <li class="navbar-item search search-popup-trigger">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fa-solid fa-magnifying-glass"></i></div>
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile drawer -->
+    <div class="navbar-drawer w-full absolute top-0 left-0 bg-background-color">
+        <ul class="drawer-navbar-list flex flex-col justify-start items-center">
+            
+                
+                    <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group " 
+                        href="/"  >
+                             
+                                
+                                    <i class="fa-regular fa-house"></i>
+                                
+                                首页
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+                
+                    <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group " 
+                        href="/archives"  >
+                             
+                                
+                                    <i class="fa-regular fa-archive"></i>
+                                
+                                文章
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+                
+                    <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group has-dropdown" 
+                        href="#" onClick="return false;">
+                            
+                                
+                                    <i class="fa-regular fa-user"></i>
+                                
+                                关于&nbsp;<i class="group-hover:rotate-180 transition-transform fa-solid fa-chevron-down"></i>
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                              
+                        
+                            <li class="text-base flex justify-center items-center hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                <a class="py-0.5" href="/about/me">我</a>
+                            </li>
+                        
+                            <li class="text-base flex justify-center items-center hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                <a class="py-0.5" target="_blank" rel="noopener" href="https://github.com/raphael-liu">GITHUB</a>
+                            </li>
+                        
+                    
+            
+
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="post-page-container">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            
+                <h1 class="article-title-regular">LCP 32-批量处理任务</h1>
+            
+            </div>
+            
+                    
+        
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">Raphael Liu</span>
+                        
+                            <span class="author-label">Lv10</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2023-09-13 00:47:26</span>
+        <span class="mobile">2023-09-13 00:47:26</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2023-09-13 17:01:06</span>
+            <span class="mobile">2023-09-13 17:01:06</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/algorithm/">algorithm</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/HARD/">HARD</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        
+
+
+        <div class="article-content markdown-body">
+            <p>某实验室计算机待处理任务以 <code>[start,end,period]</code> 格式记于二维数组 <code>tasks</code>，表示完成该任务的时间范围为起始时间 <code>start</code><br>至结束时间 <code>end</code> 之间，需要计算机投入 <code>period</code> 的时长，注意： 1. <code>period</code> 可为不连续时间 2. 首尾时间均包含在内<br>处于开机状态的计算机可同时处理任意多个任务，请返回电脑最少开机多久，可处理完所有任务。 <strong>示例 1：</strong> &gt;输入：<code>tasks = [[1,3,2],[2,5,3],[5,6,2]]</code> &gt; &gt;输出：<code>4</code> &gt; &gt;解释： &gt;tasks[0] 选择时间点 2、3； &gt;tasks[1]<br>选择时间点 2、3、5； &gt;tasks[2] 选择时间点 5、6； &gt;因此计算机仅需在时间点 2、3、5、6 四个时刻保持开机即可完成任务。 <strong>示例<br>2：</strong> &gt;输入：<code>tasks = [[2,3,1],[5,5,1],[5,6,2]]</code> &gt; &gt;输出：<code>3</code> &gt; &gt;解释： &gt;tasks[0] 选择时间点<br>2 或 3； &gt;tasks[1] 选择时间点 5； &gt;tasks[2] 选择时间点 5、6； &gt;因此计算机仅需在时间点 2、5、6 或 3、5、6<br>三个时刻保持开机即可完成任务。 <strong>提示：</strong> - <code>2 &lt;= tasks.length &lt;= 10^5</code> - <code>tasks[i].length == 3</code> - <code>0 &lt;= tasks[i][0] &lt;= tasks[i][1] &lt;= 10^9</code> - <code>1 &lt;= tasks[i][2] &lt;= tasks[i][1]-tasks[i][0] + 1</code></p>
+<p>先来想想暴力怎么做。</p>
+<h3 id="提示-1"><a href="#提示-1" class="headerlink" title="提示 1"></a>提示 1</h3><p>按照右端点排序。</p>
+<h3 id="提示-2"><a href="#提示-2" class="headerlink" title="提示 2"></a>提示 2</h3><p>对于 tasks}[i] 来说，它右侧的任务要么和它没有交集，要么包含它的区间<strong>后缀</strong>。</p>
+<h3 id="提示-3"><a href="#提示-3" class="headerlink" title="提示 3"></a>提示 3</h3><p>遍历排序后的任务，先统计区间内的已有的电脑运行时间点，如果个数小于 duration，则需要新增时间点。根据提示 2，尽量把新增的时间点安排在区间 [\textit{start},\textit{end}] 的后缀上，这样下一个区间就能统计到更多已有的时间点。</p>
+<div class="highlight-container" data-rel="Py"><figure class="iseeu highlight py"><figcaption><span>[sol1-Python3]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 会超时/超内存的暴力代码</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">processTasks</span>(<span class="params">self, tasks: <span class="type">List</span>[<span class="type">List</span>[<span class="built_in">int</span>]]</span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        tasks.sort(key=<span class="keyword">lambda</span> t: t[<span class="number">1</span>])</span><br><span class="line">        run = [<span class="literal">False</span>] * (tasks[-<span class="number">1</span>][<span class="number">1</span>] + <span class="number">1</span>)</span><br><span class="line">        <span class="keyword">for</span> start, end, d <span class="keyword">in</span> tasks:</span><br><span class="line">            d -= <span class="built_in">sum</span>(run[start:end + <span class="number">1</span>])  <span class="comment"># 去掉运行中的时间点</span></span><br><span class="line">            <span class="keyword">if</span> d &gt; <span class="number">0</span>:</span><br><span class="line">                <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(end, start - <span class="number">1</span>, -<span class="number">1</span>):  <span class="comment"># 剩余的 d 填充区间后缀</span></span><br><span class="line">                    <span class="keyword">if</span> run[i]: <span class="keyword">continue</span></span><br><span class="line">                    run[i] = <span class="literal">True</span></span><br><span class="line">                    d -= <span class="number">1</span></span><br><span class="line">                    <span class="keyword">if</span> d == <span class="number">0</span>: <span class="keyword">break</span></span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">sum</span>(run)</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><figcaption><span>[sol1-Java]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 会超时/超内存的暴力代码</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">processTasks</span><span class="params">(<span class="type">int</span>[][] tasks)</span> &#123;</span><br><span class="line">        Arrays.sort(tasks, (a, b) -&gt; a[<span class="number">1</span>] - b[<span class="number">1</span>]);</span><br><span class="line">        <span class="type">int</span> <span class="variable">ans</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="type">var</span> <span class="variable">run</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">boolean</span>[tasks[tasks.length - <span class="number">1</span>][<span class="number">1</span>] + <span class="number">1</span>];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">var</span> t : tasks) &#123;</span><br><span class="line">            <span class="type">int</span> <span class="variable">start</span> <span class="operator">=</span> t[<span class="number">0</span>], end = t[<span class="number">1</span>], d = t[<span class="number">2</span>];</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> start; i &lt;= end; ++i)</span><br><span class="line">                <span class="keyword">if</span> (run[i]) --d;  <span class="comment">// 去掉运行中的时间点</span></span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> end; d &gt; <span class="number">0</span>; --i) <span class="comment">// 剩余的 d 填充区间后缀</span></span><br><span class="line">                <span class="keyword">if</span> (!run[i]) &#123;</span><br><span class="line">                    run[i] = <span class="literal">true</span>;</span><br><span class="line">                    --d;</span><br><span class="line">                    ++ans;</span><br><span class="line">                &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Cpp"><figure class="iseeu highlight cpp"><figcaption><span>[sol1-C++]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 会超时/超内存的暴力代码</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="type">bool</span> run[(<span class="type">int</span>) <span class="number">1e9</span> + <span class="number">1</span>];</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">processTasks</span><span class="params">(vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; &amp;tasks)</span> </span>&#123;</span><br><span class="line">        <span class="built_in">sort</span>(tasks.<span class="built_in">begin</span>(), tasks.<span class="built_in">end</span>(), [](<span class="keyword">auto</span> &amp;a, <span class="keyword">auto</span> &amp;b) &#123;</span><br><span class="line">            <span class="keyword">return</span> a[<span class="number">1</span>] &lt; b[<span class="number">1</span>];</span><br><span class="line">        &#125;);</span><br><span class="line">        <span class="type">int</span> ans = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span> &amp;t : tasks) &#123;</span><br><span class="line">            <span class="type">int</span> start = t[<span class="number">0</span>], end = t[<span class="number">1</span>], d = t[<span class="number">2</span>];</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> i = start; i &lt;= end; ++i)</span><br><span class="line">                d -= run[i]; <span class="comment">// 去掉运行中的时间点</span></span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> i = end; d &gt; <span class="number">0</span>; --i) <span class="comment">// 剩余的 d 填充区间后缀</span></span><br><span class="line">                <span class="keyword">if</span> (!run[i]) &#123;</span><br><span class="line">                    run[i] = <span class="literal">true</span>;</span><br><span class="line">                    --d;</span><br><span class="line">                    ++ans;</span><br><span class="line">                &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Go"><figure class="iseeu highlight go"><figcaption><span>[sol1-Go]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 会超时/超内存的暴力代码</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">processTasks</span><span class="params">(tasks [][]<span class="type">int</span>)</span></span> (ans <span class="type">int</span>) &#123;</span><br><span class="line">	sort.Slice(tasks, <span class="function"><span class="keyword">func</span><span class="params">(i, j <span class="type">int</span>)</span></span> <span class="type">bool</span> &#123; <span class="keyword">return</span> tasks[i][<span class="number">1</span>] &lt; tasks[j][<span class="number">1</span>] &#125;)</span><br><span class="line">	run := <span class="built_in">make</span>([]<span class="type">bool</span>, tasks[<span class="built_in">len</span>(tasks)<span class="number">-1</span>][<span class="number">1</span>]+<span class="number">1</span>)</span><br><span class="line">	<span class="keyword">for</span> _, t := <span class="keyword">range</span> tasks &#123;</span><br><span class="line">		start, end, d := t[<span class="number">0</span>], t[<span class="number">1</span>], t[<span class="number">2</span>]</span><br><span class="line">		<span class="keyword">for</span> _, b := <span class="keyword">range</span> run[start : end+<span class="number">1</span>] &#123; <span class="comment">// 去掉运行中的时间点</span></span><br><span class="line">			<span class="keyword">if</span> b &#123;</span><br><span class="line">				d--</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">for</span> i := end; d &gt; <span class="number">0</span>; i-- &#123; <span class="comment">// 剩余的 d 填充区间后缀</span></span><br><span class="line">			<span class="keyword">if</span> !run[i] &#123;</span><br><span class="line">				run[i] = <span class="literal">true</span></span><br><span class="line">				d--</span><br><span class="line">				ans++</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="复杂度分析"><a href="#复杂度分析" class="headerlink" title="复杂度分析"></a>复杂度分析</h3><ul>
+<li>时间复杂度：O(nU)，其中 n 为 tasks 的长度，U&#x3D;\max(\textit{end}_i)。</li>
+<li>空间复杂度：O(U)。</li>
+</ul>
+<h1 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h1><h3 id="前置知识：二分查找"><a href="#前置知识：二分查找" class="headerlink" title="前置知识：二分查找"></a>前置知识：二分查找</h3><p>见<a class="link"   target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1AP41137w7/" >【基础算法精讲 04】 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>。</p>
+<h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><p>由于每次都是从右到左新增时间点，相当于把若干右侧的区间合并成一个大区间，因此可以用栈来优化。</p>
+<p>栈中保存闭区间的左右端点，以及从栈底到栈顶的区间长度之和（类似前缀和）。</p>
+<p>合并前先在栈中二分查找左端点所在区间，由于我们保存了长度之和，所以可以算出 [\textit{start},\textit{end}] 范围内的运行中的时间点。</p>
+<p>如果还需要新增时间点，那么就从右到左合并，具体细节见代码。</p>
+<div class="highlight-container" data-rel="Py"><figure class="iseeu highlight py"><figcaption><span>[sol3-Python3]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">processTasks</span>(<span class="params">self, tasks: <span class="type">List</span>[<span class="type">List</span>[<span class="built_in">int</span>]]</span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        tasks.sort(key=<span class="keyword">lambda</span> t: t[<span class="number">1</span>])</span><br><span class="line">        st = [(-<span class="number">2</span>, -<span class="number">2</span>, <span class="number">0</span>)]  <span class="comment"># 闭区间左右端点，栈底到栈顶的区间长度的和</span></span><br><span class="line">        <span class="keyword">for</span> start, end, d <span class="keyword">in</span> tasks:</span><br><span class="line">            _, r, s = st[bisect_left(st, (start,)) - <span class="number">1</span>]</span><br><span class="line">            d -= st[-<span class="number">1</span>][<span class="number">2</span>] - s  <span class="comment"># 去掉运行中的时间点</span></span><br><span class="line">            <span class="keyword">if</span> start &lt;= r:  <span class="comment"># start 在区间 st[i] 内</span></span><br><span class="line">                d -= r - start + <span class="number">1</span>  <span class="comment"># 去掉运行中的时间点</span></span><br><span class="line">            <span class="keyword">if</span> d &lt;= <span class="number">0</span>: <span class="keyword">continue</span></span><br><span class="line">            <span class="keyword">while</span> end - st[-<span class="number">1</span>][<span class="number">1</span>] &lt;= d:  <span class="comment"># 剩余的 d 填充区间后缀</span></span><br><span class="line">                l, r, _ = st.pop()</span><br><span class="line">                d += r - l + <span class="number">1</span>  <span class="comment"># 合并区间</span></span><br><span class="line">            st.append((end - d + <span class="number">1</span>, end, st[-<span class="number">1</span>][<span class="number">2</span>] + d))</span><br><span class="line">        <span class="keyword">return</span> st[-<span class="number">1</span>][<span class="number">2</span>]</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><figcaption><span>[sol3-Java]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">processTasks</span><span class="params">(<span class="type">int</span>[][] tasks)</span> &#123;</span><br><span class="line">        Arrays.sort(tasks, (a, b) -&gt; a[<span class="number">1</span>] - b[<span class="number">1</span>]);</span><br><span class="line">        <span class="type">var</span> <span class="variable">st</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;<span class="type">int</span>[]&gt;();</span><br><span class="line">        st.add(<span class="keyword">new</span> <span class="title class_">int</span>[]&#123;-<span class="number">2</span>, -<span class="number">2</span>, <span class="number">0</span>&#125;); <span class="comment">// 闭区间左右端点，栈底到栈顶的区间长度的和</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">var</span> t : tasks) &#123;</span><br><span class="line">            <span class="type">int</span> <span class="variable">start</span> <span class="operator">=</span> t[<span class="number">0</span>], end = t[<span class="number">1</span>], d = t[<span class="number">2</span>];</span><br><span class="line">            <span class="type">var</span> <span class="variable">e</span> <span class="operator">=</span> st.get(lowerBound(st, start) - <span class="number">1</span>);</span><br><span class="line">            d -= st.get(st.size() - <span class="number">1</span>)[<span class="number">2</span>] - e[<span class="number">2</span>]; <span class="comment">// 去掉运行中的时间点</span></span><br><span class="line">            <span class="keyword">if</span> (start &lt;= e[<span class="number">1</span>]) <span class="comment">// start 在区间 st[i] 内</span></span><br><span class="line">                d -= e[<span class="number">1</span>] - start + <span class="number">1</span>; <span class="comment">// 去掉运行中的时间点</span></span><br><span class="line">            <span class="keyword">if</span> (d &lt;= <span class="number">0</span>) <span class="keyword">continue</span>;</span><br><span class="line">            <span class="keyword">while</span> (end - st.get(st.size() - <span class="number">1</span>)[<span class="number">1</span>] &lt;= d) &#123; <span class="comment">// 剩余的 d 填充区间后缀</span></span><br><span class="line">                e = st.remove(st.size() - <span class="number">1</span>);</span><br><span class="line">                d += e[<span class="number">1</span>] - e[<span class="number">0</span>] + <span class="number">1</span>; <span class="comment">// 合并区间</span></span><br><span class="line">            &#125;</span><br><span class="line">            st.add(<span class="keyword">new</span> <span class="title class_">int</span>[]&#123;end - d + <span class="number">1</span>, end, st.get(st.size() - <span class="number">1</span>)[<span class="number">2</span>] + d&#125;);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> st.get(st.size() - <span class="number">1</span>)[<span class="number">2</span>];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 开区间写法</span></span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> <span class="title function_">lowerBound</span><span class="params">(List&lt;<span class="type">int</span>[]&gt; st, <span class="type">int</span> target)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">left</span> <span class="operator">=</span> -<span class="number">1</span>, right = st.size(); <span class="comment">// 开区间 (left, right)</span></span><br><span class="line">        <span class="keyword">while</span> (left + <span class="number">1</span> &lt; right) &#123; <span class="comment">// 区间不为空</span></span><br><span class="line">            <span class="comment">// 循环不变量：</span></span><br><span class="line">            <span class="comment">// st[left] &lt; target</span></span><br><span class="line">            <span class="comment">// st[right] &gt;= target</span></span><br><span class="line">            <span class="type">int</span> <span class="variable">mid</span> <span class="operator">=</span> (left + right) &gt;&gt;&gt; <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">if</span> (st.get(mid)[<span class="number">0</span>] &lt; target)</span><br><span class="line">                left = mid; <span class="comment">// 范围缩小到 (mid, right)</span></span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                right = mid; <span class="comment">// 范围缩小到 (left, mid)</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> right; <span class="comment">// 或者 left+1</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Cpp"><figure class="iseeu highlight cpp"><figcaption><span>[sol3-C++]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">processTasks</span><span class="params">(vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; &amp;tasks)</span> </span>&#123;</span><br><span class="line">        <span class="built_in">sort</span>(tasks.<span class="built_in">begin</span>(), tasks.<span class="built_in">end</span>(), [](<span class="keyword">auto</span> &amp;a, <span class="keyword">auto</span> &amp;b) &#123;</span><br><span class="line">            <span class="keyword">return</span> a[<span class="number">1</span>] &lt; b[<span class="number">1</span>];</span><br><span class="line">        &#125;);</span><br><span class="line">        vector&lt;tuple&lt;<span class="type">int</span>, <span class="type">int</span>, <span class="type">int</span>&gt;&gt; st&#123; &#123;<span class="number">-2</span>, <span class="number">-2</span>, <span class="number">0</span>&#125; &#125;; <span class="comment">// 闭区间左右端点，栈底到栈顶的区间长度的和</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span> &amp;t : tasks) &#123;</span><br><span class="line">            <span class="type">int</span> start = t[<span class="number">0</span>], end = t[<span class="number">1</span>], d = t[<span class="number">2</span>];</span><br><span class="line">            <span class="keyword">auto</span>[_, r, s] = *--<span class="built_in">lower_bound</span>(st.<span class="built_in">begin</span>(), st.<span class="built_in">end</span>(), start, [](<span class="type">const</span> <span class="keyword">auto</span> &amp;a, <span class="type">int</span> b) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="built_in">get</span>&lt;<span class="number">0</span>&gt;(a) &lt; b;</span><br><span class="line">            &#125;);</span><br><span class="line">            d -= <span class="built_in">get</span>&lt;<span class="number">2</span>&gt;(st.<span class="built_in">back</span>()) - s; <span class="comment">// 去掉运行中的时间点</span></span><br><span class="line">            <span class="keyword">if</span> (start &lt;= r) <span class="comment">// start 在区间 st[i] 内</span></span><br><span class="line">                d -= r - start + <span class="number">1</span>; <span class="comment">// 去掉运行中的时间点</span></span><br><span class="line">            <span class="keyword">if</span> (d &lt;= <span class="number">0</span>) <span class="keyword">continue</span>;</span><br><span class="line">            <span class="keyword">while</span> (end - <span class="built_in">get</span>&lt;<span class="number">1</span>&gt;(st.<span class="built_in">back</span>()) &lt;= d) &#123; <span class="comment">// 剩余的 d 填充区间后缀</span></span><br><span class="line">                <span class="keyword">auto</span>[l, r, _] = st.<span class="built_in">back</span>();</span><br><span class="line">                d += r - l + <span class="number">1</span>; <span class="comment">// 合并区间</span></span><br><span class="line">                st.<span class="built_in">pop_back</span>();</span><br><span class="line">            &#125;</span><br><span class="line">            st.<span class="built_in">emplace_back</span>(end - d + <span class="number">1</span>, end, <span class="built_in">get</span>&lt;<span class="number">2</span>&gt;(st.<span class="built_in">back</span>()) + d);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">get</span>&lt;<span class="number">2</span>&gt;(st.<span class="built_in">back</span>());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Go"><figure class="iseeu highlight go"><figcaption><span>[sol3-Go]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">processTasks</span><span class="params">(tasks [][]<span class="type">int</span>)</span></span> <span class="type">int</span> &#123;</span><br><span class="line">	sort.Slice(tasks, <span class="function"><span class="keyword">func</span><span class="params">(i, j <span class="type">int</span>)</span></span> <span class="type">bool</span> &#123; <span class="keyword">return</span> tasks[i][<span class="number">1</span>] &lt; tasks[j][<span class="number">1</span>] &#125;)</span><br><span class="line">	<span class="keyword">type</span> tuple <span class="keyword">struct</span>&#123; l, r, s <span class="type">int</span> &#125;</span><br><span class="line">	st := []tuple&#123; &#123;<span class="number">-2</span>, <span class="number">-2</span>, <span class="number">0</span>&#125; &#125; <span class="comment">// 闭区间左右端点，栈底到栈顶的区间长度的和</span></span><br><span class="line">	<span class="keyword">for</span> _, p := <span class="keyword">range</span> tasks &#123;</span><br><span class="line">		start, end, d := p[<span class="number">0</span>], p[<span class="number">1</span>], p[<span class="number">2</span>]</span><br><span class="line">		i := sort.Search(<span class="built_in">len</span>(st), <span class="function"><span class="keyword">func</span><span class="params">(i <span class="type">int</span>)</span></span> <span class="type">bool</span> &#123; <span class="keyword">return</span> st[i].l &gt;= start &#125;) - <span class="number">1</span></span><br><span class="line">		d -= st[<span class="built_in">len</span>(st)<span class="number">-1</span>].s - st[i].s <span class="comment">// 去掉运行中的时间点</span></span><br><span class="line">		<span class="keyword">if</span> start &lt;= st[i].r &#123; <span class="comment">// start 在区间 st[i] 内</span></span><br><span class="line">			d -= st[i].r - start + <span class="number">1</span> <span class="comment">// 去掉运行中的时间点</span></span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span> d &lt;= <span class="number">0</span> &#123;</span><br><span class="line">			<span class="keyword">continue</span></span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">for</span> end-st[<span class="built_in">len</span>(st)<span class="number">-1</span>].r &lt;= d &#123; <span class="comment">// 剩余的 d 填充区间后缀</span></span><br><span class="line">			top := st[<span class="built_in">len</span>(st)<span class="number">-1</span>]</span><br><span class="line">			st = st[:<span class="built_in">len</span>(st)<span class="number">-1</span>]</span><br><span class="line">			d += top.r - top.l + <span class="number">1</span> <span class="comment">// 合并区间</span></span><br><span class="line">		&#125;</span><br><span class="line">		st = <span class="built_in">append</span>(st, tuple&#123;end - d + <span class="number">1</span>, end, st[<span class="built_in">len</span>(st)<span class="number">-1</span>].s + d&#125;)</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> st[<span class="built_in">len</span>(st)<span class="number">-1</span>].s</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="复杂度分析-1"><a href="#复杂度分析-1" class="headerlink" title="复杂度分析"></a>复杂度分析</h3><ul>
+<li>时间复杂度：O(n\log n)，其中 n 为 tasks 的长度。</li>
+<li>空间复杂度：O(n)。</li>
+</ul>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <!--<div class="article-copyright-info-container">-->
+    <!--&lt;!&ndash;<ul>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><strong>Title:</strong> LCP 32-批量处理任务</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><strong>Author:</strong> Raphael Liu</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><strong>Created at&ndash;&gt;-->
+                <!--&lt;!&ndash;:</strong> 2023-09-13 00:47:26</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;&ndash;&gt;-->
+            <!--&lt;!&ndash;<li>&ndash;&gt;-->
+                <!--&lt;!&ndash;<strong>Updated at&ndash;&gt;-->
+                    <!--&lt;!&ndash;:</strong> 2023-09-13 17:01:06&ndash;&gt;-->
+            <!--&lt;!&ndash;</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;<li>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;<strong>Link:</strong> https://fida.ltd/2023/09/13/LCP 32-批量处理任务/&ndash;&gt;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;</li>&ndash;&gt;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;<li>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;<strong>&ndash;&gt;&ndash;&gt;-->
+                <!--&lt;!&ndash;&lt;!&ndash;License:&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;</strong>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0</a>.&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;&ndash;&gt;&ndash;&gt;-->
+
+        <!--&lt;!&ndash;&lt;!&ndash;</li>&ndash;&gt;&ndash;&gt;-->
+    <!--&lt;!&ndash;</ul>&ndash;&gt;-->
+<!--</div>-->
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box">
+                
+                    <li class="tag-item">
+                        <a href="/tags/algorithm/">#algorithm</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item">
+                        <a href="/tags/HARD/">#HARD</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                        rel="prev"
+                        href="/2023/09/13/LCP%2031-%E5%8F%98%E6%8D%A2%E7%9A%84%E8%BF%B7%E5%AE%AB/"
+                        >
+                            <span class="left arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">LCP 31-变换的迷宫</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                        rel="next"
+                        href="/2023/09/13/LCP%2033-%E8%93%84%E6%B0%B4/"
+                        >
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">LCP 33-蓄水</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+
+        
+            <div class="comment-container">
+                <div class="comments-container pjax">
+    <div id="comment-anchor"></div>
+    <div class="comment-area-title">
+        <i class="fa-solid fa-comments"></i>&nbsp;Comments
+    </div>
+    
+
+        
+            
+ 
+    <div id="waline"></div>
+    <script type="module"  data-swup-reload-script>
+        import { init } from 'https://evan.beee.top/js/waline.mjs';
+
+        function loadWaline() {
+            init({
+                el: '#waline',
+                serverURL: 'https://example.example.com',
+                lang: 'zh-CN',
+                dark: 'body[class~="dark-mode"]',
+                requiredMeta: ['nick','mail'], // cannot customize by theme config, change it yourself
+            });
+        }
+
+        if ('true') {
+            const loadWalineTimeout = setTimeout(() => {
+                loadWaline();
+                clearTimeout(loadWalineTimeout);
+            }, 1000);
+        } else {
+            window.addEventListener('DOMContentLoaded', loadWaline);
+        }
+        
+    </script>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+
+    
+        <div class="toc-content-container">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">On this page</div>
+        <div class="page-title">LCP 32-批量处理任务</div>
+        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8F%90%E7%A4%BA-1"><span class="nav-text">提示 1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8F%90%E7%A4%BA-2"><span class="nav-text">提示 2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8F%90%E7%A4%BA-3"><span class="nav-text">提示 3</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%8D%E6%9D%82%E5%BA%A6%E5%88%86%E6%9E%90"><span class="nav-text">复杂度分析</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BC%98%E5%8C%96"><span class="nav-text">优化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E7%BD%AE%E7%9F%A5%E8%AF%86%EF%BC%9A%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE"><span class="nav-text">前置知识：二分查找</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%9D%E8%B7%AF"><span class="nav-text">思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%8D%E6%9D%82%E5%BA%A6%E5%88%86%E6%9E%90-1"><span class="nav-text">复杂度分析</span></a></li></ol>
+
+    </div>
+</div>
+        </div>
+    
+</div>
+
+
+
+                
+
+            </div>
+
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2022</span>
+              -
+            
+            2023&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">Raphael Liu</a>
+        </div>
+        
+            <script data-swup-reload-script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">UV:</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">PV:</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <!--<div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">-->
+            <!--<span class="lg:block text-sm">powered_by</span>-->
+            <!--&lt;!&ndash;<span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.4.4</a></span>&ndash;&gt;-->
+        <!--</div>-->
+        
+        <!---->
+            <!--<div>-->
+                <!--runtime <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hours <span class="odometer" id="runtime_minutes"></span> minutes <span class="odometer" id="runtime_seconds"></span> seconds-->
+            <!--</div>-->
+        <!---->
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fa-regular fa-comments"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-expand-width flex justify-center items-center">
+            <i class="fa-regular fa-expand"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fa-solid fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa-solid fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa-solid fa-spinner fa-spin-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+    
+<script src="/js/libs/Swup.min.js"></script>
+
+<script src="/js/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/libs/SwupScrollPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+        ],
+        containers: ["#swup"],
+    });
+
+    swup.hooks.on("page:view", () => {
+        Global.refresh();
+    });
+
+    // if (document.readyState === "complete") {
+    //
+    // } else {
+    //     document.addEventListener("DOMContentLoaded", () => init());
+    // }
+</script>
+
+
+
+
+
+
+<script src="/js/utils.js" type="module"></script>
+
+<script src="/js/main.js" type="module"></script>
+
+<script src="/js/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/layouts/categoryList.js" type="module"></script>
+
+
+
+    
+<script src="/js/tools/localSearch.js"></script>
+
+
+
+
+    
+<script src="/js/tools/codeBlock.js"></script>
+
+
+
+
+    
+<script src="/js/layouts/lazyload.js"></script>
+
+
+
+
+    
+<script src="/js/tools/runtime.js"></script>
+
+    
+<script src="/js/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/libs/Typed.min.js"></script>
+
+  
+<script src="/js/plugins/typed.js"></script>
+
+
+
+
+
+
+
+<div class="post-scripts" data-swup-reload-script>
+    
+        
+<script src="/js/libs/anime.min.js"></script>
+
+        
+<script src="/js/tools/tocToggle.js" type="module"></script>
+
+<script src="/js/layouts/toc.js" type="module"></script>
+
+<script src="/js/plugins/tabs.js" type="module"></script>
+
+    
+</div>
+
+
+</body>
+</html>

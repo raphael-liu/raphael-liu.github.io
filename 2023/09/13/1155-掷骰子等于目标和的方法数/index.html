@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="Raphael Liu">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/2023/09/13/1155-掷骰子等于目标和的方法数/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="这里有 n 个一样的骰子，每个骰子上都有 k 个面，分别标号为 1 到 k 。 给定三个整数 n ,  k 和 target ，返回可能的方式(从总共 _ _kn _ _种方式中)滚动骰子的数量，使正面朝上的数字之和等于 _ _target 。 答案可能很大，你需要对 109 + 7 取模  。 示例 1： **输入：** n &#x3D; 1, k &#x3D; 6, target &#x3D; 3 **输出：** 1 **">
+<meta property="og:type" content="article">
+<meta property="og:title" content="1155-掷骰子等于目标和的方法数">
+<meta property="og:url" content="http://example.com/2023/09/13/1155-%E6%8E%B7%E9%AA%B0%E5%AD%90%E7%AD%89%E4%BA%8E%E7%9B%AE%E6%A0%87%E5%92%8C%E7%9A%84%E6%96%B9%E6%B3%95%E6%95%B0/index.html">
+<meta property="og:site_name" content="Raphael&#39;s Blog">
+<meta property="og:description" content="这里有 n 个一样的骰子，每个骰子上都有 k 个面，分别标号为 1 到 k 。 给定三个整数 n ,  k 和 target ，返回可能的方式(从总共 _ _kn _ _种方式中)滚动骰子的数量，使正面朝上的数字之和等于 _ _target 。 答案可能很大，你需要对 109 + 7 取模  。 示例 1： **输入：** n &#x3D; 1, k &#x3D; 6, target &#x3D; 3 **输出：** 1 **">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-09-12T16:47:26.000Z">
+<meta property="article:modified_time" content="2023-09-13T08:06:23.974Z">
+<meta property="article:author" content="Raphael Liu">
+<meta property="article:tag" content="algorithm">
+<meta property="article:tag" content="MEDIUM">
+<meta name="twitter:card" content="summary">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/redefine-favicon.svg" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/redefine-favicon.svg">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/redefine-favicon.svg">
+    <!--- Page Info-->
+    
+    <title>
+        
+            1155-掷骰子等于目标和的方法数 -
+        
+        Raphael&#39;s Blog
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/css/build/styles.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/fonts.css">
+
+    
+<link rel="stylesheet" href="/fonts/Satoshi/satoshi.css">
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+
+    <!--- Inject Part-->
+    
+    <script id="hexo-configurations">
+    let Global = window.Global || {};
+    Global.hexo_config = {"hostname":"example.com","root":"/","language":"zh_CN"};
+    Global.theme_config = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":true,"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"open_graph":true,"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-wqery6-light.webp","dark":"/images/wallhaven-wqery6-dark.webp"},"title":"Raphael's Blog","subtitle":{"text":["格物致知","坚持做正确的事情"],"hitokoto":{"enable":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":false,"links":{"github":"https://github.com/raphael-liu","email":"raphael@buaa.edu.cn# your email"},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.4.4","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"links":{"首页":{"path":"/","icon":"fa-regular fa-house"},"文章":{"path":"/archives","icon":"fa-regular fa-archive"},"关于":{"icon":"fa-regular fa-user","submenus":{"我":"/about/me","Github":"https://github.com/raphael-liu"}}},"search":{"enable":true,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"links":null},"article_date_format":"auto","categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}},"footerStart":"2022/8/17 11:45:14"};
+    Global.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    Global.data_config = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="swup-progress-icon">
+            <i class="fa-solid fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container" id="swup">
+
+    
+
+    <div class="main-content-container">
+
+
+        <div class="main-content-header">
+            <header class="navbar-container">
+    
+    <div class="navbar-content">
+        <div class="left">
+            
+            <a class="logo-title" href="http://example.com/">
+                
+                Raphael&#39;s Blog
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/"  >
+                                    
+                                        
+                                            <i class="fa-regular fa-house"></i>
+                                        
+                                        首页
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/archives"  >
+                                    
+                                        
+                                            <i class="fa-regular fa-archive"></i>
+                                        
+                                        文章
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="has-dropdown" 
+                                    href="#" onClick="return false;">
+                                    
+                                        
+                                            <i class="fa-regular fa-user"></i>
+                                        
+                                        关于&nbsp;<i class="fa-solid fa-chevron-down"></i>
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                                    <ul class="sub-menu">
+                                    
+                                        <li>
+                                        <a href="/about/me">我
+                                        </a>
+                                        </li>
+                                    
+                                        <li>
+                                        <a target="_blank" rel="noopener" href="https://github.com/raphael-liu">GITHUB
+                                        </a>
+                                        </li>
+                                    
+                                    </ul>
+                                
+                            </li>
+                    
+                    
+                        <li class="navbar-item search search-popup-trigger">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fa-solid fa-magnifying-glass"></i></div>
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile drawer -->
+    <div class="navbar-drawer w-full absolute top-0 left-0 bg-background-color">
+        <ul class="drawer-navbar-list flex flex-col justify-start items-center">
+            
+                
+                    <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group " 
+                        href="/"  >
+                             
+                                
+                                    <i class="fa-regular fa-house"></i>
+                                
+                                首页
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+                
+                    <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group " 
+                        href="/archives"  >
+                             
+                                
+                                    <i class="fa-regular fa-archive"></i>
+                                
+                                文章
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+                
+                    <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group has-dropdown" 
+                        href="#" onClick="return false;">
+                            
+                                
+                                    <i class="fa-regular fa-user"></i>
+                                
+                                关于&nbsp;<i class="group-hover:rotate-180 transition-transform fa-solid fa-chevron-down"></i>
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                              
+                        
+                            <li class="text-base flex justify-center items-center hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                <a class="py-0.5" href="/about/me">我</a>
+                            </li>
+                        
+                            <li class="text-base flex justify-center items-center hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                <a class="py-0.5" target="_blank" rel="noopener" href="https://github.com/raphael-liu">GITHUB</a>
+                            </li>
+                        
+                    
+            
+
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="post-page-container">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            
+                <h1 class="article-title-regular">1155-掷骰子等于目标和的方法数</h1>
+            
+            </div>
+            
+                    
+        
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">Raphael Liu</span>
+                        
+                            <span class="author-label">Lv10</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2023-09-13 00:47:26</span>
+        <span class="mobile">2023-09-13 00:47:26</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2023-09-13 16:06:23</span>
+            <span class="mobile">2023-09-13 16:06:23</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/algorithm/">algorithm</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/MEDIUM/">MEDIUM</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        
+
+
+        <div class="article-content markdown-body">
+            <p>这里有 <code>n</code> 个一样的骰子，每个骰子上都有 <code>k</code> 个面，分别标号为 <code>1</code> 到 <code>k</code> 。</p>
+<p>给定三个整数 <code>n</code> ,  <code>k</code> 和 <code>target</code> ，返回可能的方式(从总共 _ _<code>kn</code> _ _<br>种方式中)滚动骰子的数量，使正面朝上的数字之和等于 _ _<code>target</code> 。</p>
+<p>答案可能很大，你需要对 <code>109 + 7</code> <strong>取模</strong>  。</p>
+<p><strong>示例 1：</strong></p>
+<pre><code>**输入：** n = 1, k = 6, target = 3
+**输出：** 1
+**解释：** 你扔一个有 6 个面的骰子。
+得到 3 的和只有一种方法。
+</code></pre>
+<p><strong>示例 2：</strong></p>
+<pre><code>**输入：** n = 2, k = 6, target = 7
+**输出：** 6
+**解释：** 你扔两个骰子，每个骰子有 6 个面。
+得到 7 的和有 6 种方法：1+6 2+5 3+4 4+3 5+2 6+1。
+</code></pre>
+<p><strong>示例 3：</strong></p>
+<pre><code>**输入：** n = 30, k = 30, target = 500
+**输出：** 222616187
+**解释：** 返回的结果必须是对 109 + 7 取模。
+</code></pre>
+<p><strong>提示：</strong></p>
+<ul>
+<li><code>1 &lt;= n, k &lt;= 30</code></li>
+<li><code>1 &lt;= target &lt;= 1000</code></li>
+</ul>
+<h3 id="解题思路："><a href="#解题思路：" class="headerlink" title="解题思路："></a>解题思路：</h3><ul>
+<li>步骤一：类似于求路径总和，如果用 bracktrack，时间复杂度 O(f ^ d)， 不靠谱啊。果断套 <code>DP</code>。</li>
+<li>步骤二：求状态转移方程 (STE)：<ul>
+<li>状态：<code>dp[i][j]</code> 代表 扔 <code>i</code> 个骰子和为 <code>j</code>；</li>
+<li>方程：<code>dp[i][j]</code> 与 <code>dp[i - 1]</code> 的关系是什么呢？ 第 <code>i</code> 次我投了 <code>k ( 1 &lt;= k &lt;= f)</code>，那么前 <code>i - 1</code> 次 和 为 <code>j - k</code>，对应 <code>dp[i - 1][j - k]</code>；<br>  于是有最终方程：<code>dp[i][j] = dp[i - 1][j - 1] + dp[i - 1][j - 2] + ... + dp[i - 1][j - f]</code></li>
+<li>边界条件： <code>dp[1][k] = 1 ( 1&lt;= k &lt;= min(target, f) )</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="代码："><a href="#代码：" class="headerlink" title="代码："></a>代码：</h3><div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><figcaption><span>[ ]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="variable">MOD</span> <span class="operator">=</span> <span class="number">1000000007</span>;</span><br><span class="line"><span class="keyword">public</span> <span class="type">int</span> <span class="title function_">numRollsToTarget</span><span class="params">(<span class="type">int</span> d, <span class="type">int</span> f, <span class="type">int</span> target)</span> &#123;</span><br><span class="line">  <span class="type">int</span>[][] dp = <span class="keyword">new</span> <span class="title class_">int</span>[<span class="number">31</span>][<span class="number">1001</span>];</span><br><span class="line">  <span class="type">int</span> <span class="variable">min</span> <span class="operator">=</span> Math.min(f, target);</span><br><span class="line">  <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">1</span>; i &lt;= min; i++) &#123;</span><br><span class="line">    dp[<span class="number">1</span>][i] = <span class="number">1</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="type">int</span> <span class="variable">targetMax</span> <span class="operator">=</span> d * f;</span><br><span class="line">  <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">2</span>; i &lt;= d; i++) &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">j</span> <span class="operator">=</span> i; j &lt;= targetMax; j++) &#123;</span><br><span class="line">      <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">k</span> <span class="operator">=</span> <span class="number">1</span>; j - k &gt;= <span class="number">0</span> &amp;&amp; k &lt;= f; k++) &#123;</span><br><span class="line">        dp[i][j] = (dp[i][j] + dp[i - <span class="number">1</span>][j - k]) % MOD;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> dp[d][target];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="关于为什么取模-1e9-7："><a href="#关于为什么取模-1e9-7：" class="headerlink" title="关于为什么取模 1e9 + 7："></a>关于为什么取模 1e9 + 7：</h3><p>简单来说就是：</p>
+<ol>
+<li>取模防止大数运算出现 overflow</li>
+<li>为什么取 1e9 + 7 等 prime number 记为 <code>P</code>，可以减少实际答案 <code>A</code> mapping 到 <code>A mod P</code> 的碰撞率。 我们约定认为， 如果你 <code>A mod P</code> 如果是对的，那么你算出的 A 也是对的。 </li>
+<li>还有就是，对于参赛选手来说，这个数好记，不容易出现手误之类的；</li>
+</ol>
+<p>更详细的 digging 看下面的链接：</p>
+<ul>
+<li><a class="link"   target="_blank" rel="noopener" href="https://www.***.org/modulo-1097-1000000007/" >Modulo 10^9+7 (1000000007) <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></li>
+<li><a class="link"   target="_blank" rel="noopener" href="https://www.hackerearth.com/practice/notes/abhinav92003/why-output-the-answer-modulo-109-7/" >Why “OUTPUT THE ANSWER MODULO 10^9 + 7”? <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></li>
+<li><a class="link"   target="_blank" rel="noopener" href="https://www.zhihu.com/question/49374703" >知乎 - 为什么很多程序竞赛题目都要求答案对 1e9+7 取模？ <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></li>
+</ul>
+<h3 id="关于有些童鞋问为什么不最后取模的解释："><a href="#关于有些童鞋问为什么不最后取模的解释：" class="headerlink" title="关于有些童鞋问为什么不最后取模的解释："></a>关于有些童鞋问为什么不最后取模的解释：</h3><p>还是举个例子吧，input 设为 <code>d = 30, f = 30, target=500</code>，然后我们写段测试代码：</p>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><figcaption><span>[]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">System.out.println(String.format(<span class="string">&quot;Int Max: %s&quot;</span>, Integer.MAX_VALUE));</span><br><span class="line"><span class="type">long</span> <span class="variable">sum</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span> i : dp[d - <span class="number">1</span>]) &#123;</span><br><span class="line">  sum += i;</span><br><span class="line">&#125;</span><br><span class="line">System.out.println(String.format(<span class="string">&quot;dp[d - 1] sum: %s&quot;</span>, sum));</span><br><span class="line">System.out.println(String.format(<span class="string">&quot;dp[d - 1]: %s&quot;</span>, Arrays.toString(dp[d - <span class="number">1</span>])));</span><br></pre></td></tr></table></figure></div>
+<p>具体的 OUTPUT 看我最后面给的数据。</p>
+<p>可以看到，在你最后一步取模之前，早就 Overflow。在我题解里给的 refs <a class="link"   target="_blank" rel="noopener" href="https://www.***.org/modulo-1097-1000000007/" >Modulo 10^9+7 (1000000007) <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> 里面有个 mod 的加法性质：最后取模等效于步步取模 <code>(A + B) mod M = (A mod M + B mod M) mod M</code>。</p>
+<p>在理论上你最后取模是成立的，但我们用的计算机则存在风险：你取模之前已经溢出了。而我们在代码里每次迭代都取模，则杜绝了这个风险。另外还可以注意一下， 我们是两两相加之后取模的， 因为 <code>1000000007 * 2  &lt; Integer.MAX_VALUE</code> ，简化了下。其实我们完全可以写成：<code>dp[i][j] = (dp[i][j] % MOD + dp[i - 1][j - k] % MOD) % MOD</code>。</p>
+<p> 附上测试代码的 OUTPUT 数据</p>
+<div class="highlight-container" data-rel="Angelscript"><figure class="iseeu highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Int Max: <span class="number">2147483647</span></span><br><span class="line">dp[d - <span class="number">1</span>] sum: <span class="number">418862669522</span></span><br><span class="line">dp[d - <span class="number">1</span>]: [<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">29</span>, <span class="number">435</span>, <span class="number">4495</span>, <span class="number">35960</span>, <span class="number">237336</span>, <span class="number">1344904</span>, <span class="number">6724520</span>, <span class="number">30260340</span>, <span class="number">124403620</span>, <span class="number">472733756</span>, <span class="number">676056037</span>, <span class="number">586853445</span>, <span class="number">620076241</span>, <span class="number">860228716</span>, <span class="number">532655639</span>, <span class="number">714803002</span>, <span class="number">68596169</span>, <span class="number">953079104</span>, <span class="number">199721979</span>, <span class="number">679332751</span>, <span class="number">918443081</span>, <span class="number">814643357</span>, <span class="number">67252649</span>, <span class="number">979047412</span>, <span class="number">155580500</span>, <span class="number">861590273</span>, <span class="number">273609805</span>, <span class="number">547219610</span>, <span class="number">144535089</span>, <span class="number">79434475</span>, <span class="number">893116446</span>, <span class="number">799582292</span>, <span class="number">447605678</span>, <span class="number">109534627</span>, <span class="number">392156698</span>, <span class="number">114845677</span>, <span class="number">507694681</span>, <span class="number">290307514</span>, <span class="number">885793603</span>, <span class="number">629668714</span>, <span class="number">37969701</span>, <span class="number">53907942</span>, <span class="number">951712368</span>, <span class="number">854332693</span>, <span class="number">341219139</span>, <span class="number">234391554</span>, <span class="number">697432073</span>, <span class="number">114681024</span>, <span class="number">392880267</span>, <span class="number">307665840</span>, <span class="number">162345404</span>, <span class="number">909488304</span>, <span class="number">847140827</span>, <span class="number">300076096</span>, <span class="number">314954988</span>, <span class="number">254066441</span>, <span class="number">862081601</span>, <span class="number">829284290</span>, <span class="number">686157014</span>, <span class="number">183655830</span>, <span class="number">794131720</span>, <span class="number">626551851</span>, <span class="number">860830766</span>, <span class="number">645169812</span>, <span class="number">706836850</span>, <span class="number">799085852</span>, <span class="number">902302371</span>, <span class="number">77524967</span>, <span class="number">486121379</span>, <span class="number">306019009</span>, <span class="number">30755439</span>, <span class="number">11326789</span>, <span class="number">262333265</span>, <span class="number">142508889</span>, <span class="number">67677058</span>, <span class="number">598818525</span>, <span class="number">756242041</span>, <span class="number">482755347</span>, <span class="number">25850332</span>, <span class="number">270837728</span>, <span class="number">11408703</span>, <span class="number">92029246</span>, <span class="number">658885092</span>, <span class="number">386666719</span>, <span class="number">778410728</span>, <span class="number">319573952</span>, <span class="number">934722102</span>, <span class="number">260464715</span>, <span class="number">104838557</span>, <span class="number">979827891</span>, <span class="number">896507297</span>, <span class="number">399453482</span>, <span class="number">513197167</span>, <span class="number">365207666</span>, <span class="number">65408661</span>, <span class="number">564073391</span>, <span class="number">734555732</span>, <span class="number">130214580</span>, <span class="number">697786154</span>, <span class="number">197871237</span>, <span class="number">256360874</span>, <span class="number">725194355</span>, <span class="number">977001461</span>, <span class="number">163452532</span>, <span class="number">288002316</span>, <span class="number">801613502</span>, <span class="number">837514549</span>, <span class="number">419709827</span>, <span class="number">866008819</span>, <span class="number">611321508</span>, <span class="number">361078669</span>, <span class="number">274130200</span>, <span class="number">8495499</span>, <span class="number">41414194</span>, <span class="number">152839277</span>, <span class="number">861563673</span>, <span class="number">344595413</span>, <span class="number">147525291</span>, <span class="number">680144830</span>, <span class="number">693618995</span>, <span class="number">15047860</span>, <span class="number">523465907</span>, <span class="number">540486275</span>, <span class="number">924389076</span>, <span class="number">788399528</span>, <span class="number">425520524</span>, <span class="number">365187225</span>, <span class="number">773070415</span>, <span class="number">365336170</span>, <span class="number">147073737</span>, <span class="number">808135875</span>, <span class="number">954996399</span>, <span class="number">295585930</span>, <span class="number">370950412</span>, <span class="number">708204907</span>, <span class="number">821195563</span>, <span class="number">749340081</span>, <span class="number">226864069</span>, <span class="number">679862549</span>, <span class="number">739507260</span>, <span class="number">643929348</span>, <span class="number">853976941</span>, <span class="number">653425722</span>, <span class="number">772672340</span>, <span class="number">64736410</span>, <span class="number">839770175</span>, <span class="number">211653702</span>, <span class="number">809453455</span>, <span class="number">544599208</span>, <span class="number">371926533</span>, <span class="number">214591351</span>, <span class="number">854660574</span>, <span class="number">858315710</span>, <span class="number">731742570</span>, <span class="number">247343279</span>, <span class="number">496268936</span>, <span class="number">762565730</span>, <span class="number">461788976</span>, <span class="number">464400254</span>, <span class="number">16200211</span>, <span class="number">344216516</span>, <span class="number">459199184</span>, <span class="number">18114459</span>, <span class="number">608129954</span>, <span class="number">97578284</span>, <span class="number">338345236</span>, <span class="number">93736006</span>, <span class="number">141923650</span>, <span class="number">239437152</span>, <span class="number">16657446</span>, <span class="number">463654541</span>, <span class="number">754571164</span>, <span class="number">113053087</span>, <span class="number">103262985</span>, <span class="number">614749182</span>, <span class="number">945862341</span>, <span class="number">466194470</span>, <span class="number">912912017</span>, <span class="number">828312857</span>, <span class="number">252025671</span>, <span class="number">565654242</span>, <span class="number">567083154</span>, <span class="number">295646539</span>, <span class="number">202557576</span>, <span class="number">270278176</span>, <span class="number">941833338</span>, <span class="number">843470719</span>, <span class="number">228674901</span>, <span class="number">856273780</span>, <span class="number">515192130</span>, <span class="number">260784877</span>, <span class="number">53785843</span>, <span class="number">517492193</span>, <span class="number">813531576</span>, <span class="number">647840140</span>, <span class="number">167775845</span>, <span class="number">645868968</span>, <span class="number">593505316</span>, <span class="number">353743114</span>, <span class="number">909474918</span>, <span class="number">897275524</span>, <span class="number">655105156</span>, <span class="number">784923129</span>, <span class="number">537993088</span>, <span class="number">195015224</span>, <span class="number">818582794</span>, <span class="number">803346103</span>, <span class="number">900998533</span>, <span class="number">174321215</span>, <span class="number">494923073</span>, <span class="number">863221859</span>, <span class="number">482791676</span>, <span class="number">736861123</span>, <span class="number">709819237</span>, <span class="number">727562101</span>, <span class="number">160248311</span>, <span class="number">590189732</span>, <span class="number">40643294</span>, <span class="number">717996182</span>, <span class="number">536467761</span>, <span class="number">506324056</span>, <span class="number">115425139</span>, <span class="number">939625609</span>, <span class="number">545416294</span>, <span class="number">133569583</span>, <span class="number">917480018</span>, <span class="number">693845863</span>, <span class="number">292669224</span>, <span class="number">696411698</span>, <span class="number">484474367</span>, <span class="number">658766053</span>, <span class="number">447953722</span>, <span class="number">909804251</span>, <span class="number">174556714</span>, <span class="number">297552713</span>, <span class="number">470528079</span>, <span class="number">531103582</span>, <span class="number">328293922</span>, <span class="number">622427710</span>, <span class="number">376385029</span>, <span class="number">89961942</span>, <span class="number">101002360</span>, <span class="number">588188675</span>, <span class="number">315961823</span>, <span class="number">125555359</span>, <span class="number">394527017</span>, <span class="number">899822801</span>, <span class="number">331169575</span>, <span class="number">94936677</span>, <span class="number">777127909</span>, <span class="number">467573120</span>, <span class="number">627166257</span>, <span class="number">939700057</span>, <span class="number">154902021</span>, <span class="number">749830367</span>, <span class="number">673334215</span>, <span class="number">182908835</span>, <span class="number">187750555</span>, <span class="number">119269293</span>, <span class="number">40345845</span>, <span class="number">857173494</span>, <span class="number">842111183</span>, <span class="number">875714316</span>, <span class="number">340346555</span>, <span class="number">85779220</span>, <span class="number">380530955</span>, <span class="number">122612554</span>, <span class="number">976112394</span>, <span class="number">981839153</span>, <span class="number">919136961</span>, <span class="number">566211403</span>, <span class="number">75040820</span>, <span class="number">979096722</span>, <span class="number">349021657</span>, <span class="number">654220621</span>, <span class="number">534526105</span>, <span class="number">527741640</span>, <span class="number">906461181</span>, <span class="number">862765100</span>, <span class="number">100410219</span>, <span class="number">195308148</span>, <span class="number">2925249</span>, <span class="number">319843621</span>, <span class="number">439842237</span>, <span class="number">941938366</span>, <span class="number">663433682</span>, <span class="number">180344971</span>, <span class="number">614251499</span>, <span class="number">928383256</span>, <span class="number">165619436</span>, <span class="number">103968665</span>, <span class="number">323380139</span>, <span class="number">71088087</span>, <span class="number">118378314</span>, <span class="number">277016030</span>, <span class="number">274734219</span>, <span class="number">882688722</span>, <span class="number">954753261</span>, <span class="number">486392596</span>, <span class="number">992221971</span>, <span class="number">595041862</span>, <span class="number">232549341</span>, <span class="number">320631417</span>, <span class="number">468946246</span>, <span class="number">258338068</span>, <span class="number">827010721</span>, <span class="number">765814489</span>, <span class="number">916671870</span>, <span class="number">467190582</span>, <span class="number">243685065</span>, <span class="number">858208593</span>, <span class="number">818728965</span>, <span class="number">760618488</span>, <span class="number">747951315</span>, <span class="number">471445982</span>, <span class="number">235600878</span>, <span class="number">862292990</span>, <span class="number">838899741</span>, <span class="number">794321688</span>, <span class="number">515100713</span>, <span class="number">572674769</span>, <span class="number">194736691</span>, <span class="number">563066404</span>, <span class="number">644968325</span>, <span class="number">581977045</span>, <span class="number">464948418</span>, <span class="number">452618356</span>, <span class="number">375597361</span>, <span class="number">622459286</span>, <span class="number">972420275</span>, <span class="number">665595599</span>, <span class="number">930268056</span>, <span class="number">559678225</span>, <span class="number">669699537</span>, <span class="number">999892709</span>, <span class="number">654750313</span>, <span class="number">570566891</span>, <span class="number">321310143</span>, <span class="number">378799443</span>, <span class="number">610235141</span>, <span class="number">591891306</span>, <span class="number">511694663</span>, <span class="number">843387304</span>, <span class="number">21760772</span>, <span class="number">413433597</span>, <span class="number">29138334</span>, <span class="number">567058549</span>, <span class="number">741330128</span>, <span class="number">44569544</span>, <span class="number">640508049</span>, <span class="number">982112749</span>, <span class="number">534880725</span>, <span class="number">163910981</span>, <span class="number">559688384</span>, <span class="number">928540243</span>, <span class="number">876201316</span>, <span class="number">333373034</span>, <span class="number">954620273</span>, <span class="number">900749356</span>, <span class="number">119674876</span>, <span class="number">511646148</span>, <span class="number">178208672</span>, <span class="number">954927893</span>, <span class="number">801344287</span>, <span class="number">875406499</span>, <span class="number">784751920</span>, <span class="number">115841312</span>, <span class="number">691581188</span>, <span class="number">569198453</span>, <span class="number">765604544</span>, <span class="number">943648297</span>, <span class="number">868898358</span>, <span class="number">762195094</span>, <span class="number">451773089</span>, <span class="number">887538727</span>, <span class="number">235000584</span>, <span class="number">307764172</span>, <span class="number">206626589</span>, <span class="number">167155778</span>, <span class="number">634377871</span>, <span class="number">809011775</span>, <span class="number">156706429</span>, <span class="number">770812115</span>, <span class="number">939489442</span>, <span class="number">312673135</span>, <span class="number">348056372</span>, <span class="number">923464253</span>, <span class="number">259660047</span>, <span class="number">231560181</span>, <span class="number">948510661</span>, <span class="number">824965969</span>, <span class="number">718229212</span>, <span class="number">225414788</span>, <span class="number">218528842</span>, <span class="number">943287710</span>, <span class="number">376597255</span>, <span class="number">744440338</span>, <span class="number">575041736</span>, <span class="number">254366659</span>, <span class="number">176820821</span>, <span class="number">517644324</span>, <span class="number">48234764</span>, <span class="number">356058442</span>, <span class="number">134765092</span>, <span class="number">118517652</span>, <span class="number">598372952</span>, <span class="number">476264788</span>, <span class="number">50965049</span>, <span class="number">82802812</span>, <span class="number">918654752</span>, <span class="number">491802618</span>, <span class="number">349674341</span>, <span class="number">166462801</span>, <span class="number">193276905</span>, <span class="number">593546681</span>, <span class="number">657823058</span>, <span class="number">774733041</span>, <span class="number">290975026</span>, <span class="number">931530770</span>, <span class="number">549299692</span>, <span class="number">549299692</span>, <span class="number">931530770</span>, <span class="number">290975026</span>, <span class="number">774733041</span>, <span class="number">657823058</span>, <span class="number">593546681</span>, <span class="number">193276905</span>, <span class="number">166462801</span>, <span class="number">349674341</span>, <span class="number">491802618</span>, <span class="number">918654752</span>, <span class="number">82802812</span>, <span class="number">50965049</span>, <span class="number">476264788</span>, <span class="number">598372952</span>, <span class="number">118517652</span>, <span class="number">134765092</span>, <span class="number">356058442</span>, <span class="number">48234764</span>, <span class="number">517644324</span>, <span class="number">176820821</span>, <span class="number">254366659</span>, <span class="number">575041736</span>, <span class="number">744440338</span>, <span class="number">376597255</span>, <span class="number">943287710</span>, <span class="number">218528842</span>, <span class="number">225414788</span>, <span class="number">718229212</span>, <span class="number">824965969</span>, <span class="number">948510661</span>, <span class="number">231560181</span>, <span class="number">259660047</span>, <span class="number">923464253</span>, <span class="number">348056372</span>, <span class="number">312673135</span>, <span class="number">939489442</span>, <span class="number">770812115</span>, <span class="number">156706429</span>, <span class="number">809011775</span>, <span class="number">634377871</span>, <span class="number">167155778</span>, <span class="number">206626589</span>, <span class="number">307764172</span>, <span class="number">235000584</span>, <span class="number">887538727</span>, <span class="number">451773089</span>, <span class="number">762195094</span>, <span class="number">868898358</span>, <span class="number">943648297</span>, <span class="number">765604544</span>, <span class="number">569198453</span>, <span class="number">691581188</span>, <span class="number">115841312</span>, <span class="number">784751920</span>, <span class="number">875406499</span>, <span class="number">801344287</span>, <span class="number">954927893</span>, <span class="number">178208672</span>, <span class="number">511646148</span>, <span class="number">119674876</span>, <span class="number">900749356</span>, <span class="number">954620273</span>, <span class="number">333373034</span>, <span class="number">876201316</span>, <span class="number">928540243</span>, <span class="number">559688384</span>, <span class="number">163910981</span>, <span class="number">534880725</span>, <span class="number">982112749</span>, <span class="number">640508049</span>, <span class="number">44569544</span>, <span class="number">741330128</span>, <span class="number">567058549</span>, <span class="number">29138334</span>, <span class="number">413433597</span>, <span class="number">21760772</span>, <span class="number">843387304</span>, <span class="number">511694663</span>, <span class="number">591891306</span>, <span class="number">610235141</span>, <span class="number">378799443</span>, <span class="number">321310143</span>, <span class="number">570566891</span>, <span class="number">654750313</span>, <span class="number">999892709</span>, <span class="number">669699537</span>, <span class="number">559678225</span>, <span class="number">930268056</span>, <span class="number">665595599</span>, <span class="number">972420275</span>, <span class="number">622459286</span>, <span class="number">375597361</span>, <span class="number">452618356</span>, <span class="number">464948418</span>, <span class="number">581977045</span>, <span class="number">644968325</span>, <span class="number">563066404</span>, <span class="number">194736691</span>, <span class="number">572674769</span>, <span class="number">515100713</span>, <span class="number">794321688</span>, <span class="number">838899741</span>, <span class="number">862292990</span>, <span class="number">235600878</span>, <span class="number">471445982</span>, <span class="number">747951315</span>, <span class="number">760618488</span>, <span class="number">818728965</span>, <span class="number">858208593</span>, <span class="number">243685065</span>, <span class="number">467190582</span>, <span class="number">916671870</span>, <span class="number">765814489</span>, <span class="number">827010721</span>, <span class="number">258338068</span>, <span class="number">468946246</span>, <span class="number">320631417</span>, <span class="number">232549341</span>, <span class="number">595041862</span>, <span class="number">992221971</span>, <span class="number">486392596</span>, <span class="number">954753261</span>, <span class="number">882688722</span>, <span class="number">274734219</span>, <span class="number">277016030</span>, <span class="number">118378314</span>, <span class="number">71088087</span>, <span class="number">323380139</span>, <span class="number">103968665</span>, <span class="number">165619436</span>, <span class="number">928383256</span>, <span class="number">614251499</span>, <span class="number">180344971</span>, <span class="number">663433682</span>, <span class="number">941938366</span>, <span class="number">439842237</span>, <span class="number">319843621</span>, <span class="number">2925249</span>, <span class="number">195308148</span>, <span class="number">100410219</span>, <span class="number">862765100</span>, <span class="number">906461181</span>, <span class="number">527741640</span>, <span class="number">534526105</span>, <span class="number">654220621</span>, <span class="number">349021657</span>, <span class="number">979096722</span>, <span class="number">75040820</span>, <span class="number">566211403</span>, <span class="number">919136961</span>, <span class="number">981839153</span>, <span class="number">976112394</span>, <span class="number">122612554</span>, <span class="number">380530955</span>, <span class="number">85779220</span>, <span class="number">340346555</span>, <span class="number">875714316</span>, <span class="number">842111183</span>, <span class="number">857173494</span>, <span class="number">40345845</span>, <span class="number">119269293</span>, <span class="number">187750555</span>, <span class="number">182908835</span>, <span class="number">673334215</span>, <span class="number">749830367</span>, <span class="number">154902021</span>, <span class="number">939700057</span>, <span class="number">627166257</span>, <span class="number">467573120</span>, <span class="number">777127909</span>, <span class="number">94936677</span>, <span class="number">331169575</span>, <span class="number">899822801</span>, <span class="number">394527017</span>, <span class="number">125555359</span>, <span class="number">315961823</span>, <span class="number">588188675</span>, <span class="number">101002360</span>, <span class="number">89961942</span>, <span class="number">376385029</span>, <span class="number">622427710</span>, <span class="number">328293922</span>, <span class="number">531103582</span>, <span class="number">470528079</span>, <span class="number">297552713</span>, <span class="number">174556714</span>, <span class="number">909804251</span>, <span class="number">447953722</span>, <span class="number">658766053</span>, <span class="number">484474367</span>, <span class="number">696411698</span>, <span class="number">292669224</span>, <span class="number">693845863</span>, <span class="number">917480018</span>, <span class="number">133569583</span>, <span class="number">545416294</span>, <span class="number">939625609</span>, <span class="number">115425139</span>, <span class="number">506324056</span>, <span class="number">536467761</span>, <span class="number">717996182</span>, <span class="number">40643294</span>, <span class="number">590189732</span>, <span class="number">160248311</span>, <span class="number">727562101</span>, <span class="number">709819237</span>, <span class="number">736861123</span>, <span class="number">482791676</span>, <span class="number">863221859</span>, <span class="number">494923073</span>, <span class="number">174321215</span>, <span class="number">900998533</span>, <span class="number">803346103</span>, <span class="number">818582794</span>, <span class="number">195015224</span>, <span class="number">537993088</span>, <span class="number">784923129</span>, <span class="number">655105156</span>, <span class="number">897275524</span>, <span class="number">909474918</span>, <span class="number">353743114</span>, <span class="number">593505316</span>, <span class="number">645868968</span>, <span class="number">167775845</span>, <span class="number">647840140</span>, <span class="number">813531576</span>, <span class="number">517492193</span>, <span class="number">53785843</span>, <span class="number">260784877</span>, <span class="number">515192130</span>, <span class="number">856273780</span>, <span class="number">228674901</span>, <span class="number">843470719</span>, <span class="number">941833338</span>, <span class="number">270278176</span>, <span class="number">202557576</span>, <span class="number">295646539</span>, <span class="number">567083154</span>, <span class="number">565654242</span>, <span class="number">252025671</span>, <span class="number">828312857</span>, <span class="number">912912017</span>, <span class="number">466194470</span>, <span class="number">945862341</span>, <span class="number">614749182</span>, <span class="number">103262985</span>, <span class="number">113053087</span>, <span class="number">754571164</span>, <span class="number">463654541</span>, <span class="number">16657446</span>, <span class="number">239437152</span>, <span class="number">141923650</span>, <span class="number">93736006</span>, <span class="number">338345236</span>, <span class="number">97578284</span>, <span class="number">608129954</span>, <span class="number">18114459</span>, <span class="number">459199184</span>, <span class="number">344216516</span>, <span class="number">16200211</span>, <span class="number">464400254</span>, <span class="number">461788976</span>, <span class="number">762565730</span>, <span class="number">496268936</span>, <span class="number">247343279</span>, <span class="number">731742570</span>, <span class="number">858315710</span>, <span class="number">854660574</span>, <span class="number">214591351</span>, <span class="number">371926533</span>, <span class="number">544599208</span>, <span class="number">809453455</span>, <span class="number">211653702</span>, <span class="number">839770175</span>, <span class="number">64736410</span>, <span class="number">772672340</span>, <span class="number">653425722</span>, <span class="number">853976941</span>, <span class="number">643929348</span>, <span class="number">739507260</span>, <span class="number">679862549</span>, <span class="number">226864069</span>, <span class="number">749340081</span>, <span class="number">821195563</span>, <span class="number">708204907</span>, <span class="number">370950412</span>, <span class="number">295585930</span>, <span class="number">954996399</span>, <span class="number">808135875</span>, <span class="number">147073737</span>, <span class="number">365336170</span>, <span class="number">773070415</span>, <span class="number">365187225</span>, <span class="number">425520524</span>, <span class="number">788399528</span>, <span class="number">924389076</span>, <span class="number">540486275</span>, <span class="number">523465907</span>, <span class="number">15047860</span>, <span class="number">693618995</span>, <span class="number">680144830</span>, <span class="number">147525291</span>, <span class="number">344595413</span>, <span class="number">861563673</span>, <span class="number">152839277</span>, <span class="number">41414194</span>, <span class="number">8495499</span>, <span class="number">274130200</span>, <span class="number">361078669</span>, <span class="number">611321508</span>, <span class="number">866008819</span>, <span class="number">419709827</span>, <span class="number">837514549</span>, <span class="number">801613502</span>, <span class="number">288002316</span>, <span class="number">163452532</span>, <span class="number">977001461</span>, <span class="number">725194355</span>, <span class="number">256360874</span>, <span class="number">197871237</span>, <span class="number">697786154</span>, <span class="number">130214580</span>, <span class="number">734555732</span>, <span class="number">564073391</span>, <span class="number">65408661</span>, <span class="number">365207666</span>, <span class="number">513197167</span>, <span class="number">399453482</span>, <span class="number">896507297</span>, <span class="number">979827891</span>, <span class="number">104838557</span>, <span class="number">260464715</span>, <span class="number">934722102</span>, <span class="number">319573952</span>, <span class="number">778410728</span>, <span class="number">386666719</span>, <span class="number">658885092</span>, <span class="number">92029246</span>, <span class="number">11408703</span>, <span class="number">270837728</span>, <span class="number">25850332</span>, <span class="number">482755347</span>, <span class="number">756242041</span>, <span class="number">598818525</span>, <span class="number">67677058</span>, <span class="number">142508889</span>, <span class="number">262333265</span>, <span class="number">11326789</span>, <span class="number">30755439</span>, <span class="number">306019009</span>, <span class="number">486121379</span>, <span class="number">77524967</span>, <span class="number">902302371</span>, <span class="number">799085852</span>, <span class="number">706836850</span>, <span class="number">645169812</span>, <span class="number">860830766</span>, <span class="number">626551851</span>, <span class="number">794131720</span>, <span class="number">183655830</span>, <span class="number">686157014</span>, <span class="number">829284290</span>, <span class="number">862081601</span>, <span class="number">254066441</span>, <span class="number">314954988</span>, <span class="number">300076096</span>, <span class="number">847140827</span>, <span class="number">909488304</span>, <span class="number">162345404</span>, <span class="number">307665840</span>, <span class="number">392880267</span>, <span class="number">114681024</span>, <span class="number">697432073</span>, <span class="number">234391554</span>, <span class="number">341219139</span>, <span class="number">854332693</span>, <span class="number">951712368</span>, <span class="number">53907942</span>, <span class="number">37969701</span>, <span class="number">629668714</span>, <span class="number">885793603</span>, <span class="number">290307514</span>, <span class="number">507694681</span>, <span class="number">114845677</span>, <span class="number">392156698</span>, <span class="number">109534627</span>, <span class="number">447605678</span>, <span class="number">799582292</span>, <span class="number">893116446</span>, <span class="number">79434475</span>, <span class="number">144535089</span>, <span class="number">547219610</span>, <span class="number">273609805</span>, <span class="number">861590273</span>, <span class="number">155580500</span>, <span class="number">979047412</span>, <span class="number">67252649</span>, <span class="number">814643357</span>, <span class="number">918443081</span>, <span class="number">679332751</span>, <span class="number">199721979</span>, <span class="number">953079104</span>, <span class="number">68596169</span>, <span class="number">714803002</span>, <span class="number">532655639</span>, <span class="number">860228716</span>, <span class="number">620076241</span>, <span class="number">586853445</span>, <span class="number">676056037</span>, <span class="number">472733756</span>, <span class="number">124403620</span>, <span class="number">30260340</span>, <span class="number">6724520</span>, <span class="number">1344904</span>, <span class="number">237336</span>, <span class="number">35960</span>, <span class="number">4495</span>, <span class="number">435</span>, <span class="number">29</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>]</span><br></pre></td></tr></table></figure></div>
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <!--<div class="article-copyright-info-container">-->
+    <!--&lt;!&ndash;<ul>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><strong>Title:</strong> 1155-掷骰子等于目标和的方法数</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><strong>Author:</strong> Raphael Liu</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><strong>Created at&ndash;&gt;-->
+                <!--&lt;!&ndash;:</strong> 2023-09-13 00:47:26</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;&ndash;&gt;-->
+            <!--&lt;!&ndash;<li>&ndash;&gt;-->
+                <!--&lt;!&ndash;<strong>Updated at&ndash;&gt;-->
+                    <!--&lt;!&ndash;:</strong> 2023-09-13 16:06:23&ndash;&gt;-->
+            <!--&lt;!&ndash;</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;<li>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;<strong>Link:</strong> https://fida.ltd/2023/09/13/1155-掷骰子等于目标和的方法数/&ndash;&gt;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;</li>&ndash;&gt;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;<li>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;<strong>&ndash;&gt;&ndash;&gt;-->
+                <!--&lt;!&ndash;&lt;!&ndash;License:&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;</strong>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0</a>.&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;&ndash;&gt;&ndash;&gt;-->
+
+        <!--&lt;!&ndash;&lt;!&ndash;</li>&ndash;&gt;&ndash;&gt;-->
+    <!--&lt;!&ndash;</ul>&ndash;&gt;-->
+<!--</div>-->
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box">
+                
+                    <li class="tag-item">
+                        <a href="/tags/algorithm/">#algorithm</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item">
+                        <a href="/tags/MEDIUM/">#MEDIUM</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                        rel="prev"
+                        href="/2023/09/13/1153-%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%BD%AC%E5%8C%96/"
+                        >
+                            <span class="left arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">1153-字符串转化</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                        rel="next"
+                        href="/2023/09/13/1154-%E4%B8%80%E5%B9%B4%E4%B8%AD%E7%9A%84%E7%AC%AC%E5%87%A0%E5%A4%A9/"
+                        >
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">1154-一年中的第几天</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+
+        
+            <div class="comment-container">
+                <div class="comments-container pjax">
+    <div id="comment-anchor"></div>
+    <div class="comment-area-title">
+        <i class="fa-solid fa-comments"></i>&nbsp;Comments
+    </div>
+    
+
+        
+            
+ 
+    <div id="waline"></div>
+    <script type="module"  data-swup-reload-script>
+        import { init } from 'https://evan.beee.top/js/waline.mjs';
+
+        function loadWaline() {
+            init({
+                el: '#waline',
+                serverURL: 'https://example.example.com',
+                lang: 'zh-CN',
+                dark: 'body[class~="dark-mode"]',
+                requiredMeta: ['nick','mail'], // cannot customize by theme config, change it yourself
+            });
+        }
+
+        if ('true') {
+            const loadWalineTimeout = setTimeout(() => {
+                loadWaline();
+                clearTimeout(loadWalineTimeout);
+            }, 1000);
+        } else {
+            window.addEventListener('DOMContentLoaded', loadWaline);
+        }
+        
+    </script>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+
+    
+        <div class="toc-content-container">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">On this page</div>
+        <div class="page-title">1155-掷骰子等于目标和的方法数</div>
+        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E9%A2%98%E6%80%9D%E8%B7%AF%EF%BC%9A"><span class="nav-text">解题思路：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%EF%BC%9A"><span class="nav-text">代码：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E4%BA%8E%E4%B8%BA%E4%BB%80%E4%B9%88%E5%8F%96%E6%A8%A1-1e9-7%EF%BC%9A"><span class="nav-text">关于为什么取模 1e9 + 7：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E4%BA%8E%E6%9C%89%E4%BA%9B%E7%AB%A5%E9%9E%8B%E9%97%AE%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%8D%E6%9C%80%E5%90%8E%E5%8F%96%E6%A8%A1%E7%9A%84%E8%A7%A3%E9%87%8A%EF%BC%9A"><span class="nav-text">关于有些童鞋问为什么不最后取模的解释：</span></a></li></ol>
+
+    </div>
+</div>
+        </div>
+    
+</div>
+
+
+
+                
+
+            </div>
+
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2022</span>
+              -
+            
+            2023&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">Raphael Liu</a>
+        </div>
+        
+            <script data-swup-reload-script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">UV:</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">PV:</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <!--<div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">-->
+            <!--<span class="lg:block text-sm">powered_by</span>-->
+            <!--&lt;!&ndash;<span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.4.4</a></span>&ndash;&gt;-->
+        <!--</div>-->
+        
+        <!---->
+            <!--<div>-->
+                <!--runtime <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hours <span class="odometer" id="runtime_minutes"></span> minutes <span class="odometer" id="runtime_seconds"></span> seconds-->
+            <!--</div>-->
+        <!---->
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fa-regular fa-comments"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-expand-width flex justify-center items-center">
+            <i class="fa-regular fa-expand"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fa-solid fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa-solid fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa-solid fa-spinner fa-spin-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+    
+<script src="/js/libs/Swup.min.js"></script>
+
+<script src="/js/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/libs/SwupScrollPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+        ],
+        containers: ["#swup"],
+    });
+
+    swup.hooks.on("page:view", () => {
+        Global.refresh();
+    });
+
+    // if (document.readyState === "complete") {
+    //
+    // } else {
+    //     document.addEventListener("DOMContentLoaded", () => init());
+    // }
+</script>
+
+
+
+
+
+
+<script src="/js/utils.js" type="module"></script>
+
+<script src="/js/main.js" type="module"></script>
+
+<script src="/js/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/layouts/categoryList.js" type="module"></script>
+
+
+
+    
+<script src="/js/tools/localSearch.js"></script>
+
+
+
+
+    
+<script src="/js/tools/codeBlock.js"></script>
+
+
+
+
+    
+<script src="/js/layouts/lazyload.js"></script>
+
+
+
+
+    
+<script src="/js/tools/runtime.js"></script>
+
+    
+<script src="/js/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/libs/Typed.min.js"></script>
+
+  
+<script src="/js/plugins/typed.js"></script>
+
+
+
+
+
+
+
+<div class="post-scripts" data-swup-reload-script>
+    
+        
+<script src="/js/libs/anime.min.js"></script>
+
+        
+<script src="/js/tools/tocToggle.js" type="module"></script>
+
+<script src="/js/layouts/toc.js" type="module"></script>
+
+<script src="/js/plugins/tabs.js" type="module"></script>
+
+    
+</div>
+
+
+</body>
+</html>

@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="Raphael Liu">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/2023/09/13/0297-二叉树的序列化与反序列化/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="序列化是将一个数据结构或者对象转换为连续的比特位的操作，进而可以将转换后的数据存储在一个文件或者内存中，同时也可以通过网络传输到另一个计算机环境，采取相反方式重构得到原数据。 请设计一个算法来实现二叉树的序列化与反序列化。这里不限定你的序列 &#x2F;反序列化算法执行逻辑，你只需要保证一个二叉树可以被序列化为一个字符串并且将这个字符串反序列化为原始的树结构。 提示: 输入输出格式与 LeetCo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="0297-二叉树的序列化与反序列化">
+<meta property="og:url" content="http://example.com/2023/09/13/0297-%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E5%BA%8F%E5%88%97%E5%8C%96%E4%B8%8E%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/index.html">
+<meta property="og:site_name" content="Raphael&#39;s Blog">
+<meta property="og:description" content="序列化是将一个数据结构或者对象转换为连续的比特位的操作，进而可以将转换后的数据存储在一个文件或者内存中，同时也可以通过网络传输到另一个计算机环境，采取相反方式重构得到原数据。 请设计一个算法来实现二叉树的序列化与反序列化。这里不限定你的序列 &#x2F;反序列化算法执行逻辑，你只需要保证一个二叉树可以被序列化为一个字符串并且将这个字符串反序列化为原始的树结构。 提示: 输入输出格式与 LeetCo">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://assets.leetcode.com/uploads/2020/09/15/serdeser.jpg">
+<meta property="og:image" content="https://assets.leetcode-cn.com/solution-static/297/1.PNG">
+<meta property="og:image" content="https://assets.leetcode-cn.com/solution-static/297/2.PNG">
+<meta property="og:image" content="https://assets.leetcode-cn.com/solution-static/297/3.PNG">
+<meta property="og:image" content="https://assets.leetcode-cn.com/solution-static/297/4.PNG">
+<meta property="og:image" content="https://assets.leetcode-cn.com/solution-static/297/5.PNG">
+<meta property="og:image" content="https://assets.leetcode-cn.com/solution-static/297/6.PNG">
+<meta property="og:image" content="https://assets.leetcode-cn.com/solution-static/297/7.PNG">
+<meta property="og:image" content="https://assets.leetcode-cn.com/solution-static/297/8.PNG">
+<meta property="og:image" content="https://assets.leetcode-cn.com/solution-static/297/9.PNG">
+<meta property="og:image" content="https://assets.leetcode-cn.com/solution-static/297/10.PNG">
+<meta property="og:image" content="https://assets.leetcode-cn.com/solution-static/297/11.PNG">
+<meta property="og:image" content="https://assets.leetcode-cn.com/solution-static/297/12.PNG">
+<meta property="article:published_time" content="2023-09-12T16:47:26.000Z">
+<meta property="article:modified_time" content="2023-09-13T02:45:12.817Z">
+<meta property="article:author" content="Raphael Liu">
+<meta property="article:tag" content="algorithm">
+<meta property="article:tag" content="HARD">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://assets.leetcode.com/uploads/2020/09/15/serdeser.jpg">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/redefine-favicon.svg" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/redefine-favicon.svg">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/redefine-favicon.svg">
+    <!--- Page Info-->
+    
+    <title>
+        
+            0297-二叉树的序列化与反序列化 -
+        
+        Raphael&#39;s Blog
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/css/build/styles.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/fonts.css">
+
+    
+<link rel="stylesheet" href="/fonts/Satoshi/satoshi.css">
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+
+    <!--- Inject Part-->
+    
+    <script id="hexo-configurations">
+    let Global = window.Global || {};
+    Global.hexo_config = {"hostname":"example.com","root":"/","language":"zh_CN"};
+    Global.theme_config = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":true,"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"open_graph":true,"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-wqery6-light.webp","dark":"/images/wallhaven-wqery6-dark.webp"},"title":"Raphael's Blog","subtitle":{"text":["格物致知","坚持做正确的事情"],"hitokoto":{"enable":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":false,"links":{"github":"https://github.com/raphael-liu","email":"raphael@buaa.edu.cn# your email"},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.4.4","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"links":{"首页":{"path":"/","icon":"fa-regular fa-house"},"文章":{"path":"/archives","icon":"fa-regular fa-archive"},"关于":{"icon":"fa-regular fa-user","submenus":{"我":"/about/me","Github":"https://github.com/raphael-liu"}}},"search":{"enable":true,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"links":null},"article_date_format":"auto","categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}},"footerStart":"2022/8/17 11:45:14"};
+    Global.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    Global.data_config = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="swup-progress-icon">
+            <i class="fa-solid fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container" id="swup">
+
+    
+
+    <div class="main-content-container">
+
+
+        <div class="main-content-header">
+            <header class="navbar-container">
+    
+    <div class="navbar-content">
+        <div class="left">
+            
+            <a class="logo-title" href="http://example.com/">
+                
+                Raphael&#39;s Blog
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/"  >
+                                    
+                                        
+                                            <i class="fa-regular fa-house"></i>
+                                        
+                                        首页
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/archives"  >
+                                    
+                                        
+                                            <i class="fa-regular fa-archive"></i>
+                                        
+                                        文章
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="has-dropdown" 
+                                    href="#" onClick="return false;">
+                                    
+                                        
+                                            <i class="fa-regular fa-user"></i>
+                                        
+                                        关于&nbsp;<i class="fa-solid fa-chevron-down"></i>
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                                    <ul class="sub-menu">
+                                    
+                                        <li>
+                                        <a href="/about/me">我
+                                        </a>
+                                        </li>
+                                    
+                                        <li>
+                                        <a target="_blank" rel="noopener" href="https://github.com/raphael-liu">GITHUB
+                                        </a>
+                                        </li>
+                                    
+                                    </ul>
+                                
+                            </li>
+                    
+                    
+                        <li class="navbar-item search search-popup-trigger">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fa-solid fa-magnifying-glass"></i></div>
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile drawer -->
+    <div class="navbar-drawer w-full absolute top-0 left-0 bg-background-color">
+        <ul class="drawer-navbar-list flex flex-col justify-start items-center">
+            
+                
+                    <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group " 
+                        href="/"  >
+                             
+                                
+                                    <i class="fa-regular fa-house"></i>
+                                
+                                首页
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+                
+                    <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group " 
+                        href="/archives"  >
+                             
+                                
+                                    <i class="fa-regular fa-archive"></i>
+                                
+                                文章
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+                
+                    <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group has-dropdown" 
+                        href="#" onClick="return false;">
+                            
+                                
+                                    <i class="fa-regular fa-user"></i>
+                                
+                                关于&nbsp;<i class="group-hover:rotate-180 transition-transform fa-solid fa-chevron-down"></i>
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                              
+                        
+                            <li class="text-base flex justify-center items-center hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                <a class="py-0.5" href="/about/me">我</a>
+                            </li>
+                        
+                            <li class="text-base flex justify-center items-center hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                <a class="py-0.5" target="_blank" rel="noopener" href="https://github.com/raphael-liu">GITHUB</a>
+                            </li>
+                        
+                    
+            
+
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="post-page-container">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            
+                <h1 class="article-title-regular">0297-二叉树的序列化与反序列化</h1>
+            
+            </div>
+            
+                    
+        
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">Raphael Liu</span>
+                        
+                            <span class="author-label">Lv10</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2023-09-13 00:47:26</span>
+        <span class="mobile">2023-09-13 00:47:26</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2023-09-13 10:45:12</span>
+            <span class="mobile">2023-09-13 10:45:12</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/algorithm/">algorithm</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/HARD/">HARD</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        
+
+
+        <div class="article-content markdown-body">
+            <p>序列化是将一个数据结构或者对象转换为连续的比特位的操作，进而可以将转换后的数据存储在一个文件或者内存中，同时也可以通过网络传输到另一个计算机环境，采取相反方式重构得到原数据。</p>
+<p>请设计一个算法来实现二叉树的序列化与反序列化。这里不限定你的序列 &#x2F;<br>反序列化算法执行逻辑，你只需要保证一个二叉树可以被序列化为一个字符串并且将这个字符串反序列化为原始的树结构。</p>
+<p><strong>提示:</strong> 输入输出格式与 LeetCode 目前使用的方式一致，详情请参阅 [LeetCode 序列化二叉树的格式](&#x2F;faq&#x2F;#binary-<br>tree)。你并非必须采取这种方式，你也可以采用其他的方法解决这个问题。</p>
+<p><strong>示例 1：</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://assets.leetcode.com/uploads/2020/09/15/serdeser.jpg"
+                     
+                ></p>
+<pre><code>**输入：** root = [1,2,3,null,null,4,5]
+**输出：** [1,2,3,null,null,4,5]
+</code></pre>
+<p><strong>示例 2：</strong></p>
+<pre><code>**输入：** root = []
+**输出：** []
+</code></pre>
+<p><strong>示例 3：</strong></p>
+<pre><code>**输入：** root = [1]
+**输出：** [1]
+</code></pre>
+<p><strong>示例 4：</strong></p>
+<pre><code>**输入：** root = [1,2]
+**输出：** [1,2]
+</code></pre>
+<p><strong>提示：</strong></p>
+<ul>
+<li>树中结点数在范围 <code>[0, 104]</code> 内</li>
+<li><code>-1000 &lt;= Node.val &lt;= 1000</code></li>
+</ul>
+<h4 id="方法一：深度优先搜索"><a href="#方法一：深度优先搜索" class="headerlink" title="方法一：深度优先搜索"></a>方法一：深度优先搜索</h4><p><strong>思路和算法</strong></p>
+<p>二叉树的序列化本质上是对其值进行编码，更重要的是对其结构进行编码。可以遍历树来完成上述任务。众所周知，我们一般有两个策略：广度优先搜索和深度优先搜索。</p>
+<ul>
+<li>广度优先搜索可以按照层次的顺序从上到下遍历所有的节点</li>
+<li>深度优先搜索可以从一个根开始，一直延伸到某个叶，然后回到根，到达另一个分支。根据根节点、左节点和右节点之间的相对顺序，可以进一步将深度优先搜索策略区分为：<ul>
+<li>先序遍历</li>
+<li>中序遍历</li>
+<li>后序遍历</li>
+</ul>
+</li>
+</ul>
+<p>这里，我们选择先序遍历的编码方式，我们可以通过这样一个例子简单理解：</p>
+<p>&lt;<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://assets.leetcode-cn.com/solution-static/297/1.PNG"
+                      alt="fig1"
+                >,<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://assets.leetcode-cn.com/solution-static/297/2.PNG"
+                      alt="fig2"
+                >,<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://assets.leetcode-cn.com/solution-static/297/3.PNG"
+                      alt="fig3"
+                >,<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://assets.leetcode-cn.com/solution-static/297/4.PNG"
+                      alt="fig4"
+                >,<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://assets.leetcode-cn.com/solution-static/297/5.PNG"
+                      alt="fig5"
+                >,<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://assets.leetcode-cn.com/solution-static/297/6.PNG"
+                      alt="fig6"
+                >,<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://assets.leetcode-cn.com/solution-static/297/7.PNG"
+                      alt="fig7"
+                >,<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://assets.leetcode-cn.com/solution-static/297/8.PNG"
+                      alt="fig8"
+                >,<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://assets.leetcode-cn.com/solution-static/297/9.PNG"
+                      alt="fig9"
+                >,<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://assets.leetcode-cn.com/solution-static/297/10.PNG"
+                      alt="fig10"
+                >,<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://assets.leetcode-cn.com/solution-static/297/11.PNG"
+                      alt="fig11"
+                >,<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://assets.leetcode-cn.com/solution-static/297/12.PNG"
+                      alt="fig12"
+                >&gt;</p>
+<p>我们从根节点 <code>1</code> 开始，序列化字符串是 <code>1,</code>。然后我们跳到根节点 <code>2</code> 的左子树，序列化字符串变成 <code>1,2,</code>。现在从节点 <code>2</code> 开始，我们访问它的左节点 <code>3</code>（<code>1,2,3,None,None,</code>）和右节点 <code>4</code> </p>
+<p>(<code>1,2,3,None,None,4,None,None</code>)。<code>None,None,</code> 是用来标记缺少左、右子节点，这就是我们在序列化期间保存树结构的方式。最后，我们回到根节点 <code>1</code> 并访问它的右子树，它恰好是叶节点 <code>5</code>。最后，序列化字符串是 <code>1,2,3,None,None,4,None,None,5,None,None,</code>。</p>
+<p>即我们可以先序遍历这颗二叉树，遇到空子树的时候序列化成 <code>None</code>，否则继续递归序列化。那么我们如何反序列化呢？首先我们需要根据 <code>,</code> 把原先的序列分割开来得到先序遍历的元素列表，然后从左向右遍历这个序列：</p>
+<ul>
+<li>如果当前的元素为 <code>None</code>，则当前为空树</li>
+<li>否则先解析这棵树的左子树，再解析它的右子树</li>
+</ul>
+<p>具体请参考下面的代码。</p>
+<p><strong>代码</strong></p>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><figcaption><span>[sol1-Java]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Codec</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">serialize</span><span class="params">(TreeNode root)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> rserialize(root, <span class="string">&quot;&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  </span><br><span class="line">    <span class="keyword">public</span> TreeNode <span class="title function_">deserialize</span><span class="params">(String data)</span> &#123;</span><br><span class="line">        String[] dataArray = data.split(<span class="string">&quot;,&quot;</span>);</span><br><span class="line">        List&lt;String&gt; dataList = <span class="keyword">new</span> <span class="title class_">LinkedList</span>&lt;String&gt;(Arrays.asList(dataArray));</span><br><span class="line">        <span class="keyword">return</span> rdeserialize(dataList);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">rserialize</span><span class="params">(TreeNode root, String str)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (root == <span class="literal">null</span>) &#123;</span><br><span class="line">            str += <span class="string">&quot;None,&quot;</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            str += str.valueOf(root.val) + <span class="string">&quot;,&quot;</span>;</span><br><span class="line">            str = rserialize(root.left, str);</span><br><span class="line">            str = rserialize(root.right, str);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> str;</span><br><span class="line">    &#125;</span><br><span class="line">  </span><br><span class="line">    <span class="keyword">public</span> TreeNode <span class="title function_">rdeserialize</span><span class="params">(List&lt;String&gt; dataList)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (dataList.get(<span class="number">0</span>).equals(<span class="string">&quot;None&quot;</span>)) &#123;</span><br><span class="line">            dataList.remove(<span class="number">0</span>);</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">  </span><br><span class="line">        <span class="type">TreeNode</span> <span class="variable">root</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">TreeNode</span>(Integer.valueOf(dataList.get(<span class="number">0</span>)));</span><br><span class="line">        dataList.remove(<span class="number">0</span>);</span><br><span class="line">        root.left = rdeserialize(dataList);</span><br><span class="line">        root.right = rdeserialize(dataList);</span><br><span class="line">    </span><br><span class="line">        <span class="keyword">return</span> root;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="C#"><figure class="iseeu highlight c#"><figcaption><span>[sol1-C#]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Codec</span> &#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="built_in">string</span> <span class="title">serialize</span>(<span class="params">TreeNode root</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> rserialize(root, <span class="string">&quot;&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> TreeNode <span class="title">deserialize</span>(<span class="params"><span class="built_in">string</span> data</span>)</span> &#123;</span><br><span class="line">        <span class="built_in">string</span>[] dataArray = data.Split(<span class="string">&quot;,&quot;</span>);</span><br><span class="line">        LinkedList&lt;<span class="built_in">string</span>&gt; dataList = <span class="keyword">new</span> LinkedList&lt;<span class="built_in">string</span>&gt;(dataArray.ToList());</span><br><span class="line">        <span class="keyword">return</span> rdeserialize(dataList);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="built_in">string</span> <span class="title">rserialize</span>(<span class="params">TreeNode root, <span class="built_in">string</span> str</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (root == <span class="literal">null</span>) &#123;</span><br><span class="line">            str += <span class="string">&quot;None,&quot;</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            str += root.val.ToString() + <span class="string">&quot;,&quot;</span>;</span><br><span class="line">            str = rserialize(root.left, str);</span><br><span class="line">            str = rserialize(root.right, str);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> str;</span><br><span class="line">    &#125;</span><br><span class="line">  </span><br><span class="line">    <span class="function"><span class="keyword">public</span> TreeNode <span class="title">rdeserialize</span>(<span class="params">LinkedList&lt;<span class="built_in">string</span>&gt; dataList</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (dataList.First.Value.Equals(<span class="string">&quot;None&quot;</span>)) &#123;</span><br><span class="line">            dataList.RemoveFirst();</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">  </span><br><span class="line">        TreeNode root = <span class="keyword">new</span> TreeNode(<span class="built_in">int</span>.Parse(dataList.First.Value));</span><br><span class="line">        dataList.RemoveFirst();</span><br><span class="line">        root.left = rdeserialize(dataList);</span><br><span class="line">        root.right = rdeserialize(dataList);</span><br><span class="line">    </span><br><span class="line">        <span class="keyword">return</span> root;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="C++"><figure class="iseeu highlight c++"><figcaption><span>[sol1-C++]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Codec</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">rserialize</span><span class="params">(TreeNode* root, string&amp; str)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (root == <span class="literal">nullptr</span>) &#123;</span><br><span class="line">            str += <span class="string">&quot;None,&quot;</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            str += <span class="built_in">to_string</span>(root-&gt;val) + <span class="string">&quot;,&quot;</span>;</span><br><span class="line">            <span class="built_in">rserialize</span>(root-&gt;left, str);</span><br><span class="line">            <span class="built_in">rserialize</span>(root-&gt;right, str);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function">string <span class="title">serialize</span><span class="params">(TreeNode* root)</span> </span>&#123;</span><br><span class="line">        string ret;</span><br><span class="line">        <span class="built_in">rserialize</span>(root, ret);</span><br><span class="line">        <span class="keyword">return</span> ret;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function">TreeNode* <span class="title">rdeserialize</span><span class="params">(list&lt;string&gt;&amp; dataArray)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (dataArray.<span class="built_in">front</span>() == <span class="string">&quot;None&quot;</span>) &#123;</span><br><span class="line">            dataArray.<span class="built_in">erase</span>(dataArray.<span class="built_in">begin</span>());</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">nullptr</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        TreeNode* root = <span class="keyword">new</span> <span class="built_in">TreeNode</span>(<span class="built_in">stoi</span>(dataArray.<span class="built_in">front</span>()));</span><br><span class="line">        dataArray.<span class="built_in">erase</span>(dataArray.<span class="built_in">begin</span>());</span><br><span class="line">        root-&gt;left = <span class="built_in">rdeserialize</span>(dataArray);</span><br><span class="line">        root-&gt;right = <span class="built_in">rdeserialize</span>(dataArray);</span><br><span class="line">        <span class="keyword">return</span> root;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function">TreeNode* <span class="title">deserialize</span><span class="params">(string data)</span> </span>&#123;</span><br><span class="line">        list&lt;string&gt; dataArray;</span><br><span class="line">        string str;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span>&amp; ch : data) &#123;</span><br><span class="line">            <span class="keyword">if</span> (ch == <span class="string">&#x27;,&#x27;</span>) &#123;</span><br><span class="line">                dataArray.<span class="built_in">push_back</span>(str);</span><br><span class="line">                str.<span class="built_in">clear</span>();</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                str.<span class="built_in">push_back</span>(ch);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (!str.<span class="built_in">empty</span>()) &#123;</span><br><span class="line">            dataArray.<span class="built_in">push_back</span>(str);</span><br><span class="line">            str.<span class="built_in">clear</span>();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">rdeserialize</span>(dataArray);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><figcaption><span>[sol1-JavaScript]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> serialize = <span class="keyword">function</span>(<span class="params">root</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title function_">rserialize</span>(root, <span class="string">&#x27;&#x27;</span>);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> deserialize = <span class="keyword">function</span>(<span class="params">data</span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> dataArray = data.<span class="title function_">split</span>(<span class="string">&quot;,&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="title function_">rdeserialize</span>(dataArray);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">rserialize</span> = (<span class="params">root, str</span>) =&gt; &#123;</span><br><span class="line">    <span class="keyword">if</span> (root === <span class="literal">null</span>) &#123;</span><br><span class="line">        str += <span class="string">&quot;None,&quot;</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        str += root.<span class="property">val</span> + <span class="string">&#x27;&#x27;</span> + <span class="string">&quot;,&quot;</span>;</span><br><span class="line">        str = <span class="title function_">rserialize</span>(root.<span class="property">left</span>, str);</span><br><span class="line">        str = <span class="title function_">rserialize</span>(root.<span class="property">right</span>, str);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> str;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">rdeserialize</span> = (<span class="params">dataList</span>) =&gt; &#123;</span><br><span class="line">    <span class="keyword">if</span> (dataList[<span class="number">0</span>] === <span class="string">&quot;None&quot;</span>) &#123;</span><br><span class="line">        dataList.<span class="title function_">shift</span>();</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> root = <span class="keyword">new</span> <span class="title class_">TreeNode</span>(<span class="built_in">parseInt</span>(dataList[<span class="number">0</span>]));</span><br><span class="line">    dataList.<span class="title function_">shift</span>();</span><br><span class="line">    root.<span class="property">left</span> = <span class="title function_">rdeserialize</span>(dataList);</span><br><span class="line">    root.<span class="property">right</span> = <span class="title function_">rdeserialize</span>(dataList);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> root;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Go"><figure class="iseeu highlight go"><figcaption><span>[sol1-Golang]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> Codec <span class="keyword">struct</span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Constructor</span><span class="params">()</span></span> (_ Codec) &#123;</span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(Codec)</span></span> serialize(root *TreeNode) <span class="type">string</span> &#123;</span><br><span class="line">    sb := &amp;strings.Builder&#123;&#125;</span><br><span class="line">    <span class="keyword">var</span> dfs <span class="function"><span class="keyword">func</span><span class="params">(*TreeNode)</span></span></span><br><span class="line">    dfs = <span class="function"><span class="keyword">func</span><span class="params">(node *TreeNode)</span></span> &#123;</span><br><span class="line">        <span class="keyword">if</span> node == <span class="literal">nil</span> &#123;</span><br><span class="line">            sb.WriteString(<span class="string">&quot;null,&quot;</span>)</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">        &#125;</span><br><span class="line">        sb.WriteString(strconv.Itoa(node.Val))</span><br><span class="line">        sb.WriteByte(<span class="string">&#x27;,&#x27;</span>)</span><br><span class="line">        dfs(node.Left)</span><br><span class="line">        dfs(node.Right)</span><br><span class="line">    &#125;</span><br><span class="line">    dfs(root)</span><br><span class="line">    <span class="keyword">return</span> sb.String()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(Codec)</span></span> deserialize(data <span class="type">string</span>) *TreeNode &#123;</span><br><span class="line">    sp := strings.Split(data, <span class="string">&quot;,&quot;</span>)</span><br><span class="line">    <span class="keyword">var</span> build <span class="function"><span class="keyword">func</span><span class="params">()</span></span> *TreeNode</span><br><span class="line">    build = <span class="function"><span class="keyword">func</span><span class="params">()</span></span> *TreeNode &#123;</span><br><span class="line">        <span class="keyword">if</span> sp[<span class="number">0</span>] == <span class="string">&quot;null&quot;</span> &#123;</span><br><span class="line">            sp = sp[<span class="number">1</span>:]</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">        &#125;</span><br><span class="line">        val, _ := strconv.Atoi(sp[<span class="number">0</span>])</span><br><span class="line">        sp = sp[<span class="number">1</span>:]</span><br><span class="line">        <span class="keyword">return</span> &amp;TreeNode&#123;val, build(), build()&#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> build()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>复杂度分析</strong></p>
+<ul>
+<li>时间复杂度：在序列化和反序列化函数中，我们只访问每个节点一次，因此时间复杂度为 $O(n)$，其中 $n$ 是节点数，即树的大小。 </li>
+<li>空间复杂度：在序列化和反序列化函数中，我们递归会使用栈空间，故渐进空间复杂度为 $O(n)$。</li>
+</ul>
+<h4 id="方法二：括号表示编码-递归下降解码"><a href="#方法二：括号表示编码-递归下降解码" class="headerlink" title="方法二：括号表示编码 + 递归下降解码"></a>方法二：括号表示编码 + 递归下降解码</h4><p><strong>思路和算法</strong></p>
+<p>我们也可以这样表示一颗二叉树：</p>
+<ul>
+<li>如果当前的树为空，则表示为 <code>X</code></li>
+<li>如果当前的树不为空，则表示为 <code>(&lt;LEFT_SUB_TREE&gt;)CUR_NUM(RIGHT_SUB_TREE)</code>，其中：<ul>
+<li><code>&lt;LEFT_SUB_TREE&gt;</code> 是左子树序列化之后的结果</li>
+<li><code>&lt;RIGHT_SUB_TREE&gt;</code> 是右子树序列化之后的结果</li>
+<li><code>CUR_NUM</code> 是当前节点的值</li>
+</ul>
+</li>
+</ul>
+<p>根据这样的定义，我们很好写出序列化的过程，后序遍历这颗二叉树即可，那如何反序列化呢？根据定义，我们可以推导出这样的巴科斯范式（BNF）：</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">T -&gt; (T) num (T) | X</span><br></pre></td></tr></table></figure></div>
+
+<p>它的意义是：用 <code>T</code> 代表一棵树序列化之后的结果，<code>|</code> 表示 <code>T</code> 的构成为 <code>(T) num (T)</code> 或者 <code>X</code>，<code>|</code> 左边是对 <code>T</code> 的递归定义，右边规定了递归终止的边界条件。</p>
+<p>因为：</p>
+<ul>
+<li><code>T</code> 的定义中，序列中的第一个字符要么是 <code>X</code>，要么是 <code>(</code>，所以这个定义是不含左递归的</li>
+<li>当我们开始解析一个字符串的时候，如果开头是 <code>X</code>，我们就知道这一定是解析一个「空树」的结构，如果开头是 <code>(</code>，我们就知道需要解析 <code>(T) num (T)</code> 的结构，因此这里两种开头和两种解析方法一一对应，可以确定这是一个无二义性的文法</li>
+<li>我们只需要通过开头的第一个字母是 <code>X</code> 还是 <code>(</code> 来判断使用哪一种解析方法</li>
+</ul>
+<p>所以这个文法是 LL(1) 型文法，<strong>如果你不知道什么是 LL(1) 型文法也没有关系，你只需要知道它定义了一种递归的方法来反序列化，也保证了这个方法的正确性——我们可以设计一个递归函数：</strong></p>
+<ul>
+<li>这个递归函数传入两个参数，带解析的字符串和当前当解析的位置 <code>ptr</code>，<code>ptr</code> 之前的位置是已经解析的，<code>ptr</code> 和 <code>ptr</code> 后面的字符串是待解析的</li>
+<li>如果当前位置为 <code>X</code> 说明解析到了一棵空树，直接返回</li>
+<li>否则当前位置一定是 <code>(</code>，对括号内部按照 <code>(T) num (T)</code> 的模式解析</li>
+</ul>
+<p>具体请参考下面的代码。</p>
+<p><strong>代码</strong></p>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><figcaption><span>[sol2-Java]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Codec</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">serialize</span><span class="params">(TreeNode root)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (root == <span class="literal">null</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="string">&quot;X&quot;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">String</span> <span class="variable">left</span> <span class="operator">=</span> <span class="string">&quot;(&quot;</span> + serialize(root.left) + <span class="string">&quot;)&quot;</span>;</span><br><span class="line">        <span class="type">String</span> <span class="variable">right</span> <span class="operator">=</span> <span class="string">&quot;(&quot;</span> + serialize(root.right) + <span class="string">&quot;)&quot;</span>;</span><br><span class="line">        <span class="keyword">return</span> left + root.val + right;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> TreeNode <span class="title function_">deserialize</span><span class="params">(String data)</span> &#123;</span><br><span class="line">        <span class="type">int</span>[] ptr = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">        <span class="keyword">return</span> parse(data, ptr);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> TreeNode <span class="title function_">parse</span><span class="params">(String data, <span class="type">int</span>[] ptr)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (data.charAt(ptr[<span class="number">0</span>]) == <span class="string">&#x27;X&#x27;</span>) &#123;</span><br><span class="line">            ++ptr[<span class="number">0</span>];</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">TreeNode</span> <span class="variable">cur</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">TreeNode</span>(<span class="number">0</span>);</span><br><span class="line">        cur.left = parseSubtree(data, ptr);</span><br><span class="line">        cur.val = parseInt(data, ptr);</span><br><span class="line">        cur.right = parseSubtree(data, ptr);</span><br><span class="line">        <span class="keyword">return</span> cur;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> TreeNode <span class="title function_">parseSubtree</span><span class="params">(String data, <span class="type">int</span>[] ptr)</span> &#123;</span><br><span class="line">        ++ptr[<span class="number">0</span>]; <span class="comment">// 跳过左括号</span></span><br><span class="line">        <span class="type">TreeNode</span> <span class="variable">subtree</span> <span class="operator">=</span> parse(data, ptr);</span><br><span class="line">        ++ptr[<span class="number">0</span>]; <span class="comment">// 跳过右括号</span></span><br><span class="line">        <span class="keyword">return</span> subtree;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">parseInt</span><span class="params">(String data, <span class="type">int</span>[] ptr)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">x</span> <span class="operator">=</span> <span class="number">0</span>, sgn = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">if</span> (!Character.isDigit(data.charAt(ptr[<span class="number">0</span>]))) &#123;</span><br><span class="line">            sgn = -<span class="number">1</span>;</span><br><span class="line">            ++ptr[<span class="number">0</span>];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">while</span> (Character.isDigit(data.charAt(ptr[<span class="number">0</span>]))) &#123;</span><br><span class="line">            x = x * <span class="number">10</span> + data.charAt(ptr[<span class="number">0</span>]++) - <span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> x * sgn;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="C#"><figure class="iseeu highlight c#"><figcaption><span>[sol2-C#]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Codec</span> &#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="built_in">string</span> <span class="title">serialize</span>(<span class="params">TreeNode root</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (root == <span class="literal">null</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="string">&quot;X&quot;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">string</span> left = <span class="string">&quot;(&quot;</span> + serialize(root.left) + <span class="string">&quot;)&quot;</span>;</span><br><span class="line">        <span class="built_in">string</span> right = <span class="string">&quot;(&quot;</span> + serialize(root.right) + <span class="string">&quot;)&quot;</span>;</span><br><span class="line">        <span class="keyword">return</span> left + root.val + right;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> TreeNode <span class="title">deserialize</span>(<span class="params"><span class="built_in">string</span> data</span>)</span> &#123;</span><br><span class="line">        <span class="built_in">int</span>[] ptr = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">        <span class="keyword">return</span> parse(data, ptr);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> TreeNode <span class="title">parse</span>(<span class="params"><span class="built_in">string</span> data, <span class="built_in">int</span>[] ptr</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (data[ptr[<span class="number">0</span>]] == <span class="string">&#x27;X&#x27;</span>) &#123;</span><br><span class="line">            ++ptr[<span class="number">0</span>];</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        TreeNode cur = <span class="keyword">new</span> TreeNode(<span class="number">0</span>);</span><br><span class="line">        cur.left = parseSubtree(data, ptr);</span><br><span class="line">        cur.val = parseInt(data, ptr);</span><br><span class="line">        cur.right = parseSubtree(data, ptr);</span><br><span class="line">        <span class="keyword">return</span> cur;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> TreeNode <span class="title">parseSubtree</span>(<span class="params"><span class="built_in">string</span> data, <span class="built_in">int</span>[] ptr</span>)</span> &#123;</span><br><span class="line">        ++ptr[<span class="number">0</span>]; <span class="comment">// 跳过左括号</span></span><br><span class="line">        TreeNode subtree = parse(data, ptr);</span><br><span class="line">        ++ptr[<span class="number">0</span>]; <span class="comment">// 跳过右括号</span></span><br><span class="line">        <span class="keyword">return</span> subtree;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="built_in">int</span> <span class="title">parseInt</span>(<span class="params"><span class="built_in">string</span> data, <span class="built_in">int</span>[] ptr</span>)</span> &#123;</span><br><span class="line">        <span class="built_in">int</span> x = <span class="number">0</span>, sgn = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">if</span> (!<span class="built_in">char</span>.IsDigit(data[ptr[<span class="number">0</span>]])) &#123;</span><br><span class="line">            sgn = <span class="number">-1</span>;</span><br><span class="line">            ++ptr[<span class="number">0</span>];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">while</span> (<span class="built_in">char</span>.IsDigit(data[ptr[<span class="number">0</span>]])) &#123;</span><br><span class="line">            x = x * <span class="number">10</span> + data[ptr[<span class="number">0</span>]++] - <span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> x * sgn;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="C++"><figure class="iseeu highlight c++"><figcaption><span>[sol2-C++]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Codec</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">string <span class="title">serialize</span><span class="params">(TreeNode* root)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (!root) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="string">&quot;X&quot;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">auto</span> left = <span class="string">&quot;(&quot;</span> + <span class="built_in">serialize</span>(root-&gt;left) + <span class="string">&quot;)&quot;</span>;</span><br><span class="line">        <span class="keyword">auto</span> right = <span class="string">&quot;(&quot;</span> + <span class="built_in">serialize</span>(root-&gt;right) + <span class="string">&quot;)&quot;</span>;</span><br><span class="line">        <span class="keyword">return</span> left + <span class="built_in">to_string</span>(root-&gt;val) + right;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">inline</span> TreeNode* <span class="title">parseSubtree</span><span class="params">(<span class="type">const</span> string &amp;data, <span class="type">int</span> &amp;ptr)</span> </span>&#123;</span><br><span class="line">        ++ptr; <span class="comment">// 跳过左括号</span></span><br><span class="line">        <span class="keyword">auto</span> subtree = <span class="built_in">parse</span>(data, ptr);</span><br><span class="line">        ++ptr; <span class="comment">// 跳过右括号</span></span><br><span class="line">        <span class="keyword">return</span> subtree;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">inline</span> <span class="type">int</span> <span class="title">parseInt</span><span class="params">(<span class="type">const</span> string &amp;data, <span class="type">int</span> &amp;ptr)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> x = <span class="number">0</span>, sgn = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">if</span> (!<span class="built_in">isdigit</span>(data[ptr])) &#123;</span><br><span class="line">            sgn = <span class="number">-1</span>;</span><br><span class="line">            ++ptr;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">while</span> (<span class="built_in">isdigit</span>(data[ptr])) &#123;</span><br><span class="line">            x = x * <span class="number">10</span> + data[ptr++] - <span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> x * sgn;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function">TreeNode* <span class="title">parse</span><span class="params">(<span class="type">const</span> string &amp;data, <span class="type">int</span> &amp;ptr)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (data[ptr] == <span class="string">&#x27;X&#x27;</span>) &#123;</span><br><span class="line">            ++ptr;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">nullptr</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">auto</span> cur = <span class="keyword">new</span> <span class="built_in">TreeNode</span>(<span class="number">0</span>);</span><br><span class="line">        cur-&gt;left = <span class="built_in">parseSubtree</span>(data, ptr);</span><br><span class="line">        cur-&gt;val = <span class="built_in">parseInt</span>(data, ptr);</span><br><span class="line">        cur-&gt;right = <span class="built_in">parseSubtree</span>(data, ptr);</span><br><span class="line">        <span class="keyword">return</span> cur;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function">TreeNode* <span class="title">deserialize</span><span class="params">(string data)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> ptr = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">parse</span>(data, ptr);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><figcaption><span>[sol2-JavaScript]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> serialize = <span class="keyword">function</span>(<span class="params">root</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (root == <span class="literal">null</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;X&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">const</span> left = <span class="string">&quot;(&quot;</span> + <span class="title function_">serialize</span>(root.<span class="property">left</span>) + <span class="string">&quot;)&quot;</span>;</span><br><span class="line">    <span class="keyword">const</span> right = <span class="string">&quot;(&quot;</span> + <span class="title function_">serialize</span>(root.<span class="property">right</span>) + <span class="string">&quot;)&quot;</span>;</span><br><span class="line">    <span class="keyword">return</span> left + root.<span class="property">val</span> + right;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> deserialize = <span class="keyword">function</span>(<span class="params">data</span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> ptr = [<span class="number">0</span>];</span><br><span class="line">    <span class="keyword">return</span> <span class="title function_">parse</span>(data, ptr);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">parse</span> = (<span class="params">data, ptr</span>) =&gt; &#123;</span><br><span class="line">    <span class="keyword">if</span> (data[ptr[<span class="number">0</span>]] === <span class="string">&#x27;X&#x27;</span>) &#123;</span><br><span class="line">        ++ptr[<span class="number">0</span>];</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">let</span> cur = <span class="keyword">new</span> <span class="title class_">TreeNode</span>(<span class="number">0</span>);</span><br><span class="line">    cur.<span class="property">left</span> = <span class="title function_">parseSubtree</span>(data, ptr);</span><br><span class="line">    cur.<span class="property">val</span> = <span class="built_in">parseInt</span>(data, ptr);</span><br><span class="line">    cur.<span class="property">right</span> = <span class="title function_">parseSubtree</span>(data, ptr);</span><br><span class="line">    <span class="keyword">return</span> cur;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">parseSubtree</span> = (<span class="params">data, ptr</span>) =&gt; &#123;</span><br><span class="line">    ++ptr[<span class="number">0</span>]; <span class="comment">// 跳过左括号</span></span><br><span class="line">    <span class="keyword">const</span> subtree = <span class="title function_">parse</span>(data, ptr);</span><br><span class="line">    ++ptr[<span class="number">0</span>]; <span class="comment">// 跳过右括号</span></span><br><span class="line">    <span class="keyword">return</span> subtree;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">parseInt</span> = (<span class="params">data, ptr</span>) =&gt; &#123;</span><br><span class="line">    <span class="keyword">let</span> x = <span class="number">0</span>, sgn = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">isNaN</span>(<span class="title class_">Number</span>(data[ptr[<span class="number">0</span>]]))) &#123;</span><br><span class="line">        sgn = -<span class="number">1</span>;</span><br><span class="line">        ++ptr[<span class="number">0</span>];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span> (!<span class="built_in">isNaN</span>(<span class="title class_">Number</span>(data[ptr[<span class="number">0</span>]]))) &#123;</span><br><span class="line">        x = x * <span class="number">10</span> + data[ptr[<span class="number">0</span>]++].<span class="title function_">charCodeAt</span>() - <span class="string">&#x27;0&#x27;</span>.<span class="title function_">charCodeAt</span>();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> x * sgn;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Go"><figure class="iseeu highlight go"><figcaption><span>[sol2-Golang]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> Codec <span class="keyword">struct</span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Constructor</span><span class="params">()</span></span> (_ Codec) &#123;</span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(c Codec)</span></span> serialize(root *TreeNode) <span class="type">string</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> root == <span class="literal">nil</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;X&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">    left := <span class="string">&quot;(&quot;</span> + c.serialize(root.Left) + <span class="string">&quot;)&quot;</span></span><br><span class="line">    right := <span class="string">&quot;(&quot;</span> + c.serialize(root.Right) + <span class="string">&quot;)&quot;</span></span><br><span class="line">    <span class="keyword">return</span> left + strconv.Itoa(root.Val) + right</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(Codec)</span></span> deserialize(data <span class="type">string</span>) *TreeNode &#123;</span><br><span class="line">    <span class="keyword">var</span> parse <span class="function"><span class="keyword">func</span><span class="params">()</span></span> *TreeNode</span><br><span class="line">    parse = <span class="function"><span class="keyword">func</span><span class="params">()</span></span> *TreeNode &#123;</span><br><span class="line">        <span class="keyword">if</span> data[<span class="number">0</span>] == <span class="string">&#x27;X&#x27;</span> &#123;</span><br><span class="line">            data = data[<span class="number">1</span>:]</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">        &#125;</span><br><span class="line">        node := &amp;TreeNode&#123;&#125;</span><br><span class="line">        data = data[<span class="number">1</span>:] <span class="comment">// 跳过左括号</span></span><br><span class="line">        node.Left = parse()</span><br><span class="line">        data = data[<span class="number">1</span>:] <span class="comment">// 跳过右括号</span></span><br><span class="line">        i := <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> data[i] == <span class="string">&#x27;-&#x27;</span> || <span class="string">&#x27;0&#x27;</span> &lt;= data[i] &amp;&amp; data[i] &lt;= <span class="string">&#x27;9&#x27;</span> &#123;</span><br><span class="line">            i++</span><br><span class="line">        &#125;</span><br><span class="line">        node.Val, _ = strconv.Atoi(data[:i])</span><br><span class="line">        data = data[i:]</span><br><span class="line">        data = data[<span class="number">1</span>:] <span class="comment">// 跳过左括号</span></span><br><span class="line">        node.Right = parse()</span><br><span class="line">        data = data[<span class="number">1</span>:] <span class="comment">// 跳过右括号</span></span><br><span class="line">        <span class="keyword">return</span> node</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> parse()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>复杂度分析</strong></p>
+<ul>
+<li>时间复杂度：序列化时做了一次遍历，渐进时间复杂度为 $O(n)$。反序列化时，在解析字符串的时候 <code>ptr</code> 指针对字符串做了一次顺序遍历，字符串长度为 $O(n)$，故这里的渐进时间复杂度为 $O(n)$。</li>
+<li>空间复杂度：考虑递归使用的栈空间的大小，这里栈空间的使用和递归深度有关，递归深度又和二叉树的深度有关，在最差情况下，二叉树退化成一条链，故这里的渐进空间复杂度为 $O(n)$。</li>
+</ul>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <!--<div class="article-copyright-info-container">-->
+    <!--&lt;!&ndash;<ul>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><strong>Title:</strong> 0297-二叉树的序列化与反序列化</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><strong>Author:</strong> Raphael Liu</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><strong>Created at&ndash;&gt;-->
+                <!--&lt;!&ndash;:</strong> 2023-09-13 00:47:26</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;&ndash;&gt;-->
+            <!--&lt;!&ndash;<li>&ndash;&gt;-->
+                <!--&lt;!&ndash;<strong>Updated at&ndash;&gt;-->
+                    <!--&lt;!&ndash;:</strong> 2023-09-13 10:45:12&ndash;&gt;-->
+            <!--&lt;!&ndash;</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;<li>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;<strong>Link:</strong> https://fida.ltd/2023/09/13/0297-二叉树的序列化与反序列化/&ndash;&gt;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;</li>&ndash;&gt;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;<li>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;<strong>&ndash;&gt;&ndash;&gt;-->
+                <!--&lt;!&ndash;&lt;!&ndash;License:&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;</strong>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0</a>.&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;&ndash;&gt;&ndash;&gt;-->
+
+        <!--&lt;!&ndash;&lt;!&ndash;</li>&ndash;&gt;&ndash;&gt;-->
+    <!--&lt;!&ndash;</ul>&ndash;&gt;-->
+<!--</div>-->
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box">
+                
+                    <li class="tag-item">
+                        <a href="/tags/algorithm/">#algorithm</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item">
+                        <a href="/tags/HARD/">#HARD</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                        rel="prev"
+                        href="/2023/09/13/0298-%E4%BA%8C%E5%8F%89%E6%A0%91%E6%9C%80%E9%95%BF%E8%BF%9E%E7%BB%AD%E5%BA%8F%E5%88%97/"
+                        >
+                            <span class="left arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">0298-二叉树最长连续序列</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                        rel="next"
+                        href="/2023/09/13/0299-%E7%8C%9C%E6%95%B0%E5%AD%97%E6%B8%B8%E6%88%8F/"
+                        >
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">0299-猜数字游戏</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+
+        
+            <div class="comment-container">
+                <div class="comments-container pjax">
+    <div id="comment-anchor"></div>
+    <div class="comment-area-title">
+        <i class="fa-solid fa-comments"></i>&nbsp;Comments
+    </div>
+    
+
+        
+            
+ 
+    <div id="waline"></div>
+    <script type="module"  data-swup-reload-script>
+        import { init } from 'https://evan.beee.top/js/waline.mjs';
+
+        function loadWaline() {
+            init({
+                el: '#waline',
+                serverURL: 'https://example.example.com',
+                lang: 'zh-CN',
+                dark: 'body[class~="dark-mode"]',
+                requiredMeta: ['nick','mail'], // cannot customize by theme config, change it yourself
+            });
+        }
+
+        if ('true') {
+            const loadWalineTimeout = setTimeout(() => {
+                loadWaline();
+                clearTimeout(loadWalineTimeout);
+            }, 1000);
+        } else {
+            window.addEventListener('DOMContentLoaded', loadWaline);
+        }
+        
+    </script>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+
+    
+        <div class="toc-content-container">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">On this page</div>
+        <div class="page-title">0297-二叉树的序列化与反序列化</div>
+        
+
+    </div>
+</div>
+        </div>
+    
+</div>
+
+
+
+                
+
+            </div>
+
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2022</span>
+              -
+            
+            2023&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">Raphael Liu</a>
+        </div>
+        
+            <script data-swup-reload-script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">UV:</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">PV:</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <!--<div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">-->
+            <!--<span class="lg:block text-sm">powered_by</span>-->
+            <!--&lt;!&ndash;<span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.4.4</a></span>&ndash;&gt;-->
+        <!--</div>-->
+        
+        <!---->
+            <!--<div>-->
+                <!--runtime <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hours <span class="odometer" id="runtime_minutes"></span> minutes <span class="odometer" id="runtime_seconds"></span> seconds-->
+            <!--</div>-->
+        <!---->
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fa-regular fa-comments"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-expand-width flex justify-center items-center">
+            <i class="fa-regular fa-expand"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fa-solid fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa-solid fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa-solid fa-spinner fa-spin-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+    
+<script src="/js/libs/Swup.min.js"></script>
+
+<script src="/js/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/libs/SwupScrollPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+        ],
+        containers: ["#swup"],
+    });
+
+    swup.hooks.on("page:view", () => {
+        Global.refresh();
+    });
+
+    // if (document.readyState === "complete") {
+    //
+    // } else {
+    //     document.addEventListener("DOMContentLoaded", () => init());
+    // }
+</script>
+
+
+
+
+
+
+<script src="/js/utils.js" type="module"></script>
+
+<script src="/js/main.js" type="module"></script>
+
+<script src="/js/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/layouts/categoryList.js" type="module"></script>
+
+
+
+    
+<script src="/js/tools/localSearch.js"></script>
+
+
+
+
+    
+<script src="/js/tools/codeBlock.js"></script>
+
+
+
+
+    
+<script src="/js/layouts/lazyload.js"></script>
+
+
+
+
+    
+<script src="/js/tools/runtime.js"></script>
+
+    
+<script src="/js/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/libs/Typed.min.js"></script>
+
+  
+<script src="/js/plugins/typed.js"></script>
+
+
+
+
+
+
+
+<div class="post-scripts" data-swup-reload-script>
+    
+        
+<script src="/js/libs/anime.min.js"></script>
+
+        
+<script src="/js/tools/tocToggle.js" type="module"></script>
+
+<script src="/js/layouts/toc.js" type="module"></script>
+
+<script src="/js/plugins/tabs.js" type="module"></script>
+
+    
+</div>
+
+
+</body>
+</html>

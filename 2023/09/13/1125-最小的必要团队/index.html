@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="Raphael Liu">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/2023/09/13/1125-最小的必要团队/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="作为项目经理，你规划了一份需求的技能清单 req_skills，并打算从备选人员名单 people 中选出些人组成一个「必要团队」（ 编号为 i的备选人员 people[i] 含有一份该备选人员掌握的技能列表）。 所谓「必要团队」，就是在这个团队中，对于所需求的技能列表 req_skills中列出的每项技能，团队中至少有一名成员已经掌握。可以用每个人的编号来表示团队中的成员：  例如，团队 tea">
+<meta property="og:type" content="article">
+<meta property="og:title" content="1125-最小的必要团队">
+<meta property="og:url" content="http://example.com/2023/09/13/1125-%E6%9C%80%E5%B0%8F%E7%9A%84%E5%BF%85%E8%A6%81%E5%9B%A2%E9%98%9F/index.html">
+<meta property="og:site_name" content="Raphael&#39;s Blog">
+<meta property="og:description" content="作为项目经理，你规划了一份需求的技能清单 req_skills，并打算从备选人员名单 people 中选出些人组成一个「必要团队」（ 编号为 i的备选人员 people[i] 含有一份该备选人员掌握的技能列表）。 所谓「必要团队」，就是在这个团队中，对于所需求的技能列表 req_skills中列出的每项技能，团队中至少有一名成员已经掌握。可以用每个人的编号来表示团队中的成员：  例如，团队 tea">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-09-12T16:47:26.000Z">
+<meta property="article:modified_time" content="2023-09-13T08:06:31.448Z">
+<meta property="article:author" content="Raphael Liu">
+<meta property="article:tag" content="algorithm">
+<meta property="article:tag" content="HARD">
+<meta name="twitter:card" content="summary">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/redefine-favicon.svg" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/redefine-favicon.svg">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/redefine-favicon.svg">
+    <!--- Page Info-->
+    
+    <title>
+        
+            1125-最小的必要团队 -
+        
+        Raphael&#39;s Blog
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/css/build/styles.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/fonts.css">
+
+    
+<link rel="stylesheet" href="/fonts/Satoshi/satoshi.css">
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+
+    <!--- Inject Part-->
+    
+    <script id="hexo-configurations">
+    let Global = window.Global || {};
+    Global.hexo_config = {"hostname":"example.com","root":"/","language":"zh_CN"};
+    Global.theme_config = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":true,"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"open_graph":true,"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-wqery6-light.webp","dark":"/images/wallhaven-wqery6-dark.webp"},"title":"Raphael's Blog","subtitle":{"text":["格物致知","坚持做正确的事情"],"hitokoto":{"enable":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":false,"links":{"github":"https://github.com/raphael-liu","email":"raphael@buaa.edu.cn# your email"},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.4.4","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"links":{"首页":{"path":"/","icon":"fa-regular fa-house"},"文章":{"path":"/archives","icon":"fa-regular fa-archive"},"关于":{"icon":"fa-regular fa-user","submenus":{"我":"/about/me","Github":"https://github.com/raphael-liu"}}},"search":{"enable":true,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"links":null},"article_date_format":"auto","categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}},"footerStart":"2022/8/17 11:45:14"};
+    Global.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    Global.data_config = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="swup-progress-icon">
+            <i class="fa-solid fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container" id="swup">
+
+    
+
+    <div class="main-content-container">
+
+
+        <div class="main-content-header">
+            <header class="navbar-container">
+    
+    <div class="navbar-content">
+        <div class="left">
+            
+            <a class="logo-title" href="http://example.com/">
+                
+                Raphael&#39;s Blog
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/"  >
+                                    
+                                        
+                                            <i class="fa-regular fa-house"></i>
+                                        
+                                        首页
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/archives"  >
+                                    
+                                        
+                                            <i class="fa-regular fa-archive"></i>
+                                        
+                                        文章
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="has-dropdown" 
+                                    href="#" onClick="return false;">
+                                    
+                                        
+                                            <i class="fa-regular fa-user"></i>
+                                        
+                                        关于&nbsp;<i class="fa-solid fa-chevron-down"></i>
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                                    <ul class="sub-menu">
+                                    
+                                        <li>
+                                        <a href="/about/me">我
+                                        </a>
+                                        </li>
+                                    
+                                        <li>
+                                        <a target="_blank" rel="noopener" href="https://github.com/raphael-liu">GITHUB
+                                        </a>
+                                        </li>
+                                    
+                                    </ul>
+                                
+                            </li>
+                    
+                    
+                        <li class="navbar-item search search-popup-trigger">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fa-solid fa-magnifying-glass"></i></div>
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile drawer -->
+    <div class="navbar-drawer w-full absolute top-0 left-0 bg-background-color">
+        <ul class="drawer-navbar-list flex flex-col justify-start items-center">
+            
+                
+                    <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group " 
+                        href="/"  >
+                             
+                                
+                                    <i class="fa-regular fa-house"></i>
+                                
+                                首页
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+                
+                    <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group " 
+                        href="/archives"  >
+                             
+                                
+                                    <i class="fa-regular fa-archive"></i>
+                                
+                                文章
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+                
+                    <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group has-dropdown" 
+                        href="#" onClick="return false;">
+                            
+                                
+                                    <i class="fa-regular fa-user"></i>
+                                
+                                关于&nbsp;<i class="group-hover:rotate-180 transition-transform fa-solid fa-chevron-down"></i>
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                              
+                        
+                            <li class="text-base flex justify-center items-center hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                <a class="py-0.5" href="/about/me">我</a>
+                            </li>
+                        
+                            <li class="text-base flex justify-center items-center hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                <a class="py-0.5" target="_blank" rel="noopener" href="https://github.com/raphael-liu">GITHUB</a>
+                            </li>
+                        
+                    
+            
+
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="post-page-container">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            
+                <h1 class="article-title-regular">1125-最小的必要团队</h1>
+            
+            </div>
+            
+                    
+        
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">Raphael Liu</span>
+                        
+                            <span class="author-label">Lv10</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2023-09-13 00:47:26</span>
+        <span class="mobile">2023-09-13 00:47:26</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2023-09-13 16:06:31</span>
+            <span class="mobile">2023-09-13 16:06:31</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/algorithm/">algorithm</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/HARD/">HARD</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        
+
+
+        <div class="article-content markdown-body">
+            <p>作为项目经理，你规划了一份需求的技能清单 <code>req_skills</code>，并打算从备选人员名单 <code>people</code> 中选出些人组成一个「必要团队」（ 编号为 <code>i</code><br>的备选人员 <code>people[i]</code> 含有一份该备选人员掌握的技能列表）。</p>
+<p>所谓「必要团队」，就是在这个团队中，对于所需求的技能列表 <code>req_skills</code><br>中列出的每项技能，团队中至少有一名成员已经掌握。可以用每个人的编号来表示团队中的成员：</p>
+<ul>
+<li>例如，团队 <code>team = [0, 1, 3]</code> 表示掌握技能分别为 <code>people[0]</code>，<code>people[1]</code>，和 <code>people[3]</code> 的备选人员。</li>
+</ul>
+<p>请你返回 <strong>任一</strong> 规模最小的必要团队，团队成员用人员编号表示。你可以按 <strong>任意顺序</strong> 返回答案，题目数据保证答案存在。</p>
+<p><strong>示例 1：</strong></p>
+<pre><code>**输入：** req_skills = [&quot;java&quot;,&quot;nodejs&quot;,&quot;reactjs&quot;], people = [[&quot;java&quot;],[&quot;nodejs&quot;],[&quot;nodejs&quot;,&quot;reactjs&quot;]]
+**输出：** [0,2]
+</code></pre>
+<p><strong>示例 2：</strong></p>
+<pre><code>**输入：** req_skills = [&quot;algorithms&quot;,&quot;math&quot;,&quot;java&quot;,&quot;reactjs&quot;,&quot;csharp&quot;,&quot;aws&quot;], people = [[&quot;algorithms&quot;,&quot;math&quot;,&quot;java&quot;],[&quot;algorithms&quot;,&quot;math&quot;,&quot;reactjs&quot;],[&quot;java&quot;,&quot;csharp&quot;,&quot;aws&quot;],[&quot;reactjs&quot;,&quot;csharp&quot;],[&quot;csharp&quot;,&quot;math&quot;],[&quot;aws&quot;,&quot;java&quot;]]
+**输出：** [1,2]
+</code></pre>
+<p><strong>提示：</strong></p>
+<ul>
+<li><code>1 &lt;= req_skills.length &lt;= 16</code></li>
+<li><code>1 &lt;= req_skills[i].length &lt;= 16</code></li>
+<li><code>req_skills[i]</code> 由小写英文字母组成</li>
+<li><code>req_skills</code> 中的所有字符串 <strong>互不相同</strong></li>
+<li><code>1 &lt;= people.length &lt;= 60</code></li>
+<li><code>0 &lt;= people[i].length &lt;= 16</code></li>
+<li><code>1 &lt;= people[i][j].length &lt;= 16</code></li>
+<li><code>people[i][j]</code> 由小写英文字母组成</li>
+<li><code>people[i]</code> 中的所有字符串 <strong>互不相同</strong></li>
+<li><code>people[i]</code> 中的每个技能是 <code>req_skills</code> 中的技能</li>
+<li>题目数据保证「必要团队」一定存在</li>
+</ul>
+<h4 id="方法一：动态规划"><a href="#方法一：动态规划" class="headerlink" title="方法一：动态规划"></a>方法一：动态规划</h4><p><strong>思路与算法</strong></p>
+<p>题目输入数组 req_skills 的长度最大为 16，req_skills 中的每一项，被选择或者不被选择，总共的组合情况为 2^{16 种。因此可以通过「状态压缩」来表示一个技能集合。</p>
+<p>我们将每一个技能 req_skills}[i] 映射到一个二进制数的第 i 位。例如：</p>
+<ul>
+<li>req_skills}[0] 用 2^{0} &#x3D; (1 &lt;&lt; 0) &#x3D; 1 来表示。</li>
+<li>req_skills}[1] 用 2^{1} &#x3D; (1 &lt;&lt; 1) &#x3D; 2 来表示。</li>
+</ul>
+<p>以此类推，如此一来我们就可以用一个数字来表示一个技能集合。同时两个集合的并集计算，就可以转化为两个整数的或运算。</p>
+<p>我们采用自下而上的「动态规划」的思路来解题，用 dp}[i] 来表示状态，状态含义是满足技能集合为 i 的最小人数的数组。初始化状态是 dp}[0]，为空数组，因为如果不需要任何技能，不用任何人就可以完成。</p>
+<p>我们首先依次遍历 peoples，求出当前这个人所有的技能集合 cur_skill。然后遍历 dp 表中的结果 dp}[\textit{prev}]，其中原来的技能集合用 prev 来表示。设加入当前这个人后新的技能集合是 comb，由原来的技能集合和当前技能集合求并集后，可以得到：comb} &#x3D; \textit{prev} <del>|</del> \textit{cur_skill。状态转移的规则是，如果 dp}[\textit{comb}] 不存在，或 dp}[\textit{prev}] 的长度加上 1 小于 dp}[\textit{comb}].\textit{size}()，那么我们就需要更新 dp}[\textit{comb}] 为 dp}[\textit{prev}]，再将当前人加入到 dp}[\textit{comb}]。这里我们更新 dp}[\textit{comb}] 时候，可以采用直接覆盖的方式，因为更新后的结果因为已经包含了当前员工的技能，所以不会再次满足转移规则，而发生重复转移。</p>
+<p>最后，所有技能的集合用 (1 &lt;&lt; n) - 1 来表示，其中 n 是 req_skills 的长度，我们只需要返回最终答案 dp}[(1 &lt;&lt; n) - 1]。</p>
+<p><strong>代码</strong></p>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><figcaption><span>[sol1-Java]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span>[] smallestSufficientTeam(String[] req_skills, List&lt;List&lt;String&gt;&gt; people) &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">n</span> <span class="operator">=</span> req_skills.length, m = people.size();</span><br><span class="line">        HashMap&lt;String, Integer&gt; skill_index = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; n; ++i) &#123;</span><br><span class="line">            skill_index.put(req_skills[i], i);</span><br><span class="line">        &#125;</span><br><span class="line">        List&lt;Integer&gt;[] dp = <span class="keyword">new</span> <span class="title class_">List</span>[<span class="number">1</span> &lt;&lt; n];</span><br><span class="line">        dp[<span class="number">0</span>] = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; m; ++i) &#123;</span><br><span class="line">            <span class="type">int</span> <span class="variable">cur_skill</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">for</span> (String s : people.get(i)) &#123;</span><br><span class="line">                cur_skill |= <span class="number">1</span> &lt;&lt; skill_index.get(s);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">prev</span> <span class="operator">=</span> <span class="number">0</span>; prev &lt; dp.length; ++prev) &#123;</span><br><span class="line">                <span class="keyword">if</span> (dp[prev] == <span class="literal">null</span>) &#123;</span><br><span class="line">                    <span class="keyword">continue</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="type">int</span> <span class="variable">comb</span> <span class="operator">=</span> prev | cur_skill;</span><br><span class="line">                <span class="keyword">if</span> (dp[comb] == <span class="literal">null</span> || dp[prev].size() + <span class="number">1</span> &lt; dp[comb].size()) &#123;</span><br><span class="line">                    dp[comb] = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;(dp[prev]);</span><br><span class="line">                    dp[comb].add(i);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> dp[(<span class="number">1</span> &lt;&lt; n) - <span class="number">1</span>].stream().mapToInt(i -&gt; i).toArray();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="C++"><figure class="iseeu highlight c++"><figcaption><span>[sol1-C++]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">smallestSufficientTeam</span><span class="params">(vector&lt;string&gt;&amp; req_skills, vector&lt;vector&lt;string&gt;&gt;&amp; people)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> n = req_skills.<span class="built_in">size</span>(), m = people.<span class="built_in">size</span>();</span><br><span class="line">        unordered_map&lt;string, <span class="type">int</span>&gt; skill_index;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; ++i) &#123;</span><br><span class="line">            skill_index[req_skills[i]] = i;</span><br><span class="line">        &#125;</span><br><span class="line">        vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; <span class="built_in">dp</span>(<span class="number">1</span> &lt;&lt; n);</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; m; ++i) &#123;</span><br><span class="line">            <span class="type">int</span> cur_skill = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">for</span> (string&amp; s : people[i]) &#123;</span><br><span class="line">                cur_skill |= <span class="number">1</span> &lt;&lt; skill_index[s];</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> prev = <span class="number">0</span>; prev &lt; dp.<span class="built_in">size</span>(); ++prev) &#123;</span><br><span class="line">                <span class="keyword">if</span> (prev &gt; <span class="number">0</span> &amp;&amp; dp[prev].<span class="built_in">empty</span>()) &#123;</span><br><span class="line">                    <span class="keyword">continue</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="type">int</span> comb = prev | cur_skill;</span><br><span class="line">                <span class="keyword">if</span> (comb == prev) &#123;</span><br><span class="line">                    <span class="keyword">continue</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">if</span> (dp[comb].<span class="built_in">empty</span>() || dp[prev].<span class="built_in">size</span>() + <span class="number">1</span> &lt; dp[comb].<span class="built_in">size</span>()) &#123;</span><br><span class="line">                    dp[comb] = dp[prev];</span><br><span class="line">                    dp[comb].<span class="built_in">push_back</span>(i);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> dp[(<span class="number">1</span> &lt;&lt; n) - <span class="number">1</span>];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="C#"><figure class="iseeu highlight c#"><figcaption><span>[sol1-C#]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Solution</span> &#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="built_in">int</span>[] <span class="title">SmallestSufficientTeam</span>(<span class="params"><span class="built_in">string</span>[] req_skills, IList&lt;IList&lt;<span class="built_in">string</span>&gt;&gt; people</span>)</span> &#123;</span><br><span class="line">        <span class="built_in">int</span> n = req_skills.Length, m = people.Count;</span><br><span class="line">        IDictionary&lt;<span class="built_in">string</span>, <span class="built_in">int</span>&gt; skill_index = <span class="keyword">new</span> Dictionary&lt;<span class="built_in">string</span>, <span class="built_in">int</span>&gt;();</span><br><span class="line">        <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; n; ++i) &#123;</span><br><span class="line">            skill_index.Add(req_skills[i], i);</span><br><span class="line">        &#125;</span><br><span class="line">        IList&lt;<span class="built_in">int</span>&gt;[] dp = <span class="keyword">new</span> IList&lt;<span class="built_in">int</span>&gt;[<span class="number">1</span> &lt;&lt; n];</span><br><span class="line">        dp[<span class="number">0</span>] = <span class="keyword">new</span> List&lt;<span class="built_in">int</span>&gt;();</span><br><span class="line">        <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; m; ++i) &#123;</span><br><span class="line">            <span class="built_in">int</span> cur_skill = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">foreach</span> (<span class="built_in">string</span> s <span class="keyword">in</span> people[i]) &#123;</span><br><span class="line">                cur_skill |= <span class="number">1</span> &lt;&lt; skill_index[s];</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">for</span> (<span class="built_in">int</span> prev = <span class="number">0</span>; prev &lt; dp.Length; ++prev) &#123;</span><br><span class="line">                <span class="keyword">if</span> (dp[prev] == <span class="literal">null</span>) &#123;</span><br><span class="line">                    <span class="keyword">continue</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="built_in">int</span> comb = prev | cur_skill;</span><br><span class="line">                <span class="keyword">if</span> (dp[comb] == <span class="literal">null</span> || dp[prev].Count + <span class="number">1</span> &lt; dp[comb].Count) &#123;</span><br><span class="line">                    dp[comb] = <span class="keyword">new</span> List&lt;<span class="built_in">int</span>&gt;(dp[prev]);</span><br><span class="line">                    dp[comb].Add(i);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> dp[(<span class="number">1</span> &lt;&lt; n) - <span class="number">1</span>].ToArray();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><figcaption><span>[sol1-Python3]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">smallestSufficientTeam</span>(<span class="params">self, req_skills: <span class="type">List</span>[<span class="built_in">str</span>], people: <span class="type">List</span>[<span class="type">List</span>[<span class="built_in">str</span>]]</span>) -&gt; <span class="type">List</span>[<span class="built_in">int</span>]:</span><br><span class="line">        n, m = <span class="built_in">len</span>(req_skills), <span class="built_in">len</span>(people)</span><br><span class="line">        skill_index = &#123;v: i <span class="keyword">for</span> i, v <span class="keyword">in</span> <span class="built_in">enumerate</span>(req_skills)&#125;</span><br><span class="line">        dp = [<span class="literal">None</span>] * (<span class="number">1</span> &lt;&lt; n)</span><br><span class="line">        dp[<span class="number">0</span>] = []</span><br><span class="line">        <span class="keyword">for</span> i, p <span class="keyword">in</span> <span class="built_in">enumerate</span>(people):</span><br><span class="line">            cur_skill = <span class="number">0</span></span><br><span class="line">            <span class="keyword">for</span> s <span class="keyword">in</span> p:</span><br><span class="line">                cur_skill |= <span class="number">1</span> &lt;&lt; skill_index[s]</span><br><span class="line">            <span class="keyword">for</span> prev <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span> &lt;&lt; n):</span><br><span class="line">                <span class="keyword">if</span> dp[prev] == <span class="literal">None</span>:</span><br><span class="line">                    <span class="keyword">continue</span></span><br><span class="line">                comb = prev | cur_skill</span><br><span class="line">                <span class="keyword">if</span> dp[comb] == <span class="literal">None</span> <span class="keyword">or</span> <span class="built_in">len</span>(dp[comb]) &gt; <span class="built_in">len</span>(dp[prev]) + <span class="number">1</span>:</span><br><span class="line">                    dp[comb] = dp[prev] + [i]</span><br><span class="line">        <span class="keyword">return</span> dp[(<span class="number">1</span> &lt;&lt; n) - <span class="number">1</span>]</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="C"><figure class="iseeu highlight c"><figcaption><span>[sol1-C]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> &#123;</span></span><br><span class="line">    <span class="type">char</span> *key;</span><br><span class="line">    <span class="type">int</span> val;</span><br><span class="line">    UT_hash_handle hh;</span><br><span class="line">&#125; HashItem;</span><br><span class="line"></span><br><span class="line">HashItem *<span class="title function_">hashFindItem</span><span class="params">(HashItem **obj, <span class="type">char</span> *key)</span> &#123;</span><br><span class="line">    HashItem *pEntry = <span class="literal">NULL</span>;</span><br><span class="line">    HASH_FIND_STR(*obj, key, pEntry);</span><br><span class="line">    <span class="keyword">return</span> pEntry;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">bool</span> <span class="title function_">hashAddItem</span><span class="params">(HashItem **obj, <span class="type">char</span> *key, <span class="type">int</span> val)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (hashFindItem(obj, key)) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    HashItem *pEntry = (HashItem *)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(HashItem));</span><br><span class="line">    pEntry-&gt;key = key;</span><br><span class="line">    pEntry-&gt;val = val;</span><br><span class="line">    HASH_ADD_STR(*obj, key, pEntry);</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">bool</span> <span class="title function_">hashSetItem</span><span class="params">(HashItem **obj, <span class="type">char</span> *key, <span class="type">int</span> val)</span> &#123;</span><br><span class="line">    HashItem *pEntry = hashFindItem(obj, key);</span><br><span class="line">    <span class="keyword">if</span> (!pEntry) &#123;</span><br><span class="line">        hashAddItem(obj, key, val);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        pEntry-&gt;val = val;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">hashGetItem</span><span class="params">(HashItem **obj, <span class="type">char</span> *key, <span class="type">int</span> defaultVal)</span> &#123;</span><br><span class="line">    HashItem *pEntry = hashFindItem(obj, key);</span><br><span class="line">    <span class="keyword">if</span> (!pEntry) &#123;</span><br><span class="line">        <span class="keyword">return</span> defaultVal;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> pEntry-&gt;val;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">hashFree</span><span class="params">(HashItem **obj)</span> &#123;</span><br><span class="line">    HashItem *curr = <span class="literal">NULL</span>, *tmp = <span class="literal">NULL</span>;</span><br><span class="line">    HASH_ITER(hh, *obj, curr, tmp) &#123;</span><br><span class="line">        HASH_DEL(*obj, curr);</span><br><span class="line">        <span class="built_in">free</span>(curr);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span>* <span class="title function_">smallestSufficientTeam</span><span class="params">(<span class="type">char</span> ** req_skills, <span class="type">int</span> req_skillsSize, <span class="type">char</span> *** people, <span class="type">int</span> peopleSize, <span class="type">int</span>* peopleColSize, <span class="type">int</span>* returnSize)</span> &#123;</span><br><span class="line">    <span class="type">int</span> n = req_skillsSize, m = peopleSize;</span><br><span class="line">    HashItem *skill_index = <span class="literal">NULL</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; ++i) &#123;</span><br><span class="line">        hashAddItem(&amp;skill_index, req_skills[i], i);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="type">int</span> *dp[<span class="number">1</span> &lt;&lt; n], dpColSize[<span class="number">1</span> &lt;&lt; n];</span><br><span class="line">    <span class="built_in">memset</span>(dpColSize, <span class="number">0</span>, <span class="keyword">sizeof</span>(dpColSize));</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; (<span class="number">1</span> &lt;&lt; n); i++) &#123;</span><br><span class="line">        dp[i] = <span class="literal">NULL</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    dp[<span class="number">0</span>] = (<span class="type">int</span> *)<span class="built_in">calloc</span>(m, <span class="keyword">sizeof</span>(<span class="type">int</span>));</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; m; ++i) &#123;</span><br><span class="line">        <span class="type">int</span> cur_skill = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt; peopleColSize[i]; j++) &#123;</span><br><span class="line">            cur_skill |= <span class="number">1</span> &lt;&lt; hashGetItem(&amp;skill_index, people[i][j], <span class="number">0</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> prev = <span class="number">0</span>; prev &lt; (<span class="number">1</span> &lt;&lt; n); ++prev) &#123;</span><br><span class="line">            <span class="keyword">if</span> (dp[prev] == <span class="literal">NULL</span>) &#123;</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="type">int</span> comb = prev | cur_skill;</span><br><span class="line">            <span class="keyword">if</span> (dp[comb] == <span class="literal">NULL</span> || dpColSize[prev] + <span class="number">1</span> &lt; dpColSize[comb]) &#123;</span><br><span class="line">                dp[comb] = (<span class="type">int</span> *)<span class="built_in">calloc</span>(m, <span class="keyword">sizeof</span>(<span class="type">int</span>));</span><br><span class="line">                <span class="built_in">memcpy</span>(dp[comb], dp[prev], <span class="keyword">sizeof</span>(<span class="type">int</span>) * dpColSize[prev]);</span><br><span class="line">                dpColSize[comb] = dpColSize[prev];</span><br><span class="line">                dp[comb][dpColSize[comb]++] = i;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; (<span class="number">1</span> &lt;&lt; n) - <span class="number">1</span>; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (dp[i]) &#123;</span><br><span class="line">            <span class="built_in">free</span>(dp[i]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    *returnSize = dpColSize[(<span class="number">1</span> &lt;&lt; n) - <span class="number">1</span>];</span><br><span class="line">    <span class="keyword">return</span> dp[(<span class="number">1</span> &lt;&lt; n) - <span class="number">1</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Go"><figure class="iseeu highlight go"><figcaption><span>[sol1-Go]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">smallestSufficientTeam</span><span class="params">(req_skills []<span class="type">string</span>, people [][]<span class="type">string</span>)</span></span> []<span class="type">int</span> &#123;</span><br><span class="line">    n, m := <span class="built_in">len</span>(req_skills), <span class="built_in">len</span>(people)</span><br><span class="line">    skill_index := <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="type">string</span>]<span class="type">int</span>)</span><br><span class="line">    <span class="keyword">for</span> i, skill := <span class="keyword">range</span> req_skills &#123;</span><br><span class="line">        skill_index[skill] = i</span><br><span class="line">    &#125;</span><br><span class="line">    dp := <span class="built_in">make</span>([][]<span class="type">int</span>, <span class="number">1</span> &lt;&lt; n)</span><br><span class="line">    dp[<span class="number">0</span>] = []<span class="type">int</span> &#123;&#125;</span><br><span class="line">    <span class="keyword">for</span> i := <span class="number">0</span>; i &lt; m; i++ &#123;</span><br><span class="line">        cur_skill := <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> _, s := <span class="keyword">range</span> people[i] &#123;</span><br><span class="line">            cur_skill |= <span class="number">1</span> &lt;&lt; skill_index[s]</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> prev := <span class="number">0</span>; prev &lt; <span class="built_in">len</span>(dp); prev++ &#123;</span><br><span class="line">            <span class="keyword">if</span> dp[prev] == <span class="literal">nil</span> &#123;</span><br><span class="line">                <span class="keyword">continue</span></span><br><span class="line">            &#125;</span><br><span class="line">            comb := prev | cur_skill</span><br><span class="line">            <span class="keyword">if</span> dp[comb] == <span class="literal">nil</span> || <span class="built_in">len</span>(dp[prev]) + <span class="number">1</span> &lt; <span class="built_in">len</span>(dp[comb]) &#123;</span><br><span class="line">                dp[comb] = <span class="built_in">make</span>([]<span class="type">int</span>, <span class="built_in">len</span>(dp[prev]))</span><br><span class="line">                <span class="built_in">copy</span>(dp[comb], dp[prev])</span><br><span class="line">                dp[comb] = <span class="built_in">append</span>(dp[comb], i)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> dp[(<span class="number">1</span> &lt;&lt; n) - <span class="number">1</span>]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><figcaption><span>[sol1-JavaScript]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> smallestSufficientTeam = <span class="keyword">function</span>(<span class="params">req_skills, people</span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> n = req_skills.<span class="property">length</span>;</span><br><span class="line">    <span class="keyword">const</span> m = people.<span class="property">length</span>;</span><br><span class="line">    <span class="keyword">let</span> skillIndex = <span class="keyword">new</span> <span class="title class_">Map</span>();</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">        skillIndex.<span class="title function_">set</span>(req_skills[i], i);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">let</span> dp = <span class="keyword">new</span> <span class="title class_">Array</span>(<span class="number">1</span> &lt;&lt; n);</span><br><span class="line">    dp[<span class="number">0</span>] = [];</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; m; i++) &#123;</span><br><span class="line">        <span class="keyword">let</span> cur_skill = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">let</span> s <span class="keyword">of</span> people[i]) &#123;</span><br><span class="line">            cur_skill |= <span class="number">1</span> &lt;&lt; skillIndex.<span class="title function_">get</span>(s);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">let</span> prev = <span class="number">0</span>; prev &lt; dp.<span class="property">length</span>; prev++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (dp[prev] === <span class="literal">undefined</span>) &#123;</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">let</span> comb = prev | cur_skill;</span><br><span class="line">            <span class="keyword">if</span> (dp[comb] === <span class="literal">undefined</span> || dp[prev].<span class="property">length</span> + <span class="number">1</span> &lt; dp[comb].<span class="property">length</span>) &#123;</span><br><span class="line">                dp[comb] = [...dp[prev], i];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> dp[(<span class="number">1</span> &lt;&lt; n) - <span class="number">1</span>];</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>复杂度分析</strong></p>
+<ul>
+<li>时间复杂度：O(m^{2} \times 2^{n})，其中 n 是 req_skills 的长度，m 是 peoples 的长度。</li>
+<li>空间复杂度：O(m \times 2^{n})，其中 n 是 req_skills 的长度，m 是 peoples 的长度。</li>
+</ul>
+<h4 id="方法二：动态规划-优化"><a href="#方法二：动态规划-优化" class="headerlink" title="方法二：动态规划 + 优化"></a>方法二：动态规划 + 优化</h4><p><strong>思路与算法</strong><br>在方法一中，我们用 dp}[i] 来表示状态，状态含义是满足技能集合为 i 的最小人数的数组，每一个状态都用数组记录了具体的人员编号。这个过程浪费很多空间去储存结果，也消耗了很多时间去生成数组。<br>实际上我们只去要记录下每个状态的产生来源，就可以按序还原每个状态的具体人员编号的数组。</p>
+<p>我们用：</p>
+<ul>
+<li>dp}[i] 来表示，满足技能集合为 i 的最小人数。类似方法一中，我们初始化 dp}[0] &#x3D; 0，其它 dp}[i] 初始为最大值 m。</li>
+<li>prev_skill}[i] 来表示先前的技能集合，技能集合 i 是从 prev_skill}[i] 转移来的。</li>
+<li>prev_people}[i] 来表示一个最新加入的员工，技能集合 i 是通过加入员工 prev_people}[i] 而转移来的。</li>
+</ul>
+<p>通过这样方式，我们就记录了每一个状态的转移来源。</p>
+<p>最后，所有技能的集合用 (1 &lt;&lt; n) - 1 来表示，其中 n 是 req_skills 的长度。当我们要复原一个技能集合 i 的时候，我们可以找到最后一个员工 prev_people}[i], 把它加入结果中，然后赋值 i 为 prev_skill}[i]。不断重复这个过程，直到 i &#x3D; 0，表示我们已找到需要技能集合的最少员工。</p>
+<p><strong>代码</strong></p>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><figcaption><span>[sol2-Java]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span>[] smallestSufficientTeam(String[] req_skills, List&lt;List&lt;String&gt;&gt; people) &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">n</span> <span class="operator">=</span> req_skills.length, m = people.size();</span><br><span class="line">        HashMap&lt;String, Integer&gt; skill_index = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; n; ++i) &#123;</span><br><span class="line">            skill_index.put(req_skills[i], i);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">int</span>[] dp = <span class="keyword">new</span> <span class="title class_">int</span>[<span class="number">1</span> &lt;&lt; n];</span><br><span class="line">        Arrays.fill(dp, m);</span><br><span class="line">        dp[<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">        <span class="type">int</span>[] prev_skill = <span class="keyword">new</span> <span class="title class_">int</span>[<span class="number">1</span> &lt;&lt; n];</span><br><span class="line">        <span class="type">int</span>[] prev_people = <span class="keyword">new</span> <span class="title class_">int</span>[<span class="number">1</span> &lt;&lt; n];</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; m; i++) &#123;</span><br><span class="line">            List&lt;String&gt; p = people.get(i);</span><br><span class="line">            <span class="type">int</span> <span class="variable">cur_skill</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">for</span> (String s : p) &#123;</span><br><span class="line">                cur_skill |= <span class="number">1</span> &lt;&lt; skill_index.get(s);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">prev</span> <span class="operator">=</span> <span class="number">0</span>; prev &lt; (<span class="number">1</span> &lt;&lt; n); prev++) &#123;</span><br><span class="line">                <span class="type">int</span> <span class="variable">comb</span> <span class="operator">=</span> prev | cur_skill;</span><br><span class="line">                <span class="keyword">if</span> (dp[comb] &gt; dp[prev] + <span class="number">1</span>) &#123;</span><br><span class="line">                    dp[comb] = dp[prev] + <span class="number">1</span>;</span><br><span class="line">                    prev_skill[comb] = prev;</span><br><span class="line">                    prev_people[comb] = i;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        List&lt;Integer&gt; res = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line">        <span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> (<span class="number">1</span> &lt;&lt; n) - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span> (i &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            res.add(prev_people[i]);</span><br><span class="line">            i = prev_skill[i];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res.stream().mapToInt(j -&gt; j).toArray();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="C++"><figure class="iseeu highlight c++"><figcaption><span>[sol2-C++]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">smallestSufficientTeam</span><span class="params">(vector&lt;string&gt;&amp; req_skills, vector&lt;vector&lt;string&gt;&gt;&amp; people)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> n = req_skills.<span class="built_in">size</span>(), m = people.<span class="built_in">size</span>();</span><br><span class="line">        unordered_map&lt;string, <span class="type">int</span>&gt; skill_index;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; ++i) &#123;</span><br><span class="line">            skill_index[req_skills[i]] = i;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">dp</span><span class="params">(<span class="number">1</span> &lt;&lt; n, m)</span></span>;</span><br><span class="line">        dp[<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">        <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">prev_skill</span><span class="params">(<span class="number">1</span> &lt;&lt; n, <span class="number">0</span>)</span></span>;</span><br><span class="line">        <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">prev_people</span><span class="params">(<span class="number">1</span> &lt;&lt; n, <span class="number">0</span>)</span></span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; m; ++i) &#123;</span><br><span class="line">            <span class="type">int</span> cur_skill = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">for</span> (string&amp; skill : people[i]) &#123;</span><br><span class="line">                cur_skill |= <span class="number">1</span> &lt;&lt; skill_index[skill];</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> prev = <span class="number">0</span>; prev &lt; (<span class="number">1</span> &lt;&lt; n); prev++) &#123;</span><br><span class="line">                <span class="type">int</span> comb = prev | cur_skill;</span><br><span class="line">                <span class="keyword">if</span> (dp[comb] &gt; dp[prev] + <span class="number">1</span>) &#123;</span><br><span class="line">                    dp[comb] = dp[prev] + <span class="number">1</span>;</span><br><span class="line">                    prev_skill[comb] = prev;</span><br><span class="line">                    prev_people[comb] = i;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        vector&lt;<span class="type">int</span>&gt; res;</span><br><span class="line">        <span class="type">int</span> i = (<span class="number">1</span> &lt;&lt; n) - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span> (i &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            res.<span class="built_in">push_back</span>(prev_people[i]);</span><br><span class="line">            i = prev_skill[i];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="C#"><figure class="iseeu highlight c#"><figcaption><span>[sol2-C#]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Solution</span> &#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="built_in">int</span>[] <span class="title">SmallestSufficientTeam</span>(<span class="params"><span class="built_in">string</span>[] req_skills, IList&lt;IList&lt;<span class="built_in">string</span>&gt;&gt; people</span>)</span> &#123;</span><br><span class="line">        <span class="built_in">int</span> n = req_skills.Length, m = people.Count;</span><br><span class="line">        IDictionary&lt;<span class="built_in">string</span>, <span class="built_in">int</span>&gt; skill_index = <span class="keyword">new</span> Dictionary&lt;<span class="built_in">string</span>, <span class="built_in">int</span>&gt;();</span><br><span class="line">        <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; n; ++i) &#123;</span><br><span class="line">            skill_index.Add(req_skills[i], i);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">int</span>[] dp = <span class="keyword">new</span> <span class="built_in">int</span>[<span class="number">1</span> &lt;&lt; n];</span><br><span class="line">        <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; dp.Length; i++) &#123;</span><br><span class="line">            dp[i] = m;</span><br><span class="line">        &#125;</span><br><span class="line">        dp[<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">        <span class="built_in">int</span>[] prev_skill = <span class="keyword">new</span> <span class="built_in">int</span>[<span class="number">1</span> &lt;&lt; n];</span><br><span class="line">        <span class="built_in">int</span>[] prev_people = <span class="keyword">new</span> <span class="built_in">int</span>[<span class="number">1</span> &lt;&lt; n];</span><br><span class="line">        <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; m; ++i) &#123;</span><br><span class="line">            <span class="built_in">int</span> cur_skill = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">foreach</span> (<span class="built_in">string</span> s <span class="keyword">in</span> people[i]) &#123;</span><br><span class="line">                cur_skill |= <span class="number">1</span> &lt;&lt; skill_index[s];</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">for</span> (<span class="built_in">int</span> prev = <span class="number">0</span>; prev &lt; dp.Length; prev++) &#123;</span><br><span class="line">                <span class="built_in">int</span> comb = prev | cur_skill;</span><br><span class="line">                <span class="keyword">if</span> (dp[comb] &gt; dp[prev] + <span class="number">1</span>) &#123;</span><br><span class="line">                    dp[comb] = dp[prev] + <span class="number">1</span>;</span><br><span class="line">                    prev_skill[comb] = prev;</span><br><span class="line">                    prev_people[comb] = i;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        List&lt;<span class="built_in">int</span>&gt; res = <span class="keyword">new</span> List&lt;<span class="built_in">int</span>&gt;();</span><br><span class="line">        <span class="built_in">int</span> skills = (<span class="number">1</span> &lt;&lt; n) - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span> (skills &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            res.Add(prev_people[skills]);</span><br><span class="line">            skills = prev_skill[skills];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res.ToArray();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><figcaption><span>[sol2-Python3]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">smallestSufficientTeam</span>(<span class="params">self, req_skills: <span class="type">List</span>[<span class="built_in">str</span>], people: <span class="type">List</span>[<span class="type">List</span>[<span class="built_in">str</span>]]</span>) -&gt; <span class="type">List</span>[<span class="built_in">int</span>]:</span><br><span class="line">        n, m = <span class="built_in">len</span>(req_skills), <span class="built_in">len</span>(people)</span><br><span class="line">        skill_index = &#123;v: i <span class="keyword">for</span> i, v <span class="keyword">in</span> <span class="built_in">enumerate</span>(req_skills)&#125;</span><br><span class="line">        dp = [m] * (<span class="number">1</span> &lt;&lt; n)</span><br><span class="line">        dp[<span class="number">0</span>] = <span class="number">0</span></span><br><span class="line">        prev_skill = [<span class="number">0</span>] * (<span class="number">1</span> &lt;&lt; n)</span><br><span class="line">        prev_people = [<span class="number">0</span>] * (<span class="number">1</span> &lt;&lt; n)</span><br><span class="line">        <span class="keyword">for</span> i, p <span class="keyword">in</span> <span class="built_in">enumerate</span>(people):</span><br><span class="line">            cur_skill = <span class="number">0</span></span><br><span class="line">            <span class="keyword">for</span> s <span class="keyword">in</span> p:</span><br><span class="line">                cur_skill |= <span class="number">1</span> &lt;&lt; skill_index[s]</span><br><span class="line">            <span class="keyword">for</span> prev <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span> &lt;&lt; n):</span><br><span class="line">                comb = prev | cur_skill</span><br><span class="line">                <span class="keyword">if</span> dp[comb] &gt; dp[prev] + <span class="number">1</span>:</span><br><span class="line">                    dp[comb] = dp[prev] + <span class="number">1</span></span><br><span class="line">                    prev_skill[comb] = prev</span><br><span class="line">                    prev_people[comb] = i</span><br><span class="line">        res = []</span><br><span class="line">        i = (<span class="number">1</span> &lt;&lt; n) - <span class="number">1</span></span><br><span class="line">        <span class="keyword">while</span> i &gt; <span class="number">0</span>:</span><br><span class="line">            res.append(prev_people[i])</span><br><span class="line">            i = prev_skill[i]</span><br><span class="line">        <span class="keyword">return</span> res</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Go"><figure class="iseeu highlight go"><figcaption><span>[sol2-Go]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">smallestSufficientTeam</span><span class="params">(req_skills []<span class="type">string</span>, people [][]<span class="type">string</span>)</span></span> []<span class="type">int</span> &#123;</span><br><span class="line">    n, m := <span class="built_in">len</span>(req_skills), <span class="built_in">len</span>(people)</span><br><span class="line">    skill_index := <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="type">string</span>]<span class="type">int</span>)</span><br><span class="line">    <span class="keyword">for</span> i, skill := <span class="keyword">range</span> req_skills &#123;</span><br><span class="line">        skill_index[skill] = i</span><br><span class="line">    &#125;</span><br><span class="line">    dp := <span class="built_in">make</span>([]<span class="type">int</span>, <span class="number">1</span> &lt;&lt; n)</span><br><span class="line">    <span class="keyword">for</span> i := <span class="keyword">range</span> dp &#123;</span><br><span class="line">        dp[i] = m</span><br><span class="line">    &#125;</span><br><span class="line">    dp[<span class="number">0</span>] = <span class="number">0</span></span><br><span class="line">    prev_skill := <span class="built_in">make</span>([]<span class="type">int</span>, <span class="number">1</span> &lt;&lt; n)</span><br><span class="line">    prev_people := <span class="built_in">make</span>([]<span class="type">int</span>, <span class="number">1</span> &lt;&lt; n)</span><br><span class="line">    <span class="keyword">for</span> i := <span class="number">0</span>; i &lt; m; i++ &#123;</span><br><span class="line">        cur_skill := <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> _, s := <span class="keyword">range</span> people[i] &#123;</span><br><span class="line">            cur_skill |= <span class="number">1</span> &lt;&lt; skill_index[s]</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> prev := <span class="number">0</span>; prev &lt; (<span class="number">1</span> &lt;&lt; n); prev++ &#123;</span><br><span class="line">            comb := prev | cur_skill</span><br><span class="line">            <span class="keyword">if</span> dp[comb] &gt; dp[prev]+<span class="number">1</span> &#123;</span><br><span class="line">                dp[comb] = dp[prev] + <span class="number">1</span></span><br><span class="line">                prev_skill[comb] = prev</span><br><span class="line">                prev_people[comb] = i</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    res := []<span class="type">int</span>&#123;&#125;</span><br><span class="line">    i := (<span class="number">1</span> &lt;&lt; n) - <span class="number">1</span></span><br><span class="line">    <span class="keyword">for</span> i &gt; <span class="number">0</span> &#123;</span><br><span class="line">        res = <span class="built_in">append</span>(res, prev_people[i])</span><br><span class="line">        i = prev_skill[i]</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> res</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><figcaption><span>[sol2-JavaScript]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> smallestSufficientTeam = <span class="keyword">function</span>(<span class="params">req_skills, people</span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> n = req_skills.<span class="property">length</span>;</span><br><span class="line">    <span class="keyword">const</span> m = people.<span class="property">length</span>;</span><br><span class="line">    <span class="keyword">let</span> skillIndex = <span class="keyword">new</span> <span class="title class_">Map</span>();</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">        skillIndex.<span class="title function_">set</span>(req_skills[i], i);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">let</span> dp = <span class="keyword">new</span> <span class="title class_">Array</span>(<span class="number">1</span> &lt;&lt; n).<span class="title function_">fill</span>(m);</span><br><span class="line">    dp[<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">let</span> prev_skill = <span class="keyword">new</span> <span class="title class_">Array</span>(<span class="number">1</span> &lt;&lt; n);</span><br><span class="line">    <span class="keyword">let</span> prev_people = <span class="keyword">new</span> <span class="title class_">Array</span>(<span class="number">1</span> &lt;&lt; n);</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; m; i++) &#123;</span><br><span class="line">        <span class="keyword">let</span> cur_skill = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">let</span> s <span class="keyword">of</span> people[i]) &#123;</span><br><span class="line">            cur_skill |= <span class="number">1</span> &lt;&lt; skillIndex.<span class="title function_">get</span>(s);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">let</span> prev = <span class="number">0</span>; prev &lt; (<span class="number">1</span> &lt;&lt; n); prev++) &#123;</span><br><span class="line">            <span class="keyword">let</span> comb = prev | cur_skill;</span><br><span class="line">            <span class="keyword">if</span> (dp[comb] &gt; dp[prev] + <span class="number">1</span>) &#123;</span><br><span class="line">                dp[comb] = dp[prev] + <span class="number">1</span>;</span><br><span class="line">                prev_skill[comb] = prev;</span><br><span class="line">                prev_people[comb] = i;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">let</span> res = [];</span><br><span class="line">    <span class="keyword">let</span> skills = (<span class="number">1</span> &lt;&lt; n) - <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span> (skills &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        res.<span class="title function_">push</span>(prev_people[skills]);</span><br><span class="line">        skills = prev_skill[skills];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="C"><figure class="iseeu highlight c"><figcaption><span>[sol2-C]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> &#123;</span></span><br><span class="line">    <span class="type">char</span> *key;</span><br><span class="line">    <span class="type">int</span> val;</span><br><span class="line">    UT_hash_handle hh;</span><br><span class="line">&#125; HashItem; </span><br><span class="line"></span><br><span class="line">HashItem *<span class="title function_">hashFindItem</span><span class="params">(HashItem **obj, <span class="type">char</span> *key)</span> &#123;</span><br><span class="line">    HashItem *pEntry = <span class="literal">NULL</span>;</span><br><span class="line">    HASH_FIND_STR(*obj, key, pEntry);</span><br><span class="line">    <span class="keyword">return</span> pEntry;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">bool</span> <span class="title function_">hashAddItem</span><span class="params">(HashItem **obj, <span class="type">char</span> *key, <span class="type">int</span> val)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (hashFindItem(obj, key)) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    HashItem *pEntry = (HashItem *)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(HashItem));</span><br><span class="line">    pEntry-&gt;key = key;</span><br><span class="line">    pEntry-&gt;val = val;</span><br><span class="line">    HASH_ADD_STR(*obj, key, pEntry);</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">bool</span> <span class="title function_">hashSetItem</span><span class="params">(HashItem **obj, <span class="type">char</span> *key, <span class="type">int</span> val)</span> &#123;</span><br><span class="line">    HashItem *pEntry = hashFindItem(obj, key);</span><br><span class="line">    <span class="keyword">if</span> (!pEntry) &#123;</span><br><span class="line">        hashAddItem(obj, key, val);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        pEntry-&gt;val = val;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">hashGetItem</span><span class="params">(HashItem **obj, <span class="type">char</span> *key, <span class="type">int</span> defaultVal)</span> &#123;</span><br><span class="line">    HashItem *pEntry = hashFindItem(obj, key);</span><br><span class="line">    <span class="keyword">if</span> (!pEntry) &#123;</span><br><span class="line">        <span class="keyword">return</span> defaultVal;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> pEntry-&gt;val;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">hashFree</span><span class="params">(HashItem **obj)</span> &#123;</span><br><span class="line">    HashItem *curr = <span class="literal">NULL</span>, *tmp = <span class="literal">NULL</span>;</span><br><span class="line">    HASH_ITER(hh, *obj, curr, tmp) &#123;</span><br><span class="line">        HASH_DEL(*obj, curr);  </span><br><span class="line">        <span class="built_in">free</span>(curr);             </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span>* <span class="title function_">smallestSufficientTeam</span><span class="params">(<span class="type">char</span> ** req_skills, <span class="type">int</span> req_skillsSize, <span class="type">char</span> *** people, <span class="type">int</span> peopleSize, <span class="type">int</span>* peopleColSize, <span class="type">int</span>* returnSize)</span> &#123;</span><br><span class="line">    <span class="type">int</span> n = req_skillsSize, m = peopleSize;</span><br><span class="line">    HashItem *skill_index = <span class="literal">NULL</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; ++i) &#123;</span><br><span class="line">        hashAddItem(&amp;skill_index, req_skills[i], i);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="type">int</span> dp[<span class="number">1</span> &lt;&lt; n];</span><br><span class="line">    <span class="type">int</span> prev_skill[<span class="number">1</span> &lt;&lt; n], prev_people[<span class="number">1</span> &lt;&lt; n];</span><br><span class="line">    <span class="built_in">memset</span>(prev_skill, <span class="number">0</span>, <span class="keyword">sizeof</span>(prev_skill));</span><br><span class="line">    <span class="built_in">memset</span>(prev_people, <span class="number">0</span>, <span class="keyword">sizeof</span>(prev_people));</span><br><span class="line">    dp[<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt; (<span class="number">1</span> &lt;&lt; n); i++) &#123;</span><br><span class="line">        dp[i] = m;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; m; ++i) &#123;</span><br><span class="line">        <span class="type">int</span> cur_skill = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt; peopleColSize[i]; j++) &#123;</span><br><span class="line">            cur_skill |= <span class="number">1</span> &lt;&lt; hashGetItem(&amp;skill_index, people[i][j], <span class="number">0</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> prev = <span class="number">0</span>; prev &lt; (<span class="number">1</span> &lt;&lt; n); prev++) &#123;</span><br><span class="line">            <span class="type">int</span> comb = prev | cur_skill;</span><br><span class="line">            <span class="keyword">if</span> (dp[comb] &gt; dp[prev] + <span class="number">1</span>) &#123;</span><br><span class="line">                dp[comb] = dp[prev] + <span class="number">1</span>;</span><br><span class="line">                prev_skill[comb] = prev;</span><br><span class="line">                prev_people[comb] = i;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    hashFree(&amp;skill_index);</span><br><span class="line">    <span class="type">int</span> *res = (<span class="type">int</span> *)<span class="built_in">calloc</span>(m, <span class="keyword">sizeof</span>(<span class="type">int</span>));</span><br><span class="line">    <span class="type">int</span> i = (<span class="number">1</span> &lt;&lt; n) - <span class="number">1</span>;</span><br><span class="line">    <span class="type">int</span> pos = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span> (i &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        res[pos++] = prev_people[i];</span><br><span class="line">        i = prev_skill[i];</span><br><span class="line">    &#125;</span><br><span class="line">    *returnSize = pos;</span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>复杂度分析</strong></p>
+<ul>
+<li>时间复杂度：O(m \times 2^{n})，其中 n 是 req_skills 的长度，m 是 peoples 的长度。</li>
+<li>空间复杂度：O(2^{n})，其中 n 是 req_skills 的长度。</li>
+</ul>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <!--<div class="article-copyright-info-container">-->
+    <!--&lt;!&ndash;<ul>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><strong>Title:</strong> 1125-最小的必要团队</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><strong>Author:</strong> Raphael Liu</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><strong>Created at&ndash;&gt;-->
+                <!--&lt;!&ndash;:</strong> 2023-09-13 00:47:26</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;&ndash;&gt;-->
+            <!--&lt;!&ndash;<li>&ndash;&gt;-->
+                <!--&lt;!&ndash;<strong>Updated at&ndash;&gt;-->
+                    <!--&lt;!&ndash;:</strong> 2023-09-13 16:06:31&ndash;&gt;-->
+            <!--&lt;!&ndash;</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;<li>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;<strong>Link:</strong> https://fida.ltd/2023/09/13/1125-最小的必要团队/&ndash;&gt;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;</li>&ndash;&gt;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;<li>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;<strong>&ndash;&gt;&ndash;&gt;-->
+                <!--&lt;!&ndash;&lt;!&ndash;License:&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;</strong>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0</a>.&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;&ndash;&gt;&ndash;&gt;-->
+
+        <!--&lt;!&ndash;&lt;!&ndash;</li>&ndash;&gt;&ndash;&gt;-->
+    <!--&lt;!&ndash;</ul>&ndash;&gt;-->
+<!--</div>-->
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box">
+                
+                    <li class="tag-item">
+                        <a href="/tags/algorithm/">#algorithm</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item">
+                        <a href="/tags/HARD/">#HARD</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                        rel="prev"
+                        href="/2023/09/13/1124-%E8%A1%A8%E7%8E%B0%E8%89%AF%E5%A5%BD%E7%9A%84%E6%9C%80%E9%95%BF%E6%97%B6%E9%97%B4%E6%AE%B5/"
+                        >
+                            <span class="left arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">1124-表现良好的最长时间段</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                        rel="next"
+                        href="/2023/09/13/1128-%E7%AD%89%E4%BB%B7%E5%A4%9A%E7%B1%B3%E8%AF%BA%E9%AA%A8%E7%89%8C%E5%AF%B9%E7%9A%84%E6%95%B0%E9%87%8F/"
+                        >
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">1128-等价多米诺骨牌对的数量</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+
+        
+            <div class="comment-container">
+                <div class="comments-container pjax">
+    <div id="comment-anchor"></div>
+    <div class="comment-area-title">
+        <i class="fa-solid fa-comments"></i>&nbsp;Comments
+    </div>
+    
+
+        
+            
+ 
+    <div id="waline"></div>
+    <script type="module"  data-swup-reload-script>
+        import { init } from 'https://evan.beee.top/js/waline.mjs';
+
+        function loadWaline() {
+            init({
+                el: '#waline',
+                serverURL: 'https://example.example.com',
+                lang: 'zh-CN',
+                dark: 'body[class~="dark-mode"]',
+                requiredMeta: ['nick','mail'], // cannot customize by theme config, change it yourself
+            });
+        }
+
+        if ('true') {
+            const loadWalineTimeout = setTimeout(() => {
+                loadWaline();
+                clearTimeout(loadWalineTimeout);
+            }, 1000);
+        } else {
+            window.addEventListener('DOMContentLoaded', loadWaline);
+        }
+        
+    </script>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+
+    
+        <div class="toc-content-container">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">On this page</div>
+        <div class="page-title">1125-最小的必要团队</div>
+        
+
+    </div>
+</div>
+        </div>
+    
+</div>
+
+
+
+                
+
+            </div>
+
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2022</span>
+              -
+            
+            2023&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">Raphael Liu</a>
+        </div>
+        
+            <script data-swup-reload-script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">UV:</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">PV:</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <!--<div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">-->
+            <!--<span class="lg:block text-sm">powered_by</span>-->
+            <!--&lt;!&ndash;<span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.4.4</a></span>&ndash;&gt;-->
+        <!--</div>-->
+        
+        <!---->
+            <!--<div>-->
+                <!--runtime <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hours <span class="odometer" id="runtime_minutes"></span> minutes <span class="odometer" id="runtime_seconds"></span> seconds-->
+            <!--</div>-->
+        <!---->
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fa-regular fa-comments"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-expand-width flex justify-center items-center">
+            <i class="fa-regular fa-expand"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fa-solid fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa-solid fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa-solid fa-spinner fa-spin-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+    
+<script src="/js/libs/Swup.min.js"></script>
+
+<script src="/js/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/libs/SwupScrollPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+        ],
+        containers: ["#swup"],
+    });
+
+    swup.hooks.on("page:view", () => {
+        Global.refresh();
+    });
+
+    // if (document.readyState === "complete") {
+    //
+    // } else {
+    //     document.addEventListener("DOMContentLoaded", () => init());
+    // }
+</script>
+
+
+
+
+
+
+<script src="/js/utils.js" type="module"></script>
+
+<script src="/js/main.js" type="module"></script>
+
+<script src="/js/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/layouts/categoryList.js" type="module"></script>
+
+
+
+    
+<script src="/js/tools/localSearch.js"></script>
+
+
+
+
+    
+<script src="/js/tools/codeBlock.js"></script>
+
+
+
+
+    
+<script src="/js/layouts/lazyload.js"></script>
+
+
+
+
+    
+<script src="/js/tools/runtime.js"></script>
+
+    
+<script src="/js/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/libs/Typed.min.js"></script>
+
+  
+<script src="/js/plugins/typed.js"></script>
+
+
+
+
+
+
+
+<div class="post-scripts" data-swup-reload-script>
+    
+        
+<script src="/js/libs/anime.min.js"></script>
+
+        
+<script src="/js/tools/tocToggle.js" type="module"></script>
+
+<script src="/js/layouts/toc.js" type="module"></script>
+
+<script src="/js/plugins/tabs.js" type="module"></script>
+
+    
+</div>
+
+
+</body>
+</html>

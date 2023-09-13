@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="Raphael Liu">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/2023/09/13/2213-由单个字符重复的最长子字符串/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="给你一个下标从 0 开始的字符串 s 。另给你一个下标从 0 开始、长度为 k 的字符串 queryCharacters，一个下标从 0 开始、长度也是 k 的整数 下标 数组 queryIndices ，这两个都用来描述 k 个查询。 第 i 个查询会将 s 中位于下标 queryIndices[i] 的字符更新为 queryCharacters[i] 。 返回一个长度为 k 的数组 lengt">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2213-由单个字符重复的最长子字符串">
+<meta property="og:url" content="http://example.com/2023/09/13/2213-%E7%94%B1%E5%8D%95%E4%B8%AA%E5%AD%97%E7%AC%A6%E9%87%8D%E5%A4%8D%E7%9A%84%E6%9C%80%E9%95%BF%E5%AD%90%E5%AD%97%E7%AC%A6%E4%B8%B2/index.html">
+<meta property="og:site_name" content="Raphael&#39;s Blog">
+<meta property="og:description" content="给你一个下标从 0 开始的字符串 s 。另给你一个下标从 0 开始、长度为 k 的字符串 queryCharacters，一个下标从 0 开始、长度也是 k 的整数 下标 数组 queryIndices ，这两个都用来描述 k 个查询。 第 i 个查询会将 s 中位于下标 queryIndices[i] 的字符更新为 queryCharacters[i] 。 返回一个长度为 k 的数组 lengt">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://pic.leetcode.cn/1685281025-ZDNNkF-image.png">
+<meta property="article:published_time" content="2023-09-12T16:47:26.000Z">
+<meta property="article:modified_time" content="2023-09-13T08:06:30.404Z">
+<meta property="article:author" content="Raphael Liu">
+<meta property="article:tag" content="algorithm">
+<meta property="article:tag" content="HARD">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://pic.leetcode.cn/1685281025-ZDNNkF-image.png">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/redefine-favicon.svg" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/redefine-favicon.svg">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/redefine-favicon.svg">
+    <!--- Page Info-->
+    
+    <title>
+        
+            2213-由单个字符重复的最长子字符串 -
+        
+        Raphael&#39;s Blog
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/css/build/styles.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/fonts.css">
+
+    
+<link rel="stylesheet" href="/fonts/Satoshi/satoshi.css">
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+
+    <!--- Inject Part-->
+    
+    <script id="hexo-configurations">
+    let Global = window.Global || {};
+    Global.hexo_config = {"hostname":"example.com","root":"/","language":"zh_CN"};
+    Global.theme_config = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":true,"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"open_graph":true,"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-wqery6-light.webp","dark":"/images/wallhaven-wqery6-dark.webp"},"title":"Raphael's Blog","subtitle":{"text":["格物致知","坚持做正确的事情"],"hitokoto":{"enable":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":false,"links":{"github":"https://github.com/raphael-liu","email":"raphael@buaa.edu.cn# your email"},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.4.4","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"links":{"首页":{"path":"/","icon":"fa-regular fa-house"},"文章":{"path":"/archives","icon":"fa-regular fa-archive"},"关于":{"icon":"fa-regular fa-user","submenus":{"我":"/about/me","Github":"https://github.com/raphael-liu"}}},"search":{"enable":true,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"links":null},"article_date_format":"auto","categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}},"footerStart":"2022/8/17 11:45:14"};
+    Global.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    Global.data_config = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="swup-progress-icon">
+            <i class="fa-solid fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container" id="swup">
+
+    
+
+    <div class="main-content-container">
+
+
+        <div class="main-content-header">
+            <header class="navbar-container">
+    
+    <div class="navbar-content">
+        <div class="left">
+            
+            <a class="logo-title" href="http://example.com/">
+                
+                Raphael&#39;s Blog
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/"  >
+                                    
+                                        
+                                            <i class="fa-regular fa-house"></i>
+                                        
+                                        首页
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/archives"  >
+                                    
+                                        
+                                            <i class="fa-regular fa-archive"></i>
+                                        
+                                        文章
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="has-dropdown" 
+                                    href="#" onClick="return false;">
+                                    
+                                        
+                                            <i class="fa-regular fa-user"></i>
+                                        
+                                        关于&nbsp;<i class="fa-solid fa-chevron-down"></i>
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                                    <ul class="sub-menu">
+                                    
+                                        <li>
+                                        <a href="/about/me">我
+                                        </a>
+                                        </li>
+                                    
+                                        <li>
+                                        <a target="_blank" rel="noopener" href="https://github.com/raphael-liu">GITHUB
+                                        </a>
+                                        </li>
+                                    
+                                    </ul>
+                                
+                            </li>
+                    
+                    
+                        <li class="navbar-item search search-popup-trigger">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fa-solid fa-magnifying-glass"></i></div>
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile drawer -->
+    <div class="navbar-drawer w-full absolute top-0 left-0 bg-background-color">
+        <ul class="drawer-navbar-list flex flex-col justify-start items-center">
+            
+                
+                    <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group " 
+                        href="/"  >
+                             
+                                
+                                    <i class="fa-regular fa-house"></i>
+                                
+                                首页
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+                
+                    <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group " 
+                        href="/archives"  >
+                             
+                                
+                                    <i class="fa-regular fa-archive"></i>
+                                
+                                文章
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+                
+                    <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group has-dropdown" 
+                        href="#" onClick="return false;">
+                            
+                                
+                                    <i class="fa-regular fa-user"></i>
+                                
+                                关于&nbsp;<i class="group-hover:rotate-180 transition-transform fa-solid fa-chevron-down"></i>
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                              
+                        
+                            <li class="text-base flex justify-center items-center hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                <a class="py-0.5" href="/about/me">我</a>
+                            </li>
+                        
+                            <li class="text-base flex justify-center items-center hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                <a class="py-0.5" target="_blank" rel="noopener" href="https://github.com/raphael-liu">GITHUB</a>
+                            </li>
+                        
+                    
+            
+
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="post-page-container">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            
+                <h1 class="article-title-regular">2213-由单个字符重复的最长子字符串</h1>
+            
+            </div>
+            
+                    
+        
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">Raphael Liu</span>
+                        
+                            <span class="author-label">Lv10</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2023-09-13 00:47:26</span>
+        <span class="mobile">2023-09-13 00:47:26</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2023-09-13 16:06:30</span>
+            <span class="mobile">2023-09-13 16:06:30</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/algorithm/">algorithm</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/HARD/">HARD</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        
+
+
+        <div class="article-content markdown-body">
+            <p>给你一个下标从 <strong>0</strong> 开始的字符串 <code>s</code> 。另给你一个下标从 <strong>0</strong> 开始、长度为 <code>k</code> 的字符串 <code>queryCharacters</code><br>，一个下标从 <code>0</code> 开始、长度也是 <code>k</code> 的整数 <strong>下标</strong> 数组 <code>queryIndices</code> ，这两个都用来描述 <code>k</code> 个查询。</p>
+<p>第 <code>i</code> 个查询会将 <code>s</code> 中位于下标 <code>queryIndices[i]</code> 的字符更新为 <code>queryCharacters[i]</code> 。</p>
+<p>返回一个长度为 <code>k</code> 的数组 <code>lengths</code> ，其中 <code>lengths[i]</code> 是在执行第 <code>i</code> 个查询 <strong>之后</strong> <code>s</code> 中仅由<br><strong>单个字符重复</strong> 组成的 <strong>最长子字符串</strong> 的 <strong>长度</strong> <em>。</em></p>
+<p><strong>示例 1：</strong></p>
+<pre><code>**输入：** s = &quot;babacc&quot;, queryCharacters = &quot;bcb&quot;, queryIndices = [1,3,3]
+**输出：** [3,3,4]
+**解释：**
+- 第 1 次查询更新后 s = &quot; _b **b** b_acc&quot; 。由单个字符重复组成的最长子字符串是 &quot;bbb&quot; ，长度为 3 。
+- 第 2 次查询更新后 s = &quot;bbb _ **c** cc_&quot; 。由单个字符重复组成的最长子字符串是 &quot;bbb&quot; 或 &quot;ccc&quot;，长度为 3 。
+- 第 3 次查询更新后 s = &quot; _bbb **b**_ cc&quot; 。由单个字符重复组成的最长子字符串是 &quot;bbbb&quot; ，长度为 4 。
+因此，返回 [3,3,4] 。
+</code></pre>
+<p><strong>示例 2：</strong></p>
+<pre><code>**输入：** s = &quot;abyzz&quot;, queryCharacters = &quot;aa&quot;, queryIndices = [2,1]
+**输出：** [2,3]
+**解释：**
+- 第 1 次查询更新后 s = &quot;ab **a** _zz_ &quot; 。由单个字符重复组成的最长子字符串是 &quot;zz&quot; ，长度为 2 。
+- 第 2 次查询更新后 s = &quot; _a **a** a_zz&quot; 。由单个字符重复组成的最长子字符串是 &quot;aaa&quot; ，长度为 3 。
+因此，返回 [2,3] 。
+</code></pre>
+<p><strong>提示：</strong></p>
+<ul>
+<li><code>1 &lt;= s.length &lt;= 105</code></li>
+<li><code>s</code> 由小写英文字母组成</li>
+<li><code>k == queryCharacters.length == queryIndices.length</code></li>
+<li><code>1 &lt;= k &lt;= 105</code></li>
+<li><code>queryCharacters</code> 由小写英文字母组成</li>
+<li><code>0 &lt;= queryIndices[i] &lt; s.length</code></li>
+</ul>
+<h3 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h3><blockquote>
+<p>珂朵莉树，又叫<code>基于数据随机的颜色段均摊</code>，用于管理区间。它可以高效地进行区间的赋值、查询、遍历和删除操作。珂朵莉树的特点是，维护的每段区间的值是相等的，<code>值相等的区间可以自动合并</code>。</p>
+</blockquote>
+<ol>
+<li>这里用到的<strong>珂朵莉树</strong>是具有以下三个接口的数据结构。</li>
+</ol>
+<ul>
+<li><p><strong>set: set(start: number, end: number, value: S): void</strong>，用于设置指定范围内的值。它接受起始位置 start、结束位置 end 和值 value 作为参数，并将该范围内的值设置为指定的值。</p>
+</li>
+<li><p><strong>get: get(x: number, erase &#x3D; false): [start: number, end: number, value: S] | undefined</strong>，用于获取包含特定位置 x 的区间信息。它返回一个包含起始位置 start、结束位置 end 和对应的值 value 的元组。如果 erase 参数为 true，则在获取值的同时会将该区间删除。</p>
+</li>
+<li><p><strong>enumerateRange: enumerateRange(start: number, end: number, f: (start: number, end: number, value: S) &#x3D;&gt; void, erase &#x3D; false): void</strong>，用于遍历指定范围内的所有区间，并对每个区间执行回调函数 f。回调函数 f 接受每个区间的起始位置 start、结束位置 end 和对应的值 value 作为参数。如果 erase 参数为 true，则在遍历区间的同时会将遍历到的区间删除。</p>
+</li>
+</ul>
+<p>只要一个数据结构可以支持<strong>快速寻找前驱和后继</strong>以及<strong>快速删除和插入元素</strong>，那么就可以用来实现珂朵莉树，例如<strong>SortedDict&#x2F;64叉树&#x2F;Van Emde Boas Tree&#x2F;链表</strong>，等等…<br>下面的珂朵莉树基于64叉树实现。<br>2. 解法</p>
+<ol>
+<li>用珂朵莉树维护区间字符类型，有序数组维护每个连续段的长度。</li>
+<li>因为每次单点修改最多影响到左、中、右三个段，为了避免分类讨论，每次修改前，遍历左段起点到右段终点的每个区间，删除这些区间的长度，单点修改后，再遍历左段起点到右段终点的每个区间，把这些区间长度加回来。</li>
+<li>每次查询的单个字符重复的最长子字符串，就是有序数组中的最大值。<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://pic.leetcode.cn/1685281025-ZDNNkF-image.png"
+                      alt="image.png"
+                >{:width&#x3D;400}</li>
+</ol>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><div class="highlight-container" data-rel="Typescript"><figure class="iseeu highlight typescript"><figcaption><span>[-Solution]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">longestRepeating</span>(<span class="params">s: <span class="built_in">string</span>, queryCharacters: <span class="built_in">string</span>, queryIndices: <span class="built_in">number</span>[]</span>): <span class="built_in">number</span>[] &#123;</span><br><span class="line">   <span class="keyword">const</span> n = s.<span class="property">length</span></span><br><span class="line">   <span class="keyword">const</span> q = queryIndices.<span class="property">length</span></span><br><span class="line">   <span class="keyword">const</span> res = <span class="title class_">Array</span>(q).<span class="title function_">fill</span>(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">   <span class="keyword">const</span> odt = <span class="keyword">new</span> <span class="title function_">ODT</span>(n, -<span class="number">1</span>) <span class="comment">// !珂朵莉树维护区间字符类型</span></span><br><span class="line">   s.<span class="title function_">split</span>(<span class="string">&#x27;&#x27;</span>).<span class="title function_">forEach</span>(<span class="function">(<span class="params">c, i</span>) =&gt;</span> &#123;</span><br><span class="line">     odt.<span class="title function_">set</span>(i, i + <span class="number">1</span>, c.<span class="title function_">charCodeAt</span>(<span class="number">0</span>) - <span class="number">97</span>)</span><br><span class="line">   &#125;)</span><br><span class="line"></span><br><span class="line">   <span class="keyword">const</span> lens = <span class="keyword">new</span> <span class="title class_">SortedList</span>&lt;<span class="built_in">number</span>&gt;() <span class="comment">// !SortedList维护每个连续段的长度</span></span><br><span class="line">   odt.<span class="title function_">enumerateAll</span>(<span class="function">(<span class="params">start, end, value</span>) =&gt;</span> &#123;</span><br><span class="line">     <span class="keyword">if</span> (value !== -<span class="number">1</span>) &#123;</span><br><span class="line">       lens.<span class="title function_">add</span>(end - start)</span><br><span class="line">     &#125;</span><br><span class="line">   &#125;)</span><br><span class="line"></span><br><span class="line">   <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; q; i++) &#123;</span><br><span class="line">     <span class="keyword">const</span> target = queryCharacters.<span class="title function_">charCodeAt</span>(i) - <span class="number">97</span></span><br><span class="line">     <span class="keyword">const</span> pos = queryIndices[i]</span><br><span class="line"></span><br><span class="line">     <span class="comment">// !每次更新最多影响左中右三段区间</span></span><br><span class="line">     <span class="comment">// !先删除这三段区间的长度，修改后，再添加这三段区间的长度</span></span><br><span class="line">     <span class="comment">// 这种做法无需分类讨论</span></span><br><span class="line">     <span class="keyword">const</span> [start, end] = odt.<span class="title function_">get</span>(pos)!</span><br><span class="line">     <span class="keyword">const</span> leftSeg = odt.<span class="title function_">get</span>(start - <span class="number">1</span>)</span><br><span class="line">     <span class="keyword">const</span> rightSeg = odt.<span class="title function_">get</span>(end)</span><br><span class="line">     <span class="keyword">const</span> first = leftSeg ? leftSeg[<span class="number">0</span>] : <span class="number">0</span></span><br><span class="line">     <span class="keyword">const</span> last = rightSeg ? rightSeg[<span class="number">1</span>] : n</span><br><span class="line">     odt.<span class="title function_">enumerateRange</span>(first, last, <span class="function">(<span class="params">start, end</span>) =&gt;</span> &#123;</span><br><span class="line">       lens.<span class="title function_">discard</span>(end - start)</span><br><span class="line">     &#125;)</span><br><span class="line"></span><br><span class="line">     odt.<span class="title function_">set</span>(pos, pos + <span class="number">1</span>, target)</span><br><span class="line"></span><br><span class="line">     odt.<span class="title function_">enumerateRange</span>(first, last, <span class="function">(<span class="params">start, end</span>) =&gt;</span> &#123;</span><br><span class="line">       lens.<span class="title function_">add</span>(end - start)</span><br><span class="line">     &#125;)</span><br><span class="line"></span><br><span class="line">     res[i] = lens.<span class="title function_">max</span>()</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">return</span> res</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure></div>
+<div class="highlight-container" data-rel="Typescript"><figure class="iseeu highlight typescript"><figcaption><span>[-珂朵莉树]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="variable constant_">INF</span> = <span class="number">2e15</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 珂朵莉树，基于数据随机的颜色段均摊。</span></span><br><span class="line"><span class="comment"> * `FastSet`实现.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">ODT</span>&lt;S&gt; &#123;</span><br><span class="line">  <span class="keyword">private</span> _len = <span class="number">0</span></span><br><span class="line">  <span class="keyword">private</span> _count = <span class="number">0</span></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">readonly</span> <span class="attr">_leftLimit</span>: <span class="built_in">number</span></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">readonly</span> <span class="attr">_rightLimit</span>: <span class="built_in">number</span></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">readonly</span> <span class="attr">_noneValue</span>: S</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">readonly</span> <span class="attr">_data</span>: S[]</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">readonly</span> <span class="attr">_fs</span>: <span class="title class_">FastSet</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * 指定区间长度和哨兵值建立一个ODT.初始时,所有位置的值为 &#123;<span class="doctag">@link</span> noneValue&#125;.</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@param</span> n 区间范围为`[0, n)`.</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@param</span> noneValue 表示空值的哨兵值.</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params">n: <span class="built_in">number</span>, noneValue: S</span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> data = <span class="title class_">Array</span>(n)</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; n; i++) data[i] = noneValue</span><br><span class="line">    <span class="keyword">const</span> fs = <span class="keyword">new</span> <span class="title class_">FastSet</span>(n)</span><br><span class="line">    fs.<span class="title function_">insert</span>(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">_leftLimit</span> = <span class="number">0</span></span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">_rightLimit</span> = n</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">_noneValue</span> = noneValue</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">_data</span> = data</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">_fs</span> = fs</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * 返回包含`x`的区间的信息.</span></span><br><span class="line"><span class="comment">   * 0 &lt;= x &lt; n.</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  <span class="title function_">get</span>(<span class="attr">x</span>: <span class="built_in">number</span>, erase = <span class="literal">false</span>): [<span class="attr">start</span>: <span class="built_in">number</span>, <span class="attr">end</span>: <span class="built_in">number</span>, <span class="attr">value</span>: S] | <span class="literal">undefined</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (x &lt; <span class="variable language_">this</span>.<span class="property">_leftLimit</span> || x &gt;= <span class="variable language_">this</span>.<span class="property">_rightLimit</span>) <span class="keyword">return</span> <span class="literal">undefined</span></span><br><span class="line">    <span class="keyword">const</span> start = <span class="variable language_">this</span>.<span class="property">_fs</span>.<span class="title function_">prev</span>(x)</span><br><span class="line">    <span class="keyword">const</span> end = <span class="variable language_">this</span>.<span class="property">_fs</span>.<span class="title function_">next</span>(x + <span class="number">1</span>)</span><br><span class="line">    <span class="keyword">const</span> value = <span class="variable language_">this</span>.<span class="property">_data</span>[start]</span><br><span class="line">    <span class="keyword">if</span> (erase &amp;&amp; value !== <span class="variable language_">this</span>.<span class="property">_noneValue</span>) &#123;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">_len</span>--</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">_count</span> -= end - start</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">_data</span>[start] = <span class="variable language_">this</span>.<span class="property">_noneValue</span></span><br><span class="line">      <span class="variable language_">this</span>.<span class="title function_">_mergeAt</span>(start)</span><br><span class="line">      <span class="variable language_">this</span>.<span class="title function_">_mergeAt</span>(end)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> [start, end, value]</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">set</span>(<span class="attr">start</span>: <span class="built_in">number</span>, <span class="attr">end</span>: <span class="built_in">number</span>, <span class="attr">value</span>: S): <span class="built_in">void</span> &#123;</span><br><span class="line">    <span class="comment">// eslint-disable-next-line @typescript-eslint/no-empty-function</span></span><br><span class="line">    <span class="variable language_">this</span>.<span class="title function_">enumerateRange</span>(start, end, <span class="function">() =&gt;</span> &#123;&#125;, <span class="literal">true</span>) <span class="comment">// remove</span></span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">_fs</span>.<span class="title function_">insert</span>(start)</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">_data</span>[start] = value</span><br><span class="line">    <span class="keyword">if</span> (value !== <span class="variable language_">this</span>.<span class="property">_noneValue</span>) &#123;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">_len</span>++</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">_count</span> += end - start</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="title function_">_mergeAt</span>(start)</span><br><span class="line">    <span class="variable language_">this</span>.<span class="title function_">_mergeAt</span>(end)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">enumerateAll</span>(<span class="attr">f</span>: <span class="function">(<span class="params">start: <span class="built_in">number</span>, end: <span class="built_in">number</span>, value: S</span>) =&gt;</span> <span class="built_in">void</span>): <span class="built_in">void</span> &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="title function_">enumerateRange</span>(<span class="variable language_">this</span>.<span class="property">_leftLimit</span>, <span class="variable language_">this</span>.<span class="property">_rightLimit</span>, f, <span class="literal">false</span>)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * 遍历范围`[start, end)`内的所有区间.</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  <span class="title function_">enumerateRange</span>(</span><br><span class="line">    <span class="attr">start</span>: <span class="built_in">number</span>,</span><br><span class="line">    <span class="attr">end</span>: <span class="built_in">number</span>,</span><br><span class="line">    <span class="attr">f</span>: <span class="function">(<span class="params">start: <span class="built_in">number</span>, end: <span class="built_in">number</span>, value: S</span>) =&gt;</span> <span class="built_in">void</span>,</span><br><span class="line">    erase = <span class="literal">false</span></span><br><span class="line">  ): <span class="built_in">void</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (start &lt; <span class="variable language_">this</span>.<span class="property">_leftLimit</span>) start = <span class="variable language_">this</span>.<span class="property">_leftLimit</span></span><br><span class="line">    <span class="keyword">if</span> (end &gt; <span class="variable language_">this</span>.<span class="property">_rightLimit</span>) end = <span class="variable language_">this</span>.<span class="property">_rightLimit</span></span><br><span class="line">    <span class="keyword">if</span> (start &gt;= end) <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> none = <span class="variable language_">this</span>.<span class="property">_noneValue</span></span><br><span class="line">    <span class="keyword">if</span> (!erase) &#123;</span><br><span class="line">      <span class="keyword">let</span> left = <span class="variable language_">this</span>.<span class="property">_fs</span>.<span class="title function_">prev</span>(start)</span><br><span class="line">      <span class="keyword">while</span> (left &lt; end) &#123;</span><br><span class="line">        <span class="keyword">const</span> right = <span class="variable language_">this</span>.<span class="property">_fs</span>.<span class="title function_">next</span>(left + <span class="number">1</span>)</span><br><span class="line">        <span class="title function_">f</span>(<span class="title class_">Math</span>.<span class="title function_">max</span>(left, start), <span class="title class_">Math</span>.<span class="title function_">min</span>(right, end), <span class="variable language_">this</span>.<span class="property">_data</span>[left])</span><br><span class="line">        left = right</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> p = <span class="variable language_">this</span>.<span class="property">_fs</span>.<span class="title function_">prev</span>(start)</span><br><span class="line">    <span class="keyword">if</span> (p &lt; start) &#123;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">_fs</span>.<span class="title function_">insert</span>(start)</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">_data</span>[start] = <span class="variable language_">this</span>.<span class="property">_data</span>[p]</span><br><span class="line">      <span class="keyword">if</span> (<span class="variable language_">this</span>.<span class="property">_data</span>[start] !== none) &#123;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">_len</span>++</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    p = <span class="variable language_">this</span>.<span class="property">_fs</span>.<span class="title function_">next</span>(end)</span><br><span class="line">    <span class="keyword">if</span> (end &lt; p) &#123;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">_data</span>[end] = <span class="variable language_">this</span>.<span class="property">_data</span>[<span class="variable language_">this</span>.<span class="property">_fs</span>.<span class="title function_">prev</span>(end)]</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">_fs</span>.<span class="title function_">insert</span>(end)</span><br><span class="line">      <span class="keyword">if</span> (<span class="variable language_">this</span>.<span class="property">_data</span>[end] !== none) &#123;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">_len</span>++</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    p = start</span><br><span class="line">    <span class="keyword">while</span> (p &lt; end) &#123;</span><br><span class="line">      <span class="keyword">const</span> q = <span class="variable language_">this</span>.<span class="property">_fs</span>.<span class="title function_">next</span>(p + <span class="number">1</span>)</span><br><span class="line">      <span class="keyword">const</span> x = <span class="variable language_">this</span>.<span class="property">_data</span>[p]</span><br><span class="line">      <span class="title function_">f</span>(p, q, x)</span><br><span class="line">      <span class="keyword">if</span> (<span class="variable language_">this</span>.<span class="property">_data</span>[p] !== none) &#123;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">_len</span>--</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">_count</span> -= q - p</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">_fs</span>.<span class="title function_">erase</span>(p)</span><br><span class="line">      p = q</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">_fs</span>.<span class="title function_">insert</span>(start)</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">_data</span>[start] = none</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">toString</span>(): <span class="built_in">string</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> <span class="attr">sb</span>: <span class="built_in">string</span>[] = [<span class="string">`ODT(&#123;this.length&#125;) &#123;`</span>]</span><br><span class="line">    <span class="variable language_">this</span>.<span class="title function_">enumerateAll</span>(<span class="function">(<span class="params">start, end, value</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">const</span> v = value === <span class="variable language_">this</span>.<span class="property">_noneValue</span> ? <span class="string">&#x27;null&#x27;</span> : value</span><br><span class="line">      sb.<span class="title function_">push</span>(<span class="string">`  [&#123;start&#125;,&#123;end&#125;):&#123;v&#125;`</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">    sb.<span class="title function_">push</span>(<span class="string">&#x27;&#125;&#x27;</span>)</span><br><span class="line">    <span class="keyword">return</span> sb.<span class="title function_">join</span>(<span class="string">&#x27;\n&#x27;</span>)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * 区间个数.</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  <span class="keyword">get</span> <span class="title function_">length</span>(): <span class="built_in">number</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">_len</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * 区间内元素个数之和.</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  <span class="keyword">get</span> <span class="title function_">count</span>(): <span class="built_in">number</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">_count</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> <span class="title function_">_mergeAt</span>(<span class="attr">p</span>: <span class="built_in">number</span>): <span class="built_in">void</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (p &lt;= <span class="number">0</span> || <span class="variable language_">this</span>.<span class="property">_rightLimit</span> &lt;= p) <span class="keyword">return</span></span><br><span class="line">    <span class="keyword">const</span> q = <span class="variable language_">this</span>.<span class="property">_fs</span>.<span class="title function_">prev</span>(p - <span class="number">1</span>)</span><br><span class="line">    <span class="keyword">if</span> (<span class="variable language_">this</span>.<span class="property">_data</span>[p] === <span class="variable language_">this</span>.<span class="property">_data</span>[q]) &#123;</span><br><span class="line">      <span class="keyword">if</span> (<span class="variable language_">this</span>.<span class="property">_data</span>[p] !== <span class="variable language_">this</span>.<span class="property">_noneValue</span>) <span class="variable language_">this</span>.<span class="property">_len</span>--</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">_fs</span>.<span class="title function_">erase</span>(p)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 利用位运算寻找区间的某个位置左侧/右侧第一个未被访问过的位置.</span></span><br><span class="line"><span class="comment"> * 初始时,所有位置都未被访问过.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">FastSet</span> &#123;</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">readonly</span> <span class="attr">_n</span>: <span class="built_in">number</span></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">readonly</span> <span class="attr">_lg</span>: <span class="built_in">number</span></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">readonly</span> <span class="attr">_seg</span>: <span class="title class_">Uint32Array</span>[]</span><br><span class="line"></span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params">n: <span class="built_in">number</span></span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">_n</span> = n</span><br><span class="line">    <span class="keyword">const</span> <span class="attr">seg</span>: <span class="title class_">Uint32Array</span>[] = []</span><br><span class="line">    <span class="keyword">while</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">      seg.<span class="title function_">push</span>(<span class="keyword">new</span> <span class="title class_">Uint32Array</span>((n + <span class="number">31</span>) &gt;&gt;&gt; <span class="number">5</span>))</span><br><span class="line">      n = (n + <span class="number">31</span>) &gt;&gt;&gt; <span class="number">5</span></span><br><span class="line">      <span class="keyword">if</span> (n &lt;= <span class="number">1</span>) &#123;</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">_lg</span> = seg.<span class="property">length</span></span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">_seg</span> = seg</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">insert</span>(<span class="attr">i</span>: <span class="built_in">number</span>): <span class="built_in">void</span> &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> h = <span class="number">0</span>; h &lt; <span class="variable language_">this</span>.<span class="property">_lg</span>; h++) &#123;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">_seg</span>[h][i &gt;&gt;&gt; <span class="number">5</span>] |= <span class="number">1</span> &lt;&lt; (i &amp; <span class="number">31</span>)</span><br><span class="line">      i &gt;&gt;&gt;= <span class="number">5</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">has</span>(<span class="attr">i</span>: <span class="built_in">number</span>): <span class="built_in">boolean</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> !!(<span class="variable language_">this</span>.<span class="property">_seg</span>[<span class="number">0</span>][i &gt;&gt;&gt; <span class="number">5</span>] &amp; (<span class="number">1</span> &lt;&lt; (i &amp; <span class="number">31</span>)))</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">erase</span>(<span class="attr">i</span>: <span class="built_in">number</span>): <span class="built_in">void</span> &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> h = <span class="number">0</span>; h &lt; <span class="variable language_">this</span>.<span class="property">_lg</span>; h++) &#123;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">_seg</span>[h][i &gt;&gt;&gt; <span class="number">5</span>] &amp;= ~(<span class="number">1</span> &lt;&lt; (i &amp; <span class="number">31</span>))</span><br><span class="line">      <span class="keyword">if</span> (<span class="variable language_">this</span>.<span class="property">_seg</span>[h][i &gt;&gt;&gt; <span class="number">5</span>]) &#123;</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">      &#125;</span><br><span class="line">      i &gt;&gt;&gt;= <span class="number">5</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * 返回x右侧第一个未被访问过的位置(包含x).</span></span><br><span class="line"><span class="comment">   * 如果不存在,返回`n`.</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  <span class="title function_">next</span>(<span class="attr">i</span>: <span class="built_in">number</span>): <span class="built_in">number</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (i &lt; <span class="number">0</span>) &#123;</span><br><span class="line">      i = <span class="number">0</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (i &gt;= <span class="variable language_">this</span>.<span class="property">_n</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">_n</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> h = <span class="number">0</span>; h &lt; <span class="variable language_">this</span>.<span class="property">_lg</span>; h++) &#123;</span><br><span class="line">      <span class="keyword">if</span> (i &gt;&gt;&gt; <span class="number">5</span> === <span class="variable language_">this</span>.<span class="property">_seg</span>[h].<span class="property">length</span>) &#123;</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">let</span> d = <span class="variable language_">this</span>.<span class="property">_seg</span>[h][i &gt;&gt;&gt; <span class="number">5</span>] &gt;&gt;&gt; (i &amp; <span class="number">31</span>)</span><br><span class="line">      <span class="keyword">if</span> (d === <span class="number">0</span>) &#123;</span><br><span class="line">        i = (i &gt;&gt;&gt; <span class="number">5</span>) + <span class="number">1</span></span><br><span class="line">        <span class="keyword">continue</span></span><br><span class="line">      &#125;</span><br><span class="line">      <span class="comment">// !trailingZeros32: 31 - Math.clz32(x &amp; -x)</span></span><br><span class="line">      i += <span class="number">31</span> - <span class="title class_">Math</span>.<span class="title function_">clz32</span>(d &amp; -d)</span><br><span class="line">      <span class="keyword">for</span> (<span class="keyword">let</span> g = h - <span class="number">1</span>; ~g; g--) &#123;</span><br><span class="line">        i &lt;&lt;= <span class="number">5</span></span><br><span class="line">        <span class="keyword">const</span> tmp = <span class="variable language_">this</span>.<span class="property">_seg</span>[g][i &gt;&gt;&gt; <span class="number">5</span>]</span><br><span class="line">        i += <span class="number">31</span> - <span class="title class_">Math</span>.<span class="title function_">clz32</span>(tmp &amp; -tmp)</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">return</span> i</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">_n</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * 返回x左侧第一个未被访问过的位置(包含x).</span></span><br><span class="line"><span class="comment">   * 如果不存在,返回`-1`.</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  <span class="title function_">prev</span>(<span class="attr">i</span>: <span class="built_in">number</span>): <span class="built_in">number</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (i &lt; <span class="number">0</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> -<span class="number">1</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (i &gt;= <span class="variable language_">this</span>.<span class="property">_n</span>) &#123;</span><br><span class="line">      i = <span class="variable language_">this</span>.<span class="property">_n</span> - <span class="number">1</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> h = <span class="number">0</span>; h &lt; <span class="variable language_">this</span>.<span class="property">_lg</span>; h++) &#123;</span><br><span class="line">      <span class="keyword">if</span> (i === -<span class="number">1</span>) &#123;</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">let</span> d = <span class="variable language_">this</span>.<span class="property">_seg</span>[h][i &gt;&gt;&gt; <span class="number">5</span>] &lt;&lt; (<span class="number">31</span> - (i &amp; <span class="number">31</span>))</span><br><span class="line">      <span class="keyword">if</span> (d === <span class="number">0</span>) &#123;</span><br><span class="line">        i = (i &gt;&gt;&gt; <span class="number">5</span>) - <span class="number">1</span></span><br><span class="line">        <span class="keyword">continue</span></span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      i -= <span class="title class_">Math</span>.<span class="title function_">clz32</span>(d)</span><br><span class="line">      <span class="keyword">for</span> (<span class="keyword">let</span> g = h - <span class="number">1</span>; ~g; g--) &#123;</span><br><span class="line">        i &lt;&lt;= <span class="number">5</span></span><br><span class="line">        i += <span class="number">31</span> - <span class="title class_">Math</span>.<span class="title function_">clz32</span>(<span class="variable language_">this</span>.<span class="property">_seg</span>[g][i &gt;&gt;&gt; <span class="number">5</span>])</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">return</span> i</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> -<span class="number">1</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * 遍历[start,end)区间内的元素.</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  <span class="title function_">enumerateRange</span>(<span class="attr">start</span>: <span class="built_in">number</span>, <span class="attr">end</span>: <span class="built_in">number</span>, <span class="attr">f</span>: <span class="function">(<span class="params">v: <span class="built_in">number</span></span>) =&gt;</span> <span class="built_in">void</span>): <span class="built_in">void</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> x = start - <span class="number">1</span></span><br><span class="line">    <span class="keyword">while</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">      x = <span class="variable language_">this</span>.<span class="title function_">next</span>(x + <span class="number">1</span>)</span><br><span class="line">      <span class="keyword">if</span> (x &gt;= end) &#123;</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">      &#125;</span><br><span class="line">      <span class="title function_">f</span>(x)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">toString</span>(): <span class="built_in">string</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> <span class="attr">sb</span>: <span class="built_in">string</span>[] = []</span><br><span class="line">    <span class="variable language_">this</span>.<span class="title function_">enumerateRange</span>(<span class="number">0</span>, <span class="variable language_">this</span>.<span class="property">_n</span>, <span class="function"><span class="params">v</span> =&gt;</span> sb.<span class="title function_">push</span>(v.<span class="title function_">toString</span>()))</span><br><span class="line">    <span class="keyword">return</span> <span class="string">`FastSet(&#123;sb.join(&#x27;, &#x27;)&#125;)`</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">get</span> <span class="title function_">min</span>(): <span class="built_in">number</span> | <span class="literal">null</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="title function_">next</span>(-<span class="number">1</span>)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">get</span> <span class="title function_">max</span>(): <span class="built_in">number</span> | <span class="literal">null</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="title function_">prev</span>(<span class="variable language_">this</span>.<span class="property">_n</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+<div class="highlight-container" data-rel="Typescript"><figure class="iseeu highlight typescript"><figcaption><span>[-SortedList]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br><span class="line">318</span><br><span class="line">319</span><br><span class="line">320</span><br><span class="line">321</span><br><span class="line">322</span><br><span class="line">323</span><br><span class="line">324</span><br><span class="line">325</span><br><span class="line">326</span><br><span class="line">327</span><br><span class="line">328</span><br><span class="line">329</span><br><span class="line">330</span><br><span class="line">331</span><br><span class="line">332</span><br><span class="line">333</span><br><span class="line">334</span><br><span class="line">335</span><br><span class="line">336</span><br><span class="line">337</span><br><span class="line">338</span><br><span class="line">339</span><br><span class="line">340</span><br><span class="line">341</span><br><span class="line">342</span><br><span class="line">343</span><br><span class="line">344</span><br><span class="line">345</span><br><span class="line">346</span><br><span class="line">347</span><br><span class="line">348</span><br><span class="line">349</span><br><span class="line">350</span><br><span class="line">351</span><br><span class="line">352</span><br><span class="line">353</span><br><span class="line">354</span><br><span class="line">355</span><br><span class="line">356</span><br><span class="line">357</span><br><span class="line">358</span><br><span class="line">359</span><br><span class="line">360</span><br><span class="line">361</span><br><span class="line">362</span><br><span class="line">363</span><br><span class="line">364</span><br><span class="line">365</span><br><span class="line">366</span><br><span class="line">367</span><br><span class="line">368</span><br><span class="line">369</span><br><span class="line">370</span><br><span class="line">371</span><br><span class="line">372</span><br><span class="line">373</span><br><span class="line">374</span><br><span class="line">375</span><br><span class="line">376</span><br><span class="line">377</span><br><span class="line">378</span><br><span class="line">379</span><br><span class="line">380</span><br><span class="line">381</span><br><span class="line">382</span><br><span class="line">383</span><br><span class="line">384</span><br><span class="line">385</span><br><span class="line">386</span><br><span class="line">387</span><br><span class="line">388</span><br><span class="line">389</span><br><span class="line">390</span><br><span class="line">391</span><br><span class="line">392</span><br><span class="line">393</span><br><span class="line">394</span><br><span class="line">395</span><br><span class="line">396</span><br><span class="line">397</span><br><span class="line">398</span><br><span class="line">399</span><br><span class="line">400</span><br><span class="line">401</span><br><span class="line">402</span><br><span class="line">403</span><br><span class="line">404</span><br><span class="line">405</span><br><span class="line">406</span><br><span class="line">407</span><br><span class="line">408</span><br><span class="line">409</span><br><span class="line">410</span><br><span class="line">411</span><br><span class="line">412</span><br><span class="line">413</span><br><span class="line">414</span><br><span class="line">415</span><br><span class="line">416</span><br><span class="line">417</span><br><span class="line">418</span><br><span class="line">419</span><br><span class="line">420</span><br><span class="line">421</span><br><span class="line">422</span><br><span class="line">423</span><br><span class="line">424</span><br><span class="line">425</span><br><span class="line">426</span><br><span class="line">427</span><br><span class="line">428</span><br><span class="line">429</span><br><span class="line">430</span><br><span class="line">431</span><br><span class="line">432</span><br><span class="line">433</span><br><span class="line">434</span><br><span class="line">435</span><br><span class="line">436</span><br><span class="line">437</span><br><span class="line">438</span><br><span class="line">439</span><br><span class="line">440</span><br><span class="line">441</span><br><span class="line">442</span><br><span class="line">443</span><br><span class="line">444</span><br><span class="line">445</span><br><span class="line">446</span><br><span class="line">447</span><br><span class="line">448</span><br><span class="line">449</span><br><span class="line">450</span><br><span class="line">451</span><br><span class="line">452</span><br><span class="line">453</span><br><span class="line">454</span><br><span class="line">455</span><br><span class="line">456</span><br><span class="line">457</span><br><span class="line">458</span><br><span class="line">459</span><br><span class="line">460</span><br><span class="line">461</span><br><span class="line">462</span><br><span class="line">463</span><br><span class="line">464</span><br><span class="line">465</span><br><span class="line">466</span><br><span class="line">467</span><br><span class="line">468</span><br><span class="line">469</span><br><span class="line">470</span><br><span class="line">471</span><br><span class="line">472</span><br><span class="line">473</span><br><span class="line">474</span><br><span class="line">475</span><br><span class="line">476</span><br><span class="line">477</span><br><span class="line">478</span><br><span class="line">479</span><br><span class="line">480</span><br><span class="line">481</span><br><span class="line">482</span><br><span class="line">483</span><br><span class="line">484</span><br><span class="line">485</span><br><span class="line">486</span><br><span class="line">487</span><br><span class="line">488</span><br><span class="line">489</span><br><span class="line">490</span><br><span class="line">491</span><br><span class="line">492</span><br><span class="line">493</span><br><span class="line">494</span><br><span class="line">495</span><br><span class="line">496</span><br><span class="line">497</span><br><span class="line">498</span><br><span class="line">499</span><br><span class="line">500</span><br><span class="line">501</span><br><span class="line">502</span><br><span class="line">503</span><br><span class="line">504</span><br><span class="line">505</span><br><span class="line">506</span><br><span class="line">507</span><br><span class="line">508</span><br><span class="line">509</span><br><span class="line">510</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * A fast SortedList with O(sqrt(n)) insertion and deletion.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * @_see &#123;<span class="doctag">@link</span> https://github.com/981377660LMT/algorithm-study/blob/master/22_%E4%B8%93%E9%A2%98/%E7%A6%BB%E7%BA%BF%E6%9F%A5%E8%AF%A2/%E6%A0%B9%E5%8F%B7%E5%88%86%E6%B2%BB/SortedList/SortedList.ts&#125;</span></span><br><span class="line"><span class="comment"> * @_see &#123;<span class="doctag">@link</span> https://github.com/tatyam-prime/SortedSet/blob/main/SortedMultiset.py&#125;</span></span><br><span class="line"><span class="comment"> * @_see &#123;<span class="doctag">@link</span> https://qiita.com/tatyam/items/492c70ac4c955c055602&#125;</span></span><br><span class="line"><span class="comment"> * @_see &#123;<span class="doctag">@link</span> https://speakerdeck.com/tatyam_prime/python-dezui-qiang-falseping-heng-er-fen-tan-suo-mu-wozuo-ru&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">SortedList</span>&lt;T = <span class="built_in">number</span>&gt; &#123;</span><br><span class="line">  <span class="comment">/** Optimized for 1e5 elements in javascript. Do not change it. */</span></span><br><span class="line">  <span class="keyword">protected</span> <span class="keyword">static</span> <span class="keyword">readonly</span> _BLOCK_RATIO = <span class="number">50</span></span><br><span class="line">  <span class="keyword">protected</span> <span class="keyword">static</span> <span class="keyword">readonly</span> _REBUILD_RATIO = <span class="number">170</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">protected</span> <span class="keyword">readonly</span> <span class="attr">_compareFn</span>: <span class="function">(<span class="params">a: T, b: T</span>) =&gt;</span> <span class="built_in">number</span></span><br><span class="line">  <span class="keyword">protected</span> <span class="attr">_size</span>: <span class="built_in">number</span></span><br><span class="line">  <span class="keyword">protected</span> <span class="attr">_blocks</span>: T[][]</span><br><span class="line"></span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params"></span>)</span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params">iterable: Iterable&lt;T&gt;</span>)</span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params">compareFn: (a: T, b: T) =&gt; <span class="built_in">number</span></span>)</span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params">iterable: Iterable&lt;T&gt;, compareFn: (a: T, b: T) =&gt; <span class="built_in">number</span></span>)</span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params">compareFn: (a: T, b: T) =&gt; <span class="built_in">number</span>, iterable: Iterable&lt;T&gt;</span>)</span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params"></span></span><br><span class="line"><span class="params">    arg1?: Iterable&lt;T&gt; | ((a: T, b: T) =&gt; <span class="built_in">number</span>),</span></span><br><span class="line"><span class="params">    arg2?: Iterable&lt;T&gt; | ((a: T, b: T) =&gt; <span class="built_in">number</span>)</span></span><br><span class="line"><span class="params">  </span>) &#123;</span><br><span class="line">    <span class="keyword">let</span> <span class="title function_">defaultCompareFn</span> = (<span class="params">a: T, b: T</span>) =&gt; (a <span class="keyword">as</span> <span class="built_in">unknown</span> <span class="keyword">as</span> <span class="built_in">number</span>) - (b <span class="keyword">as</span> <span class="built_in">unknown</span> <span class="keyword">as</span> <span class="built_in">number</span>)</span><br><span class="line">    <span class="keyword">let</span> <span class="attr">defaultData</span>: T[] = []</span><br><span class="line">    <span class="keyword">if</span> (arg1 !== <span class="built_in">void</span> <span class="number">0</span>) &#123;</span><br><span class="line">      <span class="keyword">if</span> (<span class="keyword">typeof</span> arg1 === <span class="string">&#x27;function&#x27;</span>) &#123;</span><br><span class="line">        defaultCompareFn = arg1</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        defaultData = [...arg1]</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (arg2 !== <span class="built_in">void</span> <span class="number">0</span>) &#123;</span><br><span class="line">      <span class="keyword">if</span> (<span class="keyword">typeof</span> arg2 === <span class="string">&#x27;function&#x27;</span>) &#123;</span><br><span class="line">        defaultCompareFn = arg2</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        defaultData = [...arg2]</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">_compareFn</span> = defaultCompareFn</span><br><span class="line">    defaultData.<span class="title function_">sort</span>(defaultCompareFn)</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">_blocks</span> = <span class="variable language_">this</span>.<span class="title function_">_initBlocks</span>(defaultData)</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">_size</span> = defaultData.<span class="property">length</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">add</span>(<span class="attr">value</span>: T): <span class="built_in">void</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (!<span class="variable language_">this</span>.<span class="property">_size</span>) &#123;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">_blocks</span> = [[value]]</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">_size</span> = <span class="number">1</span></span><br><span class="line">      <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> blockIndex = <span class="variable language_">this</span>.<span class="title function_">_findBlockIndex</span>(value)</span><br><span class="line">    <span class="keyword">if</span> (blockIndex === -<span class="number">1</span>) &#123;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">_blocks</span>[<span class="variable language_">this</span>.<span class="property">_blocks</span>.<span class="property">length</span> - <span class="number">1</span>].<span class="title function_">push</span>(value)</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">_size</span>++</span><br><span class="line">      <span class="keyword">if</span> (</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">_blocks</span>[<span class="variable language_">this</span>.<span class="property">_blocks</span>.<span class="property">length</span> - <span class="number">1</span>].<span class="property">length</span> &gt;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">_blocks</span>.<span class="property">length</span> * <span class="title class_">SortedList</span>.<span class="property">_REBUILD_RATIO</span></span><br><span class="line">      ) &#123;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="title function_">_rebuild</span>()</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> block = <span class="variable language_">this</span>.<span class="property">_blocks</span>[blockIndex]</span><br><span class="line">    <span class="keyword">const</span> pos = <span class="variable language_">this</span>.<span class="title function_">_bisectRight</span>(block, value)</span><br><span class="line">    block.<span class="title function_">splice</span>(pos, <span class="number">0</span>, value)</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">_size</span> += <span class="number">1</span></span><br><span class="line">    <span class="keyword">if</span> (block.<span class="property">length</span> &gt; <span class="variable language_">this</span>.<span class="property">_blocks</span>.<span class="property">length</span> * <span class="title class_">SortedList</span>.<span class="property">_REBUILD_RATIO</span>) &#123;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="title function_">_rebuild</span>()</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/** 注意内部使用 `===` 来比较两个对象是否相等 */</span></span><br><span class="line">  <span class="title function_">has</span>(<span class="attr">value</span>: T): <span class="built_in">boolean</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (!<span class="variable language_">this</span>.<span class="property">_size</span>) <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">    <span class="keyword">const</span> blockIndex = <span class="variable language_">this</span>.<span class="title function_">_findBlockIndex</span>(value)</span><br><span class="line">    <span class="keyword">if</span> (blockIndex === <span class="built_in">void</span> <span class="number">0</span>) <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">    <span class="keyword">const</span> block = <span class="variable language_">this</span>.<span class="property">_blocks</span>[blockIndex]</span><br><span class="line">    <span class="keyword">const</span> pos = <span class="variable language_">this</span>.<span class="title function_">_bisectLeft</span>(block, value)</span><br><span class="line">    <span class="keyword">return</span> pos &lt; block.<span class="property">length</span> &amp;&amp; value === block[pos]</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/** 注意内部使用 `===` 来比较两个对象是否相等 */</span></span><br><span class="line">  <span class="title function_">discard</span>(<span class="attr">value</span>: T): <span class="built_in">boolean</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (!<span class="variable language_">this</span>.<span class="property">_size</span>) <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">    <span class="keyword">const</span> blockIndex = <span class="variable language_">this</span>.<span class="title function_">_findBlockIndex</span>(value)</span><br><span class="line">    <span class="keyword">if</span> (blockIndex === -<span class="number">1</span>) <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">    <span class="keyword">const</span> block = <span class="variable language_">this</span>.<span class="property">_blocks</span>[blockIndex]</span><br><span class="line">    <span class="keyword">const</span> pos = <span class="variable language_">this</span>.<span class="title function_">_bisectLeft</span>(block, value)</span><br><span class="line">    <span class="keyword">if</span> (pos === block.<span class="property">length</span> || block[pos] !== value) &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">    &#125;</span><br><span class="line">    block.<span class="title function_">splice</span>(pos, <span class="number">1</span>)</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">_size</span> -= <span class="number">1</span></span><br><span class="line">    <span class="keyword">if</span> (!block.<span class="property">length</span>) &#123;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">_blocks</span>.<span class="title function_">splice</span>(blockIndex, <span class="number">1</span>) <span class="comment">// !Splice When Empty, Do Not Rebuild</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">pop</span>(index = -<span class="number">1</span>): T | <span class="literal">undefined</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (index &lt; <span class="number">0</span>) index += <span class="variable language_">this</span>.<span class="property">_size</span></span><br><span class="line">    <span class="keyword">if</span> (index &lt; <span class="number">0</span> || index &gt;= <span class="variable language_">this</span>.<span class="property">_size</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="built_in">void</span> <span class="number">0</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="variable language_">this</span>.<span class="property">_blocks</span>.<span class="property">length</span>; i++) &#123;</span><br><span class="line">      <span class="keyword">const</span> block = <span class="variable language_">this</span>.<span class="property">_blocks</span>[i]</span><br><span class="line">      <span class="keyword">if</span> (index &lt; block.<span class="property">length</span>) &#123;</span><br><span class="line">        <span class="keyword">const</span> res = block[index]</span><br><span class="line">        block.<span class="title function_">splice</span>(index, <span class="number">1</span>)</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">_size</span> -= <span class="number">1</span></span><br><span class="line">        <span class="keyword">if</span> (!block.<span class="property">length</span>) &#123;</span><br><span class="line">          <span class="variable language_">this</span>.<span class="property">_blocks</span>.<span class="title function_">splice</span>(i, <span class="number">1</span>) <span class="comment">// !Splice When Empty, Do Not Rebuild</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res</span><br><span class="line">      &#125;</span><br><span class="line">      index -= block.<span class="property">length</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">void</span> <span class="number">0</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * 删除区间 [start, end) 内的元素.</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  <span class="title function_">erase</span>(<span class="attr">start</span>: <span class="built_in">number</span>, <span class="attr">end</span>: <span class="built_in">number</span>): <span class="built_in">void</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (start &lt; <span class="number">0</span>) start = <span class="number">0</span></span><br><span class="line">    <span class="keyword">if</span> (end &gt; <span class="variable language_">this</span>.<span class="property">_size</span>) end = <span class="variable language_">this</span>.<span class="property">_size</span></span><br><span class="line">    <span class="keyword">if</span> (start &gt;= end) <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> [bid, startPos] = <span class="variable language_">this</span>.<span class="title function_">_moveTo</span>(start)</span><br><span class="line">    <span class="keyword">let</span> deleteCount = end - start</span><br><span class="line">    <span class="keyword">for</span> (; bid &lt; <span class="variable language_">this</span>.<span class="property">_blocks</span>.<span class="property">length</span> &amp;&amp; deleteCount &gt; <span class="number">0</span>; bid++) &#123;</span><br><span class="line">      <span class="keyword">const</span> block = <span class="variable language_">this</span>.<span class="property">_blocks</span>[bid]</span><br><span class="line">      <span class="keyword">const</span> endPos = <span class="title class_">Math</span>.<span class="title function_">min</span>(block.<span class="property">length</span>, startPos + deleteCount)</span><br><span class="line">      <span class="keyword">const</span> curDeleteCount = endPos - startPos</span><br><span class="line">      <span class="keyword">if</span> (curDeleteCount === block.<span class="property">length</span>) &#123;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">_blocks</span>.<span class="title function_">splice</span>(bid, <span class="number">1</span>)</span><br><span class="line">        bid--</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        block.<span class="title function_">splice</span>(startPos, curDeleteCount)</span><br><span class="line">      &#125;</span><br><span class="line">      deleteCount -= curDeleteCount</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">_size</span> -= curDeleteCount</span><br><span class="line">      startPos = <span class="number">0</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">at</span>(<span class="attr">index</span>: <span class="built_in">number</span>): T | <span class="literal">undefined</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (index &lt; <span class="number">0</span>) index += <span class="variable language_">this</span>.<span class="property">_size</span></span><br><span class="line">    <span class="keyword">if</span> (index &lt; <span class="number">0</span> || index &gt;= <span class="variable language_">this</span>.<span class="property">_size</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="built_in">void</span> <span class="number">0</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="variable language_">this</span>.<span class="property">_blocks</span>.<span class="property">length</span>; i++) &#123;</span><br><span class="line">      <span class="keyword">const</span> block = <span class="variable language_">this</span>.<span class="property">_blocks</span>[i]</span><br><span class="line">      <span class="keyword">if</span> (index &lt; block.<span class="property">length</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> block[index]</span><br><span class="line">      &#125;</span><br><span class="line">      index -= block.<span class="property">length</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">void</span> <span class="number">0</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">lower</span>(<span class="attr">value</span>: T): T | <span class="literal">undefined</span> &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="variable language_">this</span>.<span class="property">_blocks</span>.<span class="property">length</span> - <span class="number">1</span>; ~i; i--) &#123;</span><br><span class="line">      <span class="keyword">const</span> block = <span class="variable language_">this</span>.<span class="property">_blocks</span>[i]</span><br><span class="line">      <span class="keyword">if</span> (<span class="variable language_">this</span>.<span class="title function_">_compareFn</span>(block[<span class="number">0</span>], value) &lt; <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">const</span> pos = <span class="variable language_">this</span>.<span class="title function_">_bisectLeft</span>(block, value)</span><br><span class="line">        <span class="keyword">return</span> block[pos - <span class="number">1</span>]</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">void</span> <span class="number">0</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">higher</span>(<span class="attr">value</span>: T): T | <span class="literal">undefined</span> &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="variable language_">this</span>.<span class="property">_blocks</span>.<span class="property">length</span>; i++) &#123;</span><br><span class="line">      <span class="keyword">const</span> block = <span class="variable language_">this</span>.<span class="property">_blocks</span>[i]</span><br><span class="line">      <span class="keyword">if</span> (<span class="variable language_">this</span>.<span class="title function_">_compareFn</span>(block[block.<span class="property">length</span> - <span class="number">1</span>], value) &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">const</span> pos = <span class="variable language_">this</span>.<span class="title function_">_bisectRight</span>(block, value)</span><br><span class="line">        <span class="keyword">return</span> block[pos]</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">void</span> <span class="number">0</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">floor</span>(<span class="attr">value</span>: T): T | <span class="literal">undefined</span> &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="variable language_">this</span>.<span class="property">_blocks</span>.<span class="property">length</span> - <span class="number">1</span>; ~i; i--) &#123;</span><br><span class="line">      <span class="keyword">const</span> block = <span class="variable language_">this</span>.<span class="property">_blocks</span>[i]</span><br><span class="line">      <span class="keyword">if</span> (<span class="variable language_">this</span>.<span class="title function_">_compareFn</span>(block[<span class="number">0</span>], value) &lt;= <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">const</span> pos = <span class="variable language_">this</span>.<span class="title function_">_bisectRight</span>(block, value)</span><br><span class="line">        <span class="keyword">return</span> block[pos - <span class="number">1</span>]</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">void</span> <span class="number">0</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">ceiling</span>(<span class="attr">value</span>: T): T | <span class="literal">undefined</span> &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="variable language_">this</span>.<span class="property">_blocks</span>.<span class="property">length</span>; i++) &#123;</span><br><span class="line">      <span class="keyword">const</span> block = <span class="variable language_">this</span>.<span class="property">_blocks</span>[i]</span><br><span class="line">      <span class="keyword">if</span> (<span class="variable language_">this</span>.<span class="title function_">_compareFn</span>(block[block.<span class="property">length</span> - <span class="number">1</span>], value) &gt;= <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">const</span> pos = <span class="variable language_">this</span>.<span class="title function_">_bisectLeft</span>(block, value)</span><br><span class="line">        <span class="keyword">return</span> block[pos]</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">void</span> <span class="number">0</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * Count the number of elements &lt; value or</span></span><br><span class="line"><span class="comment">   * returns the index of the first element &gt;= value.</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  <span class="title function_">bisectLeft</span>(<span class="attr">value</span>: T): <span class="built_in">number</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> res = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="variable language_">this</span>.<span class="property">_blocks</span>.<span class="property">length</span>; i++) &#123;</span><br><span class="line">      <span class="keyword">const</span> block = <span class="variable language_">this</span>.<span class="property">_blocks</span>[i]</span><br><span class="line">      <span class="keyword">if</span> (<span class="variable language_">this</span>.<span class="title function_">_compareFn</span>(value, block[block.<span class="property">length</span> - <span class="number">1</span>]) &lt;= <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> res + <span class="variable language_">this</span>.<span class="title function_">_bisectLeft</span>(block, value)</span><br><span class="line">      &#125;</span><br><span class="line">      res += block.<span class="property">length</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> res</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * Count the number of elements &lt;= value or</span></span><br><span class="line"><span class="comment">   * returns the index of the first element &gt; value.</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  <span class="title function_">bisectRight</span>(<span class="attr">value</span>: T): <span class="built_in">number</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> res = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="variable language_">this</span>.<span class="property">_blocks</span>.<span class="property">length</span>; i++) &#123;</span><br><span class="line">      <span class="keyword">const</span> block = <span class="variable language_">this</span>.<span class="property">_blocks</span>[i]</span><br><span class="line">      <span class="keyword">if</span> (<span class="variable language_">this</span>.<span class="title function_">_compareFn</span>(value, block[block.<span class="property">length</span> - <span class="number">1</span>]) &lt; <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> res + <span class="variable language_">this</span>.<span class="title function_">_bisectRight</span>(block, value)</span><br><span class="line">      &#125;</span><br><span class="line">      res += block.<span class="property">length</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> res</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">slice</span>(<span class="attr">start</span>: <span class="built_in">number</span>, <span class="attr">end</span>: <span class="built_in">number</span>): T[] &#123;</span><br><span class="line">    <span class="keyword">if</span> (start &lt; <span class="number">0</span>) start = <span class="number">0</span></span><br><span class="line">    <span class="keyword">if</span> (end &gt; <span class="variable language_">this</span>.<span class="property">_size</span>) end = <span class="variable language_">this</span>.<span class="property">_size</span></span><br><span class="line">    <span class="keyword">if</span> (start &gt;= end) <span class="keyword">return</span> []</span><br><span class="line">    <span class="keyword">let</span> count = end - start</span><br><span class="line">    <span class="keyword">const</span> <span class="attr">res</span>: T[] = <span class="title class_">Array</span>(count)</span><br><span class="line">    <span class="keyword">let</span> [bid, startPos] = <span class="variable language_">this</span>.<span class="title function_">_moveTo</span>(start)</span><br><span class="line">    <span class="keyword">let</span> ptr = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> (; bid &lt; <span class="variable language_">this</span>.<span class="property">_blocks</span>.<span class="property">length</span> &amp;&amp; count &gt; <span class="number">0</span>; bid++) &#123;</span><br><span class="line">      <span class="keyword">const</span> block = <span class="variable language_">this</span>.<span class="property">_blocks</span>[bid]</span><br><span class="line">      <span class="keyword">const</span> endPos = <span class="title class_">Math</span>.<span class="title function_">min</span>(block.<span class="property">length</span>, startPos + count)</span><br><span class="line">      <span class="keyword">const</span> curCount = endPos - startPos</span><br><span class="line">      <span class="keyword">for</span> (<span class="keyword">let</span> j = startPos; j &lt; endPos; j++) &#123;</span><br><span class="line">        res[ptr++] = block[j]</span><br><span class="line">      &#125;</span><br><span class="line">      count -= curCount</span><br><span class="line">      startPos = <span class="number">0</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> res</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">clear</span>(): <span class="built_in">void</span> &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">_blocks</span> = []</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">_size</span> = <span class="number">0</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">min</span>(): T | <span class="literal">undefined</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (!<span class="variable language_">this</span>.<span class="property">_size</span>) <span class="keyword">return</span> <span class="built_in">void</span> <span class="number">0</span></span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">_blocks</span>[<span class="number">0</span>][<span class="number">0</span>]</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">max</span>(): T | <span class="literal">undefined</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (!<span class="variable language_">this</span>.<span class="property">_size</span>) <span class="keyword">return</span> <span class="built_in">void</span> <span class="number">0</span></span><br><span class="line">    <span class="keyword">const</span> last = <span class="variable language_">this</span>.<span class="property">_blocks</span>[<span class="variable language_">this</span>.<span class="property">_blocks</span>.<span class="property">length</span> - <span class="number">1</span>]</span><br><span class="line">    <span class="keyword">return</span> last[last.<span class="property">length</span> - <span class="number">1</span>]</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">toString</span>(): <span class="built_in">string</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">`SortedList[&#123;[...this].join(&#x27;, &#x27;)&#125;]`</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * 返回一个迭代器，用于遍历区间 [start, end) 内的元素.</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  *<span class="title function_">islice</span>(<span class="attr">start</span>: <span class="built_in">number</span>, <span class="attr">end</span>: <span class="built_in">number</span>, reverse = <span class="literal">false</span>): <span class="title class_">IterableIterator</span>&lt;T&gt; &#123;</span><br><span class="line">    <span class="keyword">if</span> (start &lt; <span class="number">0</span>) start = <span class="number">0</span></span><br><span class="line">    <span class="keyword">if</span> (end &gt; <span class="variable language_">this</span>.<span class="property">_size</span>) end = <span class="variable language_">this</span>.<span class="property">_size</span></span><br><span class="line">    <span class="keyword">if</span> (start &gt;= end) <span class="keyword">return</span></span><br><span class="line">    <span class="keyword">let</span> count = end - start</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (reverse) &#123;</span><br><span class="line">      <span class="keyword">let</span> [bid, endPos] = <span class="variable language_">this</span>.<span class="title function_">_moveTo</span>(end)</span><br><span class="line">      <span class="keyword">for</span> (; ~bid &amp;&amp; count &gt; <span class="number">0</span>; bid--, ~bid &amp;&amp; (endPos = <span class="variable language_">this</span>.<span class="property">_blocks</span>[bid].<span class="property">length</span>)) &#123;</span><br><span class="line">        <span class="keyword">const</span> block = <span class="variable language_">this</span>.<span class="property">_blocks</span>[bid]</span><br><span class="line">        <span class="keyword">const</span> startPos = <span class="title class_">Math</span>.<span class="title function_">max</span>(<span class="number">0</span>, endPos - count)</span><br><span class="line">        <span class="keyword">const</span> curCount = endPos - startPos</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">let</span> j = endPos - <span class="number">1</span>; j &gt;= startPos; j--) &#123;</span><br><span class="line">          <span class="keyword">yield</span> block[j]</span><br><span class="line">        &#125;</span><br><span class="line">        count -= curCount</span><br><span class="line">      &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="keyword">let</span> [bid, startPos] = <span class="variable language_">this</span>.<span class="title function_">_moveTo</span>(start)</span><br><span class="line">      <span class="keyword">for</span> (; bid &lt; <span class="variable language_">this</span>.<span class="property">_blocks</span>.<span class="property">length</span> &amp;&amp; count &gt; <span class="number">0</span>; bid++) &#123;</span><br><span class="line">        <span class="keyword">const</span> block = <span class="variable language_">this</span>.<span class="property">_blocks</span>[bid]</span><br><span class="line">        <span class="keyword">const</span> endPos = <span class="title class_">Math</span>.<span class="title function_">min</span>(block.<span class="property">length</span>, startPos + count)</span><br><span class="line">        <span class="keyword">const</span> curCount = endPos - startPos</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">let</span> j = startPos; j &lt; endPos; j++) &#123;</span><br><span class="line">          <span class="keyword">yield</span> block[j]</span><br><span class="line">        &#125;</span><br><span class="line">        count -= curCount</span><br><span class="line">        startPos = <span class="number">0</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * 返回一个迭代器，用于遍历范围在 `[min, max] 闭区间`内的元素.</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  *<span class="title function_">irange</span>(<span class="attr">min</span>: T, <span class="attr">max</span>: T, reverse = <span class="literal">false</span>): <span class="title class_">IterableIterator</span>&lt;T&gt; &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="variable language_">this</span>.<span class="title function_">_compareFn</span>(min, max) &gt; <span class="number">0</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (reverse) &#123;</span><br><span class="line">      <span class="keyword">let</span> bi = <span class="variable language_">this</span>.<span class="title function_">_findBlockIndex</span>(max)</span><br><span class="line">      <span class="keyword">if</span> (bi === -<span class="number">1</span>) &#123;</span><br><span class="line">        bi = <span class="variable language_">this</span>.<span class="property">_blocks</span>.<span class="property">length</span> - <span class="number">1</span></span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">for</span> (<span class="keyword">let</span> i = bi; ~i; i--) &#123;</span><br><span class="line">        <span class="keyword">const</span> block = <span class="variable language_">this</span>.<span class="property">_blocks</span>[i]</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">let</span> j = block.<span class="property">length</span> - <span class="number">1</span>; ~j; j--) &#123;</span><br><span class="line">          <span class="keyword">const</span> x = block[j]</span><br><span class="line">          <span class="keyword">if</span> (<span class="variable language_">this</span>.<span class="title function_">_compareFn</span>(x, min) &lt; <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">          &#125;</span><br><span class="line">          <span class="keyword">if</span> (<span class="variable language_">this</span>.<span class="title function_">_compareFn</span>(x, max) &lt;= <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">yield</span> x</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="keyword">const</span> bi = <span class="variable language_">this</span>.<span class="title function_">_findBlockIndex</span>(min)</span><br><span class="line">      <span class="keyword">for</span> (<span class="keyword">let</span> i = bi; i &lt; <span class="variable language_">this</span>.<span class="property">_blocks</span>.<span class="property">length</span>; i++) &#123;</span><br><span class="line">        <span class="keyword">const</span> block = <span class="variable language_">this</span>.<span class="property">_blocks</span>[i]</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">let</span> j = <span class="number">0</span>; j &lt; block.<span class="property">length</span>; j++) &#123;</span><br><span class="line">          <span class="keyword">const</span> x = block[j]</span><br><span class="line">          <span class="keyword">if</span> (<span class="variable language_">this</span>.<span class="title function_">_compareFn</span>(x, max) &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">          &#125;</span><br><span class="line">          <span class="keyword">if</span> (<span class="variable language_">this</span>.<span class="title function_">_compareFn</span>(x, min) &gt;= <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">yield</span> x</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">enumerate</span>(<span class="attr">start</span>: <span class="built_in">number</span>, <span class="attr">end</span>: <span class="built_in">number</span>, <span class="attr">f</span>: <span class="function">(<span class="params">value: T</span>) =&gt;</span> <span class="built_in">void</span>, erase = <span class="literal">false</span>): <span class="built_in">void</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> [bid, startPos] = <span class="variable language_">this</span>.<span class="title function_">_moveTo</span>(start)</span><br><span class="line">    <span class="keyword">let</span> count = end - start</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (; bid &lt; <span class="variable language_">this</span>.<span class="property">_blocks</span>.<span class="property">length</span> &amp;&amp; count &gt; <span class="number">0</span>; bid++) &#123;</span><br><span class="line">      <span class="keyword">const</span> block = <span class="variable language_">this</span>.<span class="property">_blocks</span>[bid]</span><br><span class="line">      <span class="keyword">const</span> endPos = <span class="title class_">Math</span>.<span class="title function_">min</span>(block.<span class="property">length</span>, startPos + count)</span><br><span class="line">      <span class="keyword">for</span> (<span class="keyword">let</span> j = startPos; j &lt; endPos; j++) &#123;</span><br><span class="line">        <span class="title function_">f</span>(block[j])</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">const</span> curDeleteCount = endPos - startPos</span><br><span class="line">      <span class="keyword">if</span> (erase) &#123;</span><br><span class="line">        <span class="keyword">if</span> (curDeleteCount === block.<span class="property">length</span>) &#123;</span><br><span class="line">          <span class="variable language_">this</span>.<span class="property">_blocks</span>.<span class="title function_">splice</span>(bid, <span class="number">1</span>)</span><br><span class="line">          bid--</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">          block.<span class="title function_">splice</span>(startPos, curDeleteCount)</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">_size</span> -= curDeleteCount</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      count -= curDeleteCount</span><br><span class="line">      startPos = <span class="number">0</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">forEach</span>(<span class="attr">callbackfn</span>: <span class="function">(<span class="params">value: T, index: <span class="built_in">number</span></span>) =&gt;</span> <span class="built_in">void</span>): <span class="built_in">void</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> pos = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="variable language_">this</span>.<span class="property">_blocks</span>.<span class="property">length</span>; i++) &#123;</span><br><span class="line">      <span class="keyword">const</span> block = <span class="variable language_">this</span>.<span class="property">_blocks</span>[i]</span><br><span class="line">      <span class="keyword">for</span> (<span class="keyword">let</span> j = <span class="number">0</span>; j &lt; block.<span class="property">length</span>; j++) &#123;</span><br><span class="line">        <span class="title function_">callbackfn</span>(block[j], pos++)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  *<span class="title function_">entries</span>(): <span class="title class_">IterableIterator</span>&lt;[<span class="built_in">number</span>, T]&gt; &#123;</span><br><span class="line">    <span class="keyword">let</span> pos = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="variable language_">this</span>.<span class="property">_blocks</span>.<span class="property">length</span>; i++) &#123;</span><br><span class="line">      <span class="keyword">const</span> block = <span class="variable language_">this</span>.<span class="property">_blocks</span>[i]</span><br><span class="line">      <span class="keyword">for</span> (<span class="keyword">let</span> j = <span class="number">0</span>; j &lt; block.<span class="property">length</span>; j++) &#123;</span><br><span class="line">        <span class="keyword">yield</span> [pos++, block[j]]</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  *[<span class="title class_">Symbol</span>.<span class="property">iterator</span>](): <span class="title class_">Iterator</span>&lt;T&gt; &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="variable language_">this</span>.<span class="property">_blocks</span>.<span class="property">length</span>; i++) &#123;</span><br><span class="line">      <span class="keyword">const</span> block = <span class="variable language_">this</span>.<span class="property">_blocks</span>[i]</span><br><span class="line">      <span class="keyword">for</span> (<span class="keyword">let</span> j = <span class="number">0</span>; j &lt; block.<span class="property">length</span>; j++) &#123;</span><br><span class="line">        <span class="keyword">yield</span> block[j]</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">get</span> <span class="title function_">length</span>(): <span class="built_in">number</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">_size</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Find the block which should contain x. Block must not be empty.</span></span><br><span class="line">  <span class="keyword">private</span> <span class="title function_">_findBlockIndex</span>(<span class="attr">x</span>: T): <span class="built_in">number</span> &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="variable language_">this</span>.<span class="property">_blocks</span>.<span class="property">length</span>; i++) &#123;</span><br><span class="line">      <span class="keyword">const</span> block = <span class="variable language_">this</span>.<span class="property">_blocks</span>[i]</span><br><span class="line">      <span class="keyword">if</span> (<span class="variable language_">this</span>.<span class="title function_">_compareFn</span>(x, block[block.<span class="property">length</span> - <span class="number">1</span>]) &lt;= <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> i</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> -<span class="number">1</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> <span class="title function_">_rebuild</span>(): <span class="built_in">void</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (!<span class="variable language_">this</span>.<span class="property">_size</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">const</span> bCount = <span class="title class_">Math</span>.<span class="title function_">ceil</span>(<span class="title class_">Math</span>.<span class="title function_">sqrt</span>(<span class="variable language_">this</span>.<span class="property">_size</span> / <span class="title class_">SortedList</span>.<span class="property">_BLOCK_RATIO</span>))</span><br><span class="line">    <span class="keyword">const</span> bSize = ~~((<span class="variable language_">this</span>.<span class="property">_size</span> + bCount - <span class="number">1</span>) / bCount) <span class="comment">// ceil</span></span><br><span class="line">    <span class="keyword">const</span> <span class="attr">newB</span>: T[][] = <span class="title class_">Array</span>(bCount)</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; bCount; i++) &#123;</span><br><span class="line">      newB[i] = []</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">let</span> ptr = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="variable language_">this</span>.<span class="property">_blocks</span>.<span class="property">length</span>; i++) &#123;</span><br><span class="line">      <span class="keyword">const</span> b = <span class="variable language_">this</span>.<span class="property">_blocks</span>[i]</span><br><span class="line">      <span class="keyword">for</span> (<span class="keyword">let</span> j = <span class="number">0</span>; j &lt; b.<span class="property">length</span>; j++) &#123;</span><br><span class="line">        newB[~~(ptr / bSize)].<span class="title function_">push</span>(b[j])</span><br><span class="line">        ptr++</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">_blocks</span> = newB</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// eslint-disable-next-line class-methods-use-this</span></span><br><span class="line">  <span class="keyword">private</span> <span class="title function_">_initBlocks</span>(<span class="attr">sorted</span>: T[]): T[][] &#123;</span><br><span class="line">    <span class="keyword">const</span> bCount = <span class="title class_">Math</span>.<span class="title function_">ceil</span>(<span class="title class_">Math</span>.<span class="title function_">sqrt</span>(sorted.<span class="property">length</span> / <span class="title class_">SortedList</span>.<span class="property">_BLOCK_RATIO</span>))</span><br><span class="line">    <span class="keyword">const</span> bSize = ~~((sorted.<span class="property">length</span> + bCount - <span class="number">1</span>) / bCount) <span class="comment">// ceil</span></span><br><span class="line">    <span class="keyword">const</span> <span class="attr">newB</span>: T[][] = <span class="title class_">Array</span>(bCount)</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; bCount; i++) &#123;</span><br><span class="line">      newB[i] = []</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; bCount; i++) &#123;</span><br><span class="line">      <span class="keyword">for</span> (<span class="keyword">let</span> j = i * bSize; j &lt; <span class="title class_">Math</span>.<span class="title function_">min</span>((i + <span class="number">1</span>) * bSize, sorted.<span class="property">length</span>); j++) &#123;</span><br><span class="line">        newB[i].<span class="title function_">push</span>(sorted[j])</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> newB</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> <span class="title function_">_bisectLeft</span>(<span class="attr">nums</span>: T[], <span class="attr">value</span>: T): <span class="built_in">number</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> left = <span class="number">0</span></span><br><span class="line">    <span class="keyword">let</span> right = nums.<span class="property">length</span> - <span class="number">1</span></span><br><span class="line">    <span class="keyword">while</span> (left &lt;= right) &#123;</span><br><span class="line">      <span class="keyword">const</span> mid = (left + right) &gt;&gt; <span class="number">1</span></span><br><span class="line">      <span class="keyword">if</span> (<span class="variable language_">this</span>.<span class="title function_">_compareFn</span>(value, nums[mid]) &lt;= <span class="number">0</span>) &#123;</span><br><span class="line">        right = mid - <span class="number">1</span></span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        left = mid + <span class="number">1</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> left</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> <span class="title function_">_bisectRight</span>(<span class="attr">nums</span>: T[], <span class="attr">value</span>: T): <span class="built_in">number</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> left = <span class="number">0</span></span><br><span class="line">    <span class="keyword">let</span> right = nums.<span class="property">length</span> - <span class="number">1</span></span><br><span class="line">    <span class="keyword">while</span> (left &lt;= right) &#123;</span><br><span class="line">      <span class="keyword">const</span> mid = (left + right) &gt;&gt; <span class="number">1</span></span><br><span class="line">      <span class="keyword">if</span> (<span class="variable language_">this</span>.<span class="title function_">_compareFn</span>(value, nums[mid]) &lt; <span class="number">0</span>) &#123;</span><br><span class="line">        right = mid - <span class="number">1</span></span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        left = mid + <span class="number">1</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> left</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> <span class="title function_">_moveTo</span>(<span class="attr">index</span>: <span class="built_in">number</span>): [<span class="attr">blockId</span>: <span class="built_in">number</span>, <span class="attr">startPos</span>: <span class="built_in">number</span>] &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="variable language_">this</span>.<span class="property">_blocks</span>.<span class="property">length</span>; i++) &#123;</span><br><span class="line">      <span class="keyword">const</span> block = <span class="variable language_">this</span>.<span class="property">_blocks</span>[i]</span><br><span class="line">      <span class="keyword">if</span> (index &lt; block.<span class="property">length</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> [i, index]</span><br><span class="line">      &#125;</span><br><span class="line">      index -= block.<span class="property">length</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> [<span class="variable language_">this</span>.<span class="property">_blocks</span>.<span class="property">length</span>, <span class="number">0</span>]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <!--<div class="article-copyright-info-container">-->
+    <!--&lt;!&ndash;<ul>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><strong>Title:</strong> 2213-由单个字符重复的最长子字符串</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><strong>Author:</strong> Raphael Liu</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><strong>Created at&ndash;&gt;-->
+                <!--&lt;!&ndash;:</strong> 2023-09-13 00:47:26</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;&ndash;&gt;-->
+            <!--&lt;!&ndash;<li>&ndash;&gt;-->
+                <!--&lt;!&ndash;<strong>Updated at&ndash;&gt;-->
+                    <!--&lt;!&ndash;:</strong> 2023-09-13 16:06:30&ndash;&gt;-->
+            <!--&lt;!&ndash;</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;<li>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;<strong>Link:</strong> https://fida.ltd/2023/09/13/2213-由单个字符重复的最长子字符串/&ndash;&gt;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;</li>&ndash;&gt;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;<li>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;<strong>&ndash;&gt;&ndash;&gt;-->
+                <!--&lt;!&ndash;&lt;!&ndash;License:&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;</strong>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0</a>.&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;&ndash;&gt;&ndash;&gt;-->
+
+        <!--&lt;!&ndash;&lt;!&ndash;</li>&ndash;&gt;&ndash;&gt;-->
+    <!--&lt;!&ndash;</ul>&ndash;&gt;-->
+<!--</div>-->
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box">
+                
+                    <li class="tag-item">
+                        <a href="/tags/algorithm/">#algorithm</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item">
+                        <a href="/tags/HARD/">#HARD</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                        rel="prev"
+                        href="/2023/09/13/2216-%E7%BE%8E%E5%8C%96%E6%95%B0%E7%BB%84%E7%9A%84%E6%9C%80%E5%B0%91%E5%88%A0%E9%99%A4%E6%95%B0/"
+                        >
+                            <span class="left arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">2216-美化数组的最少删除数</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                        rel="next"
+                        href="/2023/09/13/2215-%E6%89%BE%E5%87%BA%E4%B8%A4%E6%95%B0%E7%BB%84%E7%9A%84%E4%B8%8D%E5%90%8C/"
+                        >
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">2215-找出两数组的不同</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+
+        
+            <div class="comment-container">
+                <div class="comments-container pjax">
+    <div id="comment-anchor"></div>
+    <div class="comment-area-title">
+        <i class="fa-solid fa-comments"></i>&nbsp;Comments
+    </div>
+    
+
+        
+            
+ 
+    <div id="waline"></div>
+    <script type="module"  data-swup-reload-script>
+        import { init } from 'https://evan.beee.top/js/waline.mjs';
+
+        function loadWaline() {
+            init({
+                el: '#waline',
+                serverURL: 'https://example.example.com',
+                lang: 'zh-CN',
+                dark: 'body[class~="dark-mode"]',
+                requiredMeta: ['nick','mail'], // cannot customize by theme config, change it yourself
+            });
+        }
+
+        if ('true') {
+            const loadWalineTimeout = setTimeout(() => {
+                loadWaline();
+                clearTimeout(loadWalineTimeout);
+            }, 1000);
+        } else {
+            window.addEventListener('DOMContentLoaded', loadWaline);
+        }
+        
+    </script>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+
+    
+        <div class="toc-content-container">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">On this page</div>
+        <div class="page-title">2213-由单个字符重复的最长子字符串</div>
+        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E9%A2%98%E6%80%9D%E8%B7%AF"><span class="nav-text">解题思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81"><span class="nav-text">代码</span></a></li></ol>
+
+    </div>
+</div>
+        </div>
+    
+</div>
+
+
+
+                
+
+            </div>
+
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2022</span>
+              -
+            
+            2023&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">Raphael Liu</a>
+        </div>
+        
+            <script data-swup-reload-script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">UV:</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">PV:</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <!--<div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">-->
+            <!--<span class="lg:block text-sm">powered_by</span>-->
+            <!--&lt;!&ndash;<span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.4.4</a></span>&ndash;&gt;-->
+        <!--</div>-->
+        
+        <!---->
+            <!--<div>-->
+                <!--runtime <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hours <span class="odometer" id="runtime_minutes"></span> minutes <span class="odometer" id="runtime_seconds"></span> seconds-->
+            <!--</div>-->
+        <!---->
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fa-regular fa-comments"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-expand-width flex justify-center items-center">
+            <i class="fa-regular fa-expand"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fa-solid fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa-solid fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa-solid fa-spinner fa-spin-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+    
+<script src="/js/libs/Swup.min.js"></script>
+
+<script src="/js/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/libs/SwupScrollPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+        ],
+        containers: ["#swup"],
+    });
+
+    swup.hooks.on("page:view", () => {
+        Global.refresh();
+    });
+
+    // if (document.readyState === "complete") {
+    //
+    // } else {
+    //     document.addEventListener("DOMContentLoaded", () => init());
+    // }
+</script>
+
+
+
+
+
+
+<script src="/js/utils.js" type="module"></script>
+
+<script src="/js/main.js" type="module"></script>
+
+<script src="/js/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/layouts/categoryList.js" type="module"></script>
+
+
+
+    
+<script src="/js/tools/localSearch.js"></script>
+
+
+
+
+    
+<script src="/js/tools/codeBlock.js"></script>
+
+
+
+
+    
+<script src="/js/layouts/lazyload.js"></script>
+
+
+
+
+    
+<script src="/js/tools/runtime.js"></script>
+
+    
+<script src="/js/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/libs/Typed.min.js"></script>
+
+  
+<script src="/js/plugins/typed.js"></script>
+
+
+
+
+
+
+
+<div class="post-scripts" data-swup-reload-script>
+    
+        
+<script src="/js/libs/anime.min.js"></script>
+
+        
+<script src="/js/tools/tocToggle.js" type="module"></script>
+
+<script src="/js/layouts/toc.js" type="module"></script>
+
+<script src="/js/plugins/tabs.js" type="module"></script>
+
+    
+</div>
+
+
+</body>
+</html>

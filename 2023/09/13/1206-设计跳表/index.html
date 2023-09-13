@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="Raphael Liu">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/2023/09/13/1206-设计跳表/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="不使用任何库函数，设计一个 跳表 。 跳表 是在 O(log(n))时间内完成增加、删除、搜索操作的数据结构。跳表相比于树堆与红黑树，其功能与性能相当，并且跳表的代码长度相较下更短，其设计思想与链表相似。 例如，一个跳表包含 [30, 40, 50, 60, 70, 90] ，然后增加 80、45 到跳表中，以下图的方式操作： Artyom Kalinin [CC BY-SA 3.0], via">
+<meta property="og:type" content="article">
+<meta property="og:title" content="1206-设计跳表">
+<meta property="og:url" content="http://example.com/2023/09/13/1206-%E8%AE%BE%E8%AE%A1%E8%B7%B3%E8%A1%A8/index.html">
+<meta property="og:site_name" content="Raphael&#39;s Blog">
+<meta property="og:description" content="不使用任何库函数，设计一个 跳表 。 跳表 是在 O(log(n))时间内完成增加、删除、搜索操作的数据结构。跳表相比于树堆与红黑树，其功能与性能相当，并且跳表的代码长度相较下更短，其设计思想与链表相似。 例如，一个跳表包含 [30, 40, 50, 60, 70, 90] ，然后增加 80、45 到跳表中，以下图的方式操作： Artyom Kalinin [CC BY-SA 3.0], via">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://assets.leetcode.com/uploads/2019/09/27/1506_skiplist.gif">
+<meta property="og:image" content="https://assets.leetcode-cn.com/solution-static/1206/1206_1.PNG">
+<meta property="og:image" content="https://assets.leetcode-cn.com/solution-static/1206/1206_2.PNG">
+<meta property="og:image" content="https://assets.leetcode-cn.com/solution-static/1206/1206_3.PNG">
+<meta property="og:image" content="https://assets.leetcode-cn.com/solution-static/1206/1206_4.PNG">
+<meta property="og:image" content="https://assets.leetcode-cn.com/solution-static/1206/1206_5.PNG">
+<meta property="og:image" content="https://assets.leetcode-cn.com/solution-static/1206/1206_6.PNG">
+<meta property="og:image" content="https://assets.leetcode-cn.com/solution-static/1206/1206_7.PNG">
+<meta property="og:image" content="https://assets.leetcode-cn.com/solution-static/1206/1206_9.PNG">
+<meta property="og:image" content="https://assets.leetcode-cn.com/solution-static/1206/1206_10.PNG">
+<meta property="og:image" content="https://assets.leetcode-cn.com/solution-static/1206/1206_11.PNG">
+<meta property="og:image" content="https://assets.leetcode-cn.com/solution-static/1206/1206_12.PNG">
+<meta property="og:image" content="https://assets.leetcode-cn.com/solution-static/1206/1206_13.PNG">
+<meta property="og:image" content="https://assets.leetcode-cn.com/solution-static/1206/1206_14.PNG">
+<meta property="article:published_time" content="2023-09-12T16:47:26.000Z">
+<meta property="article:modified_time" content="2023-09-13T09:01:06.515Z">
+<meta property="article:author" content="Raphael Liu">
+<meta property="article:tag" content="algorithm">
+<meta property="article:tag" content="HARD">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://assets.leetcode.com/uploads/2019/09/27/1506_skiplist.gif">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/redefine-favicon.svg" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/redefine-favicon.svg">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/redefine-favicon.svg">
+    <!--- Page Info-->
+    
+    <title>
+        
+            1206-设计跳表 -
+        
+        Raphael&#39;s Blog
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/css/build/styles.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/fonts.css">
+
+    
+<link rel="stylesheet" href="/fonts/Satoshi/satoshi.css">
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+
+    <!--- Inject Part-->
+    
+    <script id="hexo-configurations">
+    let Global = window.Global || {};
+    Global.hexo_config = {"hostname":"example.com","root":"/","language":"zh_CN"};
+    Global.theme_config = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":true,"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"open_graph":true,"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-wqery6-light.webp","dark":"/images/wallhaven-wqery6-dark.webp"},"title":"Raphael's Blog","subtitle":{"text":["格物致知","坚持做正确的事情"],"hitokoto":{"enable":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":false,"links":{"github":"https://github.com/raphael-liu","email":"raphael@buaa.edu.cn# your email"},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.4.4","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"links":{"首页":{"path":"/","icon":"fa-regular fa-house"},"文章":{"path":"/archives","icon":"fa-regular fa-archive"},"关于":{"icon":"fa-regular fa-user","submenus":{"我":"/about/me","Github":"https://github.com/raphael-liu"}}},"search":{"enable":true,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"links":null},"article_date_format":"auto","categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}},"footerStart":"2022/8/17 11:45:14"};
+    Global.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    Global.data_config = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="swup-progress-icon">
+            <i class="fa-solid fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container" id="swup">
+
+    
+
+    <div class="main-content-container">
+
+
+        <div class="main-content-header">
+            <header class="navbar-container">
+    
+    <div class="navbar-content">
+        <div class="left">
+            
+            <a class="logo-title" href="http://example.com/">
+                
+                Raphael&#39;s Blog
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/"  >
+                                    
+                                        
+                                            <i class="fa-regular fa-house"></i>
+                                        
+                                        首页
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/archives"  >
+                                    
+                                        
+                                            <i class="fa-regular fa-archive"></i>
+                                        
+                                        文章
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="has-dropdown" 
+                                    href="#" onClick="return false;">
+                                    
+                                        
+                                            <i class="fa-regular fa-user"></i>
+                                        
+                                        关于&nbsp;<i class="fa-solid fa-chevron-down"></i>
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                                    <ul class="sub-menu">
+                                    
+                                        <li>
+                                        <a href="/about/me">我
+                                        </a>
+                                        </li>
+                                    
+                                        <li>
+                                        <a target="_blank" rel="noopener" href="https://github.com/raphael-liu">GITHUB
+                                        </a>
+                                        </li>
+                                    
+                                    </ul>
+                                
+                            </li>
+                    
+                    
+                        <li class="navbar-item search search-popup-trigger">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fa-solid fa-magnifying-glass"></i></div>
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile drawer -->
+    <div class="navbar-drawer w-full absolute top-0 left-0 bg-background-color">
+        <ul class="drawer-navbar-list flex flex-col justify-start items-center">
+            
+                
+                    <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group " 
+                        href="/"  >
+                             
+                                
+                                    <i class="fa-regular fa-house"></i>
+                                
+                                首页
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+                
+                    <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group " 
+                        href="/archives"  >
+                             
+                                
+                                    <i class="fa-regular fa-archive"></i>
+                                
+                                文章
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+                
+                    <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group has-dropdown" 
+                        href="#" onClick="return false;">
+                            
+                                
+                                    <i class="fa-regular fa-user"></i>
+                                
+                                关于&nbsp;<i class="group-hover:rotate-180 transition-transform fa-solid fa-chevron-down"></i>
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                              
+                        
+                            <li class="text-base flex justify-center items-center hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                <a class="py-0.5" href="/about/me">我</a>
+                            </li>
+                        
+                            <li class="text-base flex justify-center items-center hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                <a class="py-0.5" target="_blank" rel="noopener" href="https://github.com/raphael-liu">GITHUB</a>
+                            </li>
+                        
+                    
+            
+
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="post-page-container">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            
+                <h1 class="article-title-regular">1206-设计跳表</h1>
+            
+            </div>
+            
+                    
+        
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">Raphael Liu</span>
+                        
+                            <span class="author-label">Lv10</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2023-09-13 00:47:26</span>
+        <span class="mobile">2023-09-13 00:47:26</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2023-09-13 17:01:06</span>
+            <span class="mobile">2023-09-13 17:01:06</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/algorithm/">algorithm</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/HARD/">HARD</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        
+
+
+        <div class="article-content markdown-body">
+            <p>不使用任何库函数，设计一个 <strong>跳表</strong> 。</p>
+<p><strong>跳表</strong> 是在 <code>O(log(n))</code><br>时间内完成增加、删除、搜索操作的数据结构。跳表相比于树堆与红黑树，其功能与性能相当，并且跳表的代码长度相较下更短，其设计思想与链表相似。</p>
+<p>例如，一个跳表包含 <code>[30, 40, 50, 60, 70, 90]</code> ，然后增加 <code>80</code>、<code>45</code> 到跳表中，以下图的方式操作：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://assets.leetcode.com/uploads/2019/09/27/1506_skiplist.gif"
+                     
+                ><br>Artyom Kalinin [CC BY-SA 3.0], via <a target="_blank" rel="noopener" href="https://commons.wikimedia.org/wiki/File:Skip_list_add_element-en.gif" title="Artyom Kalinin [CC BY-SA 3.0 (https://creativecommons.org/licenses/by-
+sa/3.0)], via Wikimedia Commons">Wikimedia<br>Commons</a></p>
+<p>跳表中有很多层，每一层是一个短的链表。在第一层的作用下，增加、删除和搜索操作的时间复杂度不超过 <code>O(n)</code>。跳表的每一个操作的平均时间复杂度是<br><code>O(log(n))</code>，空间复杂度是 <code>O(n)</code>。</p>
+<p>了解更多 : <a class="link"   target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Skip_list" >https://en.wikipedia.org/wiki/Skip_list <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p>在本题中，你的设计应该要包含这些函数：</p>
+<ul>
+<li><code>bool search(int target)</code> : 返回target是否存在于跳表中。</li>
+<li><code>void add(int num)</code>: 插入一个元素到跳表。</li>
+<li><code>bool erase(int num)</code>: 在跳表中删除一个值，如果 <code>num</code> 不存在，直接返回false. 如果存在多个 <code>num</code> ，删除其中任意一个即可。</li>
+</ul>
+<p>注意，跳表中可能存在多个相同的值，你的代码需要处理这种情况。</p>
+<p><strong>示例 1:</strong></p>
+<pre><code>**输入**
+[&quot;Skiplist&quot;, &quot;add&quot;, &quot;add&quot;, &quot;add&quot;, &quot;search&quot;, &quot;add&quot;, &quot;search&quot;, &quot;erase&quot;, &quot;erase&quot;, &quot;search&quot;]
+[[], [1], [2], [3], [0], [4], [1], [0], [1], [1]]
+**输出**
+[null, null, null, null, false, null, true, false, true, false]
+
+**解释**
+Skiplist skiplist = new Skiplist();
+skiplist.add(1);
+skiplist.add(2);
+skiplist.add(3);
+skiplist.search(0);   // 返回 false
+skiplist.add(4);
+skiplist.search(1);   // 返回 true
+skiplist.erase(0);    // 返回 false，0 不在跳表中
+skiplist.erase(1);    // 返回 true
+skiplist.search(1);   // 返回 false，1 已被擦除
+</code></pre>
+<p><strong>提示:</strong></p>
+<ul>
+<li><code>0 &lt;= num, target &lt;= 2 * 104</code></li>
+<li>调用<code>search</code>, <code>add</code>,  <code>erase</code>操作次数不大于 <code>5 * 104</code></li>
+</ul>
+<h4 id="方法一：直接构造"><a href="#方法一：直接构造" class="headerlink" title="方法一：直接构造"></a>方法一：直接构造</h4><p>跳表这种数据结构是由 William Pugh 发明的，关于跳表的详细介绍可以参考论文:「<a class="link"   target="_blank" rel="noopener" href="https://15721.courses.cs.cmu.edu/spring2018/papers/08-oltpindexes1/pugh-skiplists-cacm1990.pdf" >Skip Lists: A Probabilistic Alternative to Balanced Trees <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>」，论文中详细阐述了关于 skiplist 查找元素、删除元素、插入元素的算法伪代码，以及时间复杂度的分析。跳表是一种随机化的数据结构，可以被看做二叉树的一个变种，它在性能上和红黑树、AVL 树不相上下，但是跳表的原理非常简单，目前在 Redis 和 LevelDB 中都有用到。跳表的期望空间复杂度为 O(n)，跳表的查询，插入和删除操作的期望时间复杂度均为 O(\log n)。跳表实际为一种多层的有序链表，跳表的每一层都为一个有序链表，且满足每个位于第 i 层的节点有 p 的概率出现在第 i+1 层，其中 p 为常数。</p>
+<p>它的结构类似于如下图所示:</p>
+<p>跳表在进行查找时，首先从当前的最高层 L(n) 层开始查找，在当前层水平地逐个比较直至当前节点的下一个节点大于等于目标节点，然后移动至下一层进行查找，重复这个过程直至到达第一层。此时，若下一个节点是目标节点，则成功查找；反之，则元素不存在。由于从高层往低层开始查找，由于低层出现的元素可能不会出现在高层，因此跳表在进行查找的过程中会跳过一些元素，相比于有序链表的查询，跳表的查询速度会更快。<br>跳表的初始化、查找、添加、删除操作详细描述如下：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://assets.leetcode-cn.com/solution-static/1206/1206_1.PNG"
+                      alt="跳表结构"
+                ></p>
+<ul>
+<li>search：从跳表的当前的最大层数 level 层开始查找，在当前层水平地逐个比较直至当前节点的下一个节点大于等于目标节点，然后移动至下一层进行查找，重复这个过程直至到达第  1 层。此时，若第 1 层的下一个节点的值等于 target，则返回 true；反之，则返回 false。如图所示：</li>
+</ul>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://assets.leetcode-cn.com/solution-static/1206/1206_2.PNG"
+                      alt="跳表查询"
+                ></p>
+<ul>
+<li>add：从跳表的当前的最大层数 level 层开始查找，在当前层水平地逐个比较直至当前节点的下一个节点大于等于目标节点，然后移动至下一层进行查找，重复这个过程直至到达第  1 层。设新加入的节点为 newNode，我们需要计算出此次节点插入的层数 lv，如果 level 小于 lv，则同时需要更新 level。我们用数组 update 保存每一层查找的最后一个节点，第 i 层最后的节点为 update}[i]。我们将 newNode 的后续节点指向 update[i] 的下一个节点，同时更新 update[i] 的后续节点为 newNode。如图所示：</li>
+</ul>
+<p>&lt;<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://assets.leetcode-cn.com/solution-static/1206/1206_3.PNG"
+                      alt="update1"
+                >,<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://assets.leetcode-cn.com/solution-static/1206/1206_4.PNG"
+                      alt="update2"
+                >,<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://assets.leetcode-cn.com/solution-static/1206/1206_5.PNG"
+                      alt="update3"
+                >,<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://assets.leetcode-cn.com/solution-static/1206/1206_6.PNG"
+                      alt="update4"
+                >,<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://assets.leetcode-cn.com/solution-static/1206/1206_7.PNG"
+                      alt="update5"
+                >&gt;</p>
+<ul>
+<li>erase：首先我们需要查找当前元素是否存在跳表中。从跳表的当前的最大层数 level 层开始查找，在当前层水平地逐个比较直至当前节点的下一个节点大于等于目标节点，然后移动至下一层进行查找，重复这个过程直至到达第 1 层。如果第 1 层的下一个节点不等于 num 时，则表示当前元素不存在直接返回。我们用数组 update 保存每一层查找的最后一个节点，第 i 层最后的节点为 update}[i]。此时第 i 层的下一个节点的值为 num，则我们需要将其从跳表中将其删除。由于第 i 层的以 p 的概率出现在第 i+1 层，因此我们应当从第 1 层开始往上进行更新，将 num 从 update[i] 的下一跳中删除，同时更新 update[i] 的后续节点，直到当前层的链表中没有出现 num 的节点为止。最后我们还需要更新跳表中当前的最大层数 level。如图所示：</li>
+</ul>
+<p>&lt;<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://assets.leetcode-cn.com/solution-static/1206/1206_9.PNG"
+                      alt="erase2"
+                >,<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://assets.leetcode-cn.com/solution-static/1206/1206_10.PNG"
+                      alt="erase3"
+                >,<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://assets.leetcode-cn.com/solution-static/1206/1206_11.PNG"
+                      alt="erase4"
+                >,<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://assets.leetcode-cn.com/solution-static/1206/1206_12.PNG"
+                      alt="erase5"
+                >,<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://assets.leetcode-cn.com/solution-static/1206/1206_13.PNG"
+                      alt="erase6"
+                >,<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://assets.leetcode-cn.com/solution-static/1206/1206_14.PNG"
+                      alt="erase7"
+                >&gt;</p>
+<p>关于跳表的复杂度的分析如下：</p>
+<ul>
+<li>空间复杂度分析：我们知道每次添加节点时，节点出现在第 i 层的概率为 (1-p)\times p^{i-1，跳表插入时的期望层数为:</li>
+</ul>
+<p>\begin{aligned}<br>E(L) &amp;&#x3D; 1 \times (1-p) + 2 \times (1-p)\times p + 3 \times (1-p) \times p^2 + \cdots \<br>&amp;&#x3D; \sum_{i&#x3D;1}^{\infty} i \times (1-p) \times p^{i-1} \<br>&amp;&#x3D; (1-p) \times \sum_{i&#x3D;1}^{\infty} i \times p^{i-1} \<br>&amp;&#x3D; (1-p) \times \dfrac{1}{(1-p)^2} \<br>&amp;&#x3D; \dfrac{1&#x2F;1-p}<br>\end{aligned}</p>
+<p>如果节点的目标层数为 L，则此时需要的空间为 O(L)，因此总的空间复杂度为 O(n \times E(L)) &#x3D; O(n \times \dfrac{1&#x2F;1-p}) &#x3D; O(n)。 </p>
+<ul>
+<li>时间复杂度分析: 在含有 n 个节点的跳表中，当前最大层数 L(n) 包含的元素个数期望为 \dfrac{1}{p，根据跳表的定义可以知道第 1 层的每个元素出现在 L(n) 的概率为 p^{L(n)-1，则此时我们可以推出如下：</li>
+</ul>
+<p>\begin{aligned}<br>\dfrac{1}{p} &amp;&#x3D; np^{L(n)-1} \<br>p^{L(n)} &amp;&#x3D; \dfrac{1}{n} \<br>L(n) &amp;&#x3D; \log_p {\dfrac{1}{n} }<br>\end{aligned}</p>
+<p>根据以上结论可以知道在含有 n 个节点的跳表中，当前最大层数期望 L(n) &#x3D; \log_p {\dfrac{1}{n}。</p>
+<p>我们首先思考一下搜索目标节点 x 的过程，每次我们搜索第 i 层时，如果第 i 层的当前节点小于 x 时，则我们会在第 i 层向右进行搜索，直到下一个节点的值大于等于 x；如果第 i 层的节点值大于等于 x，则我们则会下降到 i-1 层。根据之前的定义，如果节点 x 在第 i 层出现，则节点 x 一定会出现在第 i-1 层。现在假设我们从 L(n) 的第一个节点搜索到第 1 层的目标节点 x 的路径为 S，现在我们将路径 S 反过来，即从第 1 的节点 x 回到 L(n) 层的第一个节点，我们可以观察到从第 1 层的节点 x 一直往上一层，直到 x 的最大层数，然后再向左走一步到达节点 y，再向上走，再重复上述步骤，实际搜索时如果在上一层可以到访问到节点 x，则在下一层遍历时一定不会访问所有小于 x 的节点。假设当前我们处于一个第 i 层的节点 x，此时并不知道 x 的最大层数和 x 左侧节点的最大层数，只知道 x 的最大层数至少为 i。我们可以知道 x 的最大层数大于 i，那么下一步按照最优选择应该是向上一层，这种情况的概率为 p；如果 x 的最大层数等于 i，那么下一步应该是同一层向左侧后退一个节点，这种情况概率为 1-p。令 C(i) 为在一个无限长度的跳表中向上爬 i 层的期望代价，则知道:</p>
+<p>\begin{aligned}<br>C(0) &amp;&#x3D; 0 \<br>C(i) &amp;&#x3D; (1-p)(1 + C(i)) + p(1 + C(i-1)) \<br>C(i) &amp;&#x3D; \dfrac{1}{p} + C(i-1) \<br>C(i) &amp;&#x3D; \dfrac{i}{p}<br>\end{aligned}</p>
+<p>在含有 n 个元素的跳表中，从第 1 层爬到第 L(n) 层的期望步数存在上界 \dfrac{L(n) - 1}{p。现在只需要分析爬到第 L(n) 层后还要再走多少步。当达到第 L(n) 层后，我们需要向左走。我们已知 L(n) 层的节点总数的期望存在上界为 \dfrac{1}{p。所以我们知道搜索的总的代价为:</p>
+<p>\dfrac{L(n) - 1}{p} + \dfrac{1}{p} &#x3D; \dfrac{\log_{1}{p} }n -1}{p} + \dfrac{1}{p} &#x3D;  \dfrac{\log_{1}{p} }n}{p}</p>
+<p>根据以上推理可以得到查询的平均时间复杂度为 O(\log n)。</p>
+<p>上述的推理过程与原本的论文相比还是有所忽略细节，如果对复杂度分析的详细细节感兴趣的可以参考原始论文:「<a class="link"   target="_blank" rel="noopener" href="https://15721.courses.cs.cmu.edu/spring2018/papers/08-oltpindexes1/pugh-skiplists-cacm1990.pdf" >Skip Lists: A Probabilistic Alternative to Balanced Trees <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>」。</p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><figcaption><span>[sol1-Python3]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line">MAX_LEVEL = <span class="number">32</span></span><br><span class="line">P_FACTOR = <span class="number">0.25</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">random_level</span>() -&gt; <span class="built_in">int</span>:</span><br><span class="line">    lv = <span class="number">1</span></span><br><span class="line">    <span class="keyword">while</span> lv &lt; MAX_LEVEL <span class="keyword">and</span> random.random() &lt; P_FACTOR:</span><br><span class="line">        lv += <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> lv</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">SkiplistNode</span>:</span><br><span class="line">    __slots__ = <span class="string">&#x27;val&#x27;</span>, <span class="string">&#x27;forward&#x27;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, val: <span class="built_in">int</span>, max_level=MAX_LEVEL</span>):</span><br><span class="line">        self.val = val</span><br><span class="line">        self.forward = [<span class="literal">None</span>] * max_level</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Skiplist</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">        self.head = SkiplistNode(-<span class="number">1</span>)</span><br><span class="line">        self.level = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">search</span>(<span class="params">self, target: <span class="built_in">int</span></span>) -&gt; <span class="built_in">bool</span>:</span><br><span class="line">        curr = self.head</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(self.level - <span class="number">1</span>, -<span class="number">1</span>, -<span class="number">1</span>):</span><br><span class="line">            <span class="comment"># 找到第 i 层小于且最接近 target 的元素</span></span><br><span class="line">            <span class="keyword">while</span> curr.forward[i] <span class="keyword">and</span> curr.forward[i].val &lt; target:</span><br><span class="line">                curr = curr.forward[i]</span><br><span class="line">        curr = curr.forward[<span class="number">0</span>]</span><br><span class="line">        <span class="comment"># 检测当前元素的值是否等于 target</span></span><br><span class="line">        <span class="keyword">return</span> curr <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span> <span class="keyword">and</span> curr.val == target</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">add</span>(<span class="params">self, num: <span class="built_in">int</span></span>) -&gt; <span class="literal">None</span>:</span><br><span class="line">        update = [self.head] * MAX_LEVEL</span><br><span class="line">        curr = self.head</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(self.level - <span class="number">1</span>, -<span class="number">1</span>, -<span class="number">1</span>):</span><br><span class="line">            <span class="comment"># 找到第 i 层小于且最接近 num 的元素</span></span><br><span class="line">            <span class="keyword">while</span> curr.forward[i] <span class="keyword">and</span> curr.forward[i].val &lt; num:</span><br><span class="line">                curr = curr.forward[i]</span><br><span class="line">            update[i] = curr</span><br><span class="line">        lv = random_level()</span><br><span class="line">        self.level = <span class="built_in">max</span>(self.level, lv)</span><br><span class="line">        new_node = SkiplistNode(num, lv)</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(lv):</span><br><span class="line">            <span class="comment"># 对第 i 层的状态进行更新，将当前元素的 forward 指向新的节点</span></span><br><span class="line">            new_node.forward[i] = update[i].forward[i]</span><br><span class="line">            update[i].forward[i] = new_node</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">erase</span>(<span class="params">self, num: <span class="built_in">int</span></span>) -&gt; <span class="built_in">bool</span>:</span><br><span class="line">        update = [<span class="literal">None</span>] * MAX_LEVEL</span><br><span class="line">        curr = self.head</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(self.level - <span class="number">1</span>, -<span class="number">1</span>, -<span class="number">1</span>):</span><br><span class="line">            <span class="comment"># 找到第 i 层小于且最接近 num 的元素</span></span><br><span class="line">            <span class="keyword">while</span> curr.forward[i] <span class="keyword">and</span> curr.forward[i].val &lt; num:</span><br><span class="line">                curr = curr.forward[i]</span><br><span class="line">            update[i] = curr</span><br><span class="line">        curr = curr.forward[<span class="number">0</span>]</span><br><span class="line">        <span class="keyword">if</span> curr <span class="keyword">is</span> <span class="literal">None</span> <span class="keyword">or</span> curr.val != num:  <span class="comment"># 值不存在</span></span><br><span class="line">            <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(self.level):</span><br><span class="line">            <span class="keyword">if</span> update[i].forward[i] != curr:</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">            <span class="comment"># 对第 i 层的状态进行更新，将 forward 指向被删除节点的下一跳</span></span><br><span class="line">            update[i].forward[i] = curr.forward[i]</span><br><span class="line">        <span class="comment"># 更新当前的 level</span></span><br><span class="line">        <span class="keyword">while</span> self.level &gt; <span class="number">1</span> <span class="keyword">and</span> self.head.forward[self.level - <span class="number">1</span>] <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">            self.level -= <span class="number">1</span></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">True</span></span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="C++"><figure class="iseeu highlight c++"><figcaption><span>[sol1-C++]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">constexpr</span> <span class="type">int</span> MAX_LEVEL = <span class="number">32</span>;</span><br><span class="line"><span class="keyword">constexpr</span> <span class="type">double</span> P_FACTOR = <span class="number">0.25</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">SkiplistNode</span> &#123;</span><br><span class="line">    <span class="type">int</span> val;</span><br><span class="line">    vector&lt;SkiplistNode *&gt; forward;</span><br><span class="line">    <span class="built_in">SkiplistNode</span>(<span class="type">int</span> _val, <span class="type">int</span> _maxLevel = MAX_LEVEL) : <span class="built_in">val</span>(_val), forward(_maxLevel, <span class="literal">nullptr</span>) &#123;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Skiplist</span> &#123;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    SkiplistNode * head;</span><br><span class="line">    <span class="type">int</span> level;</span><br><span class="line">    mt19937 gen&#123;random_device&#123;&#125;()&#125;;</span><br><span class="line">    uniform_real_distribution&lt;<span class="type">double</span>&gt; dis;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">Skiplist</span>(): <span class="built_in">head</span>(<span class="keyword">new</span> <span class="built_in">SkiplistNode</span>(<span class="number">-1</span>)), <span class="built_in">level</span>(<span class="number">0</span>), <span class="built_in">dis</span>(<span class="number">0</span>, <span class="number">1</span>) &#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">bool</span> <span class="title">search</span><span class="params">(<span class="type">int</span> target)</span> </span>&#123;</span><br><span class="line">        SkiplistNode *curr = <span class="keyword">this</span>-&gt;head;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = level - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">            <span class="comment">/* 找到第 i 层小于且最接近 target 的元素*/</span></span><br><span class="line">            <span class="keyword">while</span> (curr-&gt;forward[i] &amp;&amp; curr-&gt;forward[i]-&gt;val &lt; target) &#123;</span><br><span class="line">                curr = curr-&gt;forward[i];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        curr = curr-&gt;forward[<span class="number">0</span>];</span><br><span class="line">        <span class="comment">/* 检测当前元素的值是否等于 target */</span></span><br><span class="line">        <span class="keyword">if</span> (curr &amp;&amp; curr-&gt;val == target) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        &#125; </span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">add</span><span class="params">(<span class="type">int</span> num)</span> </span>&#123;</span><br><span class="line">        <span class="function">vector&lt;SkiplistNode *&gt; <span class="title">update</span><span class="params">(MAX_LEVEL, head)</span></span>;</span><br><span class="line">        SkiplistNode *curr = <span class="keyword">this</span>-&gt;head;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = level - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">            <span class="comment">/* 找到第 i 层小于且最接近 num 的元素*/</span></span><br><span class="line">            <span class="keyword">while</span> (curr-&gt;forward[i] &amp;&amp; curr-&gt;forward[i]-&gt;val &lt; num) &#123;</span><br><span class="line">                curr = curr-&gt;forward[i];</span><br><span class="line">            &#125;</span><br><span class="line">            update[i] = curr;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">int</span> lv = <span class="built_in">randomLevel</span>();</span><br><span class="line">        level = <span class="built_in">max</span>(level, lv);</span><br><span class="line">        SkiplistNode *newNode = <span class="keyword">new</span> <span class="built_in">SkiplistNode</span>(num, lv);</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; lv; i++) &#123;</span><br><span class="line">            <span class="comment">/* 对第 i 层的状态进行更新，将当前元素的 forward 指向新的节点 */</span></span><br><span class="line">            newNode-&gt;forward[i] = update[i]-&gt;forward[i];</span><br><span class="line">            update[i]-&gt;forward[i] = newNode;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">bool</span> <span class="title">erase</span><span class="params">(<span class="type">int</span> num)</span> </span>&#123;</span><br><span class="line">        <span class="function">vector&lt;SkiplistNode *&gt; <span class="title">update</span><span class="params">(MAX_LEVEL, <span class="literal">nullptr</span>)</span></span>;</span><br><span class="line">        SkiplistNode *curr = <span class="keyword">this</span>-&gt;head;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = level - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">            <span class="comment">/* 找到第 i 层小于且最接近 num 的元素*/</span></span><br><span class="line">            <span class="keyword">while</span> (curr-&gt;forward[i] &amp;&amp; curr-&gt;forward[i]-&gt;val &lt; num) &#123;</span><br><span class="line">                curr = curr-&gt;forward[i];</span><br><span class="line">            &#125;</span><br><span class="line">            update[i] = curr;</span><br><span class="line">        &#125;</span><br><span class="line">        curr = curr-&gt;forward[<span class="number">0</span>];</span><br><span class="line">        <span class="comment">/* 如果值不存在则返回 false */</span></span><br><span class="line">        <span class="keyword">if</span> (!curr || curr-&gt;val != num) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; level; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (update[i]-&gt;forward[i] != curr) &#123;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">/* 对第 i 层的状态进行更新，将 forward 指向被删除节点的下一跳 */</span></span><br><span class="line">            update[i]-&gt;forward[i] = curr-&gt;forward[i];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">delete</span> curr;</span><br><span class="line">        <span class="comment">/* 更新当前的 level */</span></span><br><span class="line">        <span class="keyword">while</span> (level &gt; <span class="number">1</span> &amp;&amp; head-&gt;forward[level - <span class="number">1</span>] == <span class="literal">nullptr</span>) &#123;</span><br><span class="line">            level--;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">randomLevel</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> lv = <span class="number">1</span>;</span><br><span class="line">        <span class="comment">/* 随机生成 lv */</span></span><br><span class="line">        <span class="keyword">while</span> (<span class="built_in">dis</span>(gen) &lt; P_FACTOR &amp;&amp; lv &lt; MAX_LEVEL) &#123;</span><br><span class="line">            lv++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> lv;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><figcaption><span>[sol1-Java]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Skiplist</span> &#123;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="variable">MAX_LEVEL</span> <span class="operator">=</span> <span class="number">32</span>;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">double</span> <span class="variable">P_FACTOR</span> <span class="operator">=</span> <span class="number">0.25</span>;</span><br><span class="line">    <span class="keyword">private</span> SkiplistNode head;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> level;</span><br><span class="line">    <span class="keyword">private</span> Random random;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">Skiplist</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.head = <span class="keyword">new</span> <span class="title class_">SkiplistNode</span>(-<span class="number">1</span>, MAX_LEVEL);</span><br><span class="line">        <span class="built_in">this</span>.level = <span class="number">0</span>;</span><br><span class="line">        <span class="built_in">this</span>.random = <span class="keyword">new</span> <span class="title class_">Random</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">search</span><span class="params">(<span class="type">int</span> target)</span> &#123;</span><br><span class="line">        <span class="type">SkiplistNode</span> <span class="variable">curr</span> <span class="operator">=</span> <span class="built_in">this</span>.head;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> level - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">            <span class="comment">/* 找到第 i 层小于且最接近 target 的元素*/</span></span><br><span class="line">            <span class="keyword">while</span> (curr.forward[i] != <span class="literal">null</span> &amp;&amp; curr.forward[i].val &lt; target) &#123;</span><br><span class="line">                curr = curr.forward[i];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        curr = curr.forward[<span class="number">0</span>];</span><br><span class="line">        <span class="comment">/* 检测当前元素的值是否等于 target */</span></span><br><span class="line">        <span class="keyword">if</span> (curr != <span class="literal">null</span> &amp;&amp; curr.val == target) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        &#125; </span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">add</span><span class="params">(<span class="type">int</span> num)</span> &#123;</span><br><span class="line">        SkiplistNode[] update = <span class="keyword">new</span> <span class="title class_">SkiplistNode</span>[MAX_LEVEL];</span><br><span class="line">        Arrays.fill(update, head);</span><br><span class="line">        <span class="type">SkiplistNode</span> <span class="variable">curr</span> <span class="operator">=</span> <span class="built_in">this</span>.head;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> level - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">            <span class="comment">/* 找到第 i 层小于且最接近 num 的元素*/</span></span><br><span class="line">            <span class="keyword">while</span> (curr.forward[i] != <span class="literal">null</span> &amp;&amp; curr.forward[i].val &lt; num) &#123;</span><br><span class="line">                curr = curr.forward[i];</span><br><span class="line">            &#125;</span><br><span class="line">            update[i] = curr;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">int</span> <span class="variable">lv</span> <span class="operator">=</span> randomLevel();</span><br><span class="line">        level = Math.max(level, lv);</span><br><span class="line">        <span class="type">SkiplistNode</span> <span class="variable">newNode</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">SkiplistNode</span>(num, lv);</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; lv; i++) &#123;</span><br><span class="line">            <span class="comment">/* 对第 i 层的状态进行更新，将当前元素的 forward 指向新的节点 */</span></span><br><span class="line">            newNode.forward[i] = update[i].forward[i];</span><br><span class="line">            update[i].forward[i] = newNode;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">erase</span><span class="params">(<span class="type">int</span> num)</span> &#123;</span><br><span class="line">        SkiplistNode[] update = <span class="keyword">new</span> <span class="title class_">SkiplistNode</span>[MAX_LEVEL];</span><br><span class="line">        <span class="type">SkiplistNode</span> <span class="variable">curr</span> <span class="operator">=</span> <span class="built_in">this</span>.head;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> level - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">            <span class="comment">/* 找到第 i 层小于且最接近 num 的元素*/</span></span><br><span class="line">            <span class="keyword">while</span> (curr.forward[i] != <span class="literal">null</span> &amp;&amp; curr.forward[i].val &lt; num) &#123;</span><br><span class="line">                curr = curr.forward[i];</span><br><span class="line">            &#125;</span><br><span class="line">            update[i] = curr;</span><br><span class="line">        &#125;</span><br><span class="line">        curr = curr.forward[<span class="number">0</span>];</span><br><span class="line">        <span class="comment">/* 如果值不存在则返回 false */</span></span><br><span class="line">        <span class="keyword">if</span> (curr == <span class="literal">null</span> || curr.val != num) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; level; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (update[i].forward[i] != curr) &#123;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">/* 对第 i 层的状态进行更新，将 forward 指向被删除节点的下一跳 */</span></span><br><span class="line">            update[i].forward[i] = curr.forward[i];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">/* 更新当前的 level */</span></span><br><span class="line">        <span class="keyword">while</span> (level &gt; <span class="number">1</span> &amp;&amp; head.forward[level - <span class="number">1</span>] == <span class="literal">null</span>) &#123;</span><br><span class="line">            level--;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> <span class="title function_">randomLevel</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">lv</span> <span class="operator">=</span> <span class="number">1</span>;</span><br><span class="line">        <span class="comment">/* 随机生成 lv */</span></span><br><span class="line">        <span class="keyword">while</span> (random.nextDouble() &lt; P_FACTOR &amp;&amp; lv &lt; MAX_LEVEL) &#123;</span><br><span class="line">            lv++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> lv;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">SkiplistNode</span> &#123;</span><br><span class="line">    <span class="type">int</span> val;</span><br><span class="line">    SkiplistNode[] forward;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">SkiplistNode</span><span class="params">(<span class="type">int</span> val, <span class="type">int</span> maxLevel)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.val = val;</span><br><span class="line">        <span class="built_in">this</span>.forward = <span class="keyword">new</span> <span class="title class_">SkiplistNode</span>[maxLevel];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="C#"><figure class="iseeu highlight c#"><figcaption><span>[sol1-C#]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Skiplist</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> <span class="built_in">int</span> MAX_LEVEL = <span class="number">32</span>;</span><br><span class="line">    <span class="keyword">const</span> <span class="built_in">double</span> P_FACTOR = <span class="number">0.25</span>;</span><br><span class="line">    <span class="keyword">private</span> SkiplistNode head;</span><br><span class="line">    <span class="keyword">private</span> <span class="built_in">int</span> level;</span><br><span class="line">    <span class="keyword">private</span> Random random;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Skiplist</span>()</span> &#123;</span><br><span class="line">        <span class="keyword">this</span>.head = <span class="keyword">new</span> SkiplistNode(<span class="number">-1</span>, MAX_LEVEL);</span><br><span class="line">        <span class="keyword">this</span>.level = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">this</span>.random = <span class="keyword">new</span> Random();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="built_in">bool</span> <span class="title">Search</span>(<span class="params"><span class="built_in">int</span> target</span>)</span> &#123;</span><br><span class="line">        SkiplistNode curr = <span class="keyword">this</span>.head;</span><br><span class="line">        <span class="keyword">for</span> (<span class="built_in">int</span> i = level - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">            <span class="comment">/* 找到第 i 层小于且最接近 target 的元素*/</span></span><br><span class="line">            <span class="keyword">while</span> (curr.forward[i] != <span class="literal">null</span> &amp;&amp; curr.forward[i].val &lt; target) &#123;</span><br><span class="line">                curr = curr.forward[i];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        curr = curr.forward[<span class="number">0</span>];</span><br><span class="line">        <span class="comment">/* 检测当前元素的值是否等于 target */</span></span><br><span class="line">        <span class="keyword">if</span> (curr != <span class="literal">null</span> &amp;&amp; curr.val == target) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        &#125; </span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Add</span>(<span class="params"><span class="built_in">int</span> num</span>)</span> &#123;</span><br><span class="line">        SkiplistNode[] update = <span class="keyword">new</span> SkiplistNode[MAX_LEVEL];</span><br><span class="line">        Array.Fill(update, head);</span><br><span class="line">        SkiplistNode curr = <span class="keyword">this</span>.head;</span><br><span class="line">        <span class="keyword">for</span> (<span class="built_in">int</span> i = level - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">            <span class="comment">/* 找到第 i 层小于且最接近 num 的元素*/</span></span><br><span class="line">            <span class="keyword">while</span> (curr.forward[i] != <span class="literal">null</span> &amp;&amp; curr.forward[i].val &lt; num) &#123;</span><br><span class="line">                curr = curr.forward[i];</span><br><span class="line">            &#125;</span><br><span class="line">            update[i] = curr;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">int</span> lv = RandomLevel();</span><br><span class="line">        level = Math.Max(level, lv);</span><br><span class="line">        SkiplistNode newNode = <span class="keyword">new</span> SkiplistNode(num, lv);</span><br><span class="line">        <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; lv; i++) &#123;</span><br><span class="line">            <span class="comment">/* 对第 i 层的状态进行更新，将当前元素的 forward 指向新的节点 */</span></span><br><span class="line">            newNode.forward[i] = update[i].forward[i];</span><br><span class="line">            update[i].forward[i] = newNode;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="built_in">bool</span> <span class="title">Erase</span>(<span class="params"><span class="built_in">int</span> num</span>)</span> &#123;</span><br><span class="line">        SkiplistNode[] update = <span class="keyword">new</span> SkiplistNode[MAX_LEVEL];</span><br><span class="line">        SkiplistNode curr = <span class="keyword">this</span>.head;</span><br><span class="line">        <span class="keyword">for</span> (<span class="built_in">int</span> i = level - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">            <span class="comment">/* 找到第 i 层小于且最接近 num 的元素*/</span></span><br><span class="line">            <span class="keyword">while</span> (curr.forward[i] != <span class="literal">null</span> &amp;&amp; curr.forward[i].val &lt; num) &#123;</span><br><span class="line">                curr = curr.forward[i];</span><br><span class="line">            &#125;</span><br><span class="line">            update[i] = curr;</span><br><span class="line">        &#125;</span><br><span class="line">        curr = curr.forward[<span class="number">0</span>];</span><br><span class="line">        <span class="comment">/* 如果值不存在则返回 false */</span></span><br><span class="line">        <span class="keyword">if</span> (curr == <span class="literal">null</span> || curr.val != num) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; level; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (update[i].forward[i] != curr) &#123;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">/* 对第 i 层的状态进行更新，将 forward 指向被删除节点的下一跳 */</span></span><br><span class="line">            update[i].forward[i] = curr.forward[i];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">/* 更新当前的 level */</span></span><br><span class="line">        <span class="keyword">while</span> (level &gt; <span class="number">1</span> &amp;&amp; head.forward[level - <span class="number">1</span>] == <span class="literal">null</span>) &#123;</span><br><span class="line">            level--;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="built_in">int</span> <span class="title">RandomLevel</span>()</span> &#123;</span><br><span class="line">        <span class="built_in">int</span> lv = <span class="number">1</span>;</span><br><span class="line">        <span class="comment">/* 随机生成 lv */</span></span><br><span class="line">        <span class="keyword">while</span> (random.NextDouble() &lt; P_FACTOR &amp;&amp; lv &lt; MAX_LEVEL) &#123;</span><br><span class="line">            lv++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> lv;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">SkiplistNode</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">int</span> val;</span><br><span class="line">    <span class="keyword">public</span> SkiplistNode[] forward;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">SkiplistNode</span>(<span class="params"><span class="built_in">int</span> val, <span class="built_in">int</span> maxLevel</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">this</span>.val = val;</span><br><span class="line">        <span class="keyword">this</span>.forward = <span class="keyword">new</span> SkiplistNode[maxLevel];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="C"><figure class="iseeu highlight c"><figcaption><span>[sol1-C]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> MAX(a, b) ((a) &gt; (b) ? (a) : (b))</span></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> MAX_LEVEL = <span class="number">32</span>;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> P_FACTOR = RAND_MAX &gt;&gt; <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">SkiplistNode</span> &#123;</span></span><br><span class="line">    <span class="type">int</span> val;</span><br><span class="line">    <span class="type">int</span> maxLevel;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">SkiplistNode</span> **<span class="title">forward</span>;</span></span><br><span class="line">&#125; SkiplistNode;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> &#123;</span></span><br><span class="line">    SkiplistNode *head;</span><br><span class="line">    <span class="type">int</span> level;</span><br><span class="line">&#125; Skiplist;</span><br><span class="line"></span><br><span class="line">SkiplistNode *<span class="title function_">skiplistNodeCreat</span><span class="params">(<span class="type">int</span> val, <span class="type">int</span> maxLevel)</span> &#123;</span><br><span class="line">    SkiplistNode *obj = (SkiplistNode *)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(SkiplistNode));</span><br><span class="line">    obj-&gt;val = val;</span><br><span class="line">    obj-&gt;maxLevel = maxLevel;</span><br><span class="line">    obj-&gt;forward = (SkiplistNode **)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(SkiplistNode *) * maxLevel);</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; maxLevel; i++) &#123;</span><br><span class="line">        obj-&gt;forward[i] = <span class="literal">NULL</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> obj;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">skiplistNodeFree</span><span class="params">(SkiplistNode* obj)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (obj-&gt;forward) &#123;</span><br><span class="line">        <span class="built_in">free</span>(obj-&gt;forward);</span><br><span class="line">        obj-&gt;forward = <span class="literal">NULL</span>;</span><br><span class="line">        obj-&gt;maxLevel = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">free</span>(obj);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Skiplist* <span class="title function_">skiplistCreate</span><span class="params">()</span> &#123;</span><br><span class="line">    Skiplist *obj = (Skiplist *)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(Skiplist));</span><br><span class="line">    obj-&gt;head = skiplistNodeCreat(<span class="number">-1</span>, MAX_LEVEL);</span><br><span class="line">    obj-&gt;level = <span class="number">0</span>;</span><br><span class="line">    srand(time(<span class="literal">NULL</span>));</span><br><span class="line">    <span class="keyword">return</span> obj;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">static</span> <span class="keyword">inline</span> <span class="type">int</span> <span class="title function_">randomLevel</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="type">int</span> lv = <span class="number">1</span>;</span><br><span class="line">    <span class="comment">/* 随机生成 lv */</span></span><br><span class="line">    <span class="keyword">while</span> (rand() &lt; P_FACTOR &amp;&amp; lv &lt; MAX_LEVEL) &#123;</span><br><span class="line">        lv++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> lv;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">bool</span> <span class="title function_">skiplistSearch</span><span class="params">(Skiplist* obj, <span class="type">int</span> target)</span> &#123;</span><br><span class="line">    SkiplistNode *curr = obj-&gt;head;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = obj-&gt;level - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">        <span class="comment">/* 找到第 i 层小于且最接近 target 的元素*/</span></span><br><span class="line">        <span class="keyword">while</span> (curr-&gt;forward[i] &amp;&amp; curr-&gt;forward[i]-&gt;val &lt; target) &#123;</span><br><span class="line">            curr = curr-&gt;forward[i];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    curr = curr-&gt;forward[<span class="number">0</span>];</span><br><span class="line">    <span class="comment">/* 检测当前元素的值是否等于 target */</span></span><br><span class="line">    <span class="keyword">if</span> (curr &amp;&amp; curr-&gt;val == target) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125; </span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">skiplistAdd</span><span class="params">(Skiplist* obj, <span class="type">int</span> num)</span> &#123;</span><br><span class="line">    SkiplistNode *update[MAX_LEVEL];</span><br><span class="line">    SkiplistNode *curr = obj-&gt;head;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = obj-&gt;level - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">        <span class="comment">/* 找到第 i 层小于且最接近 num 的元素*/</span></span><br><span class="line">        <span class="keyword">while</span> (curr-&gt;forward[i] &amp;&amp; curr-&gt;forward[i]-&gt;val &lt; num) &#123;</span><br><span class="line">            curr = curr-&gt;forward[i];</span><br><span class="line">        &#125;</span><br><span class="line">        update[i] = curr;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="type">int</span> lv = randomLevel();</span><br><span class="line">    <span class="keyword">if</span> (lv &gt; obj-&gt;level) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = obj-&gt;level; i &lt; lv; i++) &#123;</span><br><span class="line">            update[i] = obj-&gt;head;</span><br><span class="line">        &#125;</span><br><span class="line">        obj-&gt;level = lv;</span><br><span class="line">    &#125;</span><br><span class="line">    SkiplistNode *newNode = skiplistNodeCreat(num, lv);</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; lv; i++) &#123;</span><br><span class="line">        <span class="comment">/* 对第 i 层的状态进行更新，将当前元素的 forward 指向新的节点 */</span></span><br><span class="line">        newNode-&gt;forward[i] = update[i]-&gt;forward[i];</span><br><span class="line">        update[i]-&gt;forward[i] = newNode;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">bool</span> <span class="title function_">skiplistErase</span><span class="params">(Skiplist* obj, <span class="type">int</span> num)</span> &#123;</span><br><span class="line">    SkiplistNode *update[MAX_LEVEL];</span><br><span class="line">    SkiplistNode *curr = obj-&gt;head;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = obj-&gt;level - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">        <span class="comment">/* 找到第 i 层小于且最接近 num 的元素*/</span></span><br><span class="line">        <span class="keyword">while</span> (curr-&gt;forward[i] &amp;&amp; curr-&gt;forward[i]-&gt;val &lt; num) &#123;</span><br><span class="line">            curr = curr-&gt;forward[i];</span><br><span class="line">        &#125;</span><br><span class="line">        update[i] = curr;</span><br><span class="line">    &#125;</span><br><span class="line">    curr = curr-&gt;forward[<span class="number">0</span>];</span><br><span class="line">    <span class="comment">/* 如果值不存在则返回 false */</span></span><br><span class="line">    <span class="keyword">if</span> (!curr || curr-&gt;val != num) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; obj-&gt;level; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (update[i]-&gt;forward[i] != curr) &#123;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125; </span><br><span class="line">        <span class="comment">/* 对第 i 层的状态进行更新，将 forward 指向被删除节点的下一跳 */</span></span><br><span class="line">        update[i]-&gt;forward[i] = curr-&gt;forward[i];</span><br><span class="line">    &#125;</span><br><span class="line">    skiplistNodeFree(curr);</span><br><span class="line">    <span class="comment">/* 更新当前的 level */</span></span><br><span class="line">    <span class="keyword">while</span> (obj-&gt;level &gt; <span class="number">1</span> &amp;&amp; obj-&gt;head-&gt;forward[obj-&gt;level - <span class="number">1</span>] == <span class="literal">NULL</span>) &#123;</span><br><span class="line">        obj-&gt;level--;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">skiplistFree</span><span class="params">(Skiplist* obj)</span> &#123;</span><br><span class="line">    <span class="keyword">for</span> (SkiplistNode * curr = obj-&gt;head; curr; ) &#123;</span><br><span class="line">        SkiplistNode *prev = curr;</span><br><span class="line">        curr = curr-&gt;forward[<span class="number">0</span>];</span><br><span class="line">        skiplistNodeFree(prev);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">free</span>(obj);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><figcaption><span>[sol1-JavaScript]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="variable constant_">MAX_LEVEL</span> = <span class="number">32</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="variable constant_">P_FACTOR</span> = <span class="number">0.25</span>;</span><br><span class="line"><span class="keyword">var</span> <span class="title class_">Skiplist</span> = <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">head</span> = <span class="keyword">new</span> <span class="title class_">SkiplistNode</span>(-<span class="number">1</span>, <span class="variable constant_">MAX_LEVEL</span>);</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">level</span> = <span class="number">0</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="title class_">Skiplist</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">search</span> = <span class="keyword">function</span>(<span class="params">target</span>) &#123;</span><br><span class="line">    <span class="keyword">let</span> curr = <span class="variable language_">this</span>.<span class="property">head</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="variable language_">this</span>.<span class="property">level</span> - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">        <span class="comment">/* 找到第 i 层小于且最接近 target 的元素*/</span></span><br><span class="line">        <span class="keyword">while</span> (curr.<span class="property">forward</span>[i] &amp;&amp; curr.<span class="property">forward</span>[i].<span class="property">val</span> &lt; target) &#123;</span><br><span class="line">            curr = curr.<span class="property">forward</span>[i];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    curr = curr.<span class="property">forward</span>[<span class="number">0</span>];</span><br><span class="line">    <span class="comment">/* 检测当前元素的值是否等于 target */</span></span><br><span class="line">    <span class="keyword">if</span> (curr &amp;&amp; curr.<span class="property">val</span> === target) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125; </span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="title class_">Skiplist</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">add</span> = <span class="keyword">function</span>(<span class="params">num</span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> update = <span class="keyword">new</span> <span class="title class_">Array</span>(<span class="variable constant_">MAX_LEVEL</span>).<span class="title function_">fill</span>(<span class="variable language_">this</span>.<span class="property">head</span>);</span><br><span class="line">    <span class="keyword">let</span> curr = <span class="variable language_">this</span>.<span class="property">head</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="variable language_">this</span>.<span class="property">level</span> - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">        <span class="comment">/* 找到第 i 层小于且最接近 num 的元素*/</span></span><br><span class="line">        <span class="keyword">while</span> (curr.<span class="property">forward</span>[i] &amp;&amp; curr.<span class="property">forward</span>[i].<span class="property">val</span> &lt; num) &#123;</span><br><span class="line">            curr = curr.<span class="property">forward</span>[i];</span><br><span class="line">        &#125;</span><br><span class="line">        update[i] = curr;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">const</span> lv = <span class="title function_">randomLevel</span>();</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">level</span> = <span class="title class_">Math</span>.<span class="title function_">max</span>(<span class="variable language_">this</span>.<span class="property">level</span>, lv);</span><br><span class="line">    <span class="keyword">const</span> newNode = <span class="keyword">new</span> <span class="title class_">SkiplistNode</span>(num, lv);</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; lv; i++) &#123;</span><br><span class="line">        <span class="comment">/* 对第 i 层的状态进行更新，将当前元素的 forward 指向新的节点 */</span></span><br><span class="line">        newNode.<span class="property">forward</span>[i] = update[i].<span class="property">forward</span>[i];</span><br><span class="line">        update[i].<span class="property">forward</span>[i] = newNode;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="title class_">Skiplist</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">erase</span> = <span class="keyword">function</span>(<span class="params">num</span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> update = <span class="keyword">new</span> <span class="title class_">Array</span>(<span class="variable constant_">MAX_LEVEL</span>).<span class="title function_">fill</span>(<span class="number">0</span>);</span><br><span class="line">    <span class="keyword">let</span> curr = <span class="variable language_">this</span>.<span class="property">head</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="variable language_">this</span>.<span class="property">level</span> - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">        <span class="comment">/* 找到第 i 层小于且最接近 num 的元素*/</span></span><br><span class="line">        <span class="keyword">while</span> (curr.<span class="property">forward</span>[i] &amp;&amp; curr.<span class="property">forward</span>[i].<span class="property">val</span> &lt; num) &#123;</span><br><span class="line">            curr = curr.<span class="property">forward</span>[i];</span><br><span class="line">        &#125;</span><br><span class="line">        update[i] = curr;</span><br><span class="line">    &#125;</span><br><span class="line">    curr = curr.<span class="property">forward</span>[<span class="number">0</span>];</span><br><span class="line">    <span class="comment">/* 如果值不在存则返回 false */</span></span><br><span class="line">    <span class="keyword">if</span> (!curr || curr.<span class="property">val</span> !== num) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="variable language_">this</span>.<span class="property">level</span>; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (update[i].<span class="property">forward</span>[i] !== curr) &#123;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">/* 对第 i 层的状态进行更新，将 forward 指向被删除节点的下一跳 */</span></span><br><span class="line">        update[i].<span class="property">forward</span>[i] = curr.<span class="property">forward</span>[i];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">/* 更新当前的 level */</span></span><br><span class="line">    <span class="keyword">while</span> (<span class="variable language_">this</span>.<span class="property">level</span> &gt; <span class="number">1</span> &amp;&amp; !<span class="variable language_">this</span>.<span class="property">head</span>.<span class="property">forward</span>[<span class="variable language_">this</span>.<span class="property">level</span> - <span class="number">1</span>]) &#123;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">level</span>--;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">randomLevel</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">    <span class="keyword">let</span> lv = <span class="number">1</span>;</span><br><span class="line">    <span class="comment">/* 随机生成 lv */</span></span><br><span class="line">    <span class="keyword">while</span> (<span class="title class_">Math</span>.<span class="title function_">random</span>() &lt; <span class="variable constant_">P_FACTOR</span> &amp;&amp; lv &lt; <span class="variable constant_">MAX_LEVEL</span>) &#123;</span><br><span class="line">        lv++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> lv;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">SkiplistNode</span> &#123;</span><br><span class="line">    <span class="title function_">constructor</span>(<span class="params">val, maxLevel</span>) &#123;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">val</span> = val;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">forward</span> = <span class="keyword">new</span> <span class="title class_">Array</span>(maxLevel).<span class="title function_">fill</span>(<span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Go"><figure class="iseeu highlight go"><figcaption><span>[sol1-Golang]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> maxLevel = <span class="number">32</span></span><br><span class="line"><span class="keyword">const</span> pFactor = <span class="number">0.25</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> SkiplistNode <span class="keyword">struct</span> &#123;</span><br><span class="line">    val     <span class="type">int</span></span><br><span class="line">    forward []*SkiplistNode</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> Skiplist <span class="keyword">struct</span> &#123;</span><br><span class="line">    head  *SkiplistNode</span><br><span class="line">    level <span class="type">int</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Constructor</span><span class="params">()</span></span> Skiplist &#123;</span><br><span class="line">    <span class="keyword">return</span> Skiplist&#123;&amp;SkiplistNode&#123;<span class="number">-1</span>, <span class="built_in">make</span>([]*SkiplistNode, maxLevel)&#125;, <span class="number">0</span>&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(Skiplist)</span></span> randomLevel() <span class="type">int</span> &#123;</span><br><span class="line">    lv := <span class="number">1</span></span><br><span class="line">    <span class="keyword">for</span> lv &lt; maxLevel &amp;&amp; rand.Float64() &lt; pFactor &#123;</span><br><span class="line">        lv++</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> lv</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(s *Skiplist)</span></span> Search(target <span class="type">int</span>) <span class="type">bool</span> &#123;</span><br><span class="line">    curr := s.head</span><br><span class="line">    <span class="keyword">for</span> i := s.level - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i-- &#123;</span><br><span class="line">        <span class="comment">// 找到第 i 层小于且最接近 target 的元素</span></span><br><span class="line">        <span class="keyword">for</span> curr.forward[i] != <span class="literal">nil</span> &amp;&amp; curr.forward[i].val &lt; target &#123;</span><br><span class="line">            curr = curr.forward[i]</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    curr = curr.forward[<span class="number">0</span>]</span><br><span class="line">    <span class="comment">// 检测当前元素的值是否等于 target</span></span><br><span class="line">    <span class="keyword">return</span> curr != <span class="literal">nil</span> &amp;&amp; curr.val == target</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(s *Skiplist)</span></span> Add(num <span class="type">int</span>) &#123;</span><br><span class="line">    update := <span class="built_in">make</span>([]*SkiplistNode, maxLevel)</span><br><span class="line">    <span class="keyword">for</span> i := <span class="keyword">range</span> update &#123;</span><br><span class="line">        update[i] = s.head</span><br><span class="line">    &#125;</span><br><span class="line">    curr := s.head</span><br><span class="line">    <span class="keyword">for</span> i := s.level - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i-- &#123;</span><br><span class="line">        <span class="comment">// 找到第 i 层小于且最接近 num 的元素</span></span><br><span class="line">        <span class="keyword">for</span> curr.forward[i] != <span class="literal">nil</span> &amp;&amp; curr.forward[i].val &lt; num &#123;</span><br><span class="line">            curr = curr.forward[i]</span><br><span class="line">        &#125;</span><br><span class="line">        update[i] = curr</span><br><span class="line">    &#125;</span><br><span class="line">    lv := s.randomLevel()</span><br><span class="line">    s.level = max(s.level, lv)</span><br><span class="line">    newNode := &amp;SkiplistNode&#123;num, <span class="built_in">make</span>([]*SkiplistNode, lv)&#125;</span><br><span class="line">    <span class="keyword">for</span> i, node := <span class="keyword">range</span> update[:lv] &#123;</span><br><span class="line">        <span class="comment">// 对第 i 层的状态进行更新，将当前元素的 forward 指向新的节点</span></span><br><span class="line">        newNode.forward[i] = node.forward[i]</span><br><span class="line">        node.forward[i] = newNode</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(s *Skiplist)</span></span> Erase(num <span class="type">int</span>) <span class="type">bool</span> &#123;</span><br><span class="line">    update := <span class="built_in">make</span>([]*SkiplistNode, maxLevel)</span><br><span class="line">    curr := s.head</span><br><span class="line">    <span class="keyword">for</span> i := s.level - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i-- &#123;</span><br><span class="line">        <span class="comment">// 找到第 i 层小于且最接近 num 的元素</span></span><br><span class="line">        <span class="keyword">for</span> curr.forward[i] != <span class="literal">nil</span> &amp;&amp; curr.forward[i].val &lt; num &#123;</span><br><span class="line">            curr = curr.forward[i]</span><br><span class="line">        &#125;</span><br><span class="line">        update[i] = curr</span><br><span class="line">    &#125;</span><br><span class="line">    curr = curr.forward[<span class="number">0</span>]</span><br><span class="line">    <span class="comment">// 如果值不存在则返回 false</span></span><br><span class="line">    <span class="keyword">if</span> curr == <span class="literal">nil</span> || curr.val != num &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> i := <span class="number">0</span>; i &lt; s.level &amp;&amp; update[i].forward[i] == curr; i++ &#123;</span><br><span class="line">        <span class="comment">// 对第 i 层的状态进行更新，将 forward 指向被删除节点的下一跳</span></span><br><span class="line">        update[i].forward[i] = curr.forward[i]</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 更新当前的 level</span></span><br><span class="line">    <span class="keyword">for</span> s.level &gt; <span class="number">1</span> &amp;&amp; s.head.forward[s.level<span class="number">-1</span>] == <span class="literal">nil</span> &#123;</span><br><span class="line">        s.level--</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">max</span><span class="params">(a, b <span class="type">int</span>)</span></span> <span class="type">int</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> b &gt; a &#123;</span><br><span class="line">        <span class="keyword">return</span> b</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> a</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>复杂度分析</strong></p>
+<ul>
+<li><p>时间复杂度：O(\log n)，其中 n 为 add 的调用次数。详细分析参考题解描述。</p>
+</li>
+<li><p>空间复杂度：O(n)，其中 n 为 add 的调用次数。详细分析参考题解描述。</p>
+</li>
+</ul>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <!--<div class="article-copyright-info-container">-->
+    <!--&lt;!&ndash;<ul>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><strong>Title:</strong> 1206-设计跳表</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><strong>Author:</strong> Raphael Liu</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><strong>Created at&ndash;&gt;-->
+                <!--&lt;!&ndash;:</strong> 2023-09-13 00:47:26</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;&ndash;&gt;-->
+            <!--&lt;!&ndash;<li>&ndash;&gt;-->
+                <!--&lt;!&ndash;<strong>Updated at&ndash;&gt;-->
+                    <!--&lt;!&ndash;:</strong> 2023-09-13 17:01:06&ndash;&gt;-->
+            <!--&lt;!&ndash;</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;<li>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;<strong>Link:</strong> https://fida.ltd/2023/09/13/1206-设计跳表/&ndash;&gt;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;</li>&ndash;&gt;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;<li>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;<strong>&ndash;&gt;&ndash;&gt;-->
+                <!--&lt;!&ndash;&lt;!&ndash;License:&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;</strong>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0</a>.&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;&ndash;&gt;&ndash;&gt;-->
+
+        <!--&lt;!&ndash;&lt;!&ndash;</li>&ndash;&gt;&ndash;&gt;-->
+    <!--&lt;!&ndash;</ul>&ndash;&gt;-->
+<!--</div>-->
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box">
+                
+                    <li class="tag-item">
+                        <a href="/tags/algorithm/">#algorithm</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item">
+                        <a href="/tags/HARD/">#HARD</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                        rel="prev"
+                        href="/2023/09/13/1203-%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/"
+                        >
+                            <span class="left arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">1203-项目管理</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                        rel="next"
+                        href="/2023/09/13/1207-%E7%8B%AC%E4%B8%80%E6%97%A0%E4%BA%8C%E7%9A%84%E5%87%BA%E7%8E%B0%E6%AC%A1%E6%95%B0/"
+                        >
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">1207-独一无二的出现次数</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+
+        
+            <div class="comment-container">
+                <div class="comments-container pjax">
+    <div id="comment-anchor"></div>
+    <div class="comment-area-title">
+        <i class="fa-solid fa-comments"></i>&nbsp;Comments
+    </div>
+    
+
+        
+            
+ 
+    <div id="waline"></div>
+    <script type="module"  data-swup-reload-script>
+        import { init } from 'https://evan.beee.top/js/waline.mjs';
+
+        function loadWaline() {
+            init({
+                el: '#waline',
+                serverURL: 'https://example.example.com',
+                lang: 'zh-CN',
+                dark: 'body[class~="dark-mode"]',
+                requiredMeta: ['nick','mail'], // cannot customize by theme config, change it yourself
+            });
+        }
+
+        if ('true') {
+            const loadWalineTimeout = setTimeout(() => {
+                loadWaline();
+                clearTimeout(loadWalineTimeout);
+            }, 1000);
+        } else {
+            window.addEventListener('DOMContentLoaded', loadWaline);
+        }
+        
+    </script>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+
+    
+        <div class="toc-content-container">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">On this page</div>
+        <div class="page-title">1206-设计跳表</div>
+        
+
+    </div>
+</div>
+        </div>
+    
+</div>
+
+
+
+                
+
+            </div>
+
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2022</span>
+              -
+            
+            2023&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">Raphael Liu</a>
+        </div>
+        
+            <script data-swup-reload-script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">UV:</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">PV:</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <!--<div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">-->
+            <!--<span class="lg:block text-sm">powered_by</span>-->
+            <!--&lt;!&ndash;<span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.4.4</a></span>&ndash;&gt;-->
+        <!--</div>-->
+        
+        <!---->
+            <!--<div>-->
+                <!--runtime <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hours <span class="odometer" id="runtime_minutes"></span> minutes <span class="odometer" id="runtime_seconds"></span> seconds-->
+            <!--</div>-->
+        <!---->
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fa-regular fa-comments"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-expand-width flex justify-center items-center">
+            <i class="fa-regular fa-expand"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fa-solid fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa-solid fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa-solid fa-spinner fa-spin-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+    
+<script src="/js/libs/Swup.min.js"></script>
+
+<script src="/js/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/libs/SwupScrollPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+        ],
+        containers: ["#swup"],
+    });
+
+    swup.hooks.on("page:view", () => {
+        Global.refresh();
+    });
+
+    // if (document.readyState === "complete") {
+    //
+    // } else {
+    //     document.addEventListener("DOMContentLoaded", () => init());
+    // }
+</script>
+
+
+
+
+
+
+<script src="/js/utils.js" type="module"></script>
+
+<script src="/js/main.js" type="module"></script>
+
+<script src="/js/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/layouts/categoryList.js" type="module"></script>
+
+
+
+    
+<script src="/js/tools/localSearch.js"></script>
+
+
+
+
+    
+<script src="/js/tools/codeBlock.js"></script>
+
+
+
+
+    
+<script src="/js/layouts/lazyload.js"></script>
+
+
+
+
+    
+<script src="/js/tools/runtime.js"></script>
+
+    
+<script src="/js/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/libs/Typed.min.js"></script>
+
+  
+<script src="/js/plugins/typed.js"></script>
+
+
+
+
+
+
+
+<div class="post-scripts" data-swup-reload-script>
+    
+        
+<script src="/js/libs/anime.min.js"></script>
+
+        
+<script src="/js/tools/tocToggle.js" type="module"></script>
+
+<script src="/js/layouts/toc.js" type="module"></script>
+
+<script src="/js/plugins/tabs.js" type="module"></script>
+
+    
+</div>
+
+
+</body>
+</html>

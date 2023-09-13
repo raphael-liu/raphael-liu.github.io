@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="Raphael Liu">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/2023/09/13/lcp 36-最多牌组数/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="麻将的游戏规则中，共有两种方式凑成「一组牌」： - 顺子：三张牌面数字连续的麻将，例如 [4,5,6] - 刻子：三张牌面数字相同的麻将，例如[10,10,10] 给定若干数字作为麻将牌的数值（记作一维数组 tiles），请返回所给 tiles 最多可组成的牌组数。注意：凑成牌组时，每张牌仅能使用一次。 示例 1： &gt;输入：tiles &#x3D; [2,2,2,3,4] &gt; &gt;输出：1">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LCP 36-最多牌组数">
+<meta property="og:url" content="http://example.com/2023/09/13/LCP%2036-%E6%9C%80%E5%A4%9A%E7%89%8C%E7%BB%84%E6%95%B0/index.html">
+<meta property="og:site_name" content="Raphael&#39;s Blog">
+<meta property="og:description" content="麻将的游戏规则中，共有两种方式凑成「一组牌」： - 顺子：三张牌面数字连续的麻将，例如 [4,5,6] - 刻子：三张牌面数字相同的麻将，例如[10,10,10] 给定若干数字作为麻将牌的数值（记作一维数组 tiles），请返回所给 tiles 最多可组成的牌组数。注意：凑成牌组时，每张牌仅能使用一次。 示例 1： &gt;输入：tiles &#x3D; [2,2,2,3,4] &gt; &gt;输出：1">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://pic.leetcode-cn.com/1618282817-WwoZKi-map%E5%8C%96.gif">
+<meta property="og:image" content="https://pic.leetcode-cn.com/1618218608-bWRMrf-%E5%B9%BB%E7%81%AF%E7%89%873.JPG">
+<meta property="og:image" content="https://pic.leetcode-cn.com/1618218621-MIpywZ-%E5%B9%BB%E7%81%AF%E7%89%874.JPG">
+<meta property="og:image" content="https://pic.leetcode-cn.com/1618218632-lHffgA-%E5%B9%BB%E7%81%AF%E7%89%875.JPG">
+<meta property="og:image" content="https://pic.leetcode-cn.com/1618282857-wNZEqB-%E5%B9%BB%E7%81%AF%E7%89%8719.JPG">
+<meta property="og:image" content="https://pic.leetcode-cn.com/1618221308-pKcOwN-%E5%B9%BB%E7%81%AF%E7%89%8720.JPG">
+<meta property="og:image" content="https://pic.leetcode-cn.com/1618152980-GgSmAJ-%E5%B9%BB%E7%81%AF%E7%89%876.JPG">
+<meta property="og:image" content="https://pic.leetcode-cn.com/1618152984-hzahWG-%E5%B9%BB%E7%81%AF%E7%89%877.JPG">
+<meta property="og:image" content="https://pic.leetcode-cn.com/1618152994-RTjckv-%E5%B9%BB%E7%81%AF%E7%89%878.JPG">
+<meta property="og:image" content="https://pic.leetcode-cn.com/1618218777-cmUoON-%E5%B9%BB%E7%81%AF%E7%89%879.JPG">
+<meta property="og:image" content="https://pic.leetcode-cn.com/1618153000-qgeLPk-%E5%B9%BB%E7%81%AF%E7%89%8710.JPG">
+<meta property="og:image" content="https://pic.leetcode-cn.com/1618153005-OLORJJ-%E5%B9%BB%E7%81%AF%E7%89%8711.JPG">
+<meta property="og:image" content="https://pic.leetcode-cn.com/1618153007-Ohaosc-%E5%B9%BB%E7%81%AF%E7%89%8712.JPG">
+<meta property="og:image" content="https://pic.leetcode-cn.com/1618153010-ESDoVV-%E5%B9%BB%E7%81%AF%E7%89%8713.JPG">
+<meta property="og:image" content="https://pic.leetcode-cn.com/1618153013-yidgWq-%E5%B9%BB%E7%81%AF%E7%89%8714.JPG">
+<meta property="og:image" content="https://pic.leetcode-cn.com/1618153016-wHpSKe-%E5%B9%BB%E7%81%AF%E7%89%8715.JPG">
+<meta property="og:image" content="https://pic.leetcode-cn.com/1618153019-yKCNFz-%E5%B9%BB%E7%81%AF%E7%89%8716.JPG">
+<meta property="og:image" content="https://pic.leetcode-cn.com/1618219605-jlLFoM-%E9%BA%BB%E5%B0%86.jpg">
+<meta property="article:published_time" content="2023-09-12T16:47:26.000Z">
+<meta property="article:modified_time" content="2023-09-13T08:06:27.619Z">
+<meta property="article:author" content="Raphael Liu">
+<meta property="article:tag" content="algorithm">
+<meta property="article:tag" content="HARD">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://pic.leetcode-cn.com/1618282817-WwoZKi-map%E5%8C%96.gif">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/redefine-favicon.svg" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/redefine-favicon.svg">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/redefine-favicon.svg">
+    <!--- Page Info-->
+    
+    <title>
+        
+            LCP 36-最多牌组数 -
+        
+        Raphael&#39;s Blog
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/css/build/styles.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/fonts.css">
+
+    
+<link rel="stylesheet" href="/fonts/Satoshi/satoshi.css">
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+
+    <!--- Inject Part-->
+    
+    <script id="hexo-configurations">
+    let Global = window.Global || {};
+    Global.hexo_config = {"hostname":"example.com","root":"/","language":"zh_CN"};
+    Global.theme_config = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":true,"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"open_graph":true,"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-wqery6-light.webp","dark":"/images/wallhaven-wqery6-dark.webp"},"title":"Raphael's Blog","subtitle":{"text":["格物致知","坚持做正确的事情"],"hitokoto":{"enable":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":false,"links":{"github":"https://github.com/raphael-liu","email":"raphael@buaa.edu.cn# your email"},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.4.4","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"links":{"首页":{"path":"/","icon":"fa-regular fa-house"},"文章":{"path":"/archives","icon":"fa-regular fa-archive"},"关于":{"icon":"fa-regular fa-user","submenus":{"我":"/about/me","Github":"https://github.com/raphael-liu"}}},"search":{"enable":true,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"links":null},"article_date_format":"auto","categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}},"footerStart":"2022/8/17 11:45:14"};
+    Global.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    Global.data_config = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="swup-progress-icon">
+            <i class="fa-solid fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container" id="swup">
+
+    
+
+    <div class="main-content-container">
+
+
+        <div class="main-content-header">
+            <header class="navbar-container">
+    
+    <div class="navbar-content">
+        <div class="left">
+            
+            <a class="logo-title" href="http://example.com/">
+                
+                Raphael&#39;s Blog
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/"  >
+                                    
+                                        
+                                            <i class="fa-regular fa-house"></i>
+                                        
+                                        首页
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/archives"  >
+                                    
+                                        
+                                            <i class="fa-regular fa-archive"></i>
+                                        
+                                        文章
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="has-dropdown" 
+                                    href="#" onClick="return false;">
+                                    
+                                        
+                                            <i class="fa-regular fa-user"></i>
+                                        
+                                        关于&nbsp;<i class="fa-solid fa-chevron-down"></i>
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                                    <ul class="sub-menu">
+                                    
+                                        <li>
+                                        <a href="/about/me">我
+                                        </a>
+                                        </li>
+                                    
+                                        <li>
+                                        <a target="_blank" rel="noopener" href="https://github.com/raphael-liu">GITHUB
+                                        </a>
+                                        </li>
+                                    
+                                    </ul>
+                                
+                            </li>
+                    
+                    
+                        <li class="navbar-item search search-popup-trigger">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fa-solid fa-magnifying-glass"></i></div>
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile drawer -->
+    <div class="navbar-drawer w-full absolute top-0 left-0 bg-background-color">
+        <ul class="drawer-navbar-list flex flex-col justify-start items-center">
+            
+                
+                    <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group " 
+                        href="/"  >
+                             
+                                
+                                    <i class="fa-regular fa-house"></i>
+                                
+                                首页
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+                
+                    <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group " 
+                        href="/archives"  >
+                             
+                                
+                                    <i class="fa-regular fa-archive"></i>
+                                
+                                文章
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+                
+                    <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group has-dropdown" 
+                        href="#" onClick="return false;">
+                            
+                                
+                                    <i class="fa-regular fa-user"></i>
+                                
+                                关于&nbsp;<i class="group-hover:rotate-180 transition-transform fa-solid fa-chevron-down"></i>
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                              
+                        
+                            <li class="text-base flex justify-center items-center hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                <a class="py-0.5" href="/about/me">我</a>
+                            </li>
+                        
+                            <li class="text-base flex justify-center items-center hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                <a class="py-0.5" target="_blank" rel="noopener" href="https://github.com/raphael-liu">GITHUB</a>
+                            </li>
+                        
+                    
+            
+
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="post-page-container">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            
+                <h1 class="article-title-regular">LCP 36-最多牌组数</h1>
+            
+            </div>
+            
+                    
+        
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">Raphael Liu</span>
+                        
+                            <span class="author-label">Lv10</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2023-09-13 00:47:26</span>
+        <span class="mobile">2023-09-13 00:47:26</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2023-09-13 16:06:27</span>
+            <span class="mobile">2023-09-13 16:06:27</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/algorithm/">algorithm</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/HARD/">HARD</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        
+
+
+        <div class="article-content markdown-body">
+            <p>麻将的游戏规则中，共有两种方式凑成「一组牌」： - 顺子：三张牌面数字连续的麻将，例如 [4,5,6] - 刻子：三张牌面数字相同的麻将，例如<br>[10,10,10] 给定若干数字作为麻将牌的数值（记作一维数组 <code>tiles</code>），请返回所给 <code>tiles</code> 最多可组成的牌组数。<br>注意：凑成牌组时，每张牌仅能使用一次。 <strong>示例 1：</strong> &gt;输入：<code>tiles = [2,2,2,3,4]</code> &gt; &gt;输出：<code>1</code> &gt;</p>
+<blockquote>
+<p>解释：最多可以组合出 [2,2,2] 或者 [2,3,4] 其中一组牌。 <strong>示例 2：</strong> &gt;输入：<code>tiles = [2,2,2,3,4,1,3]</code></p>
+<blockquote>
+<p>输出：<code>2</code> &gt; &gt;解释：最多可以组合出 [1,2,3] 与 [2,3,4] 两组牌。 <strong>提示：</strong> - <code>1 &lt;= tiles.length &lt;= 10^5</code> - <code>1 &lt;= tiles[i] &lt;= 10^9</code></p>
+</blockquote>
+</blockquote>
+<p>原作者：<a href="/u/lucifer1004/">@lucifer1004</a><br>原回答：<a class="link"   target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/Up5XYM/solution/dp-wei-shi-yao-mei-chong-pai-zui-duo-liu-mun5/" >【DP】为什么每种牌最多留4张？ <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<h2 id="第一步：整理牌序"><a href="#第一步：整理牌序" class="headerlink" title="第一步：整理牌序"></a>第一步：整理牌序</h2><p>首先，将 <code>tiles</code> 变为 <code>map&lt;int, int&gt;</code>。其中，<strong>键</strong>是<strong>点数</strong>, 而<strong>值</strong>是对应的<strong>牌数</strong>，C++中的<code>map</code>是按照<strong>键</strong>从小到大排列的。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://pic.leetcode-cn.com/1618282817-WwoZKi-map%E5%8C%96.gif"
+                      alt="map化.gif"
+                ></p>
+<div class="highlight-container" data-rel="Cpp"><figure class="iseeu highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">map&lt;<span class="type">int</span>, <span class="type">int</span>&gt; count;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">auto</span> tile : tiles)</span><br><span class="line">    count[tile]++;</span><br></pre></td></tr></table></figure></div>
+
+<p>接下来，我们的指针会跟随<strong>点数</strong> <code>[tile]</code> 移动，动规数组也会随着 <code>[tile]</code> 更新。</p>
+<h2 id="第二步：状态矩阵"><a href="#第二步：状态矩阵" class="headerlink" title="第二步：状态矩阵"></a>第二步：状态矩阵</h2><p>动规的目标毫无疑问：已知之前所有牌面最高得分（记为<code>dp</code>），当指针随着<strong>点数</strong>增加时，我们要根据新增加的牌来更新最高得分（记为<code>dp</code>）。</p>
+<p>例如，在下面这副牌中，假设现在我们遍历到 <code>[tile] = 4</code>，我们需要根据<code>4</code>的牌数来更新得分。即</p>
+<p><code>dp += 新增得分</code></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://pic.leetcode-cn.com/1618218608-bWRMrf-%E5%B9%BB%E7%81%AF%E7%89%873.JPG"
+                      alt="幻灯片3.JPG"
+                ></p>
+<p>新增加的得分有两部分：</p>
+<ol>
+<li><code>4</code>和<strong>之前两张牌</strong>组成的<strong>顺子</strong>得分，</li>
+<li><code>4</code>自己组成的<strong>刻子</strong>得分。</li>
+</ol>
+<p>仔细分析我们发现，有两种不同的情况。  </p>
+<ul>
+<li><strong>情况1</strong><br>之前组成了两副顺子，留下来 1 张 <code>[2]</code> 和 0 张 <code>[3]</code>，无法和 <code>[4]</code> 一起组成新的顺子。因此，新增加的 <code>[4]</code> 只带来了 1 分新得分：[4] 的刻子得分。</li>
+</ul>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://pic.leetcode-cn.com/1618218621-MIpywZ-%E5%B9%BB%E7%81%AF%E7%89%874.JPG"
+                      alt="幻灯片4.JPG"
+                ></p>
+<ul>
+<li><strong>情况2</strong><br>之前组成了一副顺子和一副刻子，留下来 2 张 <code>[2]</code> 和 1 张 <code>[3]</code>，能够 <code>[4]</code> 一起组成新的顺子。另外，剩下的 <code>[4]</code> 也能组成一副刻子 。因此，新增加的 <code>[4]</code> 最多能带来 2 分：一分顺子， 一分刻子。</li>
+</ul>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://pic.leetcode-cn.com/1618218632-lHffgA-%E5%B9%BB%E7%81%AF%E7%89%875.JPG"
+                      alt="幻灯片5.JPG"
+                ></p>
+<p>仔细分析这两种情况：我们发现：  </p>
+<p><strong>影响新增得分的只有<code>[2]</code>和<code>[3]</code>的剩余牌数，也就是<code>[tile-2]</code>和<code>[tile-1]</code>的剩余牌数。</strong>  </p>
+<p>因此，我们的<code>dp</code>应该是一个二维数组，<code>dp[cnt_2][cnt_1]</code> 表示：在预留 <code>cnt_2</code> 张 <code>[tile-2]</code> 和 <code>cnt_1</code> 张 <code>[tile-1]</code> 的前提下，<code>[tile]</code> 之前的牌能组成的牌组数。</p>
+<h2 id="第三步：压缩状态空间"><a href="#第三步：压缩状态空间" class="headerlink" title="第三步：压缩状态空间"></a>第三步：压缩状态空间</h2><p>如果我们把预留数量的所有可能性都列出来，<code>dp</code>的大小将有O(n^2)。因此，我们考虑<strong>限制预留的牌数</strong>。</p>
+<p>预留的牌仅用于跟下两张牌组成顺子，故应考虑<strong>限制顺子的数量</strong>。如下图所示，当相同顺子的数量大于等于3时，我们可以把<strong>每3副顺子换成3副对应的刻子。</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://pic.leetcode-cn.com/1618282857-wNZEqB-%E5%B9%BB%E7%81%AF%E7%89%8719.JPG"
+                      alt="幻灯片19.JPG"
+                ></p>
+<p>那么，相同顺子的数量<code>&lt;=2</code>副。</p>
+<p>如下图所示，为<code>[5]</code>预留的牌，在未来遍历到<code>[6]</code>时，可组成顺子<code>([4], [5], [6])</code>；在未来遍历到<code>[7]</code>时，可组成顺子<code>([5], [6], [7])</code>。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://pic.leetcode-cn.com/1618221308-pKcOwN-%E5%B9%BB%E7%81%AF%E7%89%8720.JPG"
+                      alt="幻灯片20.JPG"
+                ></p>
+<p>每种顺子不超过2副。因此，我们预留的牌，也不超过4张。</p>
+<p><code>dp</code>的空间就压缩到了<code>dp[0~4][0~4]</code>，即O(5^2)（因为还要考虑一张都不留的情况）。</p>
+<h2 id="第三步：状态转移方程"><a href="#第三步：状态转移方程" class="headerlink" title="第三步：状态转移方程"></a>第三步：状态转移方程</h2><p>根据前面的分析，我们知道，每一步的分数由三部分组成：</p>
+<ol>
+<li>之前赚的分数；</li>
+<li><code>[tile-2]</code>、<code>[tile-1]</code>和<code>[tile]</code>组成的顺子得分；</li>
+<li><code>[tile]</code>自己组成的刻子得分。</li>
+</ol>
+<p>注意到，我们当前的 <code>[tile]</code> 也不要一次性用完，也要考虑留下几张跟后面的牌组成顺子。</p>
+<p>那么，我们应该怎么规划<strong>顺子得分</strong>、<strong>刻子得分</strong>和<strong>预留的牌数</strong>呢？我们通过遍历的方式把所有的可能性罗列出来。</p>
+<p>&lt;<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://pic.leetcode-cn.com/1618152980-GgSmAJ-%E5%B9%BB%E7%81%AF%E7%89%876.JPG"
+                      alt="幻灯片6.JPG"
+                >,<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://pic.leetcode-cn.com/1618152984-hzahWG-%E5%B9%BB%E7%81%AF%E7%89%877.JPG"
+                      alt="幻灯片7.JPG"
+                >,<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://pic.leetcode-cn.com/1618152994-RTjckv-%E5%B9%BB%E7%81%AF%E7%89%878.JPG"
+                      alt="幻灯片8.JPG"
+                >,<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://pic.leetcode-cn.com/1618218777-cmUoON-%E5%B9%BB%E7%81%AF%E7%89%879.JPG"
+                      alt="幻灯片9.JPG"
+                >,<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://pic.leetcode-cn.com/1618153000-qgeLPk-%E5%B9%BB%E7%81%AF%E7%89%8710.JPG"
+                      alt="幻灯片10.JPG"
+                >,<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://pic.leetcode-cn.com/1618153005-OLORJJ-%E5%B9%BB%E7%81%AF%E7%89%8711.JPG"
+                      alt="幻灯片11.JPG"
+                >,<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://pic.leetcode-cn.com/1618153007-Ohaosc-%E5%B9%BB%E7%81%AF%E7%89%8712.JPG"
+                      alt="幻灯片12.JPG"
+                >,<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://pic.leetcode-cn.com/1618153010-ESDoVV-%E5%B9%BB%E7%81%AF%E7%89%8713.JPG"
+                      alt="幻灯片13.JPG"
+                >,<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://pic.leetcode-cn.com/1618153013-yidgWq-%E5%B9%BB%E7%81%AF%E7%89%8714.JPG"
+                      alt="幻灯片14.JPG"
+                >,<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://pic.leetcode-cn.com/1618153016-wHpSKe-%E5%B9%BB%E7%81%AF%E7%89%8715.JPG"
+                      alt="幻灯片15.JPG"
+                >,<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://pic.leetcode-cn.com/1618153019-yKCNFz-%E5%B9%BB%E7%81%AF%E7%89%8716.JPG"
+                      alt="幻灯片16.JPG"
+                >&gt;</p>
+<h4 id="罗列顺子的所有可能性"><a href="#罗列顺子的所有可能性" class="headerlink" title="罗列顺子的所有可能性"></a>罗列顺子的所有可能性</h4><p>首先，我们把顺子数量从0开始罗列。<br>正如前文所述，我们预留了<code>cnt_2</code>张<code>[tile-2]</code> 和 <code>cnt_1</code>张<code>[tile-1]</code>，而现在我们有 <code>cnt</code>张新增加的<code>[tile]</code>牌。<br>组成的顺子数量，不能超过 <code>cnt_2</code>、<code>cnt_1</code>、<code>cnt</code> 的任何一个。</p>
+<div class="highlight-container" data-rel="Cpp"><figure class="iseeu highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="type">int</span> shunzi = <span class="number">0</span>; shunzi &lt;= <span class="built_in">min</span>(cnt_2, <span class="built_in">min</span>(cnt_1, cnt)); ++shunzi) &#123;</span><br><span class="line">    ...</span><br></pre></td></tr></table></figure></div>
+
+<p>对于下一个点数而言，<code>[new_tile-2]</code> 就是当前的 <code>[tile-1]</code>，我们用<code>new_2</code> 代表预留的 <code>[new_tile-2]</code> 的牌数，这个牌数就是<code>[tile-1]</code>的牌数减去顺子数量。</p>
+<p>例如，在下面这张图中，下一个点数<code>[new_tile]</code>是<code>5</code>，<code>new_1</code>是预留的<code>[4]</code>的数量，<code>new_2</code>就是剩下的<code>[3]</code>的数量。原来我们有 3 张<code>[3]</code>，顺子用掉 2 张，就还剩 1 张。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://pic.leetcode-cn.com/1618219605-jlLFoM-%E9%BA%BB%E5%B0%86.jpg"
+                      alt="麻将.jpg"
+                ></p>
+<div class="highlight-container" data-rel="Cpp"><figure class="iseeu highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> new_2 = cnt_1 - shunzi;</span><br></pre></td></tr></table></figure></div>
+
+<h4 id="罗列预留牌数的所有可能性"><a href="#罗列预留牌数的所有可能性" class="headerlink" title="罗列预留牌数的所有可能性"></a>罗列预留牌数的所有可能性</h4><p>同样的，我们把当前预留的牌数从0开始罗列。<br>对于下一张牌而言，当前的牌面自然是 <code>[new_tile-1]</code> 了，所以我们用 <code>new_1</code> 代表预留的 <code>[new_tile-1]</code> 的牌数，预留的牌数自然不能超过<code>[tile]</code>的牌数减去顺子用掉的数量。</p>
+<div class="highlight-container" data-rel="Cpp"><figure class="iseeu highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="type">int</span> new_1 = <span class="number">0</span>; new_1 &lt;= cnt - shunzi; ++new_1) &#123;</span><br><span class="line">    ...</span><br></pre></td></tr></table></figure></div>
+
+<p>那么，自然地，去掉了顺子数量和预留牌数之后，剩下的 <code>[tile]</code> 的数量全部组成刻子，它的得分是：<code>(cnt - shunzi - new_1) / 3</code>。</p>
+<p>综上所述，新的得分是三者相加，即</p>
+<div class="highlight-container" data-rel="Cpp"><figure class="iseeu highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="type">int</span> new_score = dp[cnt_2][cnt_1] + shunzi + (cnt - shunzi - new_1) / <span class="number">3</span>;</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="第四步：找到最高分"><a href="#第四步：找到最高分" class="headerlink" title="第四步：找到最高分"></a>第四步：找到最高分</h2><p>全部遍历完成后，我们搜索并返回dp的最大值：  </p>
+<div class="highlight-container" data-rel="Cpp"><figure class="iseeu highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> ans = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span> cnt_2 = <span class="number">0</span>; cnt_2 &lt; <span class="number">5</span>; ++cnt_2)</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> cnt_1 = <span class="number">0</span>; cnt_1 &lt; <span class="number">5</span>; ++cnt_1)</span><br><span class="line">        ans = <span class="built_in">max</span>(ans, dp[cnt_2][cnt_1]);</span><br><span class="line"><span class="keyword">return</span> ans;</span><br></pre></td></tr></table></figure></div>
+
+
+<h2 id="最终程序"><a href="#最终程序" class="headerlink" title="最终程序"></a>最终程序</h2><p>本程序改编自@lucifer1004 的解答。更改了变量命名，使之更容易被理解。如有错误请指正。</p>
+<div class="highlight-container" data-rel="Cpp"><figure class="iseeu highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">maxGroupNumber</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; tiles)</span> </span>&#123;</span><br><span class="line">        map&lt;<span class="type">int</span>, <span class="type">int</span>&gt; count;  <span class="comment">// [点数, 对应的牌数]，C++中的map是按照key(点数)从小到大排列的。</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span> tile : tiles)</span><br><span class="line">            count[tile]++;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// dp[x][y] 表示</span></span><br><span class="line">        <span class="comment">// 在预留x张 [tile-2] 和y张 [tile-1] 的前提下，</span></span><br><span class="line">        <span class="comment">// [tile] 之前的牌能组成的牌组数</span></span><br><span class="line">        vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; <span class="built_in">dp</span>(<span class="number">5</span>, <span class="built_in">vector</span>&lt;<span class="type">int</span>&gt;(<span class="number">5</span>, <span class="number">-1</span>));</span><br><span class="line">        dp[<span class="number">0</span>][<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">        <span class="type">int</span> prev_tile = <span class="number">0</span>; <span class="comment">// 前一张牌的点数</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span> [tile, cnt] : count) &#123; <span class="comment">// [tile表示当前点数, cnt表示对应的牌数]</span></span><br><span class="line">            <span class="comment">// 如果上一张牌和这张牌没法连起来</span></span><br><span class="line">            <span class="comment">// 意味着无论之前留几张牌，都无法和tile一起组成顺子，因此，只保留dp[0][0]的情形。</span></span><br><span class="line">            <span class="keyword">if</span> (prev_tile != tile - <span class="number">1</span>) &#123;     </span><br><span class="line">                <span class="comment">// dp[0][0] 表示，之前留下的 “tile-2点的牌数” 和 “tile-1点的牌数” 都为0</span></span><br><span class="line">                <span class="type">int</span> dp00 = dp[<span class="number">0</span>][<span class="number">0</span>];</span><br><span class="line">                <span class="comment">// dp[x][y] == -1 表示，之前没有 “留下x张[tile-2]点的和y张[tile-1]点” 的情况</span></span><br><span class="line">                dp = vector&lt;vector&lt;<span class="type">int</span>&gt;&gt;(<span class="number">5</span>, <span class="built_in">vector</span>&lt;<span class="type">int</span>&gt;(<span class="number">5</span>, <span class="number">-1</span>));</span><br><span class="line">                dp[<span class="number">0</span>][<span class="number">0</span>] = dp00;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// 新的dp数组</span></span><br><span class="line">            vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; <span class="built_in">new_dp</span>(<span class="number">5</span>, <span class="built_in">vector</span>&lt;<span class="type">int</span>&gt;(<span class="number">5</span>, <span class="number">-1</span>));</span><br><span class="line">            </span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> cnt_2 = <span class="number">0</span>; cnt_2 &lt; <span class="number">5</span>; ++cnt_2) <span class="comment">// [tile-2] 的牌数</span></span><br><span class="line">                <span class="keyword">for</span> (<span class="type">int</span> cnt_1 = <span class="number">0</span>; cnt_1 &lt; <span class="number">5</span>; ++cnt_1) &#123; <span class="comment">// [tile-1] 的牌数</span></span><br><span class="line">                    <span class="comment">// 如果之前没有留下这么多张牌</span></span><br><span class="line">                    <span class="keyword">if</span> (dp[cnt_2][cnt_1] &lt; <span class="number">0</span>)</span><br><span class="line">                        <span class="keyword">continue</span>;</span><br><span class="line"></span><br><span class="line">                    <span class="comment">// 顺子数量不能超过[tile-2]、[tile-1]、[tile]的牌数</span></span><br><span class="line">                    <span class="keyword">for</span> (<span class="type">int</span> shunzi = <span class="number">0</span>; shunzi &lt;= <span class="built_in">min</span>(cnt_2, <span class="built_in">min</span>(cnt_1, cnt)); ++shunzi) &#123;</span><br><span class="line">                        <span class="type">int</span> new_2 = cnt_1 - shunzi; <span class="comment">// 对于下一个点数 new_tile = tile + 1 而言，</span></span><br><span class="line">                                                    <span class="comment">// [new_tile - 2] 就是当前的 [tile - 1]</span></span><br><span class="line">                                                    <span class="comment">// new_2 代表预留的 [new_tile - 2] 的牌数</span></span><br><span class="line">                                                    <span class="comment">// 也就是当前的 [tile - 1] 的牌数 - 顺子数量</span></span><br><span class="line">                        <span class="comment">// 同理，对于下一个点数 [new_tile] 而言，new_1 代表预留的 [new_tile - 1] 的牌数，</span></span><br><span class="line">                        <span class="comment">// 也就是预留的 [tile] 的数量。</span></span><br><span class="line">                        <span class="comment">// 预留的数量不超过四张，也不超过 ( [tile]的牌数 - 顺子数量 )</span></span><br><span class="line">                        <span class="keyword">for</span> (<span class="type">int</span> new_1 = <span class="number">0</span>; new_1 &lt;= <span class="built_in">min</span>(<span class="number">4</span>, cnt - shunzi); ++new_1) &#123;</span><br><span class="line">                            <span class="comment">// 新的牌组数等于以下三者相加：</span></span><br><span class="line">                            <span class="comment">// 1. dp数组保存的，留下 cnt_2 张 [tile-2] 和 cnt_1 张 [tile-1] 的前提下，tile-1 之前的牌面能凑出来的牌组数</span></span><br><span class="line">                            <span class="comment">// 2. 顺子数量</span></span><br><span class="line">                            <span class="comment">// 3. [tile] 组成的刻子数量 = ( [tile] - 顺子数量 - 留下备用的牌 ) / 3</span></span><br><span class="line">                            <span class="type">int</span> new_score = dp[cnt_2][cnt_1] + shunzi + (cnt - shunzi - new_1) / <span class="number">3</span>;</span><br><span class="line">                            new_dp[new_2][new_1] = <span class="built_in">max</span>(new_dp[new_2][new_1], new_score);</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            </span><br><span class="line">            <span class="comment">// 将new_dp数组赋值给dp数组</span></span><br><span class="line">            dp = <span class="built_in">move</span>(new_dp);</span><br><span class="line">            <span class="comment">// 将当前tile记录都上一个tile中</span></span><br><span class="line">            prev_tile = tile;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 找到并返回dp的最大值</span></span><br><span class="line">        <span class="type">int</span> ans = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> cnt_2 = <span class="number">0</span>; cnt_2 &lt; <span class="number">5</span>; ++cnt_2)</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> cnt_1 = <span class="number">0</span>; cnt_1 &lt; <span class="number">5</span>; ++cnt_1)</span><br><span class="line">                ans = <span class="built_in">max</span>(ans, dp[cnt_2][cnt_1]);</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></div>
+
+<p>顺带分享一道类似问题：  </p>
+<p><a class="link"   target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/remove-boxes/solution/guan-fang-fang-fa-2ji-yi-hua-sou-suo-dong-hua-tu-j/" >546. 移除盒子 | 题解 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <!--<div class="article-copyright-info-container">-->
+    <!--&lt;!&ndash;<ul>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><strong>Title:</strong> LCP 36-最多牌组数</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><strong>Author:</strong> Raphael Liu</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><strong>Created at&ndash;&gt;-->
+                <!--&lt;!&ndash;:</strong> 2023-09-13 00:47:26</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;&ndash;&gt;-->
+            <!--&lt;!&ndash;<li>&ndash;&gt;-->
+                <!--&lt;!&ndash;<strong>Updated at&ndash;&gt;-->
+                    <!--&lt;!&ndash;:</strong> 2023-09-13 16:06:27&ndash;&gt;-->
+            <!--&lt;!&ndash;</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;<li>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;<strong>Link:</strong> https://fida.ltd/2023/09/13/LCP 36-最多牌组数/&ndash;&gt;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;</li>&ndash;&gt;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;<li>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;<strong>&ndash;&gt;&ndash;&gt;-->
+                <!--&lt;!&ndash;&lt;!&ndash;License:&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;</strong>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0</a>.&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;&ndash;&gt;&ndash;&gt;-->
+
+        <!--&lt;!&ndash;&lt;!&ndash;</li>&ndash;&gt;&ndash;&gt;-->
+    <!--&lt;!&ndash;</ul>&ndash;&gt;-->
+<!--</div>-->
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box">
+                
+                    <li class="tag-item">
+                        <a href="/tags/algorithm/">#algorithm</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item">
+                        <a href="/tags/HARD/">#HARD</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                        rel="prev"
+                        href="/2023/09/13/LCP%2035-%E7%94%B5%E5%8A%A8%E8%BD%A6%E6%B8%B8%E5%9F%8E%E5%B8%82/"
+                        >
+                            <span class="left arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">LCP 35-电动车游城市</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                        rel="next"
+                        href="/2023/09/13/LCP%2037-%E6%9C%80%E5%B0%8F%E7%9F%A9%E5%BD%A2%E9%9D%A2%E7%A7%AF/"
+                        >
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">LCP 37-最小矩形面积</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+
+        
+            <div class="comment-container">
+                <div class="comments-container pjax">
+    <div id="comment-anchor"></div>
+    <div class="comment-area-title">
+        <i class="fa-solid fa-comments"></i>&nbsp;Comments
+    </div>
+    
+
+        
+            
+ 
+    <div id="waline"></div>
+    <script type="module"  data-swup-reload-script>
+        import { init } from 'https://evan.beee.top/js/waline.mjs';
+
+        function loadWaline() {
+            init({
+                el: '#waline',
+                serverURL: 'https://example.example.com',
+                lang: 'zh-CN',
+                dark: 'body[class~="dark-mode"]',
+                requiredMeta: ['nick','mail'], // cannot customize by theme config, change it yourself
+            });
+        }
+
+        if ('true') {
+            const loadWalineTimeout = setTimeout(() => {
+                loadWaline();
+                clearTimeout(loadWalineTimeout);
+            }, 1000);
+        } else {
+            window.addEventListener('DOMContentLoaded', loadWaline);
+        }
+        
+    </script>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+
+    
+        <div class="toc-content-container">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">On this page</div>
+        <div class="page-title">LCP 36-最多牌组数</div>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E6%AD%A5%EF%BC%9A%E6%95%B4%E7%90%86%E7%89%8C%E5%BA%8F"><span class="nav-text">第一步：整理牌序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E6%AD%A5%EF%BC%9A%E7%8A%B6%E6%80%81%E7%9F%A9%E9%98%B5"><span class="nav-text">第二步：状态矩阵</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E6%AD%A5%EF%BC%9A%E5%8E%8B%E7%BC%A9%E7%8A%B6%E6%80%81%E7%A9%BA%E9%97%B4"><span class="nav-text">第三步：压缩状态空间</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E6%AD%A5%EF%BC%9A%E7%8A%B6%E6%80%81%E8%BD%AC%E7%A7%BB%E6%96%B9%E7%A8%8B"><span class="nav-text">第三步：状态转移方程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E5%9B%9B%E6%AD%A5%EF%BC%9A%E6%89%BE%E5%88%B0%E6%9C%80%E9%AB%98%E5%88%86"><span class="nav-text">第四步：找到最高分</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%80%E7%BB%88%E7%A8%8B%E5%BA%8F"><span class="nav-text">最终程序</span></a></li></ol>
+
+    </div>
+</div>
+        </div>
+    
+</div>
+
+
+
+                
+
+            </div>
+
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2022</span>
+              -
+            
+            2023&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">Raphael Liu</a>
+        </div>
+        
+            <script data-swup-reload-script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">UV:</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">PV:</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <!--<div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">-->
+            <!--<span class="lg:block text-sm">powered_by</span>-->
+            <!--&lt;!&ndash;<span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.4.4</a></span>&ndash;&gt;-->
+        <!--</div>-->
+        
+        <!---->
+            <!--<div>-->
+                <!--runtime <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hours <span class="odometer" id="runtime_minutes"></span> minutes <span class="odometer" id="runtime_seconds"></span> seconds-->
+            <!--</div>-->
+        <!---->
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fa-regular fa-comments"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-expand-width flex justify-center items-center">
+            <i class="fa-regular fa-expand"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fa-solid fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa-solid fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa-solid fa-spinner fa-spin-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+    
+<script src="/js/libs/Swup.min.js"></script>
+
+<script src="/js/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/libs/SwupScrollPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+        ],
+        containers: ["#swup"],
+    });
+
+    swup.hooks.on("page:view", () => {
+        Global.refresh();
+    });
+
+    // if (document.readyState === "complete") {
+    //
+    // } else {
+    //     document.addEventListener("DOMContentLoaded", () => init());
+    // }
+</script>
+
+
+
+
+
+
+<script src="/js/utils.js" type="module"></script>
+
+<script src="/js/main.js" type="module"></script>
+
+<script src="/js/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/layouts/categoryList.js" type="module"></script>
+
+
+
+    
+<script src="/js/tools/localSearch.js"></script>
+
+
+
+
+    
+<script src="/js/tools/codeBlock.js"></script>
+
+
+
+
+    
+<script src="/js/layouts/lazyload.js"></script>
+
+
+
+
+    
+<script src="/js/tools/runtime.js"></script>
+
+    
+<script src="/js/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/libs/Typed.min.js"></script>
+
+  
+<script src="/js/plugins/typed.js"></script>
+
+
+
+
+
+
+
+<div class="post-scripts" data-swup-reload-script>
+    
+        
+<script src="/js/libs/anime.min.js"></script>
+
+        
+<script src="/js/tools/tocToggle.js" type="module"></script>
+
+<script src="/js/layouts/toc.js" type="module"></script>
+
+<script src="/js/plugins/tabs.js" type="module"></script>
+
+    
+</div>
+
+
+</body>
+</html>

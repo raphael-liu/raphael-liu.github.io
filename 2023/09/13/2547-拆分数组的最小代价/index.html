@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="Raphael Liu">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/2023/09/13/2547-拆分数组的最小代价/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="给你一个整数数组 nums 和一个整数 k 。 将数组拆分成一些非空子数组。拆分的 代价 是每个子数组中的 重要性 之和。 令 trimmed(subarray) 作为子数组的一个特征，其中所有仅出现一次的数字将会被移除。  例如，trimmed([3,1,2,4,3,4]) &#x3D; [3,4,3,4] 。  子数组的 重要性 定义为 k + trimmed(subarray).length 。  例">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2547-拆分数组的最小代价">
+<meta property="og:url" content="http://example.com/2023/09/13/2547-%E6%8B%86%E5%88%86%E6%95%B0%E7%BB%84%E7%9A%84%E6%9C%80%E5%B0%8F%E4%BB%A3%E4%BB%B7/index.html">
+<meta property="og:site_name" content="Raphael&#39;s Blog">
+<meta property="og:description" content="给你一个整数数组 nums 和一个整数 k 。 将数组拆分成一些非空子数组。拆分的 代价 是每个子数组中的 重要性 之和。 令 trimmed(subarray) 作为子数组的一个特征，其中所有仅出现一次的数字将会被移除。  例如，trimmed([3,1,2,4,3,4]) &#x3D; [3,4,3,4] 。  子数组的 重要性 定义为 k + trimmed(subarray).length 。  例">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-09-12T16:47:26.000Z">
+<meta property="article:modified_time" content="2023-09-13T08:06:29.335Z">
+<meta property="article:author" content="Raphael Liu">
+<meta property="article:tag" content="algorithm">
+<meta property="article:tag" content="HARD">
+<meta name="twitter:card" content="summary">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/redefine-favicon.svg" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/redefine-favicon.svg">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/redefine-favicon.svg">
+    <!--- Page Info-->
+    
+    <title>
+        
+            2547-拆分数组的最小代价 -
+        
+        Raphael&#39;s Blog
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/css/build/styles.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/fonts.css">
+
+    
+<link rel="stylesheet" href="/fonts/Satoshi/satoshi.css">
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+
+    <!--- Inject Part-->
+    
+    <script id="hexo-configurations">
+    let Global = window.Global || {};
+    Global.hexo_config = {"hostname":"example.com","root":"/","language":"zh_CN"};
+    Global.theme_config = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":true,"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"open_graph":true,"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-wqery6-light.webp","dark":"/images/wallhaven-wqery6-dark.webp"},"title":"Raphael's Blog","subtitle":{"text":["格物致知","坚持做正确的事情"],"hitokoto":{"enable":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":false,"links":{"github":"https://github.com/raphael-liu","email":"raphael@buaa.edu.cn# your email"},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.4.4","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"links":{"首页":{"path":"/","icon":"fa-regular fa-house"},"文章":{"path":"/archives","icon":"fa-regular fa-archive"},"关于":{"icon":"fa-regular fa-user","submenus":{"我":"/about/me","Github":"https://github.com/raphael-liu"}}},"search":{"enable":true,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"links":null},"article_date_format":"auto","categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}},"footerStart":"2022/8/17 11:45:14"};
+    Global.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    Global.data_config = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="swup-progress-icon">
+            <i class="fa-solid fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container" id="swup">
+
+    
+
+    <div class="main-content-container">
+
+
+        <div class="main-content-header">
+            <header class="navbar-container">
+    
+    <div class="navbar-content">
+        <div class="left">
+            
+            <a class="logo-title" href="http://example.com/">
+                
+                Raphael&#39;s Blog
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/"  >
+                                    
+                                        
+                                            <i class="fa-regular fa-house"></i>
+                                        
+                                        首页
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/archives"  >
+                                    
+                                        
+                                            <i class="fa-regular fa-archive"></i>
+                                        
+                                        文章
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="has-dropdown" 
+                                    href="#" onClick="return false;">
+                                    
+                                        
+                                            <i class="fa-regular fa-user"></i>
+                                        
+                                        关于&nbsp;<i class="fa-solid fa-chevron-down"></i>
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                                    <ul class="sub-menu">
+                                    
+                                        <li>
+                                        <a href="/about/me">我
+                                        </a>
+                                        </li>
+                                    
+                                        <li>
+                                        <a target="_blank" rel="noopener" href="https://github.com/raphael-liu">GITHUB
+                                        </a>
+                                        </li>
+                                    
+                                    </ul>
+                                
+                            </li>
+                    
+                    
+                        <li class="navbar-item search search-popup-trigger">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fa-solid fa-magnifying-glass"></i></div>
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile drawer -->
+    <div class="navbar-drawer w-full absolute top-0 left-0 bg-background-color">
+        <ul class="drawer-navbar-list flex flex-col justify-start items-center">
+            
+                
+                    <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group " 
+                        href="/"  >
+                             
+                                
+                                    <i class="fa-regular fa-house"></i>
+                                
+                                首页
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+                
+                    <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group " 
+                        href="/archives"  >
+                             
+                                
+                                    <i class="fa-regular fa-archive"></i>
+                                
+                                文章
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+                
+                    <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group has-dropdown" 
+                        href="#" onClick="return false;">
+                            
+                                
+                                    <i class="fa-regular fa-user"></i>
+                                
+                                关于&nbsp;<i class="group-hover:rotate-180 transition-transform fa-solid fa-chevron-down"></i>
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                              
+                        
+                            <li class="text-base flex justify-center items-center hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                <a class="py-0.5" href="/about/me">我</a>
+                            </li>
+                        
+                            <li class="text-base flex justify-center items-center hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                <a class="py-0.5" target="_blank" rel="noopener" href="https://github.com/raphael-liu">GITHUB</a>
+                            </li>
+                        
+                    
+            
+
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="post-page-container">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            
+                <h1 class="article-title-regular">2547-拆分数组的最小代价</h1>
+            
+            </div>
+            
+                    
+        
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">Raphael Liu</span>
+                        
+                            <span class="author-label">Lv10</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2023-09-13 00:47:26</span>
+        <span class="mobile">2023-09-13 00:47:26</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2023-09-13 16:06:29</span>
+            <span class="mobile">2023-09-13 16:06:29</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/algorithm/">algorithm</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/HARD/">HARD</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        
+
+
+        <div class="article-content markdown-body">
+            <p>给你一个整数数组 <code>nums</code> 和一个整数 <code>k</code> 。</p>
+<p>将数组拆分成一些非空子数组。拆分的 <strong>代价</strong> 是每个子数组中的 <strong>重要性</strong> 之和。</p>
+<p>令 <code>trimmed(subarray)</code> 作为子数组的一个特征，其中所有仅出现一次的数字将会被移除。</p>
+<ul>
+<li>例如，<code>trimmed([3,1,2,4,3,4]) = [3,4,3,4]</code> 。</li>
+</ul>
+<p>子数组的 <strong>重要性</strong> 定义为 <code>k + trimmed(subarray).length</code> 。</p>
+<ul>
+<li>例如，如果一个子数组是 <code>[1,2,3,3,3,4,4]</code> ，<code>trimmed([1,2,3,3,3,4,4]) = [3,3,3,4,4]</code> 。这个子数组的重要性就是 <code>k + 5</code> 。</li>
+</ul>
+<p>找出并返回拆分 <code>nums</code> 的所有可行方案中的最小代价。</p>
+<p><strong>子数组</strong> 是数组的一个连续 <strong>非空</strong> 元素序列。</p>
+<p><strong>示例 1：</strong></p>
+<pre><code>**输入：** nums = [1,2,1,2,1,3,3], k = 2
+**输出：** 8
+**解释：** 将 nums 拆分成两个子数组：[1,2], [1,2,1,3,3]
+[1,2] 的重要性是 2 + (0) = 2 。
+[1,2,1,3,3] 的重要性是 2 + (2 + 2) = 6 。
+拆分的代价是 2 + 6 = 8 ，可以证明这是所有可行的拆分方案中的最小代价。
+</code></pre>
+<p><strong>示例 2：</strong></p>
+<pre><code>**输入：** nums = [1,2,1,2,1], k = 2
+**输出：** 6
+**解释：** 将 nums 拆分成两个子数组：[1,2], [1,2,1] 。
+[1,2] 的重要性是 2 + (0) = 2 。
+[1,2,1] 的重要性是 2 + (2) = 4 。
+拆分的代价是 2 + 4 = 6 ，可以证明这是所有可行的拆分方案中的最小代价。
+</code></pre>
+<p><strong>示例 3：</strong></p>
+<pre><code>**输入：** nums = [1,2,1,2,1], k = 5
+**输出：** 10
+**解释：** 将 nums 拆分成一个子数组：[1,2,1,2,1].
+[1,2,1,2,1] 的重要性是 5 + (3 + 2) = 10 。
+拆分的代价是 10 ，可以证明这是所有可行的拆分方案中的最小代价。
+</code></pre>
+<p><strong>提示：</strong></p>
+<ul>
+<li><code>1 &lt;= nums.length &lt;= 1000</code></li>
+<li><code>0 &lt;= nums[i] &lt; nums.length</code></li>
+<li><code>1 &lt;= k &lt;= 109</code></li>
+</ul>
+<h1 id="方法一：O-n-2-划分型动态规划"><a href="#方法一：O-n-2-划分型动态规划" class="headerlink" title="方法一：O(n^2) 划分型动态规划"></a>方法一：O(n^2) 划分型动态规划</h1><h3 id="如何思考"><a href="#如何思考" class="headerlink" title="如何思考"></a>如何思考</h3><p>划分出<strong>第一个</strong>子数组，问题变成一个规模更小的子问题。</p>
+<p>由于「划分出长为 x 和 y 的子数组」和「划分出长为 y 和 x 的子数组」之后，剩余的子问题是相同的，因此这题适合用动态规划解决。</p>
+<p>附：<a class="link"   target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Gv4y1y753/" >视频讲解 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<h3 id="具体算法"><a href="#具体算法" class="headerlink" title="具体算法"></a>具体算法</h3><p>定义 f[i+1] 表示划分 nums 的前 i 个数的最小代价，从 i 开始倒序枚举最后一个子数组的开始位置 j，同时用一个数组 state 维护每个元素的出现次数，用一个变量 unique 维护只出现一次的元素个数。</p>
+<p>具体来说：</p>
+<ul>
+<li>state}[x]&#x3D;0 表示 x 出现 0 次；</li>
+<li>state}[x]&#x3D;1 表示 x 出现 1 次；</li>
+<li>state}[x]&#x3D;2 表示 x 出现超过 1 次。</li>
+<li>如果 x 首次遇到，那么 unique 加一，state}[x]&#x3D;1；</li>
+<li>如果 x 第二次遇到，那么 unique 减一，state}[x]&#x3D;2。</li>
+</ul>
+<blockquote>
+<p>经测试，这种写法比直接计算特征要更快一些，尤其是 Python。</p>
+</blockquote>
+<p>重要性为子数组的长度减去只出现一次的元素个数加 k，即</p>
+<p>i-j+1 - \textit{unique}_{j,i} + k</p>
+<p>这里 unique}_{j,i 表示枚举到 j 时的 unique 值。</p>
+<p>加上前面子数组的最小代价，所有结果取最小值，得</p>
+<p>\begin{aligned}<br>f[i+1] &amp;&#x3D; \min\limits_{j&#x3D;0}^{i} f[j] + i-j+1 - \textit{unique}<em>{j,i} + k \<br>       &amp;&#x3D; i+1+k+ \min\limits</em>{j&#x3D;0}^{i} f[j] -j - \textit{unique}_{j,i}<br>\end{aligned}</p>
+<p>初始值 f[0] &#x3D; 0，答案为 f[n]。</p>
+<h3 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h3><p>注意到 f[j] 每次都要减去 j，而 f[i+1] 最后还要加上 i+1，如果定义 f’[i] &#x3D; f[i]-i，则有</p>
+<p>f’[i+1] &#x3D; k+\min\limits_{j&#x3D;0}^{i} f’[j] - \textit{unique}_{j,i}</p>
+<p>由于 f’[n] &#x3D; f[n]-n，所以最后答案为 f’[n]+n。</p>
+<div class="highlight-container" data-rel="Py"><figure class="iseeu highlight py"><figcaption><span>[sol1-Python3]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">minCost</span>(<span class="params">self, nums: <span class="type">List</span>[<span class="built_in">int</span>], k: <span class="built_in">int</span></span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        n = <span class="built_in">len</span>(nums)</span><br><span class="line">        f = [<span class="number">0</span>] * (n + <span class="number">1</span>)</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(n):</span><br><span class="line">            state, unique, mn = [<span class="number">0</span>] * n, <span class="number">0</span>, inf</span><br><span class="line">            <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(i, -<span class="number">1</span>, -<span class="number">1</span>):</span><br><span class="line">                x = nums[j]</span><br><span class="line">                <span class="keyword">if</span> state[x] == <span class="number">0</span>:  <span class="comment"># 首次出现</span></span><br><span class="line">                    state[x] = <span class="number">1</span></span><br><span class="line">                    unique += <span class="number">1</span></span><br><span class="line">                <span class="keyword">elif</span> state[x] == <span class="number">1</span>:  <span class="comment"># 不再唯一</span></span><br><span class="line">                    state[x] = <span class="number">2</span></span><br><span class="line">                    unique -= <span class="number">1</span></span><br><span class="line">                mn = <span class="built_in">min</span>(mn, f[j] - unique)</span><br><span class="line">                <span class="comment"># if f[j]-unique &lt; mn: mn = f[j]-unique  # 手写 min 会快很多</span></span><br><span class="line">            f[i + <span class="number">1</span>] = k + mn</span><br><span class="line">        <span class="keyword">return</span> f[n] + n</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><figcaption><span>[sol1-Java]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">minCost</span><span class="params">(<span class="type">int</span>[] nums, <span class="type">int</span> k)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">n</span> <span class="operator">=</span> nums.length;</span><br><span class="line">        <span class="type">int</span>[] f = <span class="keyword">new</span> <span class="title class_">int</span>[n + <span class="number">1</span>];</span><br><span class="line">        <span class="type">byte</span>[] state = <span class="keyword">new</span> <span class="title class_">byte</span>[n];</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; n; ++i) &#123;</span><br><span class="line">            Arrays.fill(state, (<span class="type">byte</span>) <span class="number">0</span>);</span><br><span class="line">            <span class="type">int</span> <span class="variable">unique</span> <span class="operator">=</span> <span class="number">0</span>, mn = Integer.MAX_VALUE;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">j</span> <span class="operator">=</span> i; j &gt;= <span class="number">0</span>; --j) &#123;</span><br><span class="line">                <span class="type">int</span> <span class="variable">x</span> <span class="operator">=</span> nums[j];</span><br><span class="line">                <span class="keyword">if</span> (state[x] == <span class="number">0</span>) &#123; <span class="comment">// 首次出现</span></span><br><span class="line">                    state[x] = <span class="number">1</span>;</span><br><span class="line">                    ++unique;</span><br><span class="line">                &#125; <span class="keyword">else</span> <span class="keyword">if</span> (state[x] == <span class="number">1</span>) &#123; <span class="comment">// 不再唯一</span></span><br><span class="line">                    state[x] = <span class="number">2</span>;</span><br><span class="line">                    --unique;</span><br><span class="line">                &#125;</span><br><span class="line">                mn = Math.min(mn, f[j] - unique);</span><br><span class="line">            &#125;</span><br><span class="line">            f[i + <span class="number">1</span>] = k + mn;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> f[n] + n;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Cpp"><figure class="iseeu highlight cpp"><figcaption><span>[sol1-C++]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">minCost</span><span class="params">(vector&lt;<span class="type">int</span>&gt; &amp;nums, <span class="type">int</span> k)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> n = nums.<span class="built_in">size</span>(), f[n + <span class="number">1</span>];</span><br><span class="line">        f[<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">        <span class="type">int8_t</span> state[n];</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; ++i) &#123;</span><br><span class="line">            <span class="built_in">memset</span>(state, <span class="number">0</span>, <span class="built_in">sizeof</span>(state));</span><br><span class="line">            <span class="type">int</span> unique = <span class="number">0</span>, mn = INT_MAX;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> j = i; j &gt;= <span class="number">0</span>; --j) &#123;</span><br><span class="line">                <span class="type">int</span> x = nums[j];</span><br><span class="line">                <span class="keyword">if</span> (state[x] == <span class="number">0</span>) state[x] = <span class="number">1</span>, ++unique; <span class="comment">// 首次出现</span></span><br><span class="line">                <span class="keyword">else</span> <span class="keyword">if</span> (state[x] == <span class="number">1</span>) state[x] = <span class="number">2</span>, --unique; <span class="comment">// 不再唯一</span></span><br><span class="line">                mn = <span class="built_in">min</span>(mn, f[j] - unique);</span><br><span class="line">            &#125;</span><br><span class="line">            f[i + <span class="number">1</span>] = k + mn;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> f[n] + n;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Go"><figure class="iseeu highlight go"><figcaption><span>[sol1-Go]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">minCost</span><span class="params">(nums []<span class="type">int</span>, k <span class="type">int</span>)</span></span> <span class="type">int</span> &#123;</span><br><span class="line">	n := <span class="built_in">len</span>(nums)</span><br><span class="line">	f := <span class="built_in">make</span>([]<span class="type">int</span>, n+<span class="number">1</span>)</span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; n; i++ &#123;</span><br><span class="line">		state, unique, mn := <span class="built_in">make</span>([]<span class="type">int8</span>, n), <span class="number">0</span>, math.MaxInt</span><br><span class="line">		<span class="keyword">for</span> j := i; j &gt;= <span class="number">0</span>; j-- &#123;</span><br><span class="line">			x := nums[j]</span><br><span class="line">			<span class="keyword">if</span> state[x] == <span class="number">0</span> &#123; <span class="comment">// 首次出现</span></span><br><span class="line">				state[x] = <span class="number">1</span></span><br><span class="line">				unique++</span><br><span class="line">			&#125; <span class="keyword">else</span> <span class="keyword">if</span> state[x] == <span class="number">1</span> &#123; <span class="comment">// 不再唯一</span></span><br><span class="line">				state[x] = <span class="number">2</span></span><br><span class="line">				unique--</span><br><span class="line">			&#125;</span><br><span class="line">			mn = min(mn, f[j]-unique)</span><br><span class="line">		&#125;</span><br><span class="line">		f[i+<span class="number">1</span>] = mn + k</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> f[n] + n</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">min</span><span class="params">(a, b <span class="type">int</span>)</span></span> <span class="type">int</span> &#123; <span class="keyword">if</span> a &gt; b &#123; <span class="keyword">return</span> b &#125;; <span class="keyword">return</span> a &#125;</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="复杂度分析"><a href="#复杂度分析" class="headerlink" title="复杂度分析"></a>复杂度分析</h3><ul>
+<li>时间复杂度：O(n^2)，其中 n 为 nums 的长度。</li>
+<li>空间复杂度：O(n)。</li>
+</ul>
+<h1 id="方法二：线段树优化"><a href="#方法二：线段树优化" class="headerlink" title="方法二：线段树优化"></a>方法二：线段树优化</h1><p>记 x 上一次出现的位置是 last}[x]，上上一次出现的位置是 last}_2[x]。</p>
+<p>如果从左到右枚举 x&#x3D;\textit{nums}[i]，那么：</p>
+<ul>
+<li>区间 [\textit{last}[x]+1,i] 内的数的 unique 都加一；</li>
+<li>区间 [\textit{last}_2[x]+1,\textit{last}[x]] 内的数的 unique 都减一，相当于把之前的加一撤销掉（如果 last}_2[x] 不存在则不更新）。</li>
+</ul>
+<p>此外，我们求的是一段区间内的 f[j]-\textit{unique}<em>{j,i 的最小值，这可以用线段树优化（区间更新，区间查询）。注意 unique}</em>{j,i 前面是负号，所以上面的区间更新值要取反。</p>
+<p>代码实现时，由于枚举 nums}[i] 时，更新的是 f[i+1]，我们可以在上一轮循环时把它记录下来，在下一轮循环时去把它加到线段树中。</p>
+<div class="highlight-container" data-rel="Py"><figure class="iseeu highlight py"><figcaption><span>[sol2-Python3]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">minCost</span>(<span class="params">self, nums: <span class="type">List</span>[<span class="built_in">int</span>], k: <span class="built_in">int</span></span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        <span class="comment"># Lazy 线段树模板（区间加，查询区间最小）</span></span><br><span class="line">        n = <span class="built_in">len</span>(nums)</span><br><span class="line">        mn = [<span class="number">0</span>] * (<span class="number">4</span> * n)</span><br><span class="line">        todo = [<span class="number">0</span>] * (<span class="number">4</span> * n)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">do</span>(<span class="params">o: <span class="built_in">int</span>, v: <span class="built_in">int</span></span>) -&gt; <span class="literal">None</span>:</span><br><span class="line">            mn[o] += v</span><br><span class="line">            todo[o] += v</span><br><span class="line"></span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">spread</span>(<span class="params">o: <span class="built_in">int</span></span>) -&gt; <span class="literal">None</span>:</span><br><span class="line">            v = todo[o]</span><br><span class="line">            <span class="keyword">if</span> v:</span><br><span class="line">                do(o * <span class="number">2</span>, v)</span><br><span class="line">                do(o * <span class="number">2</span> + <span class="number">1</span>, v)</span><br><span class="line">                todo[o] = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># 区间 [L,R] 内的数都加上 v   o,l,r=1,1,n</span></span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">update</span>(<span class="params">o: <span class="built_in">int</span>, l: <span class="built_in">int</span>, r: <span class="built_in">int</span>, L: <span class="built_in">int</span>, R: <span class="built_in">int</span>, v: <span class="built_in">int</span></span>) -&gt; <span class="literal">None</span>:</span><br><span class="line">            <span class="keyword">if</span> L &lt;= l <span class="keyword">and</span> r &lt;= R:</span><br><span class="line">                do(o, v)</span><br><span class="line">                <span class="keyword">return</span></span><br><span class="line">            spread(o)</span><br><span class="line">            m = (l + r) // <span class="number">2</span></span><br><span class="line">            <span class="keyword">if</span> m &gt;= L: update(o * <span class="number">2</span>, l, m, L, R, v)</span><br><span class="line">            <span class="keyword">if</span> m &lt; R: update(o * <span class="number">2</span> + <span class="number">1</span>, m + <span class="number">1</span>, r, L, R, v)</span><br><span class="line">            mn[o] = <span class="built_in">min</span>(mn[o * <span class="number">2</span>], mn[o * <span class="number">2</span> + <span class="number">1</span>])</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 查询区间 [L,R] 的最小值   o,l,r=1,1,n</span></span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">query</span>(<span class="params">o: <span class="built_in">int</span>, l: <span class="built_in">int</span>, r: <span class="built_in">int</span>, L: <span class="built_in">int</span>, R: <span class="built_in">int</span></span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">            <span class="keyword">if</span> L &lt;= l <span class="keyword">and</span> r &lt;= R:</span><br><span class="line">                <span class="keyword">return</span> mn[o]</span><br><span class="line">            spread(o)</span><br><span class="line">            m = (l + r) // <span class="number">2</span></span><br><span class="line">            <span class="keyword">if</span> m &gt;= R: <span class="keyword">return</span> query(o * <span class="number">2</span>, l, m, L, R)</span><br><span class="line">            <span class="keyword">if</span> m &lt; L: <span class="keyword">return</span> query(o * <span class="number">2</span> + <span class="number">1</span>, m + <span class="number">1</span>, r, L, R)</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">min</span>(query(o * <span class="number">2</span>, l, m, L, R), query(o * <span class="number">2</span> + <span class="number">1</span>, m + <span class="number">1</span>, r, L, R))</span><br><span class="line"></span><br><span class="line">        ans = <span class="number">0</span></span><br><span class="line">        last = [<span class="number">0</span>] * n</span><br><span class="line">        last2 = [<span class="number">0</span>] * n</span><br><span class="line">        <span class="keyword">for</span> i, x <span class="keyword">in</span> <span class="built_in">enumerate</span>(nums, <span class="number">1</span>):</span><br><span class="line">            update(<span class="number">1</span>, <span class="number">1</span>, n, i, i, ans)  <span class="comment"># 相当于设置 f[i+1] 的值</span></span><br><span class="line">            update(<span class="number">1</span>, <span class="number">1</span>, n, last[x] + <span class="number">1</span>, i, -<span class="number">1</span>)</span><br><span class="line">            <span class="keyword">if</span> last[x]: update(<span class="number">1</span>, <span class="number">1</span>, n, last2[x] + <span class="number">1</span>, last[x], <span class="number">1</span>)</span><br><span class="line">            ans = k + query(<span class="number">1</span>, <span class="number">1</span>, n, <span class="number">1</span>, i)</span><br><span class="line">            last2[x] = last[x]</span><br><span class="line">            last[x] = i</span><br><span class="line">        <span class="keyword">return</span> ans + n</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><figcaption><span>[sol2-Java]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">minCost</span><span class="params">(<span class="type">int</span>[] nums, <span class="type">int</span> k)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">n</span> <span class="operator">=</span> nums.length, ans = <span class="number">0</span>;</span><br><span class="line">        mn = <span class="keyword">new</span> <span class="title class_">int</span>[n * <span class="number">4</span>];</span><br><span class="line">        todo = <span class="keyword">new</span> <span class="title class_">int</span>[n * <span class="number">4</span>];</span><br><span class="line">        <span class="type">int</span>[] last = <span class="keyword">new</span> <span class="title class_">int</span>[n], last2 = <span class="keyword">new</span> <span class="title class_">int</span>[n];</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">1</span>; i &lt;= n; ++i) &#123;</span><br><span class="line">            <span class="type">int</span> <span class="variable">x</span> <span class="operator">=</span> nums[i - <span class="number">1</span>];</span><br><span class="line">            update(<span class="number">1</span>, <span class="number">1</span>, n, i, i, ans); <span class="comment">// 相当于设置 f[i+1] 的值</span></span><br><span class="line">            update(<span class="number">1</span>, <span class="number">1</span>, n, last[x] + <span class="number">1</span>, i, -<span class="number">1</span>);</span><br><span class="line">            <span class="keyword">if</span> (last[x] &gt; <span class="number">0</span>) update(<span class="number">1</span>, <span class="number">1</span>, n, last2[x] + <span class="number">1</span>, last[x], <span class="number">1</span>);</span><br><span class="line">            ans = k + query(<span class="number">1</span>, <span class="number">1</span>, n, <span class="number">1</span>, i);</span><br><span class="line">            last2[x] = last[x];</span><br><span class="line">            last[x] = i;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans + n;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Lazy 线段树模板（区间加，查询区间最小）</span></span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span>[] mn, todo;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">do_</span><span class="params">(<span class="type">int</span> o, <span class="type">int</span> v)</span> &#123;</span><br><span class="line">        mn[o] += v;</span><br><span class="line">        todo[o] += v;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">spread</span><span class="params">(<span class="type">int</span> o)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">v</span> <span class="operator">=</span> todo[o];</span><br><span class="line">        <span class="keyword">if</span> (v != <span class="number">0</span>) &#123;</span><br><span class="line">            do_(o * <span class="number">2</span>, v);</span><br><span class="line">            do_(o * <span class="number">2</span> + <span class="number">1</span>, v);</span><br><span class="line">            todo[o] = <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 区间 [L,R] 内的数都加上 v   o,l,r=1,1,n</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">update</span><span class="params">(<span class="type">int</span> o, <span class="type">int</span> l, <span class="type">int</span> r, <span class="type">int</span> L, <span class="type">int</span> R, <span class="type">int</span> v)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (L &lt;= l &amp;&amp; r &lt;= R) &#123;</span><br><span class="line">            do_(o, v);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        spread(o);</span><br><span class="line">        <span class="type">int</span> <span class="variable">m</span> <span class="operator">=</span> (l + r) / <span class="number">2</span>;</span><br><span class="line">        <span class="keyword">if</span> (m &gt;= L) update(o * <span class="number">2</span>, l, m, L, R, v);</span><br><span class="line">        <span class="keyword">if</span> (m &lt; R) update(o * <span class="number">2</span> + <span class="number">1</span>, m + <span class="number">1</span>, r, L, R, v);</span><br><span class="line">        mn[o] = Math.min(mn[o * <span class="number">2</span>], mn[o * <span class="number">2</span> + <span class="number">1</span>]);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 查询区间 [L,R] 的最小值   o,l,r=1,1,n</span></span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> <span class="title function_">query</span><span class="params">(<span class="type">int</span> o, <span class="type">int</span> l, <span class="type">int</span> r, <span class="type">int</span> L, <span class="type">int</span> R)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (L &lt;= l &amp;&amp; r &lt;= R)</span><br><span class="line">            <span class="keyword">return</span> mn[o];</span><br><span class="line">        spread(o);</span><br><span class="line">        <span class="type">int</span> <span class="variable">m</span> <span class="operator">=</span> (l + r) / <span class="number">2</span>;</span><br><span class="line">        <span class="keyword">if</span> (m &gt;= R) <span class="keyword">return</span> query(o * <span class="number">2</span>, l, m, L, R);</span><br><span class="line">        <span class="keyword">if</span> (m &lt; L) <span class="keyword">return</span> query(o * <span class="number">2</span> + <span class="number">1</span>, m + <span class="number">1</span>, r, L, R);</span><br><span class="line">        <span class="keyword">return</span> Math.min(query(o * <span class="number">2</span>, l, m, L, R), query(o * <span class="number">2</span> + <span class="number">1</span>, m + <span class="number">1</span>, r, L, R));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Cpp"><figure class="iseeu highlight cpp"><figcaption><span>[sol2-C++]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Lazy 线段树模板（区间加，查询区间最小）</span></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> MAX_N = <span class="number">1000</span>;</span><br><span class="line"><span class="type">int</span> mn[MAX_N * <span class="number">4</span>], todo[MAX_N * <span class="number">4</span>], last[MAX_N], last2[MAX_N];</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">do_</span><span class="params">(<span class="type">int</span> o, <span class="type">int</span> v)</span> </span>&#123;</span><br><span class="line">        mn[o] += v;</span><br><span class="line">        todo[o] += v;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">spread</span><span class="params">(<span class="type">int</span> o)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> v = todo[o];</span><br><span class="line">        <span class="keyword">if</span> (v) &#123;</span><br><span class="line">            <span class="built_in">do_</span>(o * <span class="number">2</span>, v);</span><br><span class="line">            <span class="built_in">do_</span>(o * <span class="number">2</span> + <span class="number">1</span>, v);</span><br><span class="line">            todo[o] = <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 区间 [L,R] 内的数都加上 v   o,l,r=1,1,n</span></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">update</span><span class="params">(<span class="type">int</span> o, <span class="type">int</span> l, <span class="type">int</span> r, <span class="type">int</span> L, <span class="type">int</span> R, <span class="type">int</span> v)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (L &lt;= l &amp;&amp; r &lt;= R) &#123;</span><br><span class="line">            <span class="built_in">do_</span>(o, v);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">spread</span>(o);</span><br><span class="line">        <span class="type">int</span> m = (l + r) / <span class="number">2</span>;</span><br><span class="line">        <span class="keyword">if</span> (m &gt;= L) <span class="built_in">update</span>(o * <span class="number">2</span>, l, m, L, R, v);</span><br><span class="line">        <span class="keyword">if</span> (m &lt; R) <span class="built_in">update</span>(o * <span class="number">2</span> + <span class="number">1</span>, m + <span class="number">1</span>, r, L, R, v);</span><br><span class="line">        mn[o] = <span class="built_in">min</span>(mn[o * <span class="number">2</span>], mn[o * <span class="number">2</span> + <span class="number">1</span>]);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 查询区间 [L,R] 的最小值   o,l,r=1,1,n</span></span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">query</span><span class="params">(<span class="type">int</span> o, <span class="type">int</span> l, <span class="type">int</span> r, <span class="type">int</span> L, <span class="type">int</span> R)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (L &lt;= l &amp;&amp; r &lt;= R)</span><br><span class="line">            <span class="keyword">return</span> mn[o];</span><br><span class="line">        <span class="built_in">spread</span>(o);</span><br><span class="line">        <span class="type">int</span> m = (l + r) / <span class="number">2</span>;</span><br><span class="line">        <span class="keyword">if</span> (m &gt;= R) <span class="keyword">return</span> <span class="built_in">query</span>(o * <span class="number">2</span>, l, m, L, R);</span><br><span class="line">        <span class="keyword">if</span> (m &lt; L) <span class="keyword">return</span> <span class="built_in">query</span>(o * <span class="number">2</span> + <span class="number">1</span>, m + <span class="number">1</span>, r, L, R);</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">min</span>(<span class="built_in">query</span>(o * <span class="number">2</span>, l, m, L, R), <span class="built_in">query</span>(o * <span class="number">2</span> + <span class="number">1</span>, m + <span class="number">1</span>, r, L, R));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">minCost</span><span class="params">(vector&lt;<span class="type">int</span>&gt; &amp;nums, <span class="type">int</span> k)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> n = nums.<span class="built_in">size</span>(), ans = <span class="number">0</span>;</span><br><span class="line">        <span class="built_in">memset</span>(mn, <span class="number">0</span>, <span class="built_in">sizeof</span>(<span class="type">int</span>) * <span class="number">4</span> * n);</span><br><span class="line">        <span class="built_in">memset</span>(todo, <span class="number">0</span>, <span class="built_in">sizeof</span>(<span class="type">int</span>) * <span class="number">4</span> * n);</span><br><span class="line">        <span class="built_in">memset</span>(last, <span class="number">0</span>, <span class="built_in">sizeof</span>(<span class="type">int</span>) * n);</span><br><span class="line">        <span class="built_in">memset</span>(last2, <span class="number">0</span>, <span class="built_in">sizeof</span>(<span class="type">int</span>) * n);</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; ++i) &#123;</span><br><span class="line">            <span class="type">int</span> x = nums[i - <span class="number">1</span>];</span><br><span class="line">            <span class="built_in">update</span>(<span class="number">1</span>, <span class="number">1</span>, n, i, i, ans); <span class="comment">// 相当于设置 f[i+1] 的值</span></span><br><span class="line">            <span class="built_in">update</span>(<span class="number">1</span>, <span class="number">1</span>, n, last[x] + <span class="number">1</span>, i, <span class="number">-1</span>);</span><br><span class="line">            <span class="keyword">if</span> (last[x]) <span class="built_in">update</span>(<span class="number">1</span>, <span class="number">1</span>, n, last2[x] + <span class="number">1</span>, last[x], <span class="number">1</span>);</span><br><span class="line">            ans = k + <span class="built_in">query</span>(<span class="number">1</span>, <span class="number">1</span>, n, <span class="number">1</span>, i);</span><br><span class="line">            last2[x] = last[x];</span><br><span class="line">            last[x] = i;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans + n;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Go"><figure class="iseeu highlight go"><figcaption><span>[sol2-Go]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Lazy 线段树模板（区间加，查询区间最小）</span></span><br><span class="line"><span class="keyword">type</span> seg []<span class="keyword">struct</span>&#123; l, r, min, todo <span class="type">int</span> &#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(t seg)</span></span> build(o, l, r <span class="type">int</span>) &#123;</span><br><span class="line">	t[o].l, t[o].r = l, r</span><br><span class="line">	<span class="keyword">if</span> l == r &#123;</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	&#125;</span><br><span class="line">	m := (l + r) &gt;&gt; <span class="number">1</span></span><br><span class="line">	t.build(o&lt;&lt;<span class="number">1</span>, l, m)</span><br><span class="line">	t.build(o&lt;&lt;<span class="number">1</span>|<span class="number">1</span>, m+<span class="number">1</span>, r)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(t seg)</span></span> do(o, v <span class="type">int</span>) &#123;</span><br><span class="line">	t[o].min += v</span><br><span class="line">	t[o].todo += v</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(t seg)</span></span> spread(o <span class="type">int</span>) &#123;</span><br><span class="line">	<span class="keyword">if</span> v := t[o].todo; v != <span class="number">0</span> &#123;</span><br><span class="line">		t.do(o&lt;&lt;<span class="number">1</span>, v)</span><br><span class="line">		t.do(o&lt;&lt;<span class="number">1</span>|<span class="number">1</span>, v)</span><br><span class="line">		t[o].todo = <span class="number">0</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 区间 [l,r] 内的数都加上 v   o=1</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(t seg)</span></span> update(o, l, r, v <span class="type">int</span>) &#123;</span><br><span class="line">	<span class="keyword">if</span> l &lt;= t[o].l &amp;&amp; t[o].r &lt;= r &#123;</span><br><span class="line">		t.do(o, v)</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	&#125;</span><br><span class="line">	t.spread(o)</span><br><span class="line">	m := (t[o].l + t[o].r) &gt;&gt; <span class="number">1</span></span><br><span class="line">	<span class="keyword">if</span> l &lt;= m &#123;</span><br><span class="line">		t.update(o&lt;&lt;<span class="number">1</span>, l, r, v)</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> m &lt; r &#123;</span><br><span class="line">		t.update(o&lt;&lt;<span class="number">1</span>|<span class="number">1</span>, l, r, v)</span><br><span class="line">	&#125;</span><br><span class="line">	t[o].min = min(t[o&lt;&lt;<span class="number">1</span>].min, t[o&lt;&lt;<span class="number">1</span>|<span class="number">1</span>].min)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 查询区间 [l,r] 的最小值   o=1</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(t seg)</span></span> query(o, l, r <span class="type">int</span>) <span class="type">int</span> &#123;</span><br><span class="line">	<span class="keyword">if</span> l &lt;= t[o].l &amp;&amp; t[o].r &lt;= r &#123;</span><br><span class="line">		<span class="keyword">return</span> t[o].min</span><br><span class="line">	&#125;</span><br><span class="line">	t.spread(o)</span><br><span class="line">	m := (t[o].l + t[o].r) &gt;&gt; <span class="number">1</span></span><br><span class="line">	<span class="keyword">if</span> r &lt;= m &#123;</span><br><span class="line">		<span class="keyword">return</span> t.query(o&lt;&lt;<span class="number">1</span>, l, r)</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> l &gt; m &#123;</span><br><span class="line">		<span class="keyword">return</span> t.query(o&lt;&lt;<span class="number">1</span>|<span class="number">1</span>, l, r)</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> min(t.query(o&lt;&lt;<span class="number">1</span>, l, r), t.query(o&lt;&lt;<span class="number">1</span>|<span class="number">1</span>, l, r))</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">minCost</span><span class="params">(nums []<span class="type">int</span>, k <span class="type">int</span>)</span></span> (ans <span class="type">int</span>) &#123;</span><br><span class="line">	n := <span class="built_in">len</span>(nums)</span><br><span class="line">	last := <span class="built_in">make</span>([]<span class="type">int</span>, n)</span><br><span class="line">	last2 := <span class="built_in">make</span>([]<span class="type">int</span>, n)</span><br><span class="line">	t := <span class="built_in">make</span>(seg, n*<span class="number">4</span>)</span><br><span class="line">	t.build(<span class="number">1</span>, <span class="number">1</span>, n)</span><br><span class="line">	<span class="keyword">for</span> i, x := <span class="keyword">range</span> nums &#123;</span><br><span class="line">		i++ <span class="comment">// 线段树区间从 1 开始</span></span><br><span class="line">		t.update(<span class="number">1</span>, i, i, ans) <span class="comment">// 相当于设置 f[i+1] 的值</span></span><br><span class="line">		t.update(<span class="number">1</span>, last[x]+<span class="number">1</span>, i, <span class="number">-1</span>)</span><br><span class="line">		<span class="keyword">if</span> last[x] &gt; <span class="number">0</span> &#123;</span><br><span class="line">			t.update(<span class="number">1</span>, last2[x]+<span class="number">1</span>, last[x], <span class="number">1</span>)</span><br><span class="line">		&#125;</span><br><span class="line">		ans = k + t.query(<span class="number">1</span>, <span class="number">1</span>, i)</span><br><span class="line">		last2[x] = last[x]</span><br><span class="line">		last[x] = i</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> ans + n</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">min</span><span class="params">(a, b <span class="type">int</span>)</span></span> <span class="type">int</span> &#123; <span class="keyword">if</span> a &gt; b &#123; <span class="keyword">return</span> b &#125;; <span class="keyword">return</span> a &#125;</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="复杂度分析-1"><a href="#复杂度分析-1" class="headerlink" title="复杂度分析"></a>复杂度分析</h3><ul>
+<li>时间复杂度：O(n\log n)，其中 n 为 nums 的长度。</li>
+<li>空间复杂度：O(n)。</li>
+</ul>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <!--<div class="article-copyright-info-container">-->
+    <!--&lt;!&ndash;<ul>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><strong>Title:</strong> 2547-拆分数组的最小代价</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><strong>Author:</strong> Raphael Liu</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><strong>Created at&ndash;&gt;-->
+                <!--&lt;!&ndash;:</strong> 2023-09-13 00:47:26</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;&ndash;&gt;-->
+            <!--&lt;!&ndash;<li>&ndash;&gt;-->
+                <!--&lt;!&ndash;<strong>Updated at&ndash;&gt;-->
+                    <!--&lt;!&ndash;:</strong> 2023-09-13 16:06:29&ndash;&gt;-->
+            <!--&lt;!&ndash;</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;<li>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;<strong>Link:</strong> https://fida.ltd/2023/09/13/2547-拆分数组的最小代价/&ndash;&gt;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;</li>&ndash;&gt;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;<li>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;<strong>&ndash;&gt;&ndash;&gt;-->
+                <!--&lt;!&ndash;&lt;!&ndash;License:&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;</strong>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0</a>.&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;&ndash;&gt;&ndash;&gt;-->
+
+        <!--&lt;!&ndash;&lt;!&ndash;</li>&ndash;&gt;&ndash;&gt;-->
+    <!--&lt;!&ndash;</ul>&ndash;&gt;-->
+<!--</div>-->
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box">
+                
+                    <li class="tag-item">
+                        <a href="/tags/algorithm/">#algorithm</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item">
+                        <a href="/tags/HARD/">#HARD</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                        rel="prev"
+                        href="/2023/09/13/2546-%E6%89%A7%E8%A1%8C%E9%80%90%E4%BD%8D%E8%BF%90%E7%AE%97%E4%BD%BF%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9B%B8%E7%AD%89/"
+                        >
+                            <span class="left arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">2546-执行逐位运算使字符串相等</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                        rel="next"
+                        href="/2023/09/13/2549-%E7%BB%9F%E8%AE%A1%E6%A1%8C%E9%9D%A2%E4%B8%8A%E7%9A%84%E4%B8%8D%E5%90%8C%E6%95%B0%E5%AD%97/"
+                        >
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">2549-统计桌面上的不同数字</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+
+        
+            <div class="comment-container">
+                <div class="comments-container pjax">
+    <div id="comment-anchor"></div>
+    <div class="comment-area-title">
+        <i class="fa-solid fa-comments"></i>&nbsp;Comments
+    </div>
+    
+
+        
+            
+ 
+    <div id="waline"></div>
+    <script type="module"  data-swup-reload-script>
+        import { init } from 'https://evan.beee.top/js/waline.mjs';
+
+        function loadWaline() {
+            init({
+                el: '#waline',
+                serverURL: 'https://example.example.com',
+                lang: 'zh-CN',
+                dark: 'body[class~="dark-mode"]',
+                requiredMeta: ['nick','mail'], // cannot customize by theme config, change it yourself
+            });
+        }
+
+        if ('true') {
+            const loadWalineTimeout = setTimeout(() => {
+                loadWaline();
+                clearTimeout(loadWalineTimeout);
+            }, 1000);
+        } else {
+            window.addEventListener('DOMContentLoaded', loadWaline);
+        }
+        
+    </script>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+
+    
+        <div class="toc-content-container">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">On this page</div>
+        <div class="page-title">2547-拆分数组的最小代价</div>
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%96%B9%E6%B3%95%E4%B8%80%EF%BC%9AO-n-2-%E5%88%92%E5%88%86%E5%9E%8B%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92"><span class="nav-text">方法一：O(n^2) 划分型动态规划</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E6%80%9D%E8%80%83"><span class="nav-text">如何思考</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B7%E4%BD%93%E7%AE%97%E6%B3%95"><span class="nav-text">具体算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%98%E5%8C%96"><span class="nav-text">优化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%8D%E6%9D%82%E5%BA%A6%E5%88%86%E6%9E%90"><span class="nav-text">复杂度分析</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%96%B9%E6%B3%95%E4%BA%8C%EF%BC%9A%E7%BA%BF%E6%AE%B5%E6%A0%91%E4%BC%98%E5%8C%96"><span class="nav-text">方法二：线段树优化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%8D%E6%9D%82%E5%BA%A6%E5%88%86%E6%9E%90-1"><span class="nav-text">复杂度分析</span></a></li></ol></li></ol></li></ol>
+
+    </div>
+</div>
+        </div>
+    
+</div>
+
+
+
+                
+
+            </div>
+
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2022</span>
+              -
+            
+            2023&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">Raphael Liu</a>
+        </div>
+        
+            <script data-swup-reload-script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">UV:</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">PV:</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <!--<div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">-->
+            <!--<span class="lg:block text-sm">powered_by</span>-->
+            <!--&lt;!&ndash;<span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.4.4</a></span>&ndash;&gt;-->
+        <!--</div>-->
+        
+        <!---->
+            <!--<div>-->
+                <!--runtime <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hours <span class="odometer" id="runtime_minutes"></span> minutes <span class="odometer" id="runtime_seconds"></span> seconds-->
+            <!--</div>-->
+        <!---->
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fa-regular fa-comments"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-expand-width flex justify-center items-center">
+            <i class="fa-regular fa-expand"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fa-solid fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa-solid fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa-solid fa-spinner fa-spin-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+    
+<script src="/js/libs/Swup.min.js"></script>
+
+<script src="/js/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/libs/SwupScrollPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+        ],
+        containers: ["#swup"],
+    });
+
+    swup.hooks.on("page:view", () => {
+        Global.refresh();
+    });
+
+    // if (document.readyState === "complete") {
+    //
+    // } else {
+    //     document.addEventListener("DOMContentLoaded", () => init());
+    // }
+</script>
+
+
+
+
+
+
+<script src="/js/utils.js" type="module"></script>
+
+<script src="/js/main.js" type="module"></script>
+
+<script src="/js/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/layouts/categoryList.js" type="module"></script>
+
+
+
+    
+<script src="/js/tools/localSearch.js"></script>
+
+
+
+
+    
+<script src="/js/tools/codeBlock.js"></script>
+
+
+
+
+    
+<script src="/js/layouts/lazyload.js"></script>
+
+
+
+
+    
+<script src="/js/tools/runtime.js"></script>
+
+    
+<script src="/js/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/libs/Typed.min.js"></script>
+
+  
+<script src="/js/plugins/typed.js"></script>
+
+
+
+
+
+
+
+<div class="post-scripts" data-swup-reload-script>
+    
+        
+<script src="/js/libs/anime.min.js"></script>
+
+        
+<script src="/js/tools/tocToggle.js" type="module"></script>
+
+<script src="/js/layouts/toc.js" type="module"></script>
+
+<script src="/js/plugins/tabs.js" type="module"></script>
+
+    
+</div>
+
+
+</body>
+</html>

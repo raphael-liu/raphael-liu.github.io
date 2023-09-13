@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="Raphael Liu">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/2023/09/13/1754-构造字典序最大的合并字符串/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="给你两个字符串 word1 和 word2 。你需要按下述方式构造一个新字符串 merge ：如果 word1 或 word2非空，选择 下面选项之一 继续操作：  如果 word1 非空，将 word1 中的第一个字符附加到 merge 的末尾，并将其从 word1 中移除。  例如，word1 &#x3D; &quot;abc&quot; 且 merge &#x3D; &quot;dv&quot; ，在执行此选项">
+<meta property="og:type" content="article">
+<meta property="og:title" content="1754-构造字典序最大的合并字符串">
+<meta property="og:url" content="http://example.com/2023/09/13/1754-%E6%9E%84%E9%80%A0%E5%AD%97%E5%85%B8%E5%BA%8F%E6%9C%80%E5%A4%A7%E7%9A%84%E5%90%88%E5%B9%B6%E5%AD%97%E7%AC%A6%E4%B8%B2/index.html">
+<meta property="og:site_name" content="Raphael&#39;s Blog">
+<meta property="og:description" content="给你两个字符串 word1 和 word2 。你需要按下述方式构造一个新字符串 merge ：如果 word1 或 word2非空，选择 下面选项之一 继续操作：  如果 word1 非空，将 word1 中的第一个字符附加到 merge 的末尾，并将其从 word1 中移除。  例如，word1 &#x3D; &quot;abc&quot; 且 merge &#x3D; &quot;dv&quot; ，在执行此选项">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://assets.leetcode-cn.com/solution-static/1754/1754_1.png">
+<meta property="og:image" content="https://assets.leetcode-cn.com/solution-static/1754/1754_2.png">
+<meta property="og:image" content="https://assets.leetcode-cn.com/solution-static/1754/1754_3.png">
+<meta property="og:image" content="https://assets.leetcode-cn.com/solution-static/1754/1754_4.png">
+<meta property="og:image" content="https://assets.leetcode-cn.com/solution-static/1754/1754_5.png">
+<meta property="og:image" content="https://assets.leetcode-cn.com/solution-static/1754/1754_6.png">
+<meta property="og:image" content="https://assets.leetcode-cn.com/solution-static/1754/1754_7.png">
+<meta property="og:image" content="https://assets.leetcode-cn.com/solution-static/1754/1754_8.png">
+<meta property="og:image" content="https://assets.leetcode-cn.com/solution-static/1754/1754_9.png">
+<meta property="og:image" content="https://assets.leetcode-cn.com/solution-static/1754/1754_10.png">
+<meta property="og:image" content="https://assets.leetcode-cn.com/solution-static/1754/1754_11.png">
+<meta property="og:image" content="https://assets.leetcode-cn.com/solution-static/1754/1754_12.png">
+<meta property="og:image" content="https://assets.leetcode-cn.com/solution-static/1754/1754_13.png">
+<meta property="og:image" content="https://assets.leetcode-cn.com/solution-static/1754/1754_14.png">
+<meta property="article:published_time" content="2023-09-12T16:47:26.000Z">
+<meta property="article:modified_time" content="2023-09-13T08:06:30.309Z">
+<meta property="article:author" content="Raphael Liu">
+<meta property="article:tag" content="algorithm">
+<meta property="article:tag" content="MEDIUM">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://assets.leetcode-cn.com/solution-static/1754/1754_1.png">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/redefine-favicon.svg" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/redefine-favicon.svg">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/redefine-favicon.svg">
+    <!--- Page Info-->
+    
+    <title>
+        
+            1754-构造字典序最大的合并字符串 -
+        
+        Raphael&#39;s Blog
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/css/build/styles.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/fonts.css">
+
+    
+<link rel="stylesheet" href="/fonts/Satoshi/satoshi.css">
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+
+    <!--- Inject Part-->
+    
+    <script id="hexo-configurations">
+    let Global = window.Global || {};
+    Global.hexo_config = {"hostname":"example.com","root":"/","language":"zh_CN"};
+    Global.theme_config = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":true,"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"open_graph":true,"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-wqery6-light.webp","dark":"/images/wallhaven-wqery6-dark.webp"},"title":"Raphael's Blog","subtitle":{"text":["格物致知","坚持做正确的事情"],"hitokoto":{"enable":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":false,"links":{"github":"https://github.com/raphael-liu","email":"raphael@buaa.edu.cn# your email"},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.4.4","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"links":{"首页":{"path":"/","icon":"fa-regular fa-house"},"文章":{"path":"/archives","icon":"fa-regular fa-archive"},"关于":{"icon":"fa-regular fa-user","submenus":{"我":"/about/me","Github":"https://github.com/raphael-liu"}}},"search":{"enable":true,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"links":null},"article_date_format":"auto","categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}},"footerStart":"2022/8/17 11:45:14"};
+    Global.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    Global.data_config = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="swup-progress-icon">
+            <i class="fa-solid fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container" id="swup">
+
+    
+
+    <div class="main-content-container">
+
+
+        <div class="main-content-header">
+            <header class="navbar-container">
+    
+    <div class="navbar-content">
+        <div class="left">
+            
+            <a class="logo-title" href="http://example.com/">
+                
+                Raphael&#39;s Blog
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/"  >
+                                    
+                                        
+                                            <i class="fa-regular fa-house"></i>
+                                        
+                                        首页
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/archives"  >
+                                    
+                                        
+                                            <i class="fa-regular fa-archive"></i>
+                                        
+                                        文章
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="has-dropdown" 
+                                    href="#" onClick="return false;">
+                                    
+                                        
+                                            <i class="fa-regular fa-user"></i>
+                                        
+                                        关于&nbsp;<i class="fa-solid fa-chevron-down"></i>
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                                    <ul class="sub-menu">
+                                    
+                                        <li>
+                                        <a href="/about/me">我
+                                        </a>
+                                        </li>
+                                    
+                                        <li>
+                                        <a target="_blank" rel="noopener" href="https://github.com/raphael-liu">GITHUB
+                                        </a>
+                                        </li>
+                                    
+                                    </ul>
+                                
+                            </li>
+                    
+                    
+                        <li class="navbar-item search search-popup-trigger">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fa-solid fa-magnifying-glass"></i></div>
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile drawer -->
+    <div class="navbar-drawer w-full absolute top-0 left-0 bg-background-color">
+        <ul class="drawer-navbar-list flex flex-col justify-start items-center">
+            
+                
+                    <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group " 
+                        href="/"  >
+                             
+                                
+                                    <i class="fa-regular fa-house"></i>
+                                
+                                首页
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+                
+                    <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group " 
+                        href="/archives"  >
+                             
+                                
+                                    <i class="fa-regular fa-archive"></i>
+                                
+                                文章
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+                
+                    <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group has-dropdown" 
+                        href="#" onClick="return false;">
+                            
+                                
+                                    <i class="fa-regular fa-user"></i>
+                                
+                                关于&nbsp;<i class="group-hover:rotate-180 transition-transform fa-solid fa-chevron-down"></i>
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                              
+                        
+                            <li class="text-base flex justify-center items-center hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                <a class="py-0.5" href="/about/me">我</a>
+                            </li>
+                        
+                            <li class="text-base flex justify-center items-center hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                <a class="py-0.5" target="_blank" rel="noopener" href="https://github.com/raphael-liu">GITHUB</a>
+                            </li>
+                        
+                    
+            
+
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="post-page-container">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            
+                <h1 class="article-title-regular">1754-构造字典序最大的合并字符串</h1>
+            
+            </div>
+            
+                    
+        
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">Raphael Liu</span>
+                        
+                            <span class="author-label">Lv10</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2023-09-13 00:47:26</span>
+        <span class="mobile">2023-09-13 00:47:26</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2023-09-13 16:06:30</span>
+            <span class="mobile">2023-09-13 16:06:30</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/algorithm/">algorithm</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/MEDIUM/">MEDIUM</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        
+
+
+        <div class="article-content markdown-body">
+            <p>给你两个字符串 <code>word1</code> 和 <code>word2</code> 。你需要按下述方式构造一个新字符串 <code>merge</code> ：如果 <code>word1</code> 或 <code>word2</code><br>非空，选择 <strong>下面选项之一</strong> 继续操作：</p>
+<ul>
+<li>如果 <code>word1</code> 非空，将 <code>word1</code> 中的第一个字符附加到 <code>merge</code> 的末尾，并将其从 <code>word1</code> 中移除。 <ul>
+<li>例如，<code>word1 = &quot;abc&quot; </code>且 <code>merge = &quot;dv&quot;</code> ，在执行此选项操作之后，<code>word1 = &quot;bc&quot;</code> ，同时 <code>merge = &quot;dva&quot;</code> 。</li>
+</ul>
+</li>
+<li>如果 <code>word2</code> 非空，将 <code>word2</code> 中的第一个字符附加到 <code>merge</code> 的末尾，并将其从 <code>word2</code> 中移除。 <ul>
+<li>例如，<code>word2 = &quot;abc&quot; </code>且 <code>merge = &quot;&quot;</code> ，在执行此选项操作之后，<code>word2 = &quot;bc&quot;</code> ，同时 <code>merge = &quot;a&quot;</code> 。</li>
+</ul>
+</li>
+</ul>
+<p>返回你可以构造的字典序 <strong>最大</strong> 的合并字符串 __<code>merge</code> <em>。</em></p>
+<p>长度相同的两个字符串 <code>a</code> 和 <code>b</code> 比较字典序大小，如果在 <code>a</code> 和 <code>b</code> 出现不同的第一个位置，<code>a</code> 中字符在字母表中的出现顺序位于 <code>b</code><br>中相应字符之后，就认为字符串 <code>a</code> 按字典序比字符串 <code>b</code> 更大。例如，<code>&quot;abcd&quot;</code> 按字典序比 <code>&quot;abcc&quot;</code><br>更大，因为两个字符串出现不同的第一个位置是第四个字符，而 <code>d</code> 在字母表中的出现顺序位于 <code>c</code> 之后。</p>
+<p><strong>示例 1：</strong></p>
+<pre><code>**输入：** word1 = &quot;cabaa&quot;, word2 = &quot;bcaaa&quot;
+**输出：** &quot;cbcabaaaaa&quot;
+**解释：** 构造字典序最大的合并字符串，可行的一种方法如下所示：
+- 从 word1 中取第一个字符：merge = &quot;c&quot;，word1 = &quot;abaa&quot;，word2 = &quot;bcaaa&quot;
+- 从 word2 中取第一个字符：merge = &quot;cb&quot;，word1 = &quot;abaa&quot;，word2 = &quot;caaa&quot;
+- 从 word2 中取第一个字符：merge = &quot;cbc&quot;，word1 = &quot;abaa&quot;，word2 = &quot;aaa&quot;
+- 从 word1 中取第一个字符：merge = &quot;cbca&quot;，word1 = &quot;baa&quot;，word2 = &quot;aaa&quot;
+- 从 word1 中取第一个字符：merge = &quot;cbcab&quot;，word1 = &quot;aa&quot;，word2 = &quot;aaa&quot;
+- 将 word1 和 word2 中剩下的 5 个 a 附加到 merge 的末尾。
+</code></pre>
+<p><strong>示例 2：</strong></p>
+<pre><code>**输入：** word1 = &quot;abcabc&quot;, word2 = &quot;abdcaba&quot;
+**输出：** &quot;abdcabcabcaba&quot;
+</code></pre>
+<p><strong>提示：</strong></p>
+<ul>
+<li><code>1 &lt;= word1.length, word2.length &lt;= 3000</code></li>
+<li><code>word1</code> 和 <code>word2</code> 仅由小写英文组成</li>
+</ul>
+<h4 id="方法一：贪心算法"><a href="#方法一：贪心算法" class="headerlink" title="方法一：贪心算法"></a>方法一：贪心算法</h4><p><strong>思路与算法</strong></p>
+<p>题目要求合并两个字符串 word}_1 与 word}_2，且要求合并后的字符串字典序最大。首先需要观察一下合并的选择规律，假设当前需要从 word}_1 的第 i 个字符和 word}_2 的第 j 个字符选择一个字符加入到新字符串 merge 中，需要进行分类讨论:</p>
+<ul>
+<li><p>如果 word}_1[i] &gt; \textit{word}_2[j]，此时我们的最优选择是移除 word}_1[i] 加入到 merge 中，从而保证 merge 的字典序最大；</p>
+</li>
+<li><p>如果 word}_1[i] &lt; \textit{word}_2[j]，此时我们的最优选择是移除 word}_2[j] 加入到 merge，从而保证 merge 的字典序最大；</p>
+</li>
+<li><p>如果 word}_1[i] &#x3D; \textit{word}_2[j]，此时则需要进一步讨论，结论如下：</p>
+<ul>
+<li>如果 word}_1 从 i 开始的后缀字典序大于 word}_2 从 j 开始的后缀，则此时优先选择移除 word}_1[i] 加入到 merge 中；</li>
+<li>如果 word}_1 从 i 开始的后缀字典序小于 word}_2 从 j 开始的后缀，则此时优先选择移除 word}_2[j] 加入到 merge 中；</li>
+<li>如果 word}_1 从 i 开始的后缀字典序等于 word}_2 从 j 开始的后缀，则此时任选一个均可；</li>
+</ul>
+</li>
+</ul>
+<p>当两个字符相等时，则我们最优选择为后缀较大的字符串，分类讨论如下：<br>假设 word}_1[i] &#x3D; \textit{word}_2[j]，此时两个字符串分别从 i,j 开始还有 l 个字符相等，则此时 word}_1[i+k] &#x3D; \textit{word}_2[j+k], k \in [0,l-1]，第 l+1 个字符时二者不相等，即满足 word}_1[i + l] \neq \textit{word}_2[j + l]，我们可以假设 word}_1[i + l] &lt; \textit{word}_2[j + l]。</p>
+<p>例如 word}_1 &#x3D; \text{<code>bcadea&quot; 与 word&#125;_2 = \text&#123;</code>_bcadf’’，此时 i &#x3D; 0, j &#x3D; 1, l &#x3D; 4。</p>
+<ul>
+<li>假设我们每次都选择从当前位置后缀较大的字符串，由于两个字符串分别从 i,j 开始连续 l 个字符相等，此时可以知道 word}_2 向右移动了 l 个位置到达了 j + l，此时 word}_1 向右移动了 t 个位置到达了 i + t，此时一定满足 t \le l，word}_2 优先向右移动到达字符 word}_2[j + l] 处，此时字典序较大的字符 word}_2[j + l] 优先进行合并。如果 word}_2 移动 k 个字符时，word}_1 最多也移动 k 个字符，由于两个字符串同时移动 k 个位置会遇到相同字符时总是选择字典序较大的后缀，因此 word}_2 一定先移动 l 个位置，可以参考如下图所示：</li>
+</ul>
+<p>&lt;<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://assets.leetcode-cn.com/solution-static/1754/1754_1.png"
+                      alt="update1"
+                >,<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://assets.leetcode-cn.com/solution-static/1754/1754_2.png"
+                      alt="update2"
+                >,<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://assets.leetcode-cn.com/solution-static/1754/1754_3.png"
+                      alt="update3"
+                >,<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://assets.leetcode-cn.com/solution-static/1754/1754_4.png"
+                      alt="update4"
+                >,<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://assets.leetcode-cn.com/solution-static/1754/1754_5.png"
+                      alt="update5"
+                >,<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://assets.leetcode-cn.com/solution-static/1754/1754_6.png"
+                      alt="update5"
+                >,<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://assets.leetcode-cn.com/solution-static/1754/1754_7.png"
+                      alt="update5"
+                >&gt;</p>
+<ul>
+<li>假设我们每次都选择从当前位置后缀较小的字符串，由于两个字符串分别从 i,j 开始连续 l 个字符相等，此时可以知道 word}_1 向右移动了 l 个位置到达了 i + l，此时 word}_2 向右移动了 t 个位置到达了 j + t，此时一定满足 t \le l，word}_1 优先向右移动到达字符 word}_1[i + l] 处，此时字典序较小的字符 word}_1[i + k] 优先进行合并。如果 word}_1 移动 k 个字符时，word}_2 最多也移动 k 个字符，而每次同时移动 k 个位置遇到相同字符时总是选择字典序较小的后缀，因此 word}_1 一定先移动 l 个位置，可以参考如下图所示：</li>
+</ul>
+<p>&lt;<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://assets.leetcode-cn.com/solution-static/1754/1754_8.png"
+                      alt="update1"
+                >,<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://assets.leetcode-cn.com/solution-static/1754/1754_9.png"
+                      alt="update2"
+                >,<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://assets.leetcode-cn.com/solution-static/1754/1754_10.png"
+                      alt="update3"
+                >,<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://assets.leetcode-cn.com/solution-static/1754/1754_11.png"
+                      alt="update4"
+                >,<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://assets.leetcode-cn.com/solution-static/1754/1754_12.png"
+                      alt="update5"
+                >,<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://assets.leetcode-cn.com/solution-static/1754/1754_13.png"
+                      alt="update5"
+                >,<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://assets.leetcode-cn.com/solution-static/1754/1754_14.png"
+                      alt="update5"
+                >&gt;</p>
+<ul>
+<li>我们观察到不论以何种方式进行合并，两个字符串一共移动了 l + t 个位置，此时字符串 merge 也合并了长度为 l + t 的字符串 s，不论以何种方式进行合并的字符串 s 总是相同的，而此时下一个字符优先选择字典序较大的字符进行合并这样保证合并后的字典序最大。我们可以观察到上述示例中的 s &#x3D; \text{&#96;&#96;bcbcad’’。</li>
+</ul>
+<p>其余的特殊情况跟上述思路一样，综上我们可以得到结论每次选择字典序较大的后缀进行移除一定可以保证得到最优的结果，其余的选择方法不一定能够保证得到最优结果。</p>
+<p><strong>代码</strong></p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><figcaption><span>[sol1-Python3]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">largestMerge</span>(<span class="params">self, word1: <span class="built_in">str</span>, word2: <span class="built_in">str</span></span>) -&gt; <span class="built_in">str</span>:</span><br><span class="line">        merge = []</span><br><span class="line">        i, j, n, m = <span class="number">0</span>, <span class="number">0</span>, <span class="built_in">len</span>(word1), <span class="built_in">len</span>(word2)</span><br><span class="line">        <span class="keyword">while</span> i &lt; n <span class="keyword">or</span> j &lt; m:</span><br><span class="line">            <span class="keyword">if</span> i &lt; n <span class="keyword">and</span> word1[i:] &gt; word2[j:]:</span><br><span class="line">                merge.append(word1[i])</span><br><span class="line">                i += <span class="number">1</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                merge.append(word2[j])</span><br><span class="line">                j += <span class="number">1</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;&#x27;</span>.join(merge)</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="C++"><figure class="iseeu highlight c++"><figcaption><span>[sol1-C++]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">string <span class="title">largestMerge</span><span class="params">(string word1, string word2)</span> </span>&#123;</span><br><span class="line">        string merge;</span><br><span class="line">        <span class="type">int</span> i = <span class="number">0</span>, j = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span> (i &lt; word1.<span class="built_in">size</span>() || j &lt; word2.<span class="built_in">size</span>()) &#123;</span><br><span class="line">            <span class="keyword">if</span> (i &lt; word1.<span class="built_in">size</span>() &amp;&amp; word1.<span class="built_in">substr</span>(i) &gt; word2.<span class="built_in">substr</span>(j)) &#123;</span><br><span class="line">                merge.<span class="built_in">push_back</span>(word1[i++]);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                merge.<span class="built_in">push_back</span>(word2[j++]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> merge;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><figcaption><span>[sol1-Java]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">largestMerge</span><span class="params">(String word1, String word2)</span> &#123;</span><br><span class="line">        <span class="type">StringBuilder</span> <span class="variable">merge</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringBuilder</span>();</span><br><span class="line">        <span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>, j = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span> (i &lt; word1.length() || j &lt; word2.length()) &#123;</span><br><span class="line">            <span class="keyword">if</span> (i &lt; word1.length() &amp;&amp; word1.substring(i).compareTo(word2.substring(j)) &gt; <span class="number">0</span>) &#123;</span><br><span class="line">                merge.append(word1.charAt(i));</span><br><span class="line">                i++;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                merge.append(word2.charAt(j));</span><br><span class="line">                j++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> merge.toString();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="C#"><figure class="iseeu highlight c#"><figcaption><span>[sol1-C#]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Solution</span> &#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="built_in">string</span> <span class="title">LargestMerge</span>(<span class="params"><span class="built_in">string</span> word1, <span class="built_in">string</span> word2</span>)</span> &#123;</span><br><span class="line">        StringBuilder merge = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">        <span class="built_in">int</span> i = <span class="number">0</span>, j = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span> (i &lt; word1.Length || j &lt; word2.Length) &#123;</span><br><span class="line">            <span class="keyword">if</span> (i &lt; word1.Length &amp;&amp; word1.Substring(i).CompareTo(word2.Substring(j)) &gt; <span class="number">0</span>) &#123;</span><br><span class="line">                merge.Append(word1[i]);</span><br><span class="line">                i++;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                merge.Append(word2[j]);</span><br><span class="line">                j++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> merge.ToString();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="C"><figure class="iseeu highlight c"><figcaption><span>[sol1-C]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">char</span> * <span class="title function_">largestMerge</span><span class="params">(<span class="type">char</span> * word1, <span class="type">char</span> * word2)</span> &#123;</span><br><span class="line">    <span class="type">int</span> m = <span class="built_in">strlen</span>(word1), n = <span class="built_in">strlen</span>(word2);</span><br><span class="line">    <span class="type">char</span> *merge = (<span class="type">char</span> *)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="type">char</span>) * (m + n + <span class="number">1</span>));</span><br><span class="line">    <span class="type">int</span> i = <span class="number">0</span>, j = <span class="number">0</span>, pos = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span> (i &lt; m || j &lt; n) &#123;</span><br><span class="line">        <span class="keyword">if</span> (i &lt; m &amp;&amp; <span class="built_in">strcmp</span>(word1 + i, word2 + j) &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            merge[pos] = word1[i];</span><br><span class="line">            pos++, i++;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            merge[pos] = word2[j];</span><br><span class="line">            pos++, j++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    merge[pos] = <span class="string">&#x27;\0&#x27;</span>;</span><br><span class="line">    <span class="keyword">return</span> merge;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><figcaption><span>[sol1-JavaScript]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> largestMerge = <span class="keyword">function</span>(<span class="params">word1, word2</span>) &#123;</span><br><span class="line">    <span class="keyword">let</span> merge = <span class="string">&#x27;&#x27;</span>;</span><br><span class="line">    <span class="keyword">let</span> i = <span class="number">0</span>, j = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span> (i &lt; word1.<span class="property">length</span> || j &lt; word2.<span class="property">length</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (i &lt; word1.<span class="property">length</span> &amp;&amp; word1.<span class="title function_">slice</span>(i) &gt; word2.<span class="title function_">slice</span>(j)) &#123;</span><br><span class="line">            merge += word1[i];</span><br><span class="line">            i++;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            merge += word2[j];</span><br><span class="line">            j++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> merge;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Go"><figure class="iseeu highlight go"><figcaption><span>[sol1-Golang]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">largestMerge</span><span class="params">(word1, word2 <span class="type">string</span>)</span></span> <span class="type">string</span> &#123;</span><br><span class="line">	merge := []<span class="type">byte</span>&#123;&#125;</span><br><span class="line">	i, j, n, m := <span class="number">0</span>, <span class="number">0</span>, <span class="built_in">len</span>(word1), <span class="built_in">len</span>(word2)</span><br><span class="line">	<span class="keyword">for</span> i &lt; n || j &lt; m &#123;</span><br><span class="line">		<span class="keyword">if</span> i &lt; n &amp;&amp; word1[i:] &gt; word2[j:] &#123;</span><br><span class="line">			merge = <span class="built_in">append</span>(merge, word1[i])</span><br><span class="line">			i += <span class="number">1</span></span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			merge = <span class="built_in">append</span>(merge, word2[j])</span><br><span class="line">			j += <span class="number">1</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="type">string</span>(merge)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>复杂度分析</strong></p>
+<ul>
+<li><p>时间复杂度：O((m + n) \times \max(m, n))，其中 m,n 分别表示两个字符串的长度。每次压入字符时需要进行后缀比较，每次两个字符串后缀比较的时间复杂度为 O(\max(m, n))，一共最多需要比较 m + n 次，因此总的时间复杂度为 O((m + n) \times \max(m, n))。</p>
+</li>
+<li><p>空间复杂度：O(m + n)，其中 m,n 分别表示两个字符串的长度。每次比较时都会生成两个字符串的后缀，所需要的空间为 O(m + n)。</p>
+</li>
+</ul>
+<h4 id="方法二：后缀数组"><a href="#方法二：后缀数组" class="headerlink" title="方法二：后缀数组"></a>方法二：后缀数组</h4><p><strong>思路与算法</strong></p>
+<p>后缀数组的计算过程较为复杂，后缀数组利用了倍增的思想来比较两个后缀的大小，详细资料可以参考「<a class="link"   target="_blank" rel="noopener" href="https://oi-wiki.org/string/sa/" >后缀数组简介 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>」以及 「<a class="link"   target="_blank" rel="noopener" href="http://se.moevm.info/lib/exe/fetch.php/courses:algorithms_building_and_analysis:algorithmic_challenges_2_suffix_array.pdf" >Suffix Array <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>」，在此不再展开描述，本题中计算后缀数组时用字符 &#96;*’ 标识字符串的结尾。</p>
+<p>此种与方法一同样的思路，我们在比较两个字符串 word}_1,\textit{word}_2 的后缀时，直接利用后缀数组来比较两个后缀的字典序大小。在两个 word}_1 与 word}_2 的中间添加一个字符 <code>@&#39; 来表示 word&#125;_1 的结尾，</code>@’ 比所有的英文字母都小，且比字符串的末尾 &#96;*’ 要大。设字符串 word}_1,\textit{word}_2 的长度分别为 m,n，我们计算出合并后的字符串 str 的后缀排名 rank，则 word}_1 中的第 i 个后缀对应着 str 的第 i 个后缀，word}_2 中的第 j 个后缀对应着 str 的第 m + 1 + j 个后缀。进行合并时我们可以直接比较两个字符串的后缀排序，每次选取后缀较大的进行合并即可。</p>
+<p><strong>代码</strong></p>
+<div class="highlight-container" data-rel="C++"><figure class="iseeu highlight c++"><figcaption><span>[sol2-C++]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">sortCharacters</span><span class="params">(<span class="type">const</span> string &amp; text)</span> </span>&#123;</span><br><span class="line">    <span class="type">int</span> n = text.<span class="built_in">size</span>();</span><br><span class="line">    <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">count</span><span class="params">(<span class="number">128</span>)</span>, <span class="title">order</span><span class="params">(n)</span></span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">auto</span> c : text) &#123;</span><br><span class="line">        count[c]++;</span><br><span class="line">    &#125;    </span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt; <span class="number">128</span>; i++) &#123;</span><br><span class="line">        count[i] += count[i - <span class="number">1</span>];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = n - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">        count[text[i]]--;</span><br><span class="line">        order[count[text[i]]] = i;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> order;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">computeCharClasses</span><span class="params">(<span class="type">const</span> string &amp; text, vector&lt;<span class="type">int</span>&gt; &amp; order)</span> </span>&#123;</span><br><span class="line">    <span class="type">int</span> n = text.<span class="built_in">size</span>();</span><br><span class="line">    <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">res</span><span class="params">(n, <span class="number">0</span>)</span></span>;</span><br><span class="line">    res[order[<span class="number">0</span>]] = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt; n; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (text[order[i]] != text[order[i - <span class="number">1</span>]]) &#123;</span><br><span class="line">            res[order[i]] = res[order[i - <span class="number">1</span>]] + <span class="number">1</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            res[order[i]] = res[order[i - <span class="number">1</span>]];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">sortDoubled</span><span class="params">(<span class="type">const</span> string &amp; text, <span class="type">int</span> len, vector&lt;<span class="type">int</span>&gt; &amp; order, vector&lt;<span class="type">int</span>&gt; &amp; classfiy)</span> </span>&#123;</span><br><span class="line">    <span class="type">int</span> n = text.<span class="built_in">size</span>();</span><br><span class="line">    <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">count</span><span class="params">(n)</span>, <span class="title">newOrder</span><span class="params">(n)</span></span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">        count[classfiy[i]]++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt; n; i++) &#123;</span><br><span class="line">        count[i] += count[i - <span class="number">1</span>];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = n - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">        <span class="type">int</span> start = (order[i] - len + n) % n;</span><br><span class="line">        <span class="type">int</span> cl = classfiy[start];</span><br><span class="line">        count[cl]--;</span><br><span class="line">        newOrder[count[cl]] = start;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> newOrder;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">updateClasses</span><span class="params">(vector&lt;<span class="type">int</span>&gt; &amp; newOrder, vector&lt;<span class="type">int</span>&gt; &amp; classfiy, <span class="type">int</span> len)</span> </span>&#123;</span><br><span class="line">    <span class="type">int</span> n = newOrder.<span class="built_in">size</span>();</span><br><span class="line">    <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">newClassfiy</span><span class="params">(n, <span class="number">0</span>)</span></span>;</span><br><span class="line">    newClassfiy[newOrder[<span class="number">0</span>]] = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt; n; i++) &#123;</span><br><span class="line">        <span class="type">int</span> curr = newOrder[i];</span><br><span class="line">        <span class="type">int</span> prev = newOrder[i - <span class="number">1</span>];</span><br><span class="line">        <span class="type">int</span> mid = curr + len;</span><br><span class="line">        <span class="type">int</span> midPrev = (prev + len) % n;</span><br><span class="line">        <span class="keyword">if</span> (classfiy[curr] != classfiy[prev] || classfiy[mid] != classfiy[midPrev]) &#123;</span><br><span class="line">             newClassfiy[curr] = newClassfiy[prev] + <span class="number">1</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">             newClassfiy[curr] = newClassfiy[prev];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> newClassfiy;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">buildSuffixArray</span><span class="params">(<span class="type">const</span> string&amp; text)</span> </span>&#123;</span><br><span class="line">    vector&lt;<span class="type">int</span>&gt; order = <span class="built_in">sortCharacters</span>(text);</span><br><span class="line">    vector&lt;<span class="type">int</span>&gt; classfiy = <span class="built_in">computeCharClasses</span>(text, order);</span><br><span class="line">    <span class="type">int</span> len = <span class="number">1</span>;</span><br><span class="line">    <span class="type">int</span> n = text.<span class="built_in">size</span>();</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt; n; i &lt;&lt;= <span class="number">1</span>) &#123;</span><br><span class="line">        order = <span class="built_in">sortDoubled</span>(text, i, order, classfiy);</span><br><span class="line">        classfiy = <span class="built_in">updateClasses</span>(order, classfiy, i);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> order;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">string <span class="title">largestMerge</span><span class="params">(string word1, string word2)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> m = word1.<span class="built_in">size</span>(), n = word2.<span class="built_in">size</span>();</span><br><span class="line">        string str = word1 + <span class="string">&quot;@&quot;</span> + word2 + <span class="string">&quot;*&quot;</span>;</span><br><span class="line">        vector&lt;<span class="type">int</span>&gt; suffixArray = <span class="built_in">buildSuffixArray</span>(str); </span><br><span class="line">        <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">rank</span><span class="params">(m + n + <span class="number">2</span>)</span></span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; m + n + <span class="number">2</span>; i++) &#123;</span><br><span class="line">            rank[suffixArray[i]] = i;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        string merge;</span><br><span class="line">        <span class="type">int</span> i = <span class="number">0</span>, j = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span> (i &lt; m || j &lt; n) &#123;</span><br><span class="line">            <span class="keyword">if</span> (i &lt; m &amp;&amp; rank[i] &gt; rank[m + <span class="number">1</span> + j]) &#123;</span><br><span class="line">                merge.<span class="built_in">push_back</span>(word1[i++]);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                merge.<span class="built_in">push_back</span>(word2[j++]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> merge;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><figcaption><span>[sol2-Java]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">largestMerge</span><span class="params">(String word1, String word2)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">m</span> <span class="operator">=</span> word1.length(), n = word2.length();</span><br><span class="line">        <span class="type">String</span> <span class="variable">str</span> <span class="operator">=</span> word1 + <span class="string">&quot;@&quot;</span> + word2 + <span class="string">&quot;*&quot;</span>;</span><br><span class="line">        <span class="type">int</span>[] suffixArray = buildSuffixArray(str); </span><br><span class="line">        <span class="type">int</span>[] rank = <span class="keyword">new</span> <span class="title class_">int</span>[m + n + <span class="number">2</span>];</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; m + n + <span class="number">2</span>; i++) &#123;</span><br><span class="line">            rank[suffixArray[i]] = i;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="type">StringBuilder</span> <span class="variable">merge</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringBuilder</span>();</span><br><span class="line">        <span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>, j = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span> (i &lt; m || j &lt; n) &#123;</span><br><span class="line">            <span class="keyword">if</span> (i &lt; m &amp;&amp; rank[i] &gt; rank[m + <span class="number">1</span> + j]) &#123;</span><br><span class="line">                merge.append(word1.charAt(i));</span><br><span class="line">                i++;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                merge.append(word2.charAt(j));</span><br><span class="line">                j++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> merge.toString();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span>[] buildSuffixArray(String text) &#123;</span><br><span class="line">        <span class="type">int</span>[] order = sortCharacters(text);</span><br><span class="line">        <span class="type">int</span>[] classfiy = computeCharClasses(text, order);</span><br><span class="line">        <span class="type">int</span> <span class="variable">len</span> <span class="operator">=</span> <span class="number">1</span>;</span><br><span class="line">        <span class="type">int</span> <span class="variable">n</span> <span class="operator">=</span> text.length();</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">1</span>; i &lt; n; i &lt;&lt;= <span class="number">1</span>) &#123;</span><br><span class="line">            order = sortDoubled(text, i, order, classfiy);</span><br><span class="line">            classfiy = updateClasses(order, classfiy, i);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> order;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span>[] sortCharacters(String text) &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">n</span> <span class="operator">=</span> text.length();</span><br><span class="line">        <span class="type">int</span>[] count = <span class="keyword">new</span> <span class="title class_">int</span>[<span class="number">128</span>];</span><br><span class="line">        <span class="type">int</span>[] order = <span class="keyword">new</span> <span class="title class_">int</span>[n];</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">            <span class="type">char</span> <span class="variable">c</span> <span class="operator">=</span> text.charAt(i);</span><br><span class="line">            count[c]++;</span><br><span class="line">        &#125;    </span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">1</span>; i &lt; <span class="number">128</span>; i++) &#123;</span><br><span class="line">            count[i] += count[i - <span class="number">1</span>];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> n - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">            count[text.charAt(i)]--;</span><br><span class="line">            order[count[text.charAt(i)]] = i;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> order;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span>[] computeCharClasses(String text, <span class="type">int</span>[] order) &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">n</span> <span class="operator">=</span> text.length();</span><br><span class="line">        <span class="type">int</span>[] res = <span class="keyword">new</span> <span class="title class_">int</span>[n];</span><br><span class="line">        res[order[<span class="number">0</span>]] = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">1</span>; i &lt; n; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (text.charAt(order[i]) != text.charAt(order[i - <span class="number">1</span>])) &#123;</span><br><span class="line">                res[order[i]] = res[order[i - <span class="number">1</span>]] + <span class="number">1</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                res[order[i]] = res[order[i - <span class="number">1</span>]];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span>[] sortDoubled(String text, <span class="type">int</span> len, <span class="type">int</span>[]  order, <span class="type">int</span>[] classfiy) &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">n</span> <span class="operator">=</span> text.length();</span><br><span class="line">        <span class="type">int</span>[] count = <span class="keyword">new</span> <span class="title class_">int</span>[n];</span><br><span class="line">        <span class="type">int</span>[] newOrder = <span class="keyword">new</span> <span class="title class_">int</span>[n];</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">            count[classfiy[i]]++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">1</span>; i &lt; n; i++) &#123;</span><br><span class="line">            count[i] += count[i - <span class="number">1</span>];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> n - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">            <span class="type">int</span> <span class="variable">start</span> <span class="operator">=</span> (order[i] - len + n) % n;</span><br><span class="line">            <span class="type">int</span> <span class="variable">cl</span> <span class="operator">=</span> classfiy[start];</span><br><span class="line">            count[cl]--;</span><br><span class="line">            newOrder[count[cl]] = start;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> newOrder;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span>[] updateClasses(<span class="type">int</span>[] newOrder, <span class="type">int</span>[] classfiy, <span class="type">int</span> len) &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">n</span> <span class="operator">=</span> newOrder.length;</span><br><span class="line">        <span class="type">int</span>[] newClassfiy = <span class="keyword">new</span> <span class="title class_">int</span>[n];</span><br><span class="line">        newClassfiy[newOrder[<span class="number">0</span>]] = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">1</span>; i &lt; n; i++) &#123;</span><br><span class="line">            <span class="type">int</span> <span class="variable">curr</span> <span class="operator">=</span> newOrder[i];</span><br><span class="line">            <span class="type">int</span> <span class="variable">prev</span> <span class="operator">=</span> newOrder[i - <span class="number">1</span>];</span><br><span class="line">            <span class="type">int</span> <span class="variable">mid</span> <span class="operator">=</span> curr + len;</span><br><span class="line">            <span class="type">int</span> <span class="variable">midPrev</span> <span class="operator">=</span> (prev + len) % n;</span><br><span class="line">            <span class="keyword">if</span> (classfiy[curr] != classfiy[prev] || classfiy[mid] != classfiy[midPrev]) &#123;</span><br><span class="line">                newClassfiy[curr] = newClassfiy[prev] + <span class="number">1</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                newClassfiy[curr] = newClassfiy[prev];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> newClassfiy;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="C#"><figure class="iseeu highlight c#"><figcaption><span>[sol2-C#]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Solution</span> &#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="built_in">string</span> <span class="title">LargestMerge</span>(<span class="params"><span class="built_in">string</span> word1, <span class="built_in">string</span> word2</span>)</span> &#123;</span><br><span class="line">        <span class="built_in">int</span> m = word1.Length, n = word2.Length;</span><br><span class="line">        String str = word1 + <span class="string">&quot;@&quot;</span> + word2 + <span class="string">&quot;*&quot;</span>;</span><br><span class="line">        <span class="built_in">int</span>[] suffixArray = BuildSuffixArray(str); </span><br><span class="line">        <span class="built_in">int</span>[] rank = <span class="keyword">new</span> <span class="built_in">int</span>[m + n + <span class="number">2</span>];</span><br><span class="line">        <span class="keyword">for</span> (<span class="built_in">int</span> idx = <span class="number">0</span>; idx &lt; m + n + <span class="number">2</span>; idx++) &#123;</span><br><span class="line">            rank[suffixArray[idx]] = idx;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        StringBuilder merge = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">        <span class="built_in">int</span> i = <span class="number">0</span>, j = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span> (i &lt; m || j &lt; n) &#123;</span><br><span class="line">            <span class="keyword">if</span> (i &lt; m &amp;&amp; rank[i] &gt; rank[m + <span class="number">1</span> + j]) &#123;</span><br><span class="line">                merge.Append(word1[i]);</span><br><span class="line">                i++;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                merge.Append(word2[j]);</span><br><span class="line">                j++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> merge.ToString();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="built_in">int</span>[] <span class="title">BuildSuffixArray</span>(<span class="params">String text</span>)</span> &#123;</span><br><span class="line">        <span class="built_in">int</span>[] order = CortCharacters(text);</span><br><span class="line">        <span class="built_in">int</span>[] classfiy = ComputeCharClasses(text, order);</span><br><span class="line">        <span class="built_in">int</span> len = <span class="number">1</span>;</span><br><span class="line">        <span class="built_in">int</span> n = text.Length;</span><br><span class="line">        <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">1</span>; i &lt; n; i &lt;&lt;= <span class="number">1</span>) &#123;</span><br><span class="line">            order = SortDoubled(text, i, order, classfiy);</span><br><span class="line">            classfiy = UpdateClasses(order, classfiy, i);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> order;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="built_in">int</span>[] <span class="title">CortCharacters</span>(<span class="params">String text</span>)</span> &#123;</span><br><span class="line">        <span class="built_in">int</span> n = text.Length;</span><br><span class="line">        <span class="built_in">int</span>[] count = <span class="keyword">new</span> <span class="built_in">int</span>[<span class="number">128</span>];</span><br><span class="line">        <span class="built_in">int</span>[] order = <span class="keyword">new</span> <span class="built_in">int</span>[n];</span><br><span class="line">        <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">            <span class="built_in">char</span> c = text[i];</span><br><span class="line">            count[c]++;</span><br><span class="line">        &#125;    </span><br><span class="line">        <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">1</span>; i &lt; <span class="number">128</span>; i++) &#123;</span><br><span class="line">            count[i] += count[i - <span class="number">1</span>];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="built_in">int</span> i = n - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">            count[text[i]]--;</span><br><span class="line">            order[count[text[i]]] = i;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> order;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="built_in">int</span>[] <span class="title">ComputeCharClasses</span>(<span class="params">String text, <span class="built_in">int</span>[] order</span>)</span> &#123;</span><br><span class="line">        <span class="built_in">int</span> n = text.Length;</span><br><span class="line">        <span class="built_in">int</span>[] res = <span class="keyword">new</span> <span class="built_in">int</span>[n];</span><br><span class="line">        res[order[<span class="number">0</span>]] = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">1</span>; i &lt; n; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (text[order[i]] != text[order[i - <span class="number">1</span>]]) &#123;</span><br><span class="line">                res[order[i]] = res[order[i - <span class="number">1</span>]] + <span class="number">1</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                res[order[i]] = res[order[i - <span class="number">1</span>]];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="built_in">int</span>[] <span class="title">SortDoubled</span>(<span class="params">String text, <span class="built_in">int</span> len, <span class="built_in">int</span>[]  order, <span class="built_in">int</span>[] classfiy</span>)</span> &#123;</span><br><span class="line">        <span class="built_in">int</span> n = text.Length;</span><br><span class="line">        <span class="built_in">int</span>[] count = <span class="keyword">new</span> <span class="built_in">int</span>[n];</span><br><span class="line">        <span class="built_in">int</span>[] newOrder = <span class="keyword">new</span> <span class="built_in">int</span>[n];</span><br><span class="line">        <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">            count[classfiy[i]]++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">1</span>; i &lt; n; i++) &#123;</span><br><span class="line">            count[i] += count[i - <span class="number">1</span>];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="built_in">int</span> i = n - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">            <span class="built_in">int</span> start = (order[i] - len + n) % n;</span><br><span class="line">            <span class="built_in">int</span> cl = classfiy[start];</span><br><span class="line">            count[cl]--;</span><br><span class="line">            newOrder[count[cl]] = start;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> newOrder;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="built_in">int</span>[] <span class="title">UpdateClasses</span>(<span class="params"><span class="built_in">int</span>[] newOrder, <span class="built_in">int</span>[] classfiy, <span class="built_in">int</span> len</span>)</span> &#123;</span><br><span class="line">        <span class="built_in">int</span> n = newOrder.Length;</span><br><span class="line">        <span class="built_in">int</span>[] newClassfiy = <span class="keyword">new</span> <span class="built_in">int</span>[n];</span><br><span class="line">        newClassfiy[newOrder[<span class="number">0</span>]] = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">1</span>; i &lt; n; i++) &#123;</span><br><span class="line">            <span class="built_in">int</span> curr = newOrder[i];</span><br><span class="line">            <span class="built_in">int</span> prev = newOrder[i - <span class="number">1</span>];</span><br><span class="line">            <span class="built_in">int</span> mid = curr + len;</span><br><span class="line">            <span class="built_in">int</span> midPrev = (prev + len) % n;</span><br><span class="line">            <span class="keyword">if</span> (classfiy[curr] != classfiy[prev] || classfiy[mid] != classfiy[midPrev]) &#123;</span><br><span class="line">                newClassfiy[curr] = newClassfiy[prev] + <span class="number">1</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                newClassfiy[curr] = newClassfiy[prev];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> newClassfiy;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="C"><figure class="iseeu highlight c"><figcaption><span>[sol2-C]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">sortCharacters</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *text, <span class="type">int</span> *order)</span> &#123;</span><br><span class="line">    <span class="type">int</span> n = <span class="built_in">strlen</span>(text);</span><br><span class="line">    <span class="type">int</span> count[<span class="number">128</span>];</span><br><span class="line">    <span class="built_in">memset</span>(count, <span class="number">0</span>, <span class="keyword">sizeof</span>(count));</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; text[i] != <span class="string">&#x27;\0&#x27;</span>; i++) &#123;</span><br><span class="line">        count[text[i]]++;</span><br><span class="line">    &#125;    </span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt; <span class="number">128</span>; i++) &#123;</span><br><span class="line">        count[i] += count[i - <span class="number">1</span>];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = n - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">        count[text[i]]--;</span><br><span class="line">        order[count[text[i]]] = i;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">computeCharClasses</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *text, <span class="type">const</span> <span class="type">int</span>* order, <span class="type">int</span> *classfiy)</span> &#123;</span><br><span class="line">    <span class="type">int</span> n = <span class="built_in">strlen</span>(text);</span><br><span class="line">    classfiy[order[<span class="number">0</span>]] = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt; n; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (text[order[i]] != text[order[i - <span class="number">1</span>]]) &#123;</span><br><span class="line">            classfiy[order[i]] = classfiy[order[i - <span class="number">1</span>]] + <span class="number">1</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            classfiy[order[i]] = classfiy[order[i - <span class="number">1</span>]];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">sortDoubled</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *text, <span class="type">int</span> len, <span class="type">const</span> <span class="type">int</span> *order, <span class="type">const</span> <span class="type">int</span> *classfiy, <span class="type">int</span> *newOrder)</span> &#123;</span><br><span class="line">    <span class="type">int</span> n = <span class="built_in">strlen</span>(text);</span><br><span class="line">    <span class="type">int</span> count[n];</span><br><span class="line">    <span class="built_in">memset</span>(count, <span class="number">0</span>, <span class="keyword">sizeof</span>(count));</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">        count[classfiy[i]]++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt; n; i++) &#123;</span><br><span class="line">        count[i] += count[i - <span class="number">1</span>];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = n - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">        <span class="type">int</span> start = (order[i] - len + n) % n;</span><br><span class="line">        <span class="type">int</span> cl = classfiy[start];</span><br><span class="line">        count[cl]--;</span><br><span class="line">        newOrder[count[cl]] = start;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">updateClasses</span><span class="params">(<span class="type">const</span> <span class="type">int</span> *newOrder, <span class="type">int</span> n, <span class="type">int</span> *classfiy, <span class="type">int</span> len, <span class="type">int</span> *newClassfiy)</span> &#123;</span><br><span class="line">    newClassfiy[newOrder[<span class="number">0</span>]] = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt; n; i++) &#123;</span><br><span class="line">        <span class="type">int</span> curr = newOrder[i];</span><br><span class="line">        <span class="type">int</span> prev = newOrder[i - <span class="number">1</span>];</span><br><span class="line">        <span class="type">int</span> mid = curr + len;</span><br><span class="line">        <span class="type">int</span> midPrev = (prev + len) % n;</span><br><span class="line">        <span class="keyword">if</span> (classfiy[curr] != classfiy[prev] || classfiy[mid] != classfiy[midPrev]) &#123;</span><br><span class="line">             newClassfiy[curr] = newClassfiy[prev] + <span class="number">1</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">             newClassfiy[curr] = newClassfiy[prev];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span>  *<span class="title function_">buildSuffixArray</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *text)</span> &#123;</span><br><span class="line">    <span class="type">int</span> n = <span class="built_in">strlen</span>(text);</span><br><span class="line">    <span class="type">int</span> *order = (<span class="type">int</span> *)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="type">int</span>) * n); </span><br><span class="line">    <span class="type">int</span> classfiy[n], newOrder[n], newClassfiy[n];</span><br><span class="line">    sortCharacters(text, order);</span><br><span class="line">    computeCharClasses(text, order, classfiy);    </span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt; n; i &lt;&lt;= <span class="number">1</span>) &#123;</span><br><span class="line">        sortDoubled(text, i, order, classfiy, newOrder);</span><br><span class="line">        updateClasses(newOrder, n, classfiy, i, newClassfiy);</span><br><span class="line">        <span class="built_in">memcpy</span>(order, newOrder, <span class="keyword">sizeof</span>(<span class="type">int</span>) * n);</span><br><span class="line">        <span class="built_in">memcpy</span>(classfiy, newClassfiy, <span class="keyword">sizeof</span>(<span class="type">int</span>) * n);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> order;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">char</span> * <span class="title function_">largestMerge</span><span class="params">(<span class="type">char</span> * word1, <span class="type">char</span> * word2)</span> &#123;</span><br><span class="line">    <span class="type">int</span> m = <span class="built_in">strlen</span>(word1), n = <span class="built_in">strlen</span>(word2);</span><br><span class="line">    <span class="type">char</span> str[m + n + <span class="number">3</span>];</span><br><span class="line">    <span class="built_in">sprintf</span>(str, <span class="string">&quot;%s@%s*&quot;</span>, word1, word2);</span><br><span class="line">    <span class="type">int</span> *suffixArray = buildSuffixArray(str); </span><br><span class="line">    <span class="type">int</span> rank[m + n + <span class="number">2</span>];</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; m + n + <span class="number">2</span>; i++) &#123;</span><br><span class="line">        rank[suffixArray[i]] = i;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">free</span>(suffixArray);</span><br><span class="line"></span><br><span class="line">    <span class="type">char</span> *merge = (<span class="type">char</span> *)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="type">char</span>) * (m + n + <span class="number">1</span>));</span><br><span class="line">    <span class="type">int</span> i = <span class="number">0</span>, j = <span class="number">0</span>, pos = <span class="number">0</span>; </span><br><span class="line">    <span class="keyword">while</span> (i &lt; m || j &lt; n) &#123;</span><br><span class="line">        <span class="keyword">if</span> (i &lt; m &amp;&amp; rank[i] &gt; rank[m + <span class="number">1</span> + j]) &#123;</span><br><span class="line">            merge[pos] = word1[i];</span><br><span class="line">            pos++, i++;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            merge[pos] = word2[j];</span><br><span class="line">            pos++, j++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    merge[pos] = <span class="string">&#x27;\0&#x27;</span>;</span><br><span class="line">    <span class="keyword">return</span> merge;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>复杂度分析</strong></p>
+<ul>
+<li><p>时间复杂度：O(|\Sigma| + (m + n) \times \log (m + n))，其中 m, n 表示字符串 word}_1 与 word}_2 的长度，|\Sigma| 表示字符集的大小，在此 |\Sigma| 取 128。时间复杂度主要取决于后缀数组的计算与字符串的遍历，其中后缀数组的计算需要的时间复杂度为 O(|\Sigma| + (m + n) \times \log (m + n))，我们通过后缀数组计算出每个后缀的排序需要的时间复杂度为 O(m + n)，遍历两个字符串并通过比较后缀的大小来进行合并需要的时间复杂度为 O(m + n)，因此总的时间复杂度为 O(|\Sigma| + (m + n) \times \log (m + n))</p>
+</li>
+<li><p>空间复杂度：O(m + n)。计算后缀数组时需要存放临时的字符串以及后缀排序，需要的空间均为 O(m + n)，因此总的空间复杂度为 O(m + n)。</p>
+</li>
+</ul>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <!--<div class="article-copyright-info-container">-->
+    <!--&lt;!&ndash;<ul>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><strong>Title:</strong> 1754-构造字典序最大的合并字符串</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><strong>Author:</strong> Raphael Liu</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><strong>Created at&ndash;&gt;-->
+                <!--&lt;!&ndash;:</strong> 2023-09-13 00:47:26</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;&ndash;&gt;-->
+            <!--&lt;!&ndash;<li>&ndash;&gt;-->
+                <!--&lt;!&ndash;<strong>Updated at&ndash;&gt;-->
+                    <!--&lt;!&ndash;:</strong> 2023-09-13 16:06:30&ndash;&gt;-->
+            <!--&lt;!&ndash;</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;<li>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;<strong>Link:</strong> https://fida.ltd/2023/09/13/1754-构造字典序最大的合并字符串/&ndash;&gt;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;</li>&ndash;&gt;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;<li>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;<strong>&ndash;&gt;&ndash;&gt;-->
+                <!--&lt;!&ndash;&lt;!&ndash;License:&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;</strong>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0</a>.&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;&ndash;&gt;&ndash;&gt;-->
+
+        <!--&lt;!&ndash;&lt;!&ndash;</li>&ndash;&gt;&ndash;&gt;-->
+    <!--&lt;!&ndash;</ul>&ndash;&gt;-->
+<!--</div>-->
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box">
+                
+                    <li class="tag-item">
+                        <a href="/tags/algorithm/">#algorithm</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item">
+                        <a href="/tags/MEDIUM/">#MEDIUM</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                        rel="prev"
+                        href="/2023/09/13/1753-%E7%A7%BB%E9%99%A4%E7%9F%B3%E5%AD%90%E7%9A%84%E6%9C%80%E5%A4%A7%E5%BE%97%E5%88%86/"
+                        >
+                            <span class="left arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">1753-移除石子的最大得分</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                        rel="next"
+                        href="/2023/09/13/1755-%E6%9C%80%E6%8E%A5%E8%BF%91%E7%9B%AE%E6%A0%87%E5%80%BC%E7%9A%84%E5%AD%90%E5%BA%8F%E5%88%97%E5%92%8C/"
+                        >
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">1755-最接近目标值的子序列和</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+
+        
+            <div class="comment-container">
+                <div class="comments-container pjax">
+    <div id="comment-anchor"></div>
+    <div class="comment-area-title">
+        <i class="fa-solid fa-comments"></i>&nbsp;Comments
+    </div>
+    
+
+        
+            
+ 
+    <div id="waline"></div>
+    <script type="module"  data-swup-reload-script>
+        import { init } from 'https://evan.beee.top/js/waline.mjs';
+
+        function loadWaline() {
+            init({
+                el: '#waline',
+                serverURL: 'https://example.example.com',
+                lang: 'zh-CN',
+                dark: 'body[class~="dark-mode"]',
+                requiredMeta: ['nick','mail'], // cannot customize by theme config, change it yourself
+            });
+        }
+
+        if ('true') {
+            const loadWalineTimeout = setTimeout(() => {
+                loadWaline();
+                clearTimeout(loadWalineTimeout);
+            }, 1000);
+        } else {
+            window.addEventListener('DOMContentLoaded', loadWaline);
+        }
+        
+    </script>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+
+    
+        <div class="toc-content-container">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">On this page</div>
+        <div class="page-title">1754-构造字典序最大的合并字符串</div>
+        
+
+    </div>
+</div>
+        </div>
+    
+</div>
+
+
+
+                
+
+            </div>
+
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2022</span>
+              -
+            
+            2023&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">Raphael Liu</a>
+        </div>
+        
+            <script data-swup-reload-script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">UV:</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">PV:</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <!--<div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">-->
+            <!--<span class="lg:block text-sm">powered_by</span>-->
+            <!--&lt;!&ndash;<span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.4.4</a></span>&ndash;&gt;-->
+        <!--</div>-->
+        
+        <!---->
+            <!--<div>-->
+                <!--runtime <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hours <span class="odometer" id="runtime_minutes"></span> minutes <span class="odometer" id="runtime_seconds"></span> seconds-->
+            <!--</div>-->
+        <!---->
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fa-regular fa-comments"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-expand-width flex justify-center items-center">
+            <i class="fa-regular fa-expand"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fa-solid fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa-solid fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa-solid fa-spinner fa-spin-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+    
+<script src="/js/libs/Swup.min.js"></script>
+
+<script src="/js/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/libs/SwupScrollPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+        ],
+        containers: ["#swup"],
+    });
+
+    swup.hooks.on("page:view", () => {
+        Global.refresh();
+    });
+
+    // if (document.readyState === "complete") {
+    //
+    // } else {
+    //     document.addEventListener("DOMContentLoaded", () => init());
+    // }
+</script>
+
+
+
+
+
+
+<script src="/js/utils.js" type="module"></script>
+
+<script src="/js/main.js" type="module"></script>
+
+<script src="/js/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/layouts/categoryList.js" type="module"></script>
+
+
+
+    
+<script src="/js/tools/localSearch.js"></script>
+
+
+
+
+    
+<script src="/js/tools/codeBlock.js"></script>
+
+
+
+
+    
+<script src="/js/layouts/lazyload.js"></script>
+
+
+
+
+    
+<script src="/js/tools/runtime.js"></script>
+
+    
+<script src="/js/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/libs/Typed.min.js"></script>
+
+  
+<script src="/js/plugins/typed.js"></script>
+
+
+
+
+
+
+
+<div class="post-scripts" data-swup-reload-script>
+    
+        
+<script src="/js/libs/anime.min.js"></script>
+
+        
+<script src="/js/tools/tocToggle.js" type="module"></script>
+
+<script src="/js/layouts/toc.js" type="module"></script>
+
+<script src="/js/plugins/tabs.js" type="module"></script>
+
+    
+</div>
+
+
+</body>
+</html>

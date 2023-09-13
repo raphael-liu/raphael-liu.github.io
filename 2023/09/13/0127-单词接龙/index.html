@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="Raphael Liu">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/2023/09/13/0127-单词接龙/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="字典 wordList 中从单词 beginWord _ _ 和 endWord 的 转换序列 是一个按下述规格形成的序列beginWord -&gt; s1 -&gt; s2 -&gt; ... -&gt; sk：  每一对相邻的单词只差一个字母。 对于 1 &lt;&#x3D; i &lt;&#x3D; k 时，每个 si 都在 wordList 中。注意， beginWord _ _ 不需要在 wordList">
+<meta property="og:type" content="article">
+<meta property="og:title" content="0127-单词接龙">
+<meta property="og:url" content="http://example.com/2023/09/13/0127-%E5%8D%95%E8%AF%8D%E6%8E%A5%E9%BE%99/index.html">
+<meta property="og:site_name" content="Raphael&#39;s Blog">
+<meta property="og:description" content="字典 wordList 中从单词 beginWord _ _ 和 endWord 的 转换序列 是一个按下述规格形成的序列beginWord -&gt; s1 -&gt; s2 -&gt; ... -&gt; sk：  每一对相邻的单词只差一个字母。 对于 1 &lt;&#x3D; i &lt;&#x3D; k 时，每个 si 都在 wordList 中。注意， beginWord _ _ 不需要在 wordList">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://assets.leetcode-cn.com/solution-static/127/1.png">
+<meta property="og:image" content="https://assets.leetcode-cn.com/solution-static/127/2.png">
+<meta property="article:published_time" content="2023-09-12T16:47:26.000Z">
+<meta property="article:modified_time" content="2023-09-13T02:42:42.000Z">
+<meta property="article:author" content="Raphael Liu">
+<meta property="article:tag" content="algorithm">
+<meta property="article:tag" content="HARD">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://assets.leetcode-cn.com/solution-static/127/1.png">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/redefine-favicon.svg" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/redefine-favicon.svg">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/redefine-favicon.svg">
+    <!--- Page Info-->
+    
+    <title>
+        
+            0127-单词接龙 -
+        
+        Raphael&#39;s Blog
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/css/build/styles.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/fonts.css">
+
+    
+<link rel="stylesheet" href="/fonts/Satoshi/satoshi.css">
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+
+    <!--- Inject Part-->
+    
+    <script id="hexo-configurations">
+    let Global = window.Global || {};
+    Global.hexo_config = {"hostname":"example.com","root":"/","language":"zh_CN"};
+    Global.theme_config = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":true,"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"open_graph":true,"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-wqery6-light.webp","dark":"/images/wallhaven-wqery6-dark.webp"},"title":"Raphael's Blog","subtitle":{"text":["格物致知","坚持做正确的事情"],"hitokoto":{"enable":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":false,"links":{"github":"https://github.com/raphael-liu","email":"raphael@buaa.edu.cn# your email"},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.4.4","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"links":{"首页":{"path":"/","icon":"fa-regular fa-house"},"文章":{"path":"/archives","icon":"fa-regular fa-archive"},"关于":{"icon":"fa-regular fa-user","submenus":{"我":"/about/me","Github":"https://github.com/raphael-liu"}}},"search":{"enable":true,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"links":null},"article_date_format":"auto","categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}},"footerStart":"2022/8/17 11:45:14"};
+    Global.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    Global.data_config = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="swup-progress-icon">
+            <i class="fa-solid fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container" id="swup">
+
+    
+
+    <div class="main-content-container">
+
+
+        <div class="main-content-header">
+            <header class="navbar-container">
+    
+    <div class="navbar-content">
+        <div class="left">
+            
+            <a class="logo-title" href="http://example.com/">
+                
+                Raphael&#39;s Blog
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/"  >
+                                    
+                                        
+                                            <i class="fa-regular fa-house"></i>
+                                        
+                                        首页
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/archives"  >
+                                    
+                                        
+                                            <i class="fa-regular fa-archive"></i>
+                                        
+                                        文章
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="has-dropdown" 
+                                    href="#" onClick="return false;">
+                                    
+                                        
+                                            <i class="fa-regular fa-user"></i>
+                                        
+                                        关于&nbsp;<i class="fa-solid fa-chevron-down"></i>
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                                    <ul class="sub-menu">
+                                    
+                                        <li>
+                                        <a href="/about/me">我
+                                        </a>
+                                        </li>
+                                    
+                                        <li>
+                                        <a target="_blank" rel="noopener" href="https://github.com/raphael-liu">GITHUB
+                                        </a>
+                                        </li>
+                                    
+                                    </ul>
+                                
+                            </li>
+                    
+                    
+                        <li class="navbar-item search search-popup-trigger">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fa-solid fa-magnifying-glass"></i></div>
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile drawer -->
+    <div class="navbar-drawer w-full absolute top-0 left-0 bg-background-color">
+        <ul class="drawer-navbar-list flex flex-col justify-start items-center">
+            
+                
+                    <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group " 
+                        href="/"  >
+                             
+                                
+                                    <i class="fa-regular fa-house"></i>
+                                
+                                首页
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+                
+                    <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group " 
+                        href="/archives"  >
+                             
+                                
+                                    <i class="fa-regular fa-archive"></i>
+                                
+                                文章
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+                
+                    <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group has-dropdown" 
+                        href="#" onClick="return false;">
+                            
+                                
+                                    <i class="fa-regular fa-user"></i>
+                                
+                                关于&nbsp;<i class="group-hover:rotate-180 transition-transform fa-solid fa-chevron-down"></i>
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                              
+                        
+                            <li class="text-base flex justify-center items-center hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                <a class="py-0.5" href="/about/me">我</a>
+                            </li>
+                        
+                            <li class="text-base flex justify-center items-center hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                <a class="py-0.5" target="_blank" rel="noopener" href="https://github.com/raphael-liu">GITHUB</a>
+                            </li>
+                        
+                    
+            
+
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="post-page-container">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            
+                <h1 class="article-title-regular">0127-单词接龙</h1>
+            
+            </div>
+            
+                    
+        
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">Raphael Liu</span>
+                        
+                            <span class="author-label">Lv10</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2023-09-13 00:47:26</span>
+        <span class="mobile">2023-09-13 00:47:26</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2023-09-13 10:42:42</span>
+            <span class="mobile">2023-09-13 10:42:42</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/algorithm/">algorithm</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/HARD/">HARD</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        
+
+
+        <div class="article-content markdown-body">
+            <p>字典 <code>wordList</code> 中从单词 <code>beginWord</code> _ _ 和 <code>endWord</code> 的 <strong>转换序列</strong> 是一个按下述规格形成的序列<br><code>beginWord -&gt; s1 -&gt; s2 -&gt; ... -&gt; sk</code>：</p>
+<ul>
+<li>每一对相邻的单词只差一个字母。</li>
+<li>对于 <code>1 &lt;= i &lt;= k</code> 时，每个 <code>si</code> 都在 <code>wordList</code> 中。注意， <code>beginWord</code> _ _ 不需要在 <code>wordList</code> 中。</li>
+<li><code>sk == endWord</code></li>
+</ul>
+<p>给你两个单词 __<code>beginWord</code> _ _ 和 <code>endWord</code> 和一个字典 <code>wordList</code> ，返回 <em>从  <code>beginWord</code> 到<br><code>endWord</code> 的 <strong>最短转换序列</strong> 中的 <strong>单词数目</strong></em> 。如果不存在这样的转换序列，返回 <code>0</code> 。</p>
+<p><strong>示例 1：</strong></p>
+<pre><code>**输入：** beginWord = &quot;hit&quot;, endWord = &quot;cog&quot;, wordList = [&quot;hot&quot;,&quot;dot&quot;,&quot;dog&quot;,&quot;lot&quot;,&quot;log&quot;,&quot;cog&quot;]
+**输出：** 5
+**解释：** 一个最短转换序列是 &quot;hit&quot; -&gt; &quot;hot&quot; -&gt; &quot;dot&quot; -&gt; &quot;dog&quot; -&gt; &quot;cog&quot;, 返回它的长度 5。
+</code></pre>
+<p><strong>示例 2：</strong></p>
+<pre><code>**输入：** beginWord = &quot;hit&quot;, endWord = &quot;cog&quot;, wordList = [&quot;hot&quot;,&quot;dot&quot;,&quot;dog&quot;,&quot;lot&quot;,&quot;log&quot;]
+**输出：** 0
+**解释：** endWord &quot;cog&quot; 不在字典中，所以无法进行转换。
+</code></pre>
+<p><strong>提示：</strong></p>
+<ul>
+<li><code>1 &lt;= beginWord.length &lt;= 10</code></li>
+<li><code>endWord.length == beginWord.length</code></li>
+<li><code>1 &lt;= wordList.length &lt;= 5000</code></li>
+<li><code>wordList[i].length == beginWord.length</code></li>
+<li><code>beginWord</code>、<code>endWord</code> 和 <code>wordList[i]</code> 由小写英文字母组成</li>
+<li><code>beginWord != endWord</code></li>
+<li><code>wordList</code> 中的所有字符串 <strong>互不相同</strong></li>
+</ul>
+<h4 id="方法一：广度优先搜索-优化建图"><a href="#方法一：广度优先搜索-优化建图" class="headerlink" title="方法一：广度优先搜索 + 优化建图"></a>方法一：广度优先搜索 + 优化建图</h4><p><strong>思路</strong></p>
+<p>本题要求的是<strong>最短转换序列</strong>的长度，看到最短首先想到的就是<strong>广度优先搜索</strong>。想到<strong>广度优先搜索</strong>自然而然的就能想到图，但是本题并没有直截了当的给出图的模型，因此我们需要把它抽象成图的模型。</p>
+<p>我们可以把每个单词都抽象为一个点，如果两个单词可以只改变一个字母进行转换，那么说明他们之间有一条双向边。因此我们只需要把满足转换条件的点相连，就形成了一张<strong>图</strong>。</p>
+<p>基于该图，我们以 <code>beginWord</code> 为图的起点，以 <code>endWord</code> 为终点进行<strong>广度优先搜索</strong>，寻找 <code>beginWord</code> 到 <code>endWord</code> 的最短路径。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://assets.leetcode-cn.com/solution-static/127/1.png"
+                      alt="fig1"
+                >{:width&#x3D;”60%”}</p>
+<p><strong>算法</strong></p>
+<p>基于上面的思路我们考虑如何编程实现。</p>
+<p>首先为了方便表示，我们先给每一个单词标号，即给每个单词分配一个 <code>id</code>。创建一个由单词 <code>word</code> 到 <code>id</code> 对应的映射 <code>wordId</code>，并将 <code>beginWord</code> 与 <code>wordList</code> 中所有的单词都加入这个映射中。之后我们检查 <code>endWord</code> 是否在该映射内，若不存在，则输入无解。我们可以使用<strong>哈希表</strong>实现上面的映射关系。</p>
+<p>然后我们需要建图，依据朴素的思路，我们可以枚举每一对单词的组合，判断它们是否恰好相差一个字符，以判断这两个单词对应的节点是否能够相连。但是这样效率太低，我们可以优化建图。</p>
+<p>具体地，我们可以创建虚拟节点。对于单词 <code>hit</code>，我们创建三个虚拟节点 <code>*it</code>、<code>h*t</code>、<code>hi*</code>，并让 <code>hit</code> 向这三个虚拟节点分别连一条边即可。如果一个单词能够转化为 <code>hit</code>，那么该单词必然会连接到这三个虚拟节点之一。对于每一个单词，我们枚举它连接到的虚拟节点，把该单词对应的 <code>id</code> 与这些虚拟节点对应的 <code>id</code> 相连即可。</p>
+<p>最后我们将起点加入队列开始广度优先搜索，当搜索到终点时，我们就找到了最短路径的长度。注意因为添加了虚拟节点，所以我们得到的距离为实际最短路径长度的两倍。同时我们并未计算起点对答案的贡献，所以我们应当返回距离的一半再加一的结果。</p>
+<p><strong>代码</strong></p>
+<div class="highlight-container" data-rel="C++"><figure class="iseeu highlight c++"><figcaption><span>[sol1-C++]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    unordered_map&lt;string, <span class="type">int</span>&gt; wordId;</span><br><span class="line">    vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; edge;</span><br><span class="line">    <span class="type">int</span> nodeNum = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">addWord</span><span class="params">(string&amp; word)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (!wordId.<span class="built_in">count</span>(word)) &#123;</span><br><span class="line">            wordId[word] = nodeNum++;</span><br><span class="line">            edge.<span class="built_in">emplace_back</span>();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">addEdge</span><span class="params">(string&amp; word)</span> </span>&#123;</span><br><span class="line">        <span class="built_in">addWord</span>(word);</span><br><span class="line">        <span class="type">int</span> id1 = wordId[word];</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">char</span>&amp; it : word) &#123;</span><br><span class="line">            <span class="type">char</span> tmp = it;</span><br><span class="line">            it = <span class="string">&#x27;*&#x27;</span>;</span><br><span class="line">            <span class="built_in">addWord</span>(word);</span><br><span class="line">            <span class="type">int</span> id2 = wordId[word];</span><br><span class="line">            edge[id1].<span class="built_in">push_back</span>(id2);</span><br><span class="line">            edge[id2].<span class="built_in">push_back</span>(id1);</span><br><span class="line">            it = tmp;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">ladderLength</span><span class="params">(string beginWord, string endWord, vector&lt;string&gt;&amp; wordList)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (string&amp; word : wordList) &#123;</span><br><span class="line">            <span class="built_in">addEdge</span>(word);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">addEdge</span>(beginWord);</span><br><span class="line">        <span class="keyword">if</span> (!wordId.<span class="built_in">count</span>(endWord)) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">dis</span><span class="params">(nodeNum, INT_MAX)</span></span>;</span><br><span class="line">        <span class="type">int</span> beginId = wordId[beginWord], endId = wordId[endWord];</span><br><span class="line">        dis[beginId] = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">        queue&lt;<span class="type">int</span>&gt; que;</span><br><span class="line">        que.<span class="built_in">push</span>(beginId);</span><br><span class="line">        <span class="keyword">while</span> (!que.<span class="built_in">empty</span>()) &#123;</span><br><span class="line">            <span class="type">int</span> x = que.<span class="built_in">front</span>();</span><br><span class="line">            que.<span class="built_in">pop</span>();</span><br><span class="line">            <span class="keyword">if</span> (x == endId) &#123;</span><br><span class="line">                <span class="keyword">return</span> dis[endId] / <span class="number">2</span> + <span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span>&amp; it : edge[x]) &#123;</span><br><span class="line">                <span class="keyword">if</span> (dis[it] == INT_MAX) &#123;</span><br><span class="line">                    dis[it] = dis[x] + <span class="number">1</span>;</span><br><span class="line">                    que.<span class="built_in">push</span>(it);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><figcaption><span>[sol1-Java]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    Map&lt;String, Integer&gt; wordId = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;String, Integer&gt;();</span><br><span class="line">    List&lt;List&lt;Integer&gt;&gt; edge = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;List&lt;Integer&gt;&gt;();</span><br><span class="line">    <span class="type">int</span> <span class="variable">nodeNum</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">ladderLength</span><span class="params">(String beginWord, String endWord, List&lt;String&gt; wordList)</span> &#123;</span><br><span class="line">        <span class="keyword">for</span> (String word : wordList) &#123;</span><br><span class="line">            addEdge(word);</span><br><span class="line">        &#125;</span><br><span class="line">        addEdge(beginWord);</span><br><span class="line">        <span class="keyword">if</span> (!wordId.containsKey(endWord)) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">int</span>[] dis = <span class="keyword">new</span> <span class="title class_">int</span>[nodeNum];</span><br><span class="line">        Arrays.fill(dis, Integer.MAX_VALUE);</span><br><span class="line">        <span class="type">int</span> <span class="variable">beginId</span> <span class="operator">=</span> wordId.get(beginWord), endId = wordId.get(endWord);</span><br><span class="line">        dis[beginId] = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">        Queue&lt;Integer&gt; que = <span class="keyword">new</span> <span class="title class_">LinkedList</span>&lt;Integer&gt;();</span><br><span class="line">        que.offer(beginId);</span><br><span class="line">        <span class="keyword">while</span> (!que.isEmpty()) &#123;</span><br><span class="line">            <span class="type">int</span> <span class="variable">x</span> <span class="operator">=</span> que.poll();</span><br><span class="line">            <span class="keyword">if</span> (x == endId) &#123;</span><br><span class="line">                <span class="keyword">return</span> dis[endId] / <span class="number">2</span> + <span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> it : edge.get(x)) &#123;</span><br><span class="line">                <span class="keyword">if</span> (dis[it] == Integer.MAX_VALUE) &#123;</span><br><span class="line">                    dis[it] = dis[x] + <span class="number">1</span>;</span><br><span class="line">                    que.offer(it);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">addEdge</span><span class="params">(String word)</span> &#123;</span><br><span class="line">        addWord(word);</span><br><span class="line">        <span class="type">int</span> <span class="variable">id1</span> <span class="operator">=</span> wordId.get(word);</span><br><span class="line">        <span class="type">char</span>[] array = word.toCharArray();</span><br><span class="line">        <span class="type">int</span> <span class="variable">length</span> <span class="operator">=</span> array.length;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; length; ++i) &#123;</span><br><span class="line">            <span class="type">char</span> <span class="variable">tmp</span> <span class="operator">=</span> array[i];</span><br><span class="line">            array[i] = <span class="string">&#x27;*&#x27;</span>;</span><br><span class="line">            <span class="type">String</span> <span class="variable">newWord</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">String</span>(array);</span><br><span class="line">            addWord(newWord);</span><br><span class="line">            <span class="type">int</span> <span class="variable">id2</span> <span class="operator">=</span> wordId.get(newWord);</span><br><span class="line">            edge.get(id1).add(id2);</span><br><span class="line">            edge.get(id2).add(id1);</span><br><span class="line">            array[i] = tmp;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">addWord</span><span class="params">(String word)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (!wordId.containsKey(word)) &#123;</span><br><span class="line">            wordId.put(word, nodeNum++);</span><br><span class="line">            edge.add(<span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;Integer&gt;());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><figcaption><span>[sol1-Python3]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">ladderLength</span>(<span class="params">self, beginWord: <span class="built_in">str</span>, endWord: <span class="built_in">str</span>, wordList: <span class="type">List</span>[<span class="built_in">str</span>]</span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">addWord</span>(<span class="params">word: <span class="built_in">str</span></span>):</span><br><span class="line">            <span class="keyword">if</span> word <span class="keyword">not</span> <span class="keyword">in</span> wordId:</span><br><span class="line">                <span class="keyword">nonlocal</span> nodeNum</span><br><span class="line">                wordId[word] = nodeNum</span><br><span class="line">                nodeNum += <span class="number">1</span></span><br><span class="line">        </span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">addEdge</span>(<span class="params">word: <span class="built_in">str</span></span>):</span><br><span class="line">            addWord(word)</span><br><span class="line">            id1 = wordId[word]</span><br><span class="line">            chars = <span class="built_in">list</span>(word)</span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(chars)):</span><br><span class="line">                tmp = chars[i]</span><br><span class="line">                chars[i] = <span class="string">&quot;*&quot;</span></span><br><span class="line">                newWord = <span class="string">&quot;&quot;</span>.join(chars)</span><br><span class="line">                addWord(newWord)</span><br><span class="line">                id2 = wordId[newWord]</span><br><span class="line">                edge[id1].append(id2)</span><br><span class="line">                edge[id2].append(id1)</span><br><span class="line">                chars[i] = tmp</span><br><span class="line"></span><br><span class="line">        wordId = <span class="built_in">dict</span>()</span><br><span class="line">        edge = collections.defaultdict(<span class="built_in">list</span>)</span><br><span class="line">        nodeNum = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> word <span class="keyword">in</span> wordList:</span><br><span class="line">            addEdge(word)</span><br><span class="line">        </span><br><span class="line">        addEdge(beginWord)</span><br><span class="line">        <span class="keyword">if</span> endWord <span class="keyword">not</span> <span class="keyword">in</span> wordId:</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">        </span><br><span class="line">        dis = [<span class="built_in">float</span>(<span class="string">&quot;inf&quot;</span>)] * nodeNum</span><br><span class="line">        beginId, endId = wordId[beginWord], wordId[endWord]</span><br><span class="line">        dis[beginId] = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">        que = collections.deque([beginId])</span><br><span class="line">        <span class="keyword">while</span> que:</span><br><span class="line">            x = que.popleft()</span><br><span class="line">            <span class="keyword">if</span> x == endId:</span><br><span class="line">                <span class="keyword">return</span> dis[endId] // <span class="number">2</span> + <span class="number">1</span></span><br><span class="line">            <span class="keyword">for</span> it <span class="keyword">in</span> edge[x]:</span><br><span class="line">                <span class="keyword">if</span> dis[it] == <span class="built_in">float</span>(<span class="string">&quot;inf&quot;</span>):</span><br><span class="line">                    dis[it] = dis[x] + <span class="number">1</span></span><br><span class="line">                    que.append(it)</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span></span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Golang"><figure class="iseeu highlight golang"><figcaption><span>[sol1-Golang]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">ladderLength</span><span class="params">(beginWord <span class="type">string</span>, endWord <span class="type">string</span>, wordList []<span class="type">string</span>)</span></span> <span class="type">int</span> &#123;</span><br><span class="line">    wordId := <span class="keyword">map</span>[<span class="type">string</span>]<span class="type">int</span>&#123;&#125;</span><br><span class="line">    graph := [][]<span class="type">int</span>&#123;&#125;</span><br><span class="line">    addWord := <span class="function"><span class="keyword">func</span><span class="params">(word <span class="type">string</span>)</span></span> <span class="type">int</span> &#123;</span><br><span class="line">        id, has := wordId[word]</span><br><span class="line">        <span class="keyword">if</span> !has &#123;</span><br><span class="line">            id = <span class="built_in">len</span>(wordId)</span><br><span class="line">            wordId[word] = id</span><br><span class="line">            graph = <span class="built_in">append</span>(graph, []<span class="type">int</span>&#123;&#125;)</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> id</span><br><span class="line">    &#125;</span><br><span class="line">    addEdge := <span class="function"><span class="keyword">func</span><span class="params">(word <span class="type">string</span>)</span></span> <span class="type">int</span> &#123;</span><br><span class="line">        id1 := addWord(word)</span><br><span class="line">        s := []<span class="type">byte</span>(word)</span><br><span class="line">        <span class="keyword">for</span> i, b := <span class="keyword">range</span> s &#123;</span><br><span class="line">            s[i] = <span class="string">&#x27;*&#x27;</span></span><br><span class="line">            id2 := addWord(<span class="type">string</span>(s))</span><br><span class="line">            graph[id1] = <span class="built_in">append</span>(graph[id1], id2)</span><br><span class="line">            graph[id2] = <span class="built_in">append</span>(graph[id2], id1)</span><br><span class="line">            s[i] = b</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> id1</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> _, word := <span class="keyword">range</span> wordList &#123;</span><br><span class="line">        addEdge(word)</span><br><span class="line">    &#125;</span><br><span class="line">    beginId := addEdge(beginWord)</span><br><span class="line">    endId, has := wordId[endWord]</span><br><span class="line">    <span class="keyword">if</span> !has &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> inf <span class="type">int</span> = math.MaxInt64</span><br><span class="line">    dist := <span class="built_in">make</span>([]<span class="type">int</span>, <span class="built_in">len</span>(wordId))</span><br><span class="line">    <span class="keyword">for</span> i := <span class="keyword">range</span> dist &#123;</span><br><span class="line">        dist[i] = inf</span><br><span class="line">    &#125;</span><br><span class="line">    dist[beginId] = <span class="number">0</span></span><br><span class="line">    queue := []<span class="type">int</span>&#123;beginId&#125;</span><br><span class="line">    <span class="keyword">for</span> <span class="built_in">len</span>(queue) &gt; <span class="number">0</span> &#123;</span><br><span class="line">        v := queue[<span class="number">0</span>]</span><br><span class="line">        queue = queue[<span class="number">1</span>:]</span><br><span class="line">        <span class="keyword">if</span> v == endId &#123;</span><br><span class="line">            <span class="keyword">return</span> dist[endId]/<span class="number">2</span> + <span class="number">1</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> _, w := <span class="keyword">range</span> graph[v] &#123;</span><br><span class="line">            <span class="keyword">if</span> dist[w] == inf &#123;</span><br><span class="line">                dist[w] = dist[v] + <span class="number">1</span></span><br><span class="line">                queue = <span class="built_in">append</span>(queue, w)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="C"><figure class="iseeu highlight c"><figcaption><span>[sol1-C]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Trie</span> &#123;</span></span><br><span class="line">    <span class="type">int</span> ch[<span class="number">27</span>];</span><br><span class="line">    <span class="type">int</span> val;</span><br><span class="line">&#125; trie[<span class="number">50001</span>];</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> size, nodeNum;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">insert</span><span class="params">(<span class="type">char</span>* s, <span class="type">int</span> num)</span> &#123;</span><br><span class="line">    <span class="type">int</span> sSize = <span class="built_in">strlen</span>(s), add = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; sSize; ++i) &#123;</span><br><span class="line">        <span class="type">int</span> x = s[i] - <span class="string">&#x27;`&#x27;</span>;</span><br><span class="line">        <span class="keyword">if</span> (trie[add].ch[x] == <span class="number">0</span>) &#123;</span><br><span class="line">            trie[add].ch[x] = ++size;</span><br><span class="line">            <span class="built_in">memset</span>(trie[size].ch, <span class="number">0</span>, <span class="keyword">sizeof</span>(trie[size].ch));</span><br><span class="line">            trie[size].val = <span class="number">-1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        add = trie[add].ch[x];</span><br><span class="line">    &#125;</span><br><span class="line">    trie[add].val = num;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">find</span><span class="params">(<span class="type">char</span>* s)</span> &#123;</span><br><span class="line">    <span class="type">int</span> sSize = <span class="built_in">strlen</span>(s), add = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; sSize; ++i) &#123;</span><br><span class="line">        <span class="type">int</span> x = s[i] - <span class="string">&#x27;`&#x27;</span>;</span><br><span class="line">        <span class="keyword">if</span> (trie[add].ch[x] == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        add = trie[add].ch[x];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> trie[add].val;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">addWord</span><span class="params">(<span class="type">char</span>* word)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (find(word) == <span class="number">-1</span>) &#123;</span><br><span class="line">        insert(word, nodeNum++);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> find(word);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> edge[<span class="number">30001</span>][<span class="number">26</span>];</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> edgeSize[<span class="number">30001</span>];</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">addEdge</span><span class="params">(<span class="type">char</span>* word)</span> &#123;</span><br><span class="line">    <span class="type">int</span> wordSize = <span class="built_in">strlen</span>(word), id1 = addWord(word);</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; wordSize; ++i) &#123;</span><br><span class="line">        <span class="type">char</span> tmp = word[i];</span><br><span class="line">        word[i] = <span class="string">&#x27;`&#x27;</span>;</span><br><span class="line">        <span class="type">int</span> id2 = addWord(word);</span><br><span class="line">        edge[id1][edgeSize[id1]++] = id2;</span><br><span class="line">        edge[id2][edgeSize[id2]++] = id1;</span><br><span class="line">        word[i] = tmp;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">ladderLength</span><span class="params">(<span class="type">char</span>* beginWord, <span class="type">char</span>* endWord, <span class="type">char</span>** wordList, <span class="type">int</span> wordListSize)</span> &#123;</span><br><span class="line">    size = nodeNum = <span class="number">0</span>;</span><br><span class="line">    <span class="built_in">memset</span>(trie[size].ch, <span class="number">0</span>, <span class="keyword">sizeof</span>(trie[size].ch));</span><br><span class="line">    trie[size].val = <span class="number">-1</span>;</span><br><span class="line">    <span class="built_in">memset</span>(edgeSize, <span class="number">0</span>, <span class="keyword">sizeof</span>(edgeSize));</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; wordListSize; ++i) &#123;</span><br><span class="line">        addEdge(wordList[i]);</span><br><span class="line">    &#125;</span><br><span class="line">    addEdge(beginWord);</span><br><span class="line">    <span class="type">int</span> beginId = find(beginWord), endId = find(endWord);</span><br><span class="line">    <span class="keyword">if</span> (endId == <span class="number">-1</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="type">int</span> dis[nodeNum];</span><br><span class="line">    <span class="built_in">memset</span>(dis, <span class="number">-1</span>, <span class="keyword">sizeof</span>(dis));</span><br><span class="line">    dis[beginId] = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="type">int</span> que[nodeNum];</span><br><span class="line">    <span class="type">int</span> left = <span class="number">0</span>, right = <span class="number">0</span>;</span><br><span class="line">    que[right++] = beginId;</span><br><span class="line">    <span class="keyword">while</span> (left &lt; right) &#123;</span><br><span class="line">        <span class="type">int</span> x = que[left++];</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; edgeSize[x]; ++i) &#123;</span><br><span class="line">            <span class="keyword">if</span> (dis[edge[x][i]] == <span class="number">-1</span>) &#123;</span><br><span class="line">                dis[edge[x][i]] = dis[x] + <span class="number">1</span>;</span><br><span class="line">                <span class="keyword">if</span> (edge[x][i] == endId) &#123;</span><br><span class="line">                    <span class="keyword">return</span> dis[edge[x][i]] / <span class="number">2</span> + <span class="number">1</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                que[right++] = edge[x][i];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>复杂度分析</strong></p>
+<ul>
+<li><p>时间复杂度：$O(N \times C^2)$。其中 $N$ 为 <code>wordList</code> 的长度，$C$ 为列表中单词的长度。</p>
+<ul>
+<li><p>建图过程中，对于每一个单词，我们需要枚举它连接到的所有虚拟节点，时间复杂度为 $O(C)$，将这些单词加入到哈希表中，时间复杂度为 $O(N \times C)$，因此总时间复杂度为 $O(N \times C)$。</p>
+</li>
+<li><p>广度优先搜索的时间复杂度最坏情况下是 $O(N \times C)$。每一个单词需要拓展出 $O(C)$ 个虚拟节点，因此节点数 $O(N \times C)$。</p>
+</li>
+</ul>
+</li>
+<li><p>空间复杂度：$O(N \times C^2)$。其中 $N$ 为 <code>wordList</code> 的长度，$C$ 为列表中单词的长度。哈希表中包含 $O(N \times C)$ 个节点，每个节点占用空间 $O(C)$，因此总的空间复杂度为 $O(N \times C^2)$。</p>
+</li>
+</ul>
+<h4 id="方法二：双向广度优先搜索"><a href="#方法二：双向广度优先搜索" class="headerlink" title="方法二：双向广度优先搜索"></a>方法二：双向广度优先搜索</h4><p><strong>思路及解法</strong></p>
+<p>根据给定字典构造的图可能会很大，而广度优先搜索的搜索空间大小依赖于每层节点的分支数量。假如每个节点的分支数量相同，搜索空间会随着层数的增长指数级的增加。考虑一个简单的二叉树，每一层都是满二叉树的扩展，节点的数量会以 $2$ 为底数呈指数增长。</p>
+<p>如果使用两个同时进行的广搜可以有效地减少搜索空间。一边从 <code>beginWord</code> 开始，另一边从 <code>endWord</code> 开始。我们每次从两边各扩展一层节点，当发现某一时刻两边都访问过同一顶点时就停止搜索。这就是双向广度优先搜索，它可以可观地减少搜索空间大小，从而提高代码运行效率。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://assets.leetcode-cn.com/solution-static/127/2.png"
+                      alt="fig2"
+                >{:width&#x3D;”70%”}</p>
+<p><strong>代码</strong></p>
+<div class="highlight-container" data-rel="C++"><figure class="iseeu highlight c++"><figcaption><span>[sol2-C++]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    unordered_map&lt;string, <span class="type">int</span>&gt; wordId;</span><br><span class="line">    vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; edge;</span><br><span class="line">    <span class="type">int</span> nodeNum = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">addWord</span><span class="params">(string&amp; word)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (!wordId.<span class="built_in">count</span>(word)) &#123;</span><br><span class="line">            wordId[word] = nodeNum++;</span><br><span class="line">            edge.<span class="built_in">emplace_back</span>();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">addEdge</span><span class="params">(string&amp; word)</span> </span>&#123;</span><br><span class="line">        <span class="built_in">addWord</span>(word);</span><br><span class="line">        <span class="type">int</span> id1 = wordId[word];</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">char</span>&amp; it : word) &#123;</span><br><span class="line">            <span class="type">char</span> tmp = it;</span><br><span class="line">            it = <span class="string">&#x27;*&#x27;</span>;</span><br><span class="line">            <span class="built_in">addWord</span>(word);</span><br><span class="line">            <span class="type">int</span> id2 = wordId[word];</span><br><span class="line">            edge[id1].<span class="built_in">push_back</span>(id2);</span><br><span class="line">            edge[id2].<span class="built_in">push_back</span>(id1);</span><br><span class="line">            it = tmp;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">ladderLength</span><span class="params">(string beginWord, string endWord, vector&lt;string&gt;&amp; wordList)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (string&amp; word : wordList) &#123;</span><br><span class="line">            <span class="built_in">addEdge</span>(word);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">addEdge</span>(beginWord);</span><br><span class="line">        <span class="keyword">if</span> (!wordId.<span class="built_in">count</span>(endWord)) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">disBegin</span><span class="params">(nodeNum, INT_MAX)</span></span>;</span><br><span class="line">        <span class="type">int</span> beginId = wordId[beginWord];</span><br><span class="line">        disBegin[beginId] = <span class="number">0</span>;</span><br><span class="line">        queue&lt;<span class="type">int</span>&gt; queBegin;</span><br><span class="line">        queBegin.<span class="built_in">push</span>(beginId);</span><br><span class="line"></span><br><span class="line">        <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">disEnd</span><span class="params">(nodeNum, INT_MAX)</span></span>;</span><br><span class="line">        <span class="type">int</span> endId = wordId[endWord];</span><br><span class="line">        disEnd[endId] = <span class="number">0</span>;</span><br><span class="line">        queue&lt;<span class="type">int</span>&gt; queEnd;</span><br><span class="line">        queEnd.<span class="built_in">push</span>(endId);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> (!queBegin.<span class="built_in">empty</span>() &amp;&amp; !queEnd.<span class="built_in">empty</span>()) &#123;</span><br><span class="line">            <span class="type">int</span> queBeginSize = queBegin.<span class="built_in">size</span>();</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; queBeginSize; ++i) &#123;</span><br><span class="line">                <span class="type">int</span> nodeBegin = queBegin.<span class="built_in">front</span>();</span><br><span class="line">                queBegin.<span class="built_in">pop</span>();</span><br><span class="line">                <span class="keyword">if</span> (disEnd[nodeBegin] != INT_MAX) &#123;</span><br><span class="line">                    <span class="keyword">return</span> (disBegin[nodeBegin] + disEnd[nodeBegin]) / <span class="number">2</span> + <span class="number">1</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">for</span> (<span class="type">int</span>&amp; it : edge[nodeBegin]) &#123;</span><br><span class="line">                    <span class="keyword">if</span> (disBegin[it] == INT_MAX) &#123;</span><br><span class="line">                        disBegin[it] = disBegin[nodeBegin] + <span class="number">1</span>;</span><br><span class="line">                        queBegin.<span class="built_in">push</span>(it);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="type">int</span> queEndSize = queEnd.<span class="built_in">size</span>();</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; queEndSize; ++i) &#123;</span><br><span class="line">                <span class="type">int</span> nodeEnd = queEnd.<span class="built_in">front</span>();</span><br><span class="line">                queEnd.<span class="built_in">pop</span>();</span><br><span class="line">                <span class="keyword">if</span> (disBegin[nodeEnd] != INT_MAX) &#123;</span><br><span class="line">                    <span class="keyword">return</span> (disBegin[nodeEnd] + disEnd[nodeEnd]) / <span class="number">2</span> + <span class="number">1</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">for</span> (<span class="type">int</span>&amp; it : edge[nodeEnd]) &#123;</span><br><span class="line">                    <span class="keyword">if</span> (disEnd[it] == INT_MAX) &#123;</span><br><span class="line">                        disEnd[it] = disEnd[nodeEnd] + <span class="number">1</span>;</span><br><span class="line">                        queEnd.<span class="built_in">push</span>(it);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><figcaption><span>[sol2-Java]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    Map&lt;String, Integer&gt; wordId = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;String, Integer&gt;();</span><br><span class="line">    List&lt;List&lt;Integer&gt;&gt; edge = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;List&lt;Integer&gt;&gt;();</span><br><span class="line">    <span class="type">int</span> <span class="variable">nodeNum</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">ladderLength</span><span class="params">(String beginWord, String endWord, List&lt;String&gt; wordList)</span> &#123;</span><br><span class="line">        <span class="keyword">for</span> (String word : wordList) &#123;</span><br><span class="line">            addEdge(word);</span><br><span class="line">        &#125;</span><br><span class="line">        addEdge(beginWord);</span><br><span class="line">        <span class="keyword">if</span> (!wordId.containsKey(endWord)) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="type">int</span>[] disBegin = <span class="keyword">new</span> <span class="title class_">int</span>[nodeNum];</span><br><span class="line">        Arrays.fill(disBegin, Integer.MAX_VALUE);</span><br><span class="line">        <span class="type">int</span> <span class="variable">beginId</span> <span class="operator">=</span> wordId.get(beginWord);</span><br><span class="line">        disBegin[beginId] = <span class="number">0</span>;</span><br><span class="line">        Queue&lt;Integer&gt; queBegin = <span class="keyword">new</span> <span class="title class_">LinkedList</span>&lt;Integer&gt;();</span><br><span class="line">        queBegin.offer(beginId);</span><br><span class="line">        </span><br><span class="line">        <span class="type">int</span>[] disEnd = <span class="keyword">new</span> <span class="title class_">int</span>[nodeNum];</span><br><span class="line">        Arrays.fill(disEnd, Integer.MAX_VALUE);</span><br><span class="line">        <span class="type">int</span> <span class="variable">endId</span> <span class="operator">=</span> wordId.get(endWord);</span><br><span class="line">        disEnd[endId] = <span class="number">0</span>;</span><br><span class="line">        Queue&lt;Integer&gt; queEnd = <span class="keyword">new</span> <span class="title class_">LinkedList</span>&lt;Integer&gt;();</span><br><span class="line">        queEnd.offer(endId);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> (!queBegin.isEmpty() &amp;&amp; !queEnd.isEmpty()) &#123;</span><br><span class="line">            <span class="type">int</span> <span class="variable">queBeginSize</span> <span class="operator">=</span> queBegin.size();</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; queBeginSize; ++i) &#123;</span><br><span class="line">                <span class="type">int</span> <span class="variable">nodeBegin</span> <span class="operator">=</span> queBegin.poll();</span><br><span class="line">                <span class="keyword">if</span> (disEnd[nodeBegin] != Integer.MAX_VALUE) &#123;</span><br><span class="line">                    <span class="keyword">return</span> (disBegin[nodeBegin] + disEnd[nodeBegin]) / <span class="number">2</span> + <span class="number">1</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">for</span> (<span class="type">int</span> it : edge.get(nodeBegin)) &#123;</span><br><span class="line">                    <span class="keyword">if</span> (disBegin[it] == Integer.MAX_VALUE) &#123;</span><br><span class="line">                        disBegin[it] = disBegin[nodeBegin] + <span class="number">1</span>;</span><br><span class="line">                        queBegin.offer(it);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="type">int</span> <span class="variable">queEndSize</span> <span class="operator">=</span> queEnd.size();</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; queEndSize; ++i) &#123;</span><br><span class="line">                <span class="type">int</span> <span class="variable">nodeEnd</span> <span class="operator">=</span> queEnd.poll();</span><br><span class="line">                <span class="keyword">if</span> (disBegin[nodeEnd] != Integer.MAX_VALUE) &#123;</span><br><span class="line">                    <span class="keyword">return</span> (disBegin[nodeEnd] + disEnd[nodeEnd]) / <span class="number">2</span> + <span class="number">1</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">for</span> (<span class="type">int</span> it : edge.get(nodeEnd)) &#123;</span><br><span class="line">                    <span class="keyword">if</span> (disEnd[it] == Integer.MAX_VALUE) &#123;</span><br><span class="line">                        disEnd[it] = disEnd[nodeEnd] + <span class="number">1</span>;</span><br><span class="line">                        queEnd.offer(it);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">addEdge</span><span class="params">(String word)</span> &#123;</span><br><span class="line">        addWord(word);</span><br><span class="line">        <span class="type">int</span> <span class="variable">id1</span> <span class="operator">=</span> wordId.get(word);</span><br><span class="line">        <span class="type">char</span>[] array = word.toCharArray();</span><br><span class="line">        <span class="type">int</span> <span class="variable">length</span> <span class="operator">=</span> array.length;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; length; ++i) &#123;</span><br><span class="line">            <span class="type">char</span> <span class="variable">tmp</span> <span class="operator">=</span> array[i];</span><br><span class="line">            array[i] = <span class="string">&#x27;*&#x27;</span>;</span><br><span class="line">            <span class="type">String</span> <span class="variable">newWord</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">String</span>(array);</span><br><span class="line">            addWord(newWord);</span><br><span class="line">            <span class="type">int</span> <span class="variable">id2</span> <span class="operator">=</span> wordId.get(newWord);</span><br><span class="line">            edge.get(id1).add(id2);</span><br><span class="line">            edge.get(id2).add(id1);</span><br><span class="line">            array[i] = tmp;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">addWord</span><span class="params">(String word)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (!wordId.containsKey(word)) &#123;</span><br><span class="line">            wordId.put(word, nodeNum++);</span><br><span class="line">            edge.add(<span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;Integer&gt;());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><figcaption><span>[sol2-Python3]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">ladderLength</span>(<span class="params">self, beginWord: <span class="built_in">str</span>, endWord: <span class="built_in">str</span>, wordList: <span class="type">List</span>[<span class="built_in">str</span>]</span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">addWord</span>(<span class="params">word: <span class="built_in">str</span></span>):</span><br><span class="line">            <span class="keyword">if</span> word <span class="keyword">not</span> <span class="keyword">in</span> wordId:</span><br><span class="line">                <span class="keyword">nonlocal</span> nodeNum</span><br><span class="line">                wordId[word] = nodeNum</span><br><span class="line">                nodeNum += <span class="number">1</span></span><br><span class="line">        </span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">addEdge</span>(<span class="params">word: <span class="built_in">str</span></span>):</span><br><span class="line">            addWord(word)</span><br><span class="line">            id1 = wordId[word]</span><br><span class="line">            chars = <span class="built_in">list</span>(word)</span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(chars)):</span><br><span class="line">                tmp = chars[i]</span><br><span class="line">                chars[i] = <span class="string">&quot;*&quot;</span></span><br><span class="line">                newWord = <span class="string">&quot;&quot;</span>.join(chars)</span><br><span class="line">                addWord(newWord)</span><br><span class="line">                id2 = wordId[newWord]</span><br><span class="line">                edge[id1].append(id2)</span><br><span class="line">                edge[id2].append(id1)</span><br><span class="line">                chars[i] = tmp</span><br><span class="line"></span><br><span class="line">        wordId = <span class="built_in">dict</span>()</span><br><span class="line">        edge = collections.defaultdict(<span class="built_in">list</span>)</span><br><span class="line">        nodeNum = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> word <span class="keyword">in</span> wordList:</span><br><span class="line">            addEdge(word)</span><br><span class="line">        </span><br><span class="line">        addEdge(beginWord)</span><br><span class="line">        <span class="keyword">if</span> endWord <span class="keyword">not</span> <span class="keyword">in</span> wordId:</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">        </span><br><span class="line">        disBegin = [<span class="built_in">float</span>(<span class="string">&quot;inf&quot;</span>)] * nodeNum</span><br><span class="line">        beginId = wordId[beginWord]</span><br><span class="line">        disBegin[beginId] = <span class="number">0</span></span><br><span class="line">        queBegin = collections.deque([beginId])</span><br><span class="line"></span><br><span class="line">        disEnd = [<span class="built_in">float</span>(<span class="string">&quot;inf&quot;</span>)] * nodeNum</span><br><span class="line">        endId = wordId[endWord]</span><br><span class="line">        disEnd[endId] = <span class="number">0</span></span><br><span class="line">        queEnd = collections.deque([endId])</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> queBegin <span class="keyword">or</span> queEnd:</span><br><span class="line">            queBeginSize = <span class="built_in">len</span>(queBegin)</span><br><span class="line">            <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(queBeginSize):</span><br><span class="line">                nodeBegin = queBegin.popleft()</span><br><span class="line">                <span class="keyword">if</span> disEnd[nodeBegin] != <span class="built_in">float</span>(<span class="string">&quot;inf&quot;</span>):</span><br><span class="line">                    <span class="keyword">return</span> (disBegin[nodeBegin] + disEnd[nodeBegin]) // <span class="number">2</span> + <span class="number">1</span></span><br><span class="line">                <span class="keyword">for</span> it <span class="keyword">in</span> edge[nodeBegin]:</span><br><span class="line">                    <span class="keyword">if</span> disBegin[it] == <span class="built_in">float</span>(<span class="string">&quot;inf&quot;</span>):</span><br><span class="line">                        disBegin[it] = disBegin[nodeBegin] + <span class="number">1</span></span><br><span class="line">                        queBegin.append(it)</span><br><span class="line"></span><br><span class="line">            queEndSize = <span class="built_in">len</span>(queEnd)</span><br><span class="line">            <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(queEndSize):</span><br><span class="line">                nodeEnd = queEnd.popleft()</span><br><span class="line">                <span class="keyword">if</span> disBegin[nodeEnd] != <span class="built_in">float</span>(<span class="string">&quot;inf&quot;</span>):</span><br><span class="line">                    <span class="keyword">return</span> (disBegin[nodeEnd] + disEnd[nodeEnd]) // <span class="number">2</span> + <span class="number">1</span></span><br><span class="line">                <span class="keyword">for</span> it <span class="keyword">in</span> edge[nodeEnd]:</span><br><span class="line">                    <span class="keyword">if</span> disEnd[it] == <span class="built_in">float</span>(<span class="string">&quot;inf&quot;</span>):</span><br><span class="line">                        disEnd[it] = disEnd[nodeEnd] + <span class="number">1</span></span><br><span class="line">                        queEnd.append(it)</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span></span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Golang"><figure class="iseeu highlight golang"><figcaption><span>[sol2-Golang]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">ladderLength</span><span class="params">(beginWord <span class="type">string</span>, endWord <span class="type">string</span>, wordList []<span class="type">string</span>)</span></span> <span class="type">int</span> &#123;</span><br><span class="line">    wordId := <span class="keyword">map</span>[<span class="type">string</span>]<span class="type">int</span>&#123;&#125;</span><br><span class="line">    graph := [][]<span class="type">int</span>&#123;&#125;</span><br><span class="line">    addWord := <span class="function"><span class="keyword">func</span><span class="params">(word <span class="type">string</span>)</span></span> <span class="type">int</span> &#123;</span><br><span class="line">        id, has := wordId[word]</span><br><span class="line">        <span class="keyword">if</span> !has &#123;</span><br><span class="line">            id = <span class="built_in">len</span>(wordId)</span><br><span class="line">            wordId[word] = id</span><br><span class="line">            graph = <span class="built_in">append</span>(graph, []<span class="type">int</span>&#123;&#125;)</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> id</span><br><span class="line">    &#125;</span><br><span class="line">    addEdge := <span class="function"><span class="keyword">func</span><span class="params">(word <span class="type">string</span>)</span></span> <span class="type">int</span> &#123;</span><br><span class="line">        id1 := addWord(word)</span><br><span class="line">        s := []<span class="type">byte</span>(word)</span><br><span class="line">        <span class="keyword">for</span> i, b := <span class="keyword">range</span> s &#123;</span><br><span class="line">            s[i] = <span class="string">&#x27;*&#x27;</span></span><br><span class="line">            id2 := addWord(<span class="type">string</span>(s))</span><br><span class="line">            graph[id1] = <span class="built_in">append</span>(graph[id1], id2)</span><br><span class="line">            graph[id2] = <span class="built_in">append</span>(graph[id2], id1)</span><br><span class="line">            s[i] = b</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> id1</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> _, word := <span class="keyword">range</span> wordList &#123;</span><br><span class="line">        addEdge(word)</span><br><span class="line">    &#125;</span><br><span class="line">    beginId := addEdge(beginWord)</span><br><span class="line">    endId, has := wordId[endWord]</span><br><span class="line">    <span class="keyword">if</span> !has &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> inf <span class="type">int</span> = math.MaxInt64</span><br><span class="line">    distBegin := <span class="built_in">make</span>([]<span class="type">int</span>, <span class="built_in">len</span>(wordId))</span><br><span class="line">    <span class="keyword">for</span> i := <span class="keyword">range</span> distBegin &#123;</span><br><span class="line">        distBegin[i] = inf</span><br><span class="line">    &#125;</span><br><span class="line">    distBegin[beginId] = <span class="number">0</span></span><br><span class="line">    queueBegin := []<span class="type">int</span>&#123;beginId&#125;</span><br><span class="line"></span><br><span class="line">    distEnd := <span class="built_in">make</span>([]<span class="type">int</span>, <span class="built_in">len</span>(wordId))</span><br><span class="line">    <span class="keyword">for</span> i := <span class="keyword">range</span> distEnd &#123;</span><br><span class="line">        distEnd[i] = inf</span><br><span class="line">    &#125;</span><br><span class="line">    distEnd[endId] = <span class="number">0</span></span><br><span class="line">    queueEnd := []<span class="type">int</span>&#123;endId&#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> <span class="built_in">len</span>(queueBegin) &gt; <span class="number">0</span> &amp;&amp; <span class="built_in">len</span>(queueEnd) &gt; <span class="number">0</span> &#123;</span><br><span class="line">        q := queueBegin</span><br><span class="line">        queueBegin = <span class="literal">nil</span></span><br><span class="line">        <span class="keyword">for</span> _, v := <span class="keyword">range</span> q &#123;</span><br><span class="line">            <span class="keyword">if</span> distEnd[v] &lt; inf &#123;</span><br><span class="line">                <span class="keyword">return</span> (distBegin[v]+distEnd[v])/<span class="number">2</span> + <span class="number">1</span></span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">for</span> _, w := <span class="keyword">range</span> graph[v] &#123;</span><br><span class="line">                <span class="keyword">if</span> distBegin[w] == inf &#123;</span><br><span class="line">                    distBegin[w] = distBegin[v] + <span class="number">1</span></span><br><span class="line">                    queueBegin = <span class="built_in">append</span>(queueBegin, w)</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        q = queueEnd</span><br><span class="line">        queueEnd = <span class="literal">nil</span></span><br><span class="line">        <span class="keyword">for</span> _, v := <span class="keyword">range</span> q &#123;</span><br><span class="line">            <span class="keyword">if</span> distBegin[v] &lt; inf &#123;</span><br><span class="line">                <span class="keyword">return</span> (distBegin[v]+distEnd[v])/<span class="number">2</span> + <span class="number">1</span></span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">for</span> _, w := <span class="keyword">range</span> graph[v] &#123;</span><br><span class="line">                <span class="keyword">if</span> distEnd[w] == inf &#123;</span><br><span class="line">                    distEnd[w] = distEnd[v] + <span class="number">1</span></span><br><span class="line">                    queueEnd = <span class="built_in">append</span>(queueEnd, w)</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="C"><figure class="iseeu highlight c"><figcaption><span>[sol2-C]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Trie</span> &#123;</span></span><br><span class="line">    <span class="type">int</span> ch[<span class="number">27</span>];</span><br><span class="line">    <span class="type">int</span> val;</span><br><span class="line">&#125; trie[<span class="number">50001</span>];</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> size, nodeNum;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">insert</span><span class="params">(<span class="type">char</span>* s, <span class="type">int</span> num)</span> &#123;</span><br><span class="line">    <span class="type">int</span> sSize = <span class="built_in">strlen</span>(s), add = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; sSize; ++i) &#123;</span><br><span class="line">        <span class="type">int</span> x = s[i] - <span class="string">&#x27;`&#x27;</span>;</span><br><span class="line">        <span class="keyword">if</span> (trie[add].ch[x] == <span class="number">0</span>) &#123;</span><br><span class="line">            trie[add].ch[x] = ++size;</span><br><span class="line">            <span class="built_in">memset</span>(trie[size].ch, <span class="number">0</span>, <span class="keyword">sizeof</span>(trie[size].ch));</span><br><span class="line">            trie[size].val = <span class="number">-1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        add = trie[add].ch[x];</span><br><span class="line">    &#125;</span><br><span class="line">    trie[add].val = num;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">find</span><span class="params">(<span class="type">char</span>* s)</span> &#123;</span><br><span class="line">    <span class="type">int</span> sSize = <span class="built_in">strlen</span>(s), add = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; sSize; ++i) &#123;</span><br><span class="line">        <span class="type">int</span> x = s[i] - <span class="string">&#x27;`&#x27;</span>;</span><br><span class="line">        <span class="keyword">if</span> (trie[add].ch[x] == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        add = trie[add].ch[x];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> trie[add].val;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">addWord</span><span class="params">(<span class="type">char</span>* word)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (find(word) == <span class="number">-1</span>) &#123;</span><br><span class="line">        insert(word, nodeNum++);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> find(word);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> edge[<span class="number">30001</span>][<span class="number">26</span>];</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> edgeSize[<span class="number">30001</span>];</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">addEdge</span><span class="params">(<span class="type">char</span>* word)</span> &#123;</span><br><span class="line">    <span class="type">int</span> wordSize = <span class="built_in">strlen</span>(word), id1 = addWord(word);</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; wordSize; ++i) &#123;</span><br><span class="line">        <span class="type">char</span> tmp = word[i];</span><br><span class="line">        word[i] = <span class="string">&#x27;`&#x27;</span>;</span><br><span class="line">        <span class="type">int</span> id2 = addWord(word);</span><br><span class="line">        edge[id1][edgeSize[id1]++] = id2;</span><br><span class="line">        edge[id2][edgeSize[id2]++] = id1;</span><br><span class="line">        word[i] = tmp;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">ladderLength</span><span class="params">(<span class="type">char</span>* beginWord, <span class="type">char</span>* endWord, <span class="type">char</span>** wordList, <span class="type">int</span> wordListSize)</span> &#123;</span><br><span class="line">    size = nodeNum = <span class="number">0</span>;</span><br><span class="line">    <span class="built_in">memset</span>(trie[size].ch, <span class="number">0</span>, <span class="keyword">sizeof</span>(trie[size].ch));</span><br><span class="line">    trie[size].val = <span class="number">-1</span>;</span><br><span class="line">    <span class="built_in">memset</span>(edgeSize, <span class="number">0</span>, <span class="keyword">sizeof</span>(edgeSize));</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; wordListSize; ++i) &#123;</span><br><span class="line">        addEdge(wordList[i]);</span><br><span class="line">    &#125;</span><br><span class="line">    addEdge(beginWord);</span><br><span class="line">    <span class="type">int</span> beginId = find(beginWord), endId = find(endWord);</span><br><span class="line">    <span class="keyword">if</span> (endId == <span class="number">-1</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="type">int</span> disBegin[nodeNum];</span><br><span class="line">    <span class="built_in">memset</span>(disBegin, <span class="number">-1</span>, <span class="keyword">sizeof</span>(disBegin));</span><br><span class="line">    disBegin[beginId] = <span class="number">0</span>;</span><br><span class="line">    <span class="type">int</span> queBegin[nodeNum];</span><br><span class="line">    <span class="type">int</span> leftBegin = <span class="number">0</span>, rightBegin = <span class="number">0</span>;</span><br><span class="line">    queBegin[rightBegin++] = beginId;</span><br><span class="line"></span><br><span class="line">    <span class="type">int</span> disEnd[nodeNum];</span><br><span class="line">    <span class="built_in">memset</span>(disEnd, <span class="number">-1</span>, <span class="keyword">sizeof</span>(disEnd));</span><br><span class="line">    disEnd[endId] = <span class="number">0</span>;</span><br><span class="line">    <span class="type">int</span> queEnd[nodeNum];</span><br><span class="line">    <span class="type">int</span> leftEnd = <span class="number">0</span>, rightEnd = <span class="number">0</span>;</span><br><span class="line">    queEnd[rightEnd++] = endId;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (leftBegin &lt; rightBegin &amp;&amp; leftEnd &lt; rightEnd) &#123;</span><br><span class="line">        <span class="type">int</span> queBeginSize = rightBegin - leftBegin;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; queBeginSize; ++i) &#123;</span><br><span class="line">            <span class="type">int</span> nodeBegin = queBegin[leftBegin++];</span><br><span class="line">            <span class="keyword">if</span> (disEnd[nodeBegin] != <span class="number">-1</span>) &#123;</span><br><span class="line">                <span class="keyword">return</span> (disBegin[nodeBegin] + disEnd[nodeBegin]) / <span class="number">2</span> + <span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt; edgeSize[nodeBegin]; ++j) &#123;</span><br><span class="line">                <span class="keyword">if</span> (disBegin[edge[nodeBegin][j]] == <span class="number">-1</span>) &#123;</span><br><span class="line">                    disBegin[edge[nodeBegin][j]] = disBegin[nodeBegin] + <span class="number">1</span>;</span><br><span class="line">                    queBegin[rightBegin++] = edge[nodeBegin][j];</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">int</span> queEndSize = rightEnd - leftEnd;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; queEndSize; ++i) &#123;</span><br><span class="line">            <span class="type">int</span> nodeEnd = queEnd[leftEnd++];</span><br><span class="line">            <span class="keyword">if</span> (disBegin[nodeEnd] != <span class="number">-1</span>) &#123;</span><br><span class="line">                <span class="keyword">return</span> (disBegin[nodeEnd] + disEnd[nodeEnd]) / <span class="number">2</span> + <span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt; edgeSize[nodeEnd]; ++j) &#123;</span><br><span class="line">                <span class="keyword">if</span> (disEnd[edge[nodeEnd][j]] == <span class="number">-1</span>) &#123;</span><br><span class="line">                    disEnd[edge[nodeEnd][j]] = disEnd[nodeEnd] + <span class="number">1</span>;</span><br><span class="line">                    queEnd[rightEnd++] = edge[nodeEnd][j];</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>复杂度分析</strong></p>
+<ul>
+<li><p>时间复杂度：$O(N \times C^2)$。其中 $N$ 为 <code>wordList</code> 的长度，$C$ 为列表中单词的长度。</p>
+<ul>
+<li><p>建图过程中，对于每一个单词，我们需要枚举它连接到的所有虚拟节点，时间复杂度为 $O(C)$，将这些单词加入到哈希表中，时间复杂度为 $O(N \times C)$，因此总时间复杂度为 $O(N \times C)$。</p>
+</li>
+<li><p>双向广度优先搜索的时间复杂度最坏情况下是 $O(N \times C)$。每一个单词需要拓展出 $O(C)$ 个虚拟节点，因此节点数 $O(N \times C)$。</p>
+</li>
+</ul>
+</li>
+<li><p>空间复杂度：$O(N \times C^2)$。其中 $N$ 为 <code>wordList</code> 的长度，$C$ 为列表中单词的长度。哈希表中包含 $O(N \times C)$ 个节点，每个节点占用空间 $O(C)$，因此总的空间复杂度为 $O(N \times C^2)$。</p>
+</li>
+</ul>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <!--<div class="article-copyright-info-container">-->
+    <!--&lt;!&ndash;<ul>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><strong>Title:</strong> 0127-单词接龙</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><strong>Author:</strong> Raphael Liu</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><strong>Created at&ndash;&gt;-->
+                <!--&lt;!&ndash;:</strong> 2023-09-13 00:47:26</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;&ndash;&gt;-->
+            <!--&lt;!&ndash;<li>&ndash;&gt;-->
+                <!--&lt;!&ndash;<strong>Updated at&ndash;&gt;-->
+                    <!--&lt;!&ndash;:</strong> 2023-09-13 10:42:42&ndash;&gt;-->
+            <!--&lt;!&ndash;</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;<li>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;<strong>Link:</strong> https://fida.ltd/2023/09/13/0127-单词接龙/&ndash;&gt;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;</li>&ndash;&gt;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;<li>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;<strong>&ndash;&gt;&ndash;&gt;-->
+                <!--&lt;!&ndash;&lt;!&ndash;License:&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;</strong>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0</a>.&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;&ndash;&gt;&ndash;&gt;-->
+
+        <!--&lt;!&ndash;&lt;!&ndash;</li>&ndash;&gt;&ndash;&gt;-->
+    <!--&lt;!&ndash;</ul>&ndash;&gt;-->
+<!--</div>-->
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box">
+                
+                    <li class="tag-item">
+                        <a href="/tags/algorithm/">#algorithm</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item">
+                        <a href="/tags/HARD/">#HARD</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                        rel="prev"
+                        href="/2023/09/13/0126-%E5%8D%95%E8%AF%8D%E6%8E%A5%E9%BE%99%20II/"
+                        >
+                            <span class="left arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">0126-单词接龙 II</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                        rel="next"
+                        href="/2023/09/13/0128-%E6%9C%80%E9%95%BF%E8%BF%9E%E7%BB%AD%E5%BA%8F%E5%88%97/"
+                        >
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">0128-最长连续序列</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+
+        
+            <div class="comment-container">
+                <div class="comments-container pjax">
+    <div id="comment-anchor"></div>
+    <div class="comment-area-title">
+        <i class="fa-solid fa-comments"></i>&nbsp;Comments
+    </div>
+    
+
+        
+            
+ 
+    <div id="waline"></div>
+    <script type="module"  data-swup-reload-script>
+        import { init } from 'https://evan.beee.top/js/waline.mjs';
+
+        function loadWaline() {
+            init({
+                el: '#waline',
+                serverURL: 'https://example.example.com',
+                lang: 'zh-CN',
+                dark: 'body[class~="dark-mode"]',
+                requiredMeta: ['nick','mail'], // cannot customize by theme config, change it yourself
+            });
+        }
+
+        if ('true') {
+            const loadWalineTimeout = setTimeout(() => {
+                loadWaline();
+                clearTimeout(loadWalineTimeout);
+            }, 1000);
+        } else {
+            window.addEventListener('DOMContentLoaded', loadWaline);
+        }
+        
+    </script>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+
+    
+        <div class="toc-content-container">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">On this page</div>
+        <div class="page-title">0127-单词接龙</div>
+        
+
+    </div>
+</div>
+        </div>
+    
+</div>
+
+
+
+                
+
+            </div>
+
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2022</span>
+              -
+            
+            2023&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">Raphael Liu</a>
+        </div>
+        
+            <script data-swup-reload-script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">UV:</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">PV:</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <!--<div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">-->
+            <!--<span class="lg:block text-sm">powered_by</span>-->
+            <!--&lt;!&ndash;<span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.4.4</a></span>&ndash;&gt;-->
+        <!--</div>-->
+        
+        <!---->
+            <!--<div>-->
+                <!--runtime <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hours <span class="odometer" id="runtime_minutes"></span> minutes <span class="odometer" id="runtime_seconds"></span> seconds-->
+            <!--</div>-->
+        <!---->
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fa-regular fa-comments"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-expand-width flex justify-center items-center">
+            <i class="fa-regular fa-expand"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fa-solid fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa-solid fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa-solid fa-spinner fa-spin-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+    
+<script src="/js/libs/Swup.min.js"></script>
+
+<script src="/js/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/libs/SwupScrollPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+        ],
+        containers: ["#swup"],
+    });
+
+    swup.hooks.on("page:view", () => {
+        Global.refresh();
+    });
+
+    // if (document.readyState === "complete") {
+    //
+    // } else {
+    //     document.addEventListener("DOMContentLoaded", () => init());
+    // }
+</script>
+
+
+
+
+
+
+<script src="/js/utils.js" type="module"></script>
+
+<script src="/js/main.js" type="module"></script>
+
+<script src="/js/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/layouts/categoryList.js" type="module"></script>
+
+
+
+    
+<script src="/js/tools/localSearch.js"></script>
+
+
+
+
+    
+<script src="/js/tools/codeBlock.js"></script>
+
+
+
+
+    
+<script src="/js/layouts/lazyload.js"></script>
+
+
+
+
+    
+<script src="/js/tools/runtime.js"></script>
+
+    
+<script src="/js/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/libs/Typed.min.js"></script>
+
+  
+<script src="/js/plugins/typed.js"></script>
+
+
+
+
+
+
+
+<div class="post-scripts" data-swup-reload-script>
+    
+        
+<script src="/js/libs/anime.min.js"></script>
+
+        
+<script src="/js/tools/tocToggle.js" type="module"></script>
+
+<script src="/js/layouts/toc.js" type="module"></script>
+
+<script src="/js/plugins/tabs.js" type="module"></script>
+
+    
+</div>
+
+
+</body>
+</html>

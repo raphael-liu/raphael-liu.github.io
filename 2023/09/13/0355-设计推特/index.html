@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="Raphael Liu">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/2023/09/13/0355-设计推特/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="设计一个简化版的推特(Twitter)，可以让用户实现发送推文，关注&#x2F;取消关注其他用户，能够看见关注人（包括自己）的最近 10 条推文。 实现 Twitter 类：  Twitter() 初始化简易版推特对象 void postTweet(int userId, int tweetId) 根据给定的 tweetId 和 userId 创建一条新推文。每次调用此函数都会使用一个不同的 tw">
+<meta property="og:type" content="article">
+<meta property="og:title" content="0355-设计推特">
+<meta property="og:url" content="http://example.com/2023/09/13/0355-%E8%AE%BE%E8%AE%A1%E6%8E%A8%E7%89%B9/index.html">
+<meta property="og:site_name" content="Raphael&#39;s Blog">
+<meta property="og:description" content="设计一个简化版的推特(Twitter)，可以让用户实现发送推文，关注&#x2F;取消关注其他用户，能够看见关注人（包括自己）的最近 10 条推文。 实现 Twitter 类：  Twitter() 初始化简易版推特对象 void postTweet(int userId, int tweetId) 根据给定的 tweetId 和 userId 创建一条新推文。每次调用此函数都会使用一个不同的 tw">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/262540fb-dfbf-4220-a8b9-504f0151d287">
+<meta property="og:image" content="https://assets.leetcode-cn.com/solution-static/355_fig1.png">
+<meta property="article:published_time" content="2023-09-12T16:47:26.000Z">
+<meta property="article:modified_time" content="2023-09-13T02:46:08.865Z">
+<meta property="article:author" content="Raphael Liu">
+<meta property="article:tag" content="algorithm">
+<meta property="article:tag" content="MEDIUM">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/262540fb-dfbf-4220-a8b9-504f0151d287">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/redefine-favicon.svg" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/redefine-favicon.svg">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/redefine-favicon.svg">
+    <!--- Page Info-->
+    
+    <title>
+        
+            0355-设计推特 -
+        
+        Raphael&#39;s Blog
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/css/build/styles.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/fonts.css">
+
+    
+<link rel="stylesheet" href="/fonts/Satoshi/satoshi.css">
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+
+    <!--- Inject Part-->
+    
+    <script id="hexo-configurations">
+    let Global = window.Global || {};
+    Global.hexo_config = {"hostname":"example.com","root":"/","language":"zh_CN"};
+    Global.theme_config = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":true,"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"open_graph":true,"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-wqery6-light.webp","dark":"/images/wallhaven-wqery6-dark.webp"},"title":"Raphael's Blog","subtitle":{"text":["格物致知","坚持做正确的事情"],"hitokoto":{"enable":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":false,"links":{"github":"https://github.com/raphael-liu","email":"raphael@buaa.edu.cn# your email"},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.4.4","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"links":{"首页":{"path":"/","icon":"fa-regular fa-house"},"文章":{"path":"/archives","icon":"fa-regular fa-archive"},"关于":{"icon":"fa-regular fa-user","submenus":{"我":"/about/me","Github":"https://github.com/raphael-liu"}}},"search":{"enable":true,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"links":null},"article_date_format":"auto","categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}},"footerStart":"2022/8/17 11:45:14"};
+    Global.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    Global.data_config = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="swup-progress-icon">
+            <i class="fa-solid fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container" id="swup">
+
+    
+
+    <div class="main-content-container">
+
+
+        <div class="main-content-header">
+            <header class="navbar-container">
+    
+    <div class="navbar-content">
+        <div class="left">
+            
+            <a class="logo-title" href="http://example.com/">
+                
+                Raphael&#39;s Blog
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/"  >
+                                    
+                                        
+                                            <i class="fa-regular fa-house"></i>
+                                        
+                                        首页
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/archives"  >
+                                    
+                                        
+                                            <i class="fa-regular fa-archive"></i>
+                                        
+                                        文章
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="has-dropdown" 
+                                    href="#" onClick="return false;">
+                                    
+                                        
+                                            <i class="fa-regular fa-user"></i>
+                                        
+                                        关于&nbsp;<i class="fa-solid fa-chevron-down"></i>
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                                    <ul class="sub-menu">
+                                    
+                                        <li>
+                                        <a href="/about/me">我
+                                        </a>
+                                        </li>
+                                    
+                                        <li>
+                                        <a target="_blank" rel="noopener" href="https://github.com/raphael-liu">GITHUB
+                                        </a>
+                                        </li>
+                                    
+                                    </ul>
+                                
+                            </li>
+                    
+                    
+                        <li class="navbar-item search search-popup-trigger">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fa-solid fa-magnifying-glass"></i></div>
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile drawer -->
+    <div class="navbar-drawer w-full absolute top-0 left-0 bg-background-color">
+        <ul class="drawer-navbar-list flex flex-col justify-start items-center">
+            
+                
+                    <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group " 
+                        href="/"  >
+                             
+                                
+                                    <i class="fa-regular fa-house"></i>
+                                
+                                首页
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+                
+                    <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group " 
+                        href="/archives"  >
+                             
+                                
+                                    <i class="fa-regular fa-archive"></i>
+                                
+                                文章
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+                
+                    <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group has-dropdown" 
+                        href="#" onClick="return false;">
+                            
+                                
+                                    <i class="fa-regular fa-user"></i>
+                                
+                                关于&nbsp;<i class="group-hover:rotate-180 transition-transform fa-solid fa-chevron-down"></i>
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                              
+                        
+                            <li class="text-base flex justify-center items-center hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                <a class="py-0.5" href="/about/me">我</a>
+                            </li>
+                        
+                            <li class="text-base flex justify-center items-center hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                <a class="py-0.5" target="_blank" rel="noopener" href="https://github.com/raphael-liu">GITHUB</a>
+                            </li>
+                        
+                    
+            
+
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="post-page-container">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            
+                <h1 class="article-title-regular">0355-设计推特</h1>
+            
+            </div>
+            
+                    
+        
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">Raphael Liu</span>
+                        
+                            <span class="author-label">Lv10</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2023-09-13 00:47:26</span>
+        <span class="mobile">2023-09-13 00:47:26</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2023-09-13 10:46:08</span>
+            <span class="mobile">2023-09-13 10:46:08</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/algorithm/">algorithm</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/MEDIUM/">MEDIUM</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        
+
+
+        <div class="article-content markdown-body">
+            <p>设计一个简化版的推特(Twitter)，可以让用户实现发送推文，关注&#x2F;取消关注其他用户，能够看见关注人（包括自己）的最近 <code>10</code> 条推文。</p>
+<p>实现 <code>Twitter</code> 类：</p>
+<ul>
+<li><code>Twitter()</code> 初始化简易版推特对象</li>
+<li><code>void postTweet(int userId, int tweetId)</code> 根据给定的 <code>tweetId</code> 和 <code>userId</code> 创建一条新推文。每次调用此函数都会使用一个不同的 <code>tweetId</code> 。</li>
+<li><code>List&lt;Integer&gt; getNewsFeed(int userId)</code> 检索当前用户新闻推送中最近  <code>10</code> 条推文的 ID 。新闻推送中的每一项都必须是由用户关注的人或者是用户自己发布的推文。推文必须 <strong>按照时间顺序由最近到最远排序</strong> 。</li>
+<li><code>void follow(int followerId, int followeeId)</code> ID 为 <code>followerId</code> 的用户开始关注 ID 为 <code>followeeId</code> 的用户。</li>
+<li><code>void unfollow(int followerId, int followeeId)</code> ID 为 <code>followerId</code> 的用户不再关注 ID 为 <code>followeeId</code> 的用户。</li>
+</ul>
+<p><strong>示例：</strong></p>
+<pre><code>**输入**
+[&quot;Twitter&quot;, &quot;postTweet&quot;, &quot;getNewsFeed&quot;, &quot;follow&quot;, &quot;postTweet&quot;, &quot;getNewsFeed&quot;, &quot;unfollow&quot;, &quot;getNewsFeed&quot;]
+[[], [1, 5], [1], [1, 2], [2, 6], [1], [1, 2], [1]]
+**输出**
+[null, null, [5], null, null, [6, 5], null, [5]]
+
+**解释**
+Twitter twitter = new Twitter();
+twitter.postTweet(1, 5); // 用户 1 发送了一条新推文 (用户 id = 1, 推文 id = 5)
+twitter.getNewsFeed(1);  // 用户 1 的获取推文应当返回一个列表，其中包含一个 id 为 5 的推文
+twitter.follow(1, 2);    // 用户 1 关注了用户 2
+twitter.postTweet(2, 6); // 用户 2 发送了一个新推文 (推文 id = 6)
+twitter.getNewsFeed(1);  // 用户 1 的获取推文应当返回一个列表，其中包含两个推文，id 分别为 -&gt; [6, 5] 。推文 id 6 应当在推文 id 5 之前，因为它是在 5 之后发送的
+twitter.unfollow(1, 2);  // 用户 1 取消关注了用户 2
+twitter.getNewsFeed(1);  // 用户 1 获取推文应当返回一个列表，其中包含一个 id 为 5 的推文。因为用户 1 已经不再关注用户 2
+</code></pre>
+<p><strong>提示：</strong></p>
+<ul>
+<li><code>1 &lt;= userId, followerId, followeeId &lt;= 500</code></li>
+<li><code>0 &lt;= tweetId &lt;= 104</code></li>
+<li>所有推特的 ID 都互不相同</li>
+<li><code>postTweet</code>、<code>getNewsFeed</code>、<code>follow</code> 和 <code>unfollow</code> 方法最多调用 <code>3 * 104</code> 次</li>
+</ul>
+<h3 id="📺-视频题解"><a href="#📺-视频题解" class="headerlink" title="📺 视频题解"></a>📺 视频题解</h3><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/262540fb-dfbf-4220-a8b9-504f0151d287"
+                      alt="355 设计推特-仲耀晖.mp4"
+                ></p>
+<h3 id="📖-文字题解"><a href="#📖-文字题解" class="headerlink" title="📖 文字题解"></a>📖 文字题解</h3><h4 id="方法一：哈希表-链表"><a href="#方法一：哈希表-链表" class="headerlink" title="方法一：哈希表 + 链表"></a>方法一：哈希表 + 链表</h4><p><strong>思路和算法</strong></p>
+<p>根据题意我们知道，对于每个推特用户，我们需要存储他关注的用户 <code>Id</code>，以及自己发的推文 <code>Id</code> 的集合，为了使每个操作的复杂度尽可能的低，我们需要根据操作来决定存储这些信息的数据结构。注意，由于题目中没有说明用户的 <code>Id</code> 是否连续，所以我们需要用一个以用户 <code>Id</code> 为索引的哈希表来存储用户的信息。</p>
+<p>对于操作 <code>3</code> 和操作 <code>4</code>，我们只需要用一个哈希表存储，即可实现插入和删除的时间复杂度都为 $O(1)$。</p>
+<p>对于操作 <code>1</code> 和操作 <code>2</code>，由于操作 <code>2</code> 要知道此用户关注的人和用户自己发出的最近十条推文，因此我们可以考虑对每个用户用链表存储发送的推文。每次创建推文的时候我们在链表头插入，这样能保证链表里存储的推文的时间是从最近到最久的。那么对于操作 <code>2</code>，问题其实就等价于有若干个有序的链表，我们需要找到它们合起来最近的十条推文。由于链表里存储的数据都是有序的，所以我们将这些链表进行线性归并即可得到最近的十条推文。这个操作与 <a class="link"   target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/merge-k-sorted-lists/" >23. 合并K个排序链表 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> 基本等同。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://assets.leetcode-cn.com/solution-static/355_fig1.png"
+                      alt="fig1"
+                ></p>
+<p>如果我们直接照搬「合并K个排序链表」的解法来进行合并，那么无疑会造成空间的部分浪费，因为这个题目不要求你展示用户的所有推文，所以我们只要动态维护用户的链表，存储最近的 <code>recentMax</code> 个推文 <code>Id</code> 即可（题目中的 <code>recentMax</code> 为 <code>10</code>）。那么对于操作 <code>1</code>，当发现链表的节点数等于 <code>recentMax</code> 时，我们按题意删除链表末尾的元素，再插入最新的推文 <code>Id</code>。对于操作 <code>2</code>，在两个链表进行线性归并的时候，只要已合并的数量等于 <code>recentMax</code>，代表已经找到这两个链表合起来后最近的 <code>recentMax</code> 条推文，直接结束合并即可。</p>
+<div class="highlight-container" data-rel="C++"><figure class="iseeu highlight c++"><figcaption><span>[sol1-C++]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Twitter</span> &#123;</span><br><span class="line">    <span class="keyword">struct</span> <span class="title class_">Node</span> &#123;</span><br><span class="line">        <span class="comment">// 哈希表存储关注人的 Id</span></span><br><span class="line">        unordered_set&lt;<span class="type">int</span>&gt; followee;</span><br><span class="line">        <span class="comment">// 用链表存储 tweetId</span></span><br><span class="line">        list&lt;<span class="type">int</span>&gt; tweet;</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="comment">// getNewsFeed 检索的推文的上限以及 tweetId 的时间戳</span></span><br><span class="line">    <span class="type">int</span> recentMax, time;</span><br><span class="line">    <span class="comment">// tweetId 对应发送的时间</span></span><br><span class="line">    unordered_map&lt;<span class="type">int</span>, <span class="type">int</span>&gt; tweetTime;</span><br><span class="line">    <span class="comment">// 每个用户存储的信息</span></span><br><span class="line">    unordered_map&lt;<span class="type">int</span>, Node&gt; user;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">Twitter</span>() &#123;</span><br><span class="line">        time = <span class="number">0</span>;</span><br><span class="line">        recentMax = <span class="number">10</span>;</span><br><span class="line">        user.<span class="built_in">clear</span>();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 初始化</span></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">init</span><span class="params">(<span class="type">int</span> userId)</span> </span>&#123;</span><br><span class="line">        user[userId].followee.<span class="built_in">clear</span>();</span><br><span class="line">        user[userId].tweet.<span class="built_in">clear</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">postTweet</span><span class="params">(<span class="type">int</span> userId, <span class="type">int</span> tweetId)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (user.<span class="built_in">find</span>(userId) == user.<span class="built_in">end</span>()) &#123;</span><br><span class="line">            <span class="built_in">init</span>(userId);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 达到限制，剔除链表末尾元素</span></span><br><span class="line">        <span class="keyword">if</span> (user[userId].tweet.<span class="built_in">size</span>() == recentMax) &#123;</span><br><span class="line">            user[userId].tweet.<span class="built_in">pop_back</span>();</span><br><span class="line">        &#125;</span><br><span class="line">        user[userId].tweet.<span class="built_in">push_front</span>(tweetId);</span><br><span class="line">        tweetTime[tweetId] = ++time;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">getNewsFeed</span><span class="params">(<span class="type">int</span> userId)</span> </span>&#123;</span><br><span class="line">        vector&lt;<span class="type">int</span>&gt; ans; ans.<span class="built_in">clear</span>();</span><br><span class="line">        <span class="keyword">for</span> (list&lt;<span class="type">int</span>&gt;::iterator it = user[userId].tweet.<span class="built_in">begin</span>(); it != user[userId].tweet.<span class="built_in">end</span>(); ++it) &#123;</span><br><span class="line">            ans.<span class="built_in">emplace_back</span>(*it);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> followeeId: user[userId].followee) &#123;</span><br><span class="line">            <span class="keyword">if</span> (followeeId == userId) <span class="keyword">continue</span>; <span class="comment">// 可能出现自己关注自己的情况</span></span><br><span class="line">            vector&lt;<span class="type">int</span>&gt; res; res.<span class="built_in">clear</span>();</span><br><span class="line">            list&lt;<span class="type">int</span>&gt;::iterator it = user[followeeId].tweet.<span class="built_in">begin</span>();</span><br><span class="line">            <span class="type">int</span> i = <span class="number">0</span>;</span><br><span class="line">            <span class="comment">// 线性归并</span></span><br><span class="line">            <span class="keyword">while</span> (i &lt; (<span class="type">int</span>)ans.<span class="built_in">size</span>() &amp;&amp; it != user[followeeId].tweet.<span class="built_in">end</span>()) &#123;</span><br><span class="line">                <span class="keyword">if</span> (tweetTime[(*it)] &gt; tweetTime[ans[i]]) &#123;</span><br><span class="line">                    res.<span class="built_in">emplace_back</span>(*it);</span><br><span class="line">                    ++it;</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    res.<span class="built_in">emplace_back</span>(ans[i]);</span><br><span class="line">                    ++i;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="comment">// 已经找到这两个链表合起来后最近的 recentMax 条推文</span></span><br><span class="line">                <span class="keyword">if</span> ((<span class="type">int</span>)res.<span class="built_in">size</span>() == recentMax) <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">for</span> (; i &lt; (<span class="type">int</span>)ans.<span class="built_in">size</span>() &amp;&amp; (<span class="type">int</span>)res.<span class="built_in">size</span>() &lt; recentMax; ++i) res.<span class="built_in">emplace_back</span>(ans[i]);</span><br><span class="line">            <span class="keyword">for</span> (; it != user[followeeId].tweet.<span class="built_in">end</span>() &amp;&amp; (<span class="type">int</span>)res.<span class="built_in">size</span>() &lt; recentMax; ++it) res.<span class="built_in">emplace_back</span>(*it);</span><br><span class="line">            ans.<span class="built_in">assign</span>(res.<span class="built_in">begin</span>(),res.<span class="built_in">end</span>());</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">follow</span><span class="params">(<span class="type">int</span> followerId, <span class="type">int</span> followeeId)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (user.<span class="built_in">find</span>(followerId) == user.<span class="built_in">end</span>()) &#123;</span><br><span class="line">            <span class="built_in">init</span>(followerId);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (user.<span class="built_in">find</span>(followeeId) == user.<span class="built_in">end</span>()) &#123;</span><br><span class="line">            <span class="built_in">init</span>(followeeId);</span><br><span class="line">        &#125;</span><br><span class="line">        user[followerId].followee.<span class="built_in">insert</span>(followeeId);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">unfollow</span><span class="params">(<span class="type">int</span> followerId, <span class="type">int</span> followeeId)</span> </span>&#123;</span><br><span class="line">        user[followerId].followee.<span class="built_in">erase</span>(followeeId);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><figcaption><span>[sol1-Java]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Twitter</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">class</span> <span class="title class_">Node</span> &#123;</span><br><span class="line">        <span class="comment">// 哈希表存储关注人的 Id</span></span><br><span class="line">        Set&lt;Integer&gt; followee;</span><br><span class="line">        <span class="comment">// 用链表存储 tweetId</span></span><br><span class="line">        LinkedList&lt;Integer&gt; tweet;</span><br><span class="line"></span><br><span class="line">        Node() &#123;</span><br><span class="line">            followee = <span class="keyword">new</span> <span class="title class_">HashSet</span>&lt;Integer&gt;();</span><br><span class="line">            tweet = <span class="keyword">new</span> <span class="title class_">LinkedList</span>&lt;Integer&gt;();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// getNewsFeed 检索的推文的上限以及 tweetId 的时间戳</span></span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> recentMax, time;</span><br><span class="line">    <span class="comment">// tweetId 对应发送的时间</span></span><br><span class="line">    <span class="keyword">private</span> Map&lt;Integer, Integer&gt; tweetTime;</span><br><span class="line">    <span class="comment">// 每个用户存储的信息</span></span><br><span class="line">    <span class="keyword">private</span> Map&lt;Integer, Node&gt; user;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">Twitter</span><span class="params">()</span> &#123;</span><br><span class="line">        time = <span class="number">0</span>;</span><br><span class="line">        recentMax = <span class="number">10</span>;</span><br><span class="line">        tweetTime = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;Integer, Integer&gt;();</span><br><span class="line">        user = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;Integer, Node&gt;();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 初始化</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">init</span><span class="params">(<span class="type">int</span> userId)</span> &#123;</span><br><span class="line">        user.put(userId, <span class="keyword">new</span> <span class="title class_">Node</span>());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">postTweet</span><span class="params">(<span class="type">int</span> userId, <span class="type">int</span> tweetId)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (!user.containsKey(userId)) &#123;</span><br><span class="line">            init(userId);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 达到限制，剔除链表末尾元素</span></span><br><span class="line">        <span class="keyword">if</span> (user.get(userId).tweet.size() == recentMax) &#123;</span><br><span class="line">            user.get(userId).tweet.remove(recentMax - <span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        user.get(userId).tweet.addFirst(tweetId);</span><br><span class="line">        tweetTime.put(tweetId, ++time);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">public</span> List&lt;Integer&gt; <span class="title function_">getNewsFeed</span><span class="params">(<span class="type">int</span> userId)</span> &#123;</span><br><span class="line">        LinkedList&lt;Integer&gt; ans = <span class="keyword">new</span> <span class="title class_">LinkedList</span>&lt;Integer&gt;();</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> it : user.getOrDefault(userId, <span class="keyword">new</span> <span class="title class_">Node</span>()).tweet) &#123;</span><br><span class="line">            ans.addLast(it);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> followeeId : user.getOrDefault(userId, <span class="keyword">new</span> <span class="title class_">Node</span>()).followee) &#123;</span><br><span class="line">            <span class="keyword">if</span> (followeeId == userId) &#123; <span class="comment">// 可能出现自己关注自己的情况</span></span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            LinkedList&lt;Integer&gt; res = <span class="keyword">new</span> <span class="title class_">LinkedList</span>&lt;Integer&gt;();</span><br><span class="line">            <span class="type">int</span> <span class="variable">tweetSize</span> <span class="operator">=</span> user.get(followeeId).tweet.size();</span><br><span class="line">            Iterator&lt;Integer&gt; it = user.get(followeeId).tweet.iterator();</span><br><span class="line">            <span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">            <span class="type">int</span> <span class="variable">j</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">            <span class="type">int</span> <span class="variable">curr</span> <span class="operator">=</span> -<span class="number">1</span>;</span><br><span class="line">            <span class="comment">// 线性归并</span></span><br><span class="line">            <span class="keyword">if</span> (j &lt; tweetSize) &#123;</span><br><span class="line">                curr = it.next();</span><br><span class="line">                <span class="keyword">while</span> (i &lt; ans.size() &amp;&amp; j &lt; tweetSize) &#123;</span><br><span class="line">                    <span class="keyword">if</span> (tweetTime.get(curr) &gt; tweetTime.get(ans.get(i))) &#123;</span><br><span class="line">                        res.addLast(curr);</span><br><span class="line">                        ++j;</span><br><span class="line">                        <span class="keyword">if</span> (it.hasNext()) &#123;</span><br><span class="line">                            curr = it.next();</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                        res.addLast(ans.get(i));</span><br><span class="line">                        ++i;</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="comment">// 已经找到这两个链表合起来后最近的 recentMax 条推文</span></span><br><span class="line">                    <span class="keyword">if</span> (res.size() == recentMax) &#123;</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">for</span> (; i &lt; ans.size() &amp;&amp; res.size() &lt; recentMax; ++i) &#123;</span><br><span class="line">                res.addLast(ans.get(i));</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (j &lt; tweetSize &amp;&amp; res.size() &lt; recentMax) &#123;</span><br><span class="line">                res.addLast(curr);</span><br><span class="line">                <span class="keyword">for</span> (; it.hasNext() &amp;&amp; res.size() &lt; recentMax;) &#123;</span><br><span class="line">                    res.addLast(it.next());</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            ans = <span class="keyword">new</span> <span class="title class_">LinkedList</span>&lt;Integer&gt;(res);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">follow</span><span class="params">(<span class="type">int</span> followerId, <span class="type">int</span> followeeId)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (!user.containsKey(followerId)) &#123;</span><br><span class="line">            init(followerId);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (!user.containsKey(followeeId)) &#123;</span><br><span class="line">            init(followeeId);</span><br><span class="line">        &#125;</span><br><span class="line">        user.get(followerId).followee.add(followeeId);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">unfollow</span><span class="params">(<span class="type">int</span> followerId, <span class="type">int</span> followeeId)</span> &#123;</span><br><span class="line">        user.getOrDefault(followerId, <span class="keyword">new</span> <span class="title class_">Node</span>()).followee.remove(followeeId);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><figcaption><span>[sol1-Python3]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Twitter</span>:</span><br><span class="line"></span><br><span class="line">    <span class="keyword">class</span> <span class="title class_">Node</span>:</span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">            self.followee = <span class="built_in">set</span>()</span><br><span class="line">            self.tweet = <span class="built_in">list</span>()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">        self.time = <span class="number">0</span></span><br><span class="line">        self.recentMax = <span class="number">10</span></span><br><span class="line">        self.tweetTime = <span class="built_in">dict</span>()</span><br><span class="line">        self.user = <span class="built_in">dict</span>()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">postTweet</span>(<span class="params">self, userId: <span class="built_in">int</span>, tweetId: <span class="built_in">int</span></span>) -&gt; <span class="literal">None</span>:</span><br><span class="line">        <span class="keyword">if</span> userId <span class="keyword">not</span> <span class="keyword">in</span> self.user:</span><br><span class="line">            self.user[userId] = Twitter.Node()</span><br><span class="line">        self.user[userId].tweet.append(tweetId)</span><br><span class="line">        self.time += <span class="number">1</span></span><br><span class="line">        self.tweetTime[tweetId] = self.time</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">getNewsFeed</span>(<span class="params">self, userId: <span class="built_in">int</span></span>) -&gt; <span class="type">List</span>[<span class="built_in">int</span>]:</span><br><span class="line">        <span class="keyword">if</span> userId <span class="keyword">not</span> <span class="keyword">in</span> self.user:</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">list</span>()</span><br><span class="line">        ans = self.user[userId].tweet[-<span class="number">10</span>:][::-<span class="number">1</span>]</span><br><span class="line">        <span class="keyword">for</span> followeeId <span class="keyword">in</span> self.user[userId].followee:</span><br><span class="line">            <span class="keyword">if</span> followeeId <span class="keyword">in</span> self.user:</span><br><span class="line">                opt = self.user[followeeId].tweet[-<span class="number">10</span>:][::-<span class="number">1</span>]</span><br><span class="line">                i, j, combined = <span class="number">0</span>, <span class="number">0</span>, <span class="built_in">list</span>()</span><br><span class="line">                <span class="keyword">while</span> i &lt; <span class="built_in">len</span>(ans) <span class="keyword">and</span> j &lt; <span class="built_in">len</span>(opt):</span><br><span class="line">                    <span class="keyword">if</span> self.tweetTime[ans[i]] &gt; self.tweetTime[opt[j]]:</span><br><span class="line">                        combined.append(ans[i])</span><br><span class="line">                        i += <span class="number">1</span></span><br><span class="line">                    <span class="keyword">else</span>:</span><br><span class="line">                        combined.append(opt[j])</span><br><span class="line">                        j += <span class="number">1</span></span><br><span class="line">                combined.extend(ans[i:])</span><br><span class="line">                combined.extend(opt[j:])</span><br><span class="line">                ans = combined[:<span class="number">10</span>]</span><br><span class="line">        <span class="keyword">return</span> ans</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">follow</span>(<span class="params">self, followerId: <span class="built_in">int</span>, followeeId: <span class="built_in">int</span></span>) -&gt; <span class="literal">None</span>:</span><br><span class="line">        <span class="keyword">if</span> followerId != followeeId:</span><br><span class="line">            <span class="keyword">if</span> followerId <span class="keyword">not</span> <span class="keyword">in</span> self.user:</span><br><span class="line">                self.user[followerId] = Twitter.Node()</span><br><span class="line">            self.user[followerId].followee.add(followeeId)</span><br><span class="line">            </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">unfollow</span>(<span class="params">self, followerId: <span class="built_in">int</span>, followeeId: <span class="built_in">int</span></span>) -&gt; <span class="literal">None</span>:</span><br><span class="line">        <span class="keyword">if</span> followerId != followeeId:</span><br><span class="line">            <span class="keyword">if</span> followerId <span class="keyword">in</span> self.user:</span><br><span class="line">                self.user[followerId].followee.discard(followeeId)</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>复杂度分析</strong></p>
+<ul>
+<li><p>时间复杂度：</p>
+<ul>
+<li><p>操作 <code>1</code> ： $O(1)$，链表的插入删除为 $O(1)$ 的复杂度。</p>
+</li>
+<li><p>操作 <code>2</code> ： $O(\textit{recentMax}*num)$，其中 <code>recentMax = 10</code>， <code>num</code> 为用户关注的人加上自己的数量和。因为链表里最多存储 <code>recentMax</code> 个节点，因此每次合并两个链表最多比较 <code>recentMax</code> 次后能得到两个链表最近的 <code>recentMax</code> 个推文，一共需要合并 <code>num</code> 次，因此总时间复杂度为 $O(\textit{recentMax}*num)$。</p>
+</li>
+<li><p>操作 <code>3</code> ： $O(1)$，哈希表插入为 $O(1)$ 的复杂度。</p>
+</li>
+<li><p>操作 <code>4</code> ： $O(1)$，哈希表插入为 $O(1)$ 的复杂度。</p>
+</li>
+</ul>
+</li>
+<li><p>空间复杂度：$O(\textit{recentMax}*tot)$，其中 <code>recentMax = 10</code>，<code>tot</code> 为推特总用户数。即对于每个用户我们不会存储超过 <code>recentMax</code> 个推特 <code>Id</code>，所以空间上限为 $O(\textit{recentMax}*tot)$。</p>
+</li>
+</ul>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <!--<div class="article-copyright-info-container">-->
+    <!--&lt;!&ndash;<ul>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><strong>Title:</strong> 0355-设计推特</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><strong>Author:</strong> Raphael Liu</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><strong>Created at&ndash;&gt;-->
+                <!--&lt;!&ndash;:</strong> 2023-09-13 00:47:26</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;&ndash;&gt;-->
+            <!--&lt;!&ndash;<li>&ndash;&gt;-->
+                <!--&lt;!&ndash;<strong>Updated at&ndash;&gt;-->
+                    <!--&lt;!&ndash;:</strong> 2023-09-13 10:46:08&ndash;&gt;-->
+            <!--&lt;!&ndash;</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;<li>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;<strong>Link:</strong> https://fida.ltd/2023/09/13/0355-设计推特/&ndash;&gt;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;</li>&ndash;&gt;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;<li>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;<strong>&ndash;&gt;&ndash;&gt;-->
+                <!--&lt;!&ndash;&lt;!&ndash;License:&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;</strong>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0</a>.&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;&ndash;&gt;&ndash;&gt;-->
+
+        <!--&lt;!&ndash;&lt;!&ndash;</li>&ndash;&gt;&ndash;&gt;-->
+    <!--&lt;!&ndash;</ul>&ndash;&gt;-->
+<!--</div>-->
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box">
+                
+                    <li class="tag-item">
+                        <a href="/tags/algorithm/">#algorithm</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item">
+                        <a href="/tags/MEDIUM/">#MEDIUM</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                        rel="prev"
+                        href="/2023/09/13/0356-%E7%9B%B4%E7%BA%BF%E9%95%9C%E5%83%8F/"
+                        >
+                            <span class="left arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">0356-直线镜像</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                        rel="next"
+                        href="/2023/09/13/0357-%E7%BB%9F%E8%AE%A1%E5%90%84%E4%BD%8D%E6%95%B0%E5%AD%97%E9%83%BD%E4%B8%8D%E5%90%8C%E7%9A%84%E6%95%B0%E5%AD%97%E4%B8%AA%E6%95%B0/"
+                        >
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">0357-统计各位数字都不同的数字个数</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+
+        
+            <div class="comment-container">
+                <div class="comments-container pjax">
+    <div id="comment-anchor"></div>
+    <div class="comment-area-title">
+        <i class="fa-solid fa-comments"></i>&nbsp;Comments
+    </div>
+    
+
+        
+            
+ 
+    <div id="waline"></div>
+    <script type="module"  data-swup-reload-script>
+        import { init } from 'https://evan.beee.top/js/waline.mjs';
+
+        function loadWaline() {
+            init({
+                el: '#waline',
+                serverURL: 'https://example.example.com',
+                lang: 'zh-CN',
+                dark: 'body[class~="dark-mode"]',
+                requiredMeta: ['nick','mail'], // cannot customize by theme config, change it yourself
+            });
+        }
+
+        if ('true') {
+            const loadWalineTimeout = setTimeout(() => {
+                loadWaline();
+                clearTimeout(loadWalineTimeout);
+            }, 1000);
+        } else {
+            window.addEventListener('DOMContentLoaded', loadWaline);
+        }
+        
+    </script>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+
+    
+        <div class="toc-content-container">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">On this page</div>
+        <div class="page-title">0355-设计推特</div>
+        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%F0%9F%93%BA-%E8%A7%86%E9%A2%91%E9%A2%98%E8%A7%A3"><span class="nav-text">📺 视频题解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%F0%9F%93%96-%E6%96%87%E5%AD%97%E9%A2%98%E8%A7%A3"><span class="nav-text">📖 文字题解</span></a></li></ol>
+
+    </div>
+</div>
+        </div>
+    
+</div>
+
+
+
+                
+
+            </div>
+
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2022</span>
+              -
+            
+            2023&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">Raphael Liu</a>
+        </div>
+        
+            <script data-swup-reload-script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">UV:</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">PV:</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <!--<div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">-->
+            <!--<span class="lg:block text-sm">powered_by</span>-->
+            <!--&lt;!&ndash;<span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.4.4</a></span>&ndash;&gt;-->
+        <!--</div>-->
+        
+        <!---->
+            <!--<div>-->
+                <!--runtime <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hours <span class="odometer" id="runtime_minutes"></span> minutes <span class="odometer" id="runtime_seconds"></span> seconds-->
+            <!--</div>-->
+        <!---->
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fa-regular fa-comments"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-expand-width flex justify-center items-center">
+            <i class="fa-regular fa-expand"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fa-solid fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa-solid fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa-solid fa-spinner fa-spin-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+    
+<script src="/js/libs/Swup.min.js"></script>
+
+<script src="/js/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/libs/SwupScrollPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+        ],
+        containers: ["#swup"],
+    });
+
+    swup.hooks.on("page:view", () => {
+        Global.refresh();
+    });
+
+    // if (document.readyState === "complete") {
+    //
+    // } else {
+    //     document.addEventListener("DOMContentLoaded", () => init());
+    // }
+</script>
+
+
+
+
+
+
+<script src="/js/utils.js" type="module"></script>
+
+<script src="/js/main.js" type="module"></script>
+
+<script src="/js/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/layouts/categoryList.js" type="module"></script>
+
+
+
+    
+<script src="/js/tools/localSearch.js"></script>
+
+
+
+
+    
+<script src="/js/tools/codeBlock.js"></script>
+
+
+
+
+    
+<script src="/js/layouts/lazyload.js"></script>
+
+
+
+
+    
+<script src="/js/tools/runtime.js"></script>
+
+    
+<script src="/js/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/libs/Typed.min.js"></script>
+
+  
+<script src="/js/plugins/typed.js"></script>
+
+
+
+
+
+
+
+<div class="post-scripts" data-swup-reload-script>
+    
+        
+<script src="/js/libs/anime.min.js"></script>
+
+        
+<script src="/js/tools/tocToggle.js" type="module"></script>
+
+<script src="/js/layouts/toc.js" type="module"></script>
+
+<script src="/js/plugins/tabs.js" type="module"></script>
+
+    
+</div>
+
+
+</body>
+</html>

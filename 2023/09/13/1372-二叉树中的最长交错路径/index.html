@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="Raphael Liu">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/2023/09/13/1372-二叉树中的最长交错路径/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="给你一棵以 root 为根的二叉树，二叉树中的交错路径定义如下：  选择二叉树中 任意  节点和一个方向（左或者右）。 如果前进方向为右，那么移动到当前节点的的右子节点，否则移动到它的左子节点。 改变前进方向：左变右或者右变左。 重复第二步和第三步，直到你在树中无法继续移动。  交错路径的长度定义为： 访问过的节点数目 - 1 （单个节点的路径长度为 0 ）。 请你返回给定树中最长 交错路径  的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="1372-二叉树中的最长交错路径">
+<meta property="og:url" content="http://example.com/2023/09/13/1372-%E4%BA%8C%E5%8F%89%E6%A0%91%E4%B8%AD%E7%9A%84%E6%9C%80%E9%95%BF%E4%BA%A4%E9%94%99%E8%B7%AF%E5%BE%84/index.html">
+<meta property="og:site_name" content="Raphael&#39;s Blog">
+<meta property="og:description" content="给你一棵以 root 为根的二叉树，二叉树中的交错路径定义如下：  选择二叉树中 任意  节点和一个方向（左或者右）。 如果前进方向为右，那么移动到当前节点的的右子节点，否则移动到它的左子节点。 改变前进方向：左变右或者右变左。 重复第二步和第三步，直到你在树中无法继续移动。  交错路径的长度定义为： 访问过的节点数目 - 1 （单个节点的路径长度为 0 ）。 请你返回给定树中最长 交错路径  的">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-09-12T16:47:26.000Z">
+<meta property="article:modified_time" content="2023-09-13T08:06:30.801Z">
+<meta property="article:author" content="Raphael Liu">
+<meta property="article:tag" content="algorithm">
+<meta property="article:tag" content="MEDIUM">
+<meta name="twitter:card" content="summary">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/redefine-favicon.svg" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/redefine-favicon.svg">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/redefine-favicon.svg">
+    <!--- Page Info-->
+    
+    <title>
+        
+            1372-二叉树中的最长交错路径 -
+        
+        Raphael&#39;s Blog
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/css/build/styles.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/fonts.css">
+
+    
+<link rel="stylesheet" href="/fonts/Satoshi/satoshi.css">
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+
+    <!--- Inject Part-->
+    
+    <script id="hexo-configurations">
+    let Global = window.Global || {};
+    Global.hexo_config = {"hostname":"example.com","root":"/","language":"zh_CN"};
+    Global.theme_config = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":true,"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"open_graph":true,"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-wqery6-light.webp","dark":"/images/wallhaven-wqery6-dark.webp"},"title":"Raphael's Blog","subtitle":{"text":["格物致知","坚持做正确的事情"],"hitokoto":{"enable":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":false,"links":{"github":"https://github.com/raphael-liu","email":"raphael@buaa.edu.cn# your email"},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.4.4","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"links":{"首页":{"path":"/","icon":"fa-regular fa-house"},"文章":{"path":"/archives","icon":"fa-regular fa-archive"},"关于":{"icon":"fa-regular fa-user","submenus":{"我":"/about/me","Github":"https://github.com/raphael-liu"}}},"search":{"enable":true,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"links":null},"article_date_format":"auto","categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}},"footerStart":"2022/8/17 11:45:14"};
+    Global.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    Global.data_config = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="swup-progress-icon">
+            <i class="fa-solid fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container" id="swup">
+
+    
+
+    <div class="main-content-container">
+
+
+        <div class="main-content-header">
+            <header class="navbar-container">
+    
+    <div class="navbar-content">
+        <div class="left">
+            
+            <a class="logo-title" href="http://example.com/">
+                
+                Raphael&#39;s Blog
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/"  >
+                                    
+                                        
+                                            <i class="fa-regular fa-house"></i>
+                                        
+                                        首页
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/archives"  >
+                                    
+                                        
+                                            <i class="fa-regular fa-archive"></i>
+                                        
+                                        文章
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="has-dropdown" 
+                                    href="#" onClick="return false;">
+                                    
+                                        
+                                            <i class="fa-regular fa-user"></i>
+                                        
+                                        关于&nbsp;<i class="fa-solid fa-chevron-down"></i>
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                                    <ul class="sub-menu">
+                                    
+                                        <li>
+                                        <a href="/about/me">我
+                                        </a>
+                                        </li>
+                                    
+                                        <li>
+                                        <a target="_blank" rel="noopener" href="https://github.com/raphael-liu">GITHUB
+                                        </a>
+                                        </li>
+                                    
+                                    </ul>
+                                
+                            </li>
+                    
+                    
+                        <li class="navbar-item search search-popup-trigger">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fa-solid fa-magnifying-glass"></i></div>
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile drawer -->
+    <div class="navbar-drawer w-full absolute top-0 left-0 bg-background-color">
+        <ul class="drawer-navbar-list flex flex-col justify-start items-center">
+            
+                
+                    <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group " 
+                        href="/"  >
+                             
+                                
+                                    <i class="fa-regular fa-house"></i>
+                                
+                                首页
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+                
+                    <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group " 
+                        href="/archives"  >
+                             
+                                
+                                    <i class="fa-regular fa-archive"></i>
+                                
+                                文章
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+                
+                    <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group has-dropdown" 
+                        href="#" onClick="return false;">
+                            
+                                
+                                    <i class="fa-regular fa-user"></i>
+                                
+                                关于&nbsp;<i class="group-hover:rotate-180 transition-transform fa-solid fa-chevron-down"></i>
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                              
+                        
+                            <li class="text-base flex justify-center items-center hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                <a class="py-0.5" href="/about/me">我</a>
+                            </li>
+                        
+                            <li class="text-base flex justify-center items-center hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                <a class="py-0.5" target="_blank" rel="noopener" href="https://github.com/raphael-liu">GITHUB</a>
+                            </li>
+                        
+                    
+            
+
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="post-page-container">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            
+                <h1 class="article-title-regular">1372-二叉树中的最长交错路径</h1>
+            
+            </div>
+            
+                    
+        
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">Raphael Liu</span>
+                        
+                            <span class="author-label">Lv10</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2023-09-13 00:47:26</span>
+        <span class="mobile">2023-09-13 00:47:26</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2023-09-13 16:06:30</span>
+            <span class="mobile">2023-09-13 16:06:30</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/algorithm/">algorithm</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/MEDIUM/">MEDIUM</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        
+
+
+        <div class="article-content markdown-body">
+            <p>给你一棵以 <code>root</code> 为根的二叉树，二叉树中的交错路径定义如下：</p>
+<ul>
+<li>选择二叉树中 <strong>任意</strong>  节点和一个方向（左或者右）。</li>
+<li>如果前进方向为右，那么移动到当前节点的的右子节点，否则移动到它的左子节点。</li>
+<li>改变前进方向：左变右或者右变左。</li>
+<li>重复第二步和第三步，直到你在树中无法继续移动。</li>
+</ul>
+<p>交错路径的长度定义为： <strong>访问过的节点数目 - 1</strong> （单个节点的路径长度为 0 ）。</p>
+<p>请你返回给定树中最长 <strong>交错路径</strong>  的长度。</p>
+<p><strong>示例 1：</strong></p>
+<p><strong>![](<a class="link"   target="_blank" rel="noopener" href="https://assets.leetcode-cn.com/aliyun-lc-" >https://assets.leetcode-cn.com/aliyun-lc- <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a><br>upload&#x2F;uploads&#x2F;2020&#x2F;03&#x2F;07&#x2F;sample_1_1702.png)</strong></p>
+<pre><code>**输入：** root = [1,null,1,1,1,null,null,1,1,null,1,null,null,null,1,null,1]
+**输出：** 3
+**解释：** 蓝色节点为树中最长交错路径（右 -&gt; 左 -&gt; 右）。
+</code></pre>
+<p><strong>示例 2：</strong></p>
+<p><strong>![](<a class="link"   target="_blank" rel="noopener" href="https://assets.leetcode-cn.com/aliyun-lc-" >https://assets.leetcode-cn.com/aliyun-lc- <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a><br>upload&#x2F;uploads&#x2F;2020&#x2F;03&#x2F;07&#x2F;sample_2_1702.png)</strong></p>
+<pre><code>**输入：** root = [1,1,1,null,1,null,null,1,1,null,1]
+**输出：** 4
+**解释：** 蓝色节点为树中最长交错路径（左 -&gt; 右 -&gt; 左 -&gt; 右）。
+</code></pre>
+<p><strong>示例 3：</strong></p>
+<pre><code>**输入：** root = [1]
+**输出：** 0
+</code></pre>
+<p><strong>提示：</strong></p>
+<ul>
+<li>每棵树最多有 <code>50000</code> 个节点。</li>
+<li>每个节点的值在 <code>[1, 100]</code> 之间。</li>
+</ul>
+<h4 id="题目分析"><a href="#题目分析" class="headerlink" title="题目分析"></a>题目分析</h4><p>题目要求我们找到树当中一条最长的左右交错的路径。</p>
+<h4 id="方法一：动态规划"><a href="#方法一：动态规划" class="headerlink" title="方法一：动态规划"></a>方法一：动态规划</h4><p><strong>思路</strong></p>
+<p>记 f(u) 为从根到节点 u 的路径上以 u 结尾并且 u 是它父亲的左儿子的最长交错路径，g(u) 为从根到节点 u 的路径上以 u 结尾并且 u 是它父亲的右儿子的最长交错路径。记 u 的父节点为 {\rm father}(u)，我们可以推得这样的转移方程：</p>
+<p>\begin{aligned} &amp; f[u] &#x3D; g[{\rm father}(u)] + 1 &amp;,&amp; , u \text{是左儿子} \ &amp; g[u] &#x3D; f[{\rm father}(u)] + 1 &amp;,&amp; , u \text{是右儿子}  \end{aligned</p>
+<p>很好理解，因为我们需要一条「交错」的路，如果 u 是 {\rm father}(u) 的左儿子，那么 {\rm father}(u) 一定是 {\rm father}({\rm father}(u)) 的右儿子；反之，如果 u 是 {\rm father}(u) 的右儿子，那么 {\rm father}(u) 一定是 {\rm father}({\rm father}(u)) 的左儿子。</p>
+<p>实现的时候我们需要维护两个数组—— <code>f</code> 和 <code>g</code>，这里我们可以用从树的节点到整数的映射容器来实现，这样很方便从节点的指针映射到 f 和 g 的函数值。理论上我们可以用 DFS 或者 BFS 的任意一种框架来遍历这棵树，这里提供一个 BFS 的版本。我们用二元组 <code>(node, parent)</code> 作为状态，其中 <code>node</code> 表示当前待计算 <code>f</code> 和 <code>g</code> 的值的节点，<code>parent</code> 表示它的父亲。初始化的时候我们可以把每个点的 <code>f</code> 和 <code>g</code> 的值都置 0。在动态规划算法 BFS 过程中，先根据当前的点是左子树还是右子树更新 <code>f</code> 和 <code>g</code>，然后再拓展新状态入队。</p>
+<p>最终我们可以遍历 <code>f</code> 和 <code>g</code>，找到最大的答案。</p>
+<p>代码如下。</p>
+<p><strong>代码</strong></p>
+<div class="highlight-container" data-rel="C++"><figure class="iseeu highlight c++"><figcaption><span>[sol1]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    unordered_map &lt;TreeNode*, <span class="type">int</span>&gt; f, g;</span><br><span class="line">    </span><br><span class="line">    queue &lt;pair &lt;TreeNode *, TreeNode *&gt;&gt; q;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">dp</span><span class="params">(TreeNode *o)</span> </span>&#123;</span><br><span class="line">        f[o] = g[o] = <span class="number">0</span>;</span><br><span class="line">        q.<span class="built_in">push</span>(&#123;o, <span class="literal">nullptr</span>&#125;);</span><br><span class="line">        <span class="keyword">while</span> (!q.<span class="built_in">empty</span>()) &#123;</span><br><span class="line">            <span class="keyword">auto</span> y = q.<span class="built_in">front</span>(); q.<span class="built_in">pop</span>();</span><br><span class="line">            <span class="keyword">auto</span> x = y.second, u = y.first;</span><br><span class="line">            f[u] = g[u] = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">if</span> (x) &#123;</span><br><span class="line">                <span class="keyword">if</span> (x-&gt;left == u) f[u] = g[x] + <span class="number">1</span>;</span><br><span class="line">                <span class="keyword">if</span> (x-&gt;right == u) g[u] = f[x] + <span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (u-&gt;left) q.<span class="built_in">push</span>(&#123;u-&gt;left, u&#125;);</span><br><span class="line">            <span class="keyword">if</span> (u-&gt;right) q.<span class="built_in">push</span>(&#123;u-&gt;right, u&#125;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">longestZigZag</span><span class="params">(TreeNode* root)</span> </span>&#123;</span><br><span class="line">        <span class="built_in">dp</span>(root);</span><br><span class="line">        <span class="type">int</span> maxAns = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">const</span> <span class="keyword">auto</span> &amp;u: f) maxAns = <span class="built_in">max</span>(maxAns, <span class="built_in">max</span>(u.second, g[u.first]));</span><br><span class="line">        <span class="keyword">return</span> maxAns;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><figcaption><span>[sol1]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    Map&lt;TreeNode, Integer&gt; f = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;TreeNode, Integer&gt;();</span><br><span class="line">    Map&lt;TreeNode, Integer&gt; g = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;TreeNode, Integer&gt;();</span><br><span class="line">    Queue&lt;TreeNode[]&gt; q = <span class="keyword">new</span> <span class="title class_">LinkedList</span>&lt;TreeNode[]&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">longestZigZag</span><span class="params">(TreeNode root)</span> &#123;</span><br><span class="line">        dp(root);</span><br><span class="line">        <span class="type">int</span> <span class="variable">maxAns</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (TreeNode u : f.keySet()) &#123;</span><br><span class="line">            maxAns = Math.max(maxAns, Math.max(f.get(u), g.get(u)));</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> maxAns;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">dp</span><span class="params">(TreeNode o)</span> &#123;</span><br><span class="line">        f.put(o, <span class="number">0</span>);</span><br><span class="line">        g.put(o, <span class="number">0</span>);</span><br><span class="line">        q.offer(<span class="keyword">new</span> <span class="title class_">TreeNode</span>[]&#123;o, <span class="literal">null</span>&#125;);</span><br><span class="line">        <span class="keyword">while</span> (!q.isEmpty()) &#123;</span><br><span class="line">            TreeNode[] y = q.poll();</span><br><span class="line">            <span class="type">TreeNode</span> <span class="variable">u</span> <span class="operator">=</span> y[<span class="number">0</span>], x = y[<span class="number">1</span>];</span><br><span class="line">            f.put(u, <span class="number">0</span>);</span><br><span class="line">            g.put(u, <span class="number">0</span>);</span><br><span class="line">            <span class="keyword">if</span> (x != <span class="literal">null</span>) &#123;</span><br><span class="line">                <span class="keyword">if</span> (x.left == u) &#123;</span><br><span class="line">                    f.put(u, g.get(x) + <span class="number">1</span>);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">if</span> (x.right == u) &#123;</span><br><span class="line">                    g.put(u, f.get(x) + <span class="number">1</span>);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (u.left != <span class="literal">null</span>) &#123;</span><br><span class="line">                q.offer(<span class="keyword">new</span> <span class="title class_">TreeNode</span>[]&#123;u.left, u&#125;);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (u.right != <span class="literal">null</span>) &#123;</span><br><span class="line">                q.offer(<span class="keyword">new</span> <span class="title class_">TreeNode</span>[]&#123;u.right, u&#125;);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><figcaption><span>[sol1]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">longestZigZag</span>(<span class="params">self, root: TreeNode</span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        f, g = collections.defaultdict(<span class="built_in">int</span>), collections.defaultdict(<span class="built_in">int</span>)</span><br><span class="line">        q = collections.deque([(root, <span class="literal">None</span>)])</span><br><span class="line">        <span class="keyword">while</span> <span class="built_in">len</span>(q) &gt; <span class="number">0</span>:</span><br><span class="line">            node, parent = q.popleft()</span><br><span class="line">            <span class="keyword">if</span> parent:</span><br><span class="line">                <span class="keyword">if</span> parent.left == node:</span><br><span class="line">                    f[node] = g[parent] + <span class="number">1</span></span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    g[node] = f[parent] + <span class="number">1</span></span><br><span class="line">            <span class="keyword">if</span> node.left:</span><br><span class="line">                q.append((node.left, node))</span><br><span class="line">            <span class="keyword">if</span> node.right:</span><br><span class="line">                q.append((node.right, node))</span><br><span class="line">        </span><br><span class="line">        maxans = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> _, val <span class="keyword">in</span> f.items():</span><br><span class="line">            maxans = <span class="built_in">max</span>(maxans, val)</span><br><span class="line">        <span class="keyword">for</span> _, val <span class="keyword">in</span> g.items():</span><br><span class="line">            maxans = <span class="built_in">max</span>(maxans, val)</span><br><span class="line">        <span class="keyword">return</span> maxans</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>复杂度</strong></p>
+<p>记 n 为树上的节点总数。</p>
+<ul>
+<li><p>时间复杂度：在 BFS 的过程中，每个点只被访问一次，所以这里的渐进时间复杂度为 O(n)。</p>
+</li>
+<li><p>空间复杂度：我们这里开了 <code>f</code> 和 <code>g</code> 两个大小为 n 的数组和一个用来做 BFS 的队列。每个点最多进队两次（一次在初始化的过程中，一次在动态规划的过程中），所以队列最大的时候不会超过 n 个元素。所以这里的渐进空间复杂度为 O(n)。</p>
+</li>
+</ul>
+<h4 id="方法二：深度优先搜索"><a href="#方法二：深度优先搜索" class="headerlink" title="方法二：深度优先搜索"></a>方法二：深度优先搜索</h4><p><strong>思路</strong></p>
+<p>考虑以上的 DP 对于每个节点 u 只使用到了父亲节点的信息，所以我们可以在 DFS 的时候作为参数传递下来，省掉两个数组的空间开销。</p>
+<p><strong>思考：是否需要把 <code>f</code> 和 <code>g</code> 的值都传递下来？</strong> 其实是不需要的，实际上我们只需要传递「当前」这个点应该走的方向（「向左」或者「向右」）<code>dir</code>，以及以这个点结尾的最长交错路径的长度 <code>len</code>。对于 <code>dir</code> 这个参数，这里 <code>0</code> 表示向左，<code>1</code> 表示向右。</p>
+<p>在 DFS 的过程中，每次我们都把当前点的 <code>len</code> 参数和答案 <code>maxAns</code> 打擂台，这样可以比出一个最大的。然后我们根据 <code>dir</code> 分类讨论。如果当前点应该向左且可以向左，那么就让他向左走一步，新的 <code>len</code> 是当前的 <code>len</code> 加一。如果的的点应该向左但是却没有左子树呢？很无奈那就只能向右了，这个时候 <code>len</code> 的值应该「重置」。</p>
+<p><strong>思考：「重置」为什么是把 <code>len</code> 变成 1 而不是 0？</strong> 因为当前的点下传到它的子节点的时候已经走了一条长度为 1 的边。<strong>那么为什么 <code>main</code> 函数中传入的 <code>len</code> 值是 0 而不是 1 呢？</strong> 因为 <code>main</code> 函数中的 <code>root</code> 是没有父亲节点的，所以当前已经走过的路为 0。</p>
+<p>以下是代码实现。</p>
+<p><strong>代码</strong></p>
+<div class="highlight-container" data-rel="C++"><figure class="iseeu highlight c++"><figcaption><span>[sol2]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="type">int</span> maxAns;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* 0 =&gt; left, 1 =&gt; right */</span></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">dfs</span><span class="params">(TreeNode* o, <span class="type">bool</span> dir, <span class="type">int</span> len)</span> </span>&#123;</span><br><span class="line">        maxAns = <span class="built_in">max</span>(maxAns, len);</span><br><span class="line">        <span class="keyword">if</span> (!dir) &#123;</span><br><span class="line">            <span class="keyword">if</span> (o-&gt;left) <span class="built_in">dfs</span>(o-&gt;left, <span class="number">1</span>, len + <span class="number">1</span>);</span><br><span class="line">            <span class="keyword">if</span> (o-&gt;right) <span class="built_in">dfs</span>(o-&gt;right, <span class="number">0</span>, <span class="number">1</span>);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (o-&gt;right) <span class="built_in">dfs</span>(o-&gt;right, <span class="number">0</span>, len + <span class="number">1</span>);</span><br><span class="line">            <span class="keyword">if</span> (o-&gt;left) <span class="built_in">dfs</span>(o-&gt;left, <span class="number">1</span>, <span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; </span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">longestZigZag</span><span class="params">(TreeNode* root)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (!root) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        maxAns = <span class="number">0</span>;</span><br><span class="line">        <span class="built_in">dfs</span>(root, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">        <span class="built_in">dfs</span>(root, <span class="number">1</span>, <span class="number">0</span>);</span><br><span class="line">        <span class="keyword">return</span> maxAns;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><figcaption><span>[sol2]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="type">int</span> maxAns;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">longestZigZag</span><span class="params">(TreeNode root)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (root == <span class="literal">null</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        maxAns = <span class="number">0</span>;</span><br><span class="line">        dfs(root, <span class="literal">false</span>, <span class="number">0</span>);</span><br><span class="line">        dfs(root, <span class="literal">true</span>, <span class="number">0</span>);</span><br><span class="line">        <span class="keyword">return</span> maxAns;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">dfs</span><span class="params">(TreeNode o, <span class="type">boolean</span> dir, <span class="type">int</span> len)</span> &#123;</span><br><span class="line">        maxAns = Math.max(maxAns, len);</span><br><span class="line">        <span class="keyword">if</span> (!dir) &#123;</span><br><span class="line">            <span class="keyword">if</span> (o.left != <span class="literal">null</span>) &#123;</span><br><span class="line">                dfs(o.left, <span class="literal">true</span>, len + <span class="number">1</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (o.right != <span class="literal">null</span>) &#123;</span><br><span class="line">                dfs(o.right, <span class="literal">false</span>, <span class="number">1</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (o.right != <span class="literal">null</span>) &#123;</span><br><span class="line">                dfs(o.right, <span class="literal">false</span>, len + <span class="number">1</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (o.left != <span class="literal">null</span>) &#123;</span><br><span class="line">                dfs(o.left, <span class="literal">true</span>, <span class="number">1</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><figcaption><span>[sol2]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">longestZigZag</span>(<span class="params">self, root: TreeNode</span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        maxans = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">dfs</span>(<span class="params">o, direction, length</span>):</span><br><span class="line">            <span class="keyword">if</span> <span class="keyword">not</span> o:</span><br><span class="line">                <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">            <span class="keyword">nonlocal</span> maxans</span><br><span class="line">            maxans = <span class="built_in">max</span>(maxans, length)</span><br><span class="line">            <span class="keyword">if</span> direction == <span class="number">0</span>:</span><br><span class="line">                dfs(o.left, <span class="number">1</span>, length + <span class="number">1</span>)</span><br><span class="line">                dfs(o.right, <span class="number">0</span>, <span class="number">1</span>)</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                dfs(o.right, <span class="number">0</span>, length + <span class="number">1</span>)</span><br><span class="line">                dfs(o.left, <span class="number">1</span>, <span class="number">1</span>)</span><br><span class="line">        </span><br><span class="line">        dfs(root, <span class="number">0</span>, <span class="number">0</span>)</span><br><span class="line">        dfs(root, <span class="number">1</span>, <span class="number">0</span>)</span><br><span class="line">        <span class="keyword">return</span> maxans</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>复杂度分析</strong></p>
+<ul>
+<li><p>时间复杂度：在 DFS 的过程中，这棵树中的所有节点都会被访问一次，所以如果节点总数是 n 的话，那么渐进时间复杂度就是 O(n)。</p>
+</li>
+<li><p>空间复杂度：这里用到的辅助空间是 <code>maxAns</code> 变量，所以渐进空间复杂度是 O(1)。</p>
+</li>
+</ul>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <!--<div class="article-copyright-info-container">-->
+    <!--&lt;!&ndash;<ul>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><strong>Title:</strong> 1372-二叉树中的最长交错路径</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><strong>Author:</strong> Raphael Liu</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><strong>Created at&ndash;&gt;-->
+                <!--&lt;!&ndash;:</strong> 2023-09-13 00:47:26</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;&ndash;&gt;-->
+            <!--&lt;!&ndash;<li>&ndash;&gt;-->
+                <!--&lt;!&ndash;<strong>Updated at&ndash;&gt;-->
+                    <!--&lt;!&ndash;:</strong> 2023-09-13 16:06:30&ndash;&gt;-->
+            <!--&lt;!&ndash;</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;<li>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;<strong>Link:</strong> https://fida.ltd/2023/09/13/1372-二叉树中的最长交错路径/&ndash;&gt;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;</li>&ndash;&gt;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;<li>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;<strong>&ndash;&gt;&ndash;&gt;-->
+                <!--&lt;!&ndash;&lt;!&ndash;License:&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;</strong>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0</a>.&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;&ndash;&gt;&ndash;&gt;-->
+
+        <!--&lt;!&ndash;&lt;!&ndash;</li>&ndash;&gt;&ndash;&gt;-->
+    <!--&lt;!&ndash;</ul>&ndash;&gt;-->
+<!--</div>-->
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box">
+                
+                    <li class="tag-item">
+                        <a href="/tags/algorithm/">#algorithm</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item">
+                        <a href="/tags/MEDIUM/">#MEDIUM</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                        rel="prev"
+                        href="/2023/09/13/1371-%E6%AF%8F%E4%B8%AA%E5%85%83%E9%9F%B3%E5%8C%85%E5%90%AB%E5%81%B6%E6%95%B0%E6%AC%A1%E7%9A%84%E6%9C%80%E9%95%BF%E5%AD%90%E5%AD%97%E7%AC%A6%E4%B8%B2/"
+                        >
+                            <span class="left arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">1371-每个元音包含偶数次的最长子字符串</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                        rel="next"
+                        href="/2023/09/13/1373-%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E5%AD%90%E6%A0%91%E7%9A%84%E6%9C%80%E5%A4%A7%E9%94%AE%E5%80%BC%E5%92%8C/"
+                        >
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">1373-二叉搜索子树的最大键值和</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+
+        
+            <div class="comment-container">
+                <div class="comments-container pjax">
+    <div id="comment-anchor"></div>
+    <div class="comment-area-title">
+        <i class="fa-solid fa-comments"></i>&nbsp;Comments
+    </div>
+    
+
+        
+            
+ 
+    <div id="waline"></div>
+    <script type="module"  data-swup-reload-script>
+        import { init } from 'https://evan.beee.top/js/waline.mjs';
+
+        function loadWaline() {
+            init({
+                el: '#waline',
+                serverURL: 'https://example.example.com',
+                lang: 'zh-CN',
+                dark: 'body[class~="dark-mode"]',
+                requiredMeta: ['nick','mail'], // cannot customize by theme config, change it yourself
+            });
+        }
+
+        if ('true') {
+            const loadWalineTimeout = setTimeout(() => {
+                loadWaline();
+                clearTimeout(loadWalineTimeout);
+            }, 1000);
+        } else {
+            window.addEventListener('DOMContentLoaded', loadWaline);
+        }
+        
+    </script>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+
+    
+        <div class="toc-content-container">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">On this page</div>
+        <div class="page-title">1372-二叉树中的最长交错路径</div>
+        
+
+    </div>
+</div>
+        </div>
+    
+</div>
+
+
+
+                
+
+            </div>
+
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2022</span>
+              -
+            
+            2023&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">Raphael Liu</a>
+        </div>
+        
+            <script data-swup-reload-script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">UV:</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">PV:</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <!--<div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">-->
+            <!--<span class="lg:block text-sm">powered_by</span>-->
+            <!--&lt;!&ndash;<span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.4.4</a></span>&ndash;&gt;-->
+        <!--</div>-->
+        
+        <!---->
+            <!--<div>-->
+                <!--runtime <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hours <span class="odometer" id="runtime_minutes"></span> minutes <span class="odometer" id="runtime_seconds"></span> seconds-->
+            <!--</div>-->
+        <!---->
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fa-regular fa-comments"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-expand-width flex justify-center items-center">
+            <i class="fa-regular fa-expand"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fa-solid fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa-solid fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa-solid fa-spinner fa-spin-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+    
+<script src="/js/libs/Swup.min.js"></script>
+
+<script src="/js/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/libs/SwupScrollPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+        ],
+        containers: ["#swup"],
+    });
+
+    swup.hooks.on("page:view", () => {
+        Global.refresh();
+    });
+
+    // if (document.readyState === "complete") {
+    //
+    // } else {
+    //     document.addEventListener("DOMContentLoaded", () => init());
+    // }
+</script>
+
+
+
+
+
+
+<script src="/js/utils.js" type="module"></script>
+
+<script src="/js/main.js" type="module"></script>
+
+<script src="/js/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/layouts/categoryList.js" type="module"></script>
+
+
+
+    
+<script src="/js/tools/localSearch.js"></script>
+
+
+
+
+    
+<script src="/js/tools/codeBlock.js"></script>
+
+
+
+
+    
+<script src="/js/layouts/lazyload.js"></script>
+
+
+
+
+    
+<script src="/js/tools/runtime.js"></script>
+
+    
+<script src="/js/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/libs/Typed.min.js"></script>
+
+  
+<script src="/js/plugins/typed.js"></script>
+
+
+
+
+
+
+
+<div class="post-scripts" data-swup-reload-script>
+    
+        
+<script src="/js/libs/anime.min.js"></script>
+
+        
+<script src="/js/tools/tocToggle.js" type="module"></script>
+
+<script src="/js/layouts/toc.js" type="module"></script>
+
+<script src="/js/plugins/tabs.js" type="module"></script>
+
+    
+</div>
+
+
+</body>
+</html>

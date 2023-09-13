@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="Raphael Liu">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/2023/09/13/1391-检查网格中是否存在有效路径/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="给你一个 m x n 的网格 grid。网格里的每个单元都代表一条街道。grid[i][j] 的街道可以是：  1 表示连接左单元格和右单元格的街道。 2 表示连接上单元格和下单元格的街道。 3  表示连接左单元格和下单元格的街道。 4 表示连接右单元格和下单元格的街道。 5 表示连接左单元格和上单元格的街道。 6 表示连接右单元格和上单元格的街道。  ![](https:&#x2F;&#x2F;assets.lee">
+<meta property="og:type" content="article">
+<meta property="og:title" content="1391-检查网格中是否存在有效路径">
+<meta property="og:url" content="http://example.com/2023/09/13/1391-%E6%A3%80%E6%9F%A5%E7%BD%91%E6%A0%BC%E4%B8%AD%E6%98%AF%E5%90%A6%E5%AD%98%E5%9C%A8%E6%9C%89%E6%95%88%E8%B7%AF%E5%BE%84/index.html">
+<meta property="og:site_name" content="Raphael&#39;s Blog">
+<meta property="og:description" content="给你一个 m x n 的网格 grid。网格里的每个单元都代表一条街道。grid[i][j] 的街道可以是：  1 表示连接左单元格和右单元格的街道。 2 表示连接上单元格和下单元格的街道。 3  表示连接左单元格和下单元格的街道。 4 表示连接右单元格和下单元格的街道。 5 表示连接左单元格和上单元格的街道。 6 表示连接右单元格和上单元格的街道。  ![](https:&#x2F;&#x2F;assets.lee">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://assets.leetcode-cn.com/aliyun-lc-upload/uploads/2020/03/21/e1.png">
+<meta property="og:image" content="https://assets.leetcode-cn.com/aliyun-lc-upload/uploads/2020/03/21/e2.png">
+<meta property="article:published_time" content="2023-09-12T16:47:26.000Z">
+<meta property="article:modified_time" content="2023-09-13T09:01:06.913Z">
+<meta property="article:author" content="Raphael Liu">
+<meta property="article:tag" content="algorithm">
+<meta property="article:tag" content="MEDIUM">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://assets.leetcode-cn.com/aliyun-lc-upload/uploads/2020/03/21/e1.png">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/redefine-favicon.svg" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/redefine-favicon.svg">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/redefine-favicon.svg">
+    <!--- Page Info-->
+    
+    <title>
+        
+            1391-检查网格中是否存在有效路径 -
+        
+        Raphael&#39;s Blog
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/css/build/styles.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/fonts.css">
+
+    
+<link rel="stylesheet" href="/fonts/Satoshi/satoshi.css">
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+
+    <!--- Inject Part-->
+    
+    <script id="hexo-configurations">
+    let Global = window.Global || {};
+    Global.hexo_config = {"hostname":"example.com","root":"/","language":"zh_CN"};
+    Global.theme_config = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":true,"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"open_graph":true,"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-wqery6-light.webp","dark":"/images/wallhaven-wqery6-dark.webp"},"title":"Raphael's Blog","subtitle":{"text":["格物致知","坚持做正确的事情"],"hitokoto":{"enable":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":false,"links":{"github":"https://github.com/raphael-liu","email":"raphael@buaa.edu.cn# your email"},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.4.4","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"links":{"首页":{"path":"/","icon":"fa-regular fa-house"},"文章":{"path":"/archives","icon":"fa-regular fa-archive"},"关于":{"icon":"fa-regular fa-user","submenus":{"我":"/about/me","Github":"https://github.com/raphael-liu"}}},"search":{"enable":true,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"links":null},"article_date_format":"auto","categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}},"footerStart":"2022/8/17 11:45:14"};
+    Global.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    Global.data_config = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="swup-progress-icon">
+            <i class="fa-solid fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container" id="swup">
+
+    
+
+    <div class="main-content-container">
+
+
+        <div class="main-content-header">
+            <header class="navbar-container">
+    
+    <div class="navbar-content">
+        <div class="left">
+            
+            <a class="logo-title" href="http://example.com/">
+                
+                Raphael&#39;s Blog
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/"  >
+                                    
+                                        
+                                            <i class="fa-regular fa-house"></i>
+                                        
+                                        首页
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/archives"  >
+                                    
+                                        
+                                            <i class="fa-regular fa-archive"></i>
+                                        
+                                        文章
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="has-dropdown" 
+                                    href="#" onClick="return false;">
+                                    
+                                        
+                                            <i class="fa-regular fa-user"></i>
+                                        
+                                        关于&nbsp;<i class="fa-solid fa-chevron-down"></i>
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                                    <ul class="sub-menu">
+                                    
+                                        <li>
+                                        <a href="/about/me">我
+                                        </a>
+                                        </li>
+                                    
+                                        <li>
+                                        <a target="_blank" rel="noopener" href="https://github.com/raphael-liu">GITHUB
+                                        </a>
+                                        </li>
+                                    
+                                    </ul>
+                                
+                            </li>
+                    
+                    
+                        <li class="navbar-item search search-popup-trigger">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fa-solid fa-magnifying-glass"></i></div>
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile drawer -->
+    <div class="navbar-drawer w-full absolute top-0 left-0 bg-background-color">
+        <ul class="drawer-navbar-list flex flex-col justify-start items-center">
+            
+                
+                    <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group " 
+                        href="/"  >
+                             
+                                
+                                    <i class="fa-regular fa-house"></i>
+                                
+                                首页
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+                
+                    <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group " 
+                        href="/archives"  >
+                             
+                                
+                                    <i class="fa-regular fa-archive"></i>
+                                
+                                文章
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+                
+                    <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group has-dropdown" 
+                        href="#" onClick="return false;">
+                            
+                                
+                                    <i class="fa-regular fa-user"></i>
+                                
+                                关于&nbsp;<i class="group-hover:rotate-180 transition-transform fa-solid fa-chevron-down"></i>
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                              
+                        
+                            <li class="text-base flex justify-center items-center hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                <a class="py-0.5" href="/about/me">我</a>
+                            </li>
+                        
+                            <li class="text-base flex justify-center items-center hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                <a class="py-0.5" target="_blank" rel="noopener" href="https://github.com/raphael-liu">GITHUB</a>
+                            </li>
+                        
+                    
+            
+
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="post-page-container">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            
+                <h1 class="article-title-regular">1391-检查网格中是否存在有效路径</h1>
+            
+            </div>
+            
+                    
+        
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">Raphael Liu</span>
+                        
+                            <span class="author-label">Lv10</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2023-09-13 00:47:26</span>
+        <span class="mobile">2023-09-13 00:47:26</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2023-09-13 17:01:06</span>
+            <span class="mobile">2023-09-13 17:01:06</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/algorithm/">algorithm</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/MEDIUM/">MEDIUM</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        
+
+
+        <div class="article-content markdown-body">
+            <p>给你一个 <em>m</em> x <em>n</em> 的网格 <code>grid</code>。网格里的每个单元都代表一条街道。<code>grid[i][j]</code> 的街道可以是：</p>
+<ul>
+<li><strong>1</strong> 表示连接左单元格和右单元格的街道。</li>
+<li><strong>2</strong> 表示连接上单元格和下单元格的街道。</li>
+<li><strong>3</strong>  表示连接左单元格和下单元格的街道。</li>
+<li><strong>4</strong> 表示连接右单元格和下单元格的街道。</li>
+<li><strong>5</strong> 表示连接左单元格和上单元格的街道。</li>
+<li><strong>6</strong> 表示连接右单元格和上单元格的街道。</li>
+</ul>
+<p>![](<a class="link"   target="_blank" rel="noopener" href="https://assets.leetcode-cn.com/aliyun-lc-" >https://assets.leetcode-cn.com/aliyun-lc- <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a><br>upload&#x2F;uploads&#x2F;2020&#x2F;03&#x2F;21&#x2F;main.png)</p>
+<p>你最开始从左上角的单元格 <code>(0,0)</code> 开始出发，网格中的「有效路径」是指从左上方的单元格 <code>(0,0)</code> 开始、一直到右下方的 <code>(m-1,n-1)</code><br>结束的路径。 <strong>该路径必须只沿着街道走</strong> 。</p>
+<p><strong>注意：</strong> 你 <strong>不能</strong> 变更街道。</p>
+<p>如果网格中存在有效的路径，则返回 <code>true</code>，否则返回 <code>false</code> 。</p>
+<p><strong>示例 1：</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://assets.leetcode-cn.com/aliyun-lc-upload/uploads/2020/03/21/e1.png"
+                     
+                ></p>
+<pre><code>**输入：** grid = [[2,4,3],[6,5,2]]
+**输出：** true
+**解释：** 如图所示，你可以从 (0, 0) 开始，访问网格中的所有单元格并到达 (m - 1, n - 1) 。
+</code></pre>
+<p><strong>示例 2：</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://assets.leetcode-cn.com/aliyun-lc-upload/uploads/2020/03/21/e2.png"
+                     
+                ></p>
+<pre><code>**输入：** grid = [[1,2,1],[1,2,1]]
+**输出：** false
+**解释：** 如图所示，单元格 (0, 0) 上的街道没有与任何其他单元格上的街道相连，你只会停在 (0, 0) 处。
+</code></pre>
+<p><strong>示例 3：</strong></p>
+<pre><code>**输入：** grid = [[1,1,2]]
+**输出：** false
+**解释：** 你会停在 (0, 1)，而且无法到达 (0, 2) 。
+</code></pre>
+<p><strong>示例 4：</strong></p>
+<pre><code>**输入：** grid = [[1,1,1,1,1,1,3]]
+**输出：** true
+</code></pre>
+<p><strong>示例 5：</strong></p>
+<pre><code>**输入：** grid = [[2],[2],[2],[2],[2],[2],[6]]
+**输出：** true
+</code></pre>
+<p><strong>提示：</strong></p>
+<ul>
+<li><code>m == grid.length</code></li>
+<li><code>n == grid[i].length</code></li>
+<li><code>1 &lt;= m, n &lt;= 300</code></li>
+<li><code>1 &lt;= grid[i][j] &lt;= 6</code></li>
+</ul>
+<h4 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h4><p><strong>静态连通性</strong></p>
+<p>如果题目中先给定了整个图（例如本题通过二维数组 <code>grid</code> 直接给出了整个网格的信息），再给出关于连通性的询问（例如本题询问起点到终点是否存在一条路径），那么称其为「静态连通性」。其相反的定义为「动态连通性」，即图的信息和关于连通性的询问是交替给出的。换句话说，在给出一次关于连通性的询问后，还可以修改图的一部分，这样就是「动态连通性」。例如，如果本题有若干次询问，每次询问给定 <code>grid</code> 中的一个位置，将其修改后再判断起点和终点是否存在一条路径，且询问中对 <code>grid</code> 的修改会保留至后续的所有询问中，这样就是一道「动态连通性」的题目。</p>
+<p><strong>关于本题</strong></p>
+<p>对于静态连通性的题目，一般来说可以使用深度优先搜索、广度优先搜索以及并查集来实现。这三种方法的相似度很高，难点都在于如何建图，即确定哪些点对之间存在一条边。在建图完成之后，我们用任意一种算法都可以很方便得判断出某两个点是否连通。</p>
+<p>在本题解中，我们只介绍并查集的方法。我们可以把每个「单元格」看作是图上的「点」，把单元格与单元格之间的「直接可达关系」看作是「边」。这里的「直接可达关系」是指从某个单元格可以「直接」到达它上下左右某个单元格的关系：例如，单元格中的 1 表示连接左单元格和右单元格的街道，单元格中的 3 表示连接左单元格和下单元格的街道，那么当有一个 1 在 3 的左边的时候，这两个单元格就具有这种「直接可达关系」。类似的，我们也可以用并查集来维护这种关系。</p>
+<p>那么新的问题又来了，并查集中的点是一维的，而我们这里的单元格坐标是二维的，所以我们要做的第一步是把每一个单元格坐标映射成一个唯一的整数值，作为每个单元格的 ID。假设这里的单元格一共有 m 行 n 列，左上角为 (0, 0)，右下角为 (m - 1, n - 1)，坐标 (x, y) 可以这样映射到一个唯一的整数 {\rm id：{\rm id} &#x3D; x \times n + y。这样问题就得到了解决。</p>
+<p>考虑完这些问题之后，我们发现本题的难点在于：如何快速地判断两个相邻的单元格是否直接可达呢？判断部分的代码编写复杂度直接影响了代码编写的难易程度和可读性，因此下面我们介绍两种不同的判断方法。</p>
+<h4 id="方法一：相邻关系建图"><a href="#方法一：相邻关系建图" class="headerlink" title="方法一：相邻关系建图"></a>方法一：相邻关系建图</h4><p><strong>思路</strong></p>
+<p>一种简单的判断方法是：对于数组 <code>grid</code> 中的某个单元格 (x, y)，根据 <code>grid[x][y]</code> 值的不同，它最多会连接两个不同方向的单元格。我们实现四个函数 <code>detectL(x, y)</code>、<code>detectR(x, y)</code>、<code>detectU(x, y)</code> 以及 <code>detectD(x, y)</code>，在 (x, y) 连接了左、右、上、下四个方向时分别调用对应的函数。例如当 <code>grid[x][y]</code> 的值为 <code>1</code> 时，表示连接左右两个方向，那么调用 <code>detectL(x, y)</code> 和 <code>detectR(x, y)</code> 两个函数。</p>
+<p>这些函数的作用是什么呢？我们还是以 <code>grid[x][y] = 1</code> 为例子。当调用 <code>detectL(x, y)</code> 时，我们需要考虑左边的单元格 (x, y - 1)，这个单元格必须能够与它的右侧，即 (x, y) 相连，那么 <code>grid[x][y - 1]</code> 的值必须为 <code>[1, 4, 6]</code> 中的一个。因此在 <code>detectL(x, y)</code> 函数中，我们会先判断单元格 (x, y - 1) 是否存在，若存在，再判断 <code>grid[x][y - 1]</code> 的值是否满足要求。对于其余的三个函数，它们的作用也是类似的。</p>
+<p>这样以来，我们遍历整个网格，对于其中的每一个单元格，根据它的 <code>grid</code> 值调用四个函数中的两个，并在满足要求时将该单元格与相邻的单元格相连（即在并查集中将它们合并）。在遍历结束之后，我们判断左上角和右下角在并查集中是否属于同一集合即可。</p>
+<p><strong>代码</strong></p>
+<div class="highlight-container" data-rel="C++"><figure class="iseeu highlight c++"><figcaption><span>[sol1-C++]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="type">static</span> <span class="keyword">constexpr</span> <span class="type">int</span> MAX_N = <span class="number">300</span> * <span class="number">300</span> + <span class="number">5</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">struct</span> <span class="title class_">DisjointSet</span> &#123;</span><br><span class="line">        <span class="type">int</span> f[MAX_N];</span><br><span class="line">        </span><br><span class="line">        <span class="built_in">DisjointSet</span>() &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; MAX_N; ++i) &#123;</span><br><span class="line">                f[i] = i;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="function"><span class="type">int</span> <span class="title">find</span><span class="params">(<span class="type">int</span> x)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> x == f[x] ? x : f[x] = <span class="built_in">find</span>(f[x]);</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="function"><span class="type">void</span> <span class="title">merge</span><span class="params">(<span class="type">int</span> x, <span class="type">int</span> y)</span> </span>&#123;</span><br><span class="line">            f[<span class="built_in">find</span>(x)] = <span class="built_in">find</span>(y);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; ds;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="type">bool</span> <span class="title">hasValidPath</span><span class="params">(vector&lt;vector&lt;<span class="type">int</span>&gt;&gt;&amp; grid)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> m = grid.<span class="built_in">size</span>(), n = grid[<span class="number">0</span>].<span class="built_in">size</span>();</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">auto</span> getId = [&amp;] (<span class="type">int</span> x, <span class="type">int</span> y) &#123;</span><br><span class="line">            <span class="keyword">return</span> x * n + y;</span><br><span class="line">        &#125;;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">auto</span> detectL = [&amp;] (<span class="type">int</span> x, <span class="type">int</span> y) &#123;</span><br><span class="line">            <span class="keyword">if</span> (y - <span class="number">1</span> &gt;= <span class="number">0</span> &amp;&amp; (grid[x][y - <span class="number">1</span>] == <span class="number">4</span> || grid[x][y - <span class="number">1</span>] == <span class="number">6</span> || grid[x][y - <span class="number">1</span>] == <span class="number">1</span>)) &#123;</span><br><span class="line">                ds.<span class="built_in">merge</span>(<span class="built_in">getId</span>(x, y), <span class="built_in">getId</span>(x, y - <span class="number">1</span>));</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">auto</span> detectR = [&amp;] (<span class="type">int</span> x, <span class="type">int</span> y) &#123;</span><br><span class="line">            <span class="keyword">if</span> (y + <span class="number">1</span> &lt; n &amp;&amp; (grid[x][y + <span class="number">1</span>] == <span class="number">3</span> || grid[x][y + <span class="number">1</span>] == <span class="number">5</span> || grid[x][y + <span class="number">1</span>] == <span class="number">1</span>)) &#123;</span><br><span class="line">                ds.<span class="built_in">merge</span>(<span class="built_in">getId</span>(x, y), <span class="built_in">getId</span>(x, y + <span class="number">1</span>));</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">auto</span> detectU = [&amp;] (<span class="type">int</span> x, <span class="type">int</span> y) &#123;</span><br><span class="line">            <span class="keyword">if</span> (x - <span class="number">1</span> &gt;= <span class="number">0</span> &amp;&amp; (grid[x - <span class="number">1</span>][y] == <span class="number">3</span> || grid[x - <span class="number">1</span>][y] == <span class="number">4</span> || grid[x - <span class="number">1</span>][y] == <span class="number">2</span>)) &#123;</span><br><span class="line">                ds.<span class="built_in">merge</span>(<span class="built_in">getId</span>(x, y), <span class="built_in">getId</span>(x - <span class="number">1</span>, y));</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">auto</span> detectD = [&amp;] (<span class="type">int</span> x, <span class="type">int</span> y) &#123;</span><br><span class="line">            <span class="keyword">if</span> (x + <span class="number">1</span> &lt; m &amp;&amp; (grid[x + <span class="number">1</span>][y] == <span class="number">5</span> || grid[x + <span class="number">1</span>][y] == <span class="number">6</span> || grid[x + <span class="number">1</span>][y] == <span class="number">2</span>)) &#123;</span><br><span class="line">                ds.<span class="built_in">merge</span>(<span class="built_in">getId</span>(x, y), <span class="built_in">getId</span>(x + <span class="number">1</span>, y));</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">auto</span> handler = [&amp;] (<span class="type">int</span> x, <span class="type">int</span> y) &#123;</span><br><span class="line">            <span class="keyword">switch</span> (grid[x][y]) &#123;</span><br><span class="line">                <span class="keyword">case</span> <span class="number">1</span>: &#123;</span><br><span class="line">                    <span class="built_in">detectL</span>(x, y); <span class="built_in">detectR</span>(x, y);</span><br><span class="line">                &#125; <span class="keyword">break</span>;</span><br><span class="line">                <span class="keyword">case</span> <span class="number">2</span>: &#123;</span><br><span class="line">                    <span class="built_in">detectU</span>(x, y); <span class="built_in">detectD</span>(x, y);</span><br><span class="line">                &#125; <span class="keyword">break</span>;</span><br><span class="line">                <span class="keyword">case</span> <span class="number">3</span>: &#123;</span><br><span class="line">                    <span class="built_in">detectL</span>(x, y); <span class="built_in">detectD</span>(x, y);</span><br><span class="line">                &#125; <span class="keyword">break</span>;</span><br><span class="line">                <span class="keyword">case</span> <span class="number">4</span>: &#123;</span><br><span class="line">                    <span class="built_in">detectR</span>(x, y); <span class="built_in">detectD</span>(x, y);</span><br><span class="line">                &#125; <span class="keyword">break</span>;</span><br><span class="line">                <span class="keyword">case</span> <span class="number">5</span>: &#123;</span><br><span class="line">                    <span class="built_in">detectL</span>(x, y); <span class="built_in">detectU</span>(x, y);</span><br><span class="line">                &#125; <span class="keyword">break</span>;</span><br><span class="line">                <span class="keyword">case</span> <span class="number">6</span>: &#123;</span><br><span class="line">                    <span class="built_in">detectR</span>(x, y); <span class="built_in">detectU</span>(x, y);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; m; ++i) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt; n; ++j) &#123;</span><br><span class="line">                <span class="built_in">handler</span>(i, j);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> ds.<span class="built_in">find</span>(<span class="built_in">getId</span>(<span class="number">0</span>, <span class="number">0</span>)) == ds.<span class="built_in">find</span>(<span class="built_in">getId</span>(m - <span class="number">1</span>, n - <span class="number">1</span>));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><figcaption><span>[sol1-Java]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">class</span> <span class="title class_">DisjointSet</span> &#123;</span><br><span class="line">        <span class="type">int</span>[] f;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">public</span> <span class="title function_">DisjointSet</span><span class="params">(<span class="type">int</span> m, <span class="type">int</span> n)</span> &#123;</span><br><span class="line">            f = <span class="keyword">new</span> <span class="title class_">int</span>[m * n];</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; m * n; ++i) &#123;</span><br><span class="line">                f[i] = i;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">find</span><span class="params">(<span class="type">int</span> x)</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> x == f[x] ? x : (f[x] = find(f[x]));</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">merge</span><span class="params">(<span class="type">int</span> x, <span class="type">int</span> y)</span> &#123;</span><br><span class="line">            f[find(x)] = find(y);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="type">int</span>[][] grid;</span><br><span class="line">    <span class="type">int</span> m, n;</span><br><span class="line">    DisjointSet ds;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">hasValidPath</span><span class="params">(<span class="type">int</span>[][] grid)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.grid = grid;</span><br><span class="line">        m = grid.length;</span><br><span class="line">        n = grid[<span class="number">0</span>].length;</span><br><span class="line">        ds = <span class="keyword">new</span> <span class="title class_">DisjointSet</span>(m, n);</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; m; ++i) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">j</span> <span class="operator">=</span> <span class="number">0</span>; j &lt; n; ++j) &#123;</span><br><span class="line">                handler(i, j);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ds.find(getId(<span class="number">0</span>, <span class="number">0</span>)) == ds.find(getId(m - <span class="number">1</span>, n - <span class="number">1</span>));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">getId</span><span class="params">(<span class="type">int</span> x, <span class="type">int</span> y)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> x * n + y;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">detectL</span><span class="params">(<span class="type">int</span> x, <span class="type">int</span> y)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (y - <span class="number">1</span> &gt;= <span class="number">0</span> &amp;&amp; (grid[x][y - <span class="number">1</span>] == <span class="number">4</span> || grid[x][y - <span class="number">1</span>] == <span class="number">6</span> || grid[x][y - <span class="number">1</span>] == <span class="number">1</span>)) &#123;</span><br><span class="line">            ds.merge(getId(x, y), getId(x, y - <span class="number">1</span>));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">detectR</span><span class="params">(<span class="type">int</span> x, <span class="type">int</span> y)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (y + <span class="number">1</span> &lt; n &amp;&amp; (grid[x][y + <span class="number">1</span>] == <span class="number">3</span> || grid[x][y + <span class="number">1</span>] == <span class="number">5</span> || grid[x][y + <span class="number">1</span>] == <span class="number">1</span>)) &#123;</span><br><span class="line">            ds.merge(getId(x, y), getId(x, y + <span class="number">1</span>));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">detectU</span><span class="params">(<span class="type">int</span> x, <span class="type">int</span> y)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (x - <span class="number">1</span> &gt;= <span class="number">0</span> &amp;&amp; (grid[x - <span class="number">1</span>][y] == <span class="number">3</span> || grid[x - <span class="number">1</span>][y] == <span class="number">4</span> || grid[x - <span class="number">1</span>][y] == <span class="number">2</span>)) &#123;</span><br><span class="line">            ds.merge(getId(x, y), getId(x - <span class="number">1</span>, y));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">detectD</span><span class="params">(<span class="type">int</span> x, <span class="type">int</span> y)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (x + <span class="number">1</span> &lt; m &amp;&amp; (grid[x + <span class="number">1</span>][y] == <span class="number">5</span> || grid[x + <span class="number">1</span>][y] == <span class="number">6</span> || grid[x + <span class="number">1</span>][y] == <span class="number">2</span>)) &#123;</span><br><span class="line">            ds.merge(getId(x, y), getId(x + <span class="number">1</span>, y));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">handler</span><span class="params">(<span class="type">int</span> x, <span class="type">int</span> y)</span> &#123;</span><br><span class="line">        <span class="keyword">switch</span> (grid[x][y]) &#123;</span><br><span class="line">            <span class="keyword">case</span> <span class="number">1</span>:</span><br><span class="line">                detectL(x, y);</span><br><span class="line">                detectR(x, y);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="number">2</span>:</span><br><span class="line">                detectU(x, y);</span><br><span class="line">                detectD(x, y);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="number">3</span>:</span><br><span class="line">                detectL(x, y);</span><br><span class="line">                detectD(x, y);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="number">4</span>:</span><br><span class="line">                detectR(x, y);</span><br><span class="line">                detectD(x, y);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="number">5</span>:</span><br><span class="line">                detectL(x, y);</span><br><span class="line">                detectU(x, y);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="number">6</span>:</span><br><span class="line">                detectR(x, y);</span><br><span class="line">                detectU(x, y);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><figcaption><span>[sol1-Python3]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">class</span> <span class="title class_">DisjointSet</span>:</span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, n</span>):</span><br><span class="line">            self.f = <span class="built_in">list</span>(<span class="built_in">range</span>(n))</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">find</span>(<span class="params">self, x</span>):</span><br><span class="line">            <span class="keyword">if</span> x == self.f[x]:</span><br><span class="line">                <span class="keyword">return</span> x</span><br><span class="line">            self.f[x] = self.find(self.f[x])</span><br><span class="line">            <span class="keyword">return</span> self.f[x]</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">merge</span>(<span class="params">self, x, y</span>):</span><br><span class="line">            self.f[self.find(x)] = self.find(y)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">hasValidPath</span>(<span class="params">self, grid: <span class="type">List</span>[<span class="type">List</span>[<span class="built_in">int</span>]]</span>) -&gt; <span class="built_in">bool</span>:</span><br><span class="line">        m, n = <span class="built_in">len</span>(grid), <span class="built_in">len</span>(grid[<span class="number">0</span>])</span><br><span class="line">        ds = Solution.DisjointSet(m * n)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">getId</span>(<span class="params">x, y</span>):</span><br><span class="line">            <span class="keyword">return</span> x * n + y</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">detectL</span>(<span class="params">x, y</span>):</span><br><span class="line">            <span class="keyword">if</span> y - <span class="number">1</span> &gt;= <span class="number">0</span> <span class="keyword">and</span> grid[x][y - <span class="number">1</span>] <span class="keyword">in</span> [<span class="number">1</span>, <span class="number">4</span>, <span class="number">6</span>]:</span><br><span class="line">                ds.merge(getId(x, y), getId(x, y - <span class="number">1</span>))</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">detectR</span>(<span class="params">x, y</span>):</span><br><span class="line">            <span class="keyword">if</span> y + <span class="number">1</span> &lt; n <span class="keyword">and</span> grid[x][y + <span class="number">1</span>] <span class="keyword">in</span> [<span class="number">1</span>, <span class="number">3</span>, <span class="number">5</span>]:</span><br><span class="line">                ds.merge(getId(x, y), getId(x, y + <span class="number">1</span>))</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">detectU</span>(<span class="params">x, y</span>):</span><br><span class="line">            <span class="keyword">if</span> x - <span class="number">1</span> &gt;= <span class="number">0</span> <span class="keyword">and</span> grid[x - <span class="number">1</span>][y] <span class="keyword">in</span> [<span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>]:</span><br><span class="line">                ds.merge(getId(x, y), getId(x - <span class="number">1</span>, y))</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">detectD</span>(<span class="params">x, y</span>):</span><br><span class="line">            <span class="keyword">if</span> x + <span class="number">1</span> &lt; m <span class="keyword">and</span> grid[x + <span class="number">1</span>][y] <span class="keyword">in</span> [<span class="number">2</span>, <span class="number">5</span>, <span class="number">6</span>]:</span><br><span class="line">                ds.merge(getId(x, y), getId(x + <span class="number">1</span>, y))</span><br><span class="line"></span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">handler</span>(<span class="params">x, y</span>):</span><br><span class="line">            <span class="keyword">if</span> grid[x][y] == <span class="number">1</span>:</span><br><span class="line">                detectL(x, y)</span><br><span class="line">                detectR(x, y)</span><br><span class="line">            <span class="keyword">elif</span> grid[x][y] == <span class="number">2</span>:</span><br><span class="line">                detectU(x, y)</span><br><span class="line">                detectD(x, y)</span><br><span class="line">            <span class="keyword">elif</span> grid[x][y] == <span class="number">3</span>:</span><br><span class="line">                detectL(x, y)</span><br><span class="line">                detectD(x, y)</span><br><span class="line">            <span class="keyword">elif</span> grid[x][y] == <span class="number">4</span>:</span><br><span class="line">                detectR(x, y)</span><br><span class="line">                detectD(x, y)</span><br><span class="line">            <span class="keyword">elif</span> grid[x][y] == <span class="number">5</span>:</span><br><span class="line">                detectL(x, y)</span><br><span class="line">                detectU(x, y)</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                detectR(x, y)</span><br><span class="line">                detectU(x, y)</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(m):</span><br><span class="line">            <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(n):</span><br><span class="line">                handler(i, j)</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> ds.find(getId(<span class="number">0</span>, <span class="number">0</span>)) == ds.find(getId(m - <span class="number">1</span>, n - <span class="number">1</span>))</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>复杂度分析</strong></p>
+<p>记单元格的总数为 t &#x3D; m \times n。</p>
+<ul>
+<li><p>时间复杂度：这里的并查集使用了路径压缩，但是没有使用启发式合并，在最坏情况下单次操作的时间代价是 O(\log t)，平均情况下时间代价依然是 O(\alpha(t))，其中 \alpha 函数为阿克曼函数的反函数，增长比对数函数更加缓慢。t 个单元格每个最多和上下左右四个单元格中的两个做合并操作，所以平均情况下渐进时间复杂度为 O(t \times \alpha(t))。</p>
+</li>
+<li><p>空间复杂度：并查集中 <code>f</code> 数组是辅助空间，长度为 t，故这里的渐进空间复杂度为 O(t)。</p>
+</li>
+</ul>
+<h4 id="方法二：单元格性质建图"><a href="#方法二：单元格性质建图" class="headerlink" title="方法二：单元格性质建图"></a>方法二：单元格性质建图</h4><p>我们将四个方向进行编号：</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">     0</span><br><span class="line">     ^</span><br><span class="line">     |</span><br><span class="line">3 &lt;-- --&gt; 1</span><br><span class="line">     |</span><br><span class="line">     v</span><br><span class="line">     2</span><br></pre></td></tr></table></figure></div>
+
+<p>每一种单元格都可以用一个长度为 4 的二进制数表示，二进制数的第 i 位为 1 等价于该单元格在第 i 个方向存在街道。这样以来，每一种单元格对应的二进制数中都恰好有 2 个 1。</p>
+<p>这样编号的好处是什么呢？可以发现，只有在这些情况下，两个相邻的单元格才能相连：</p>
+<ul>
+<li><p>如果某一个单元格有第 0 个方向，那么它上方的单元格必须有第 2 个方向；</p>
+</li>
+<li><p>如果某一个单元格有第 1 个方向，那么它右侧的单元格必须有第 3 个方向；</p>
+</li>
+<li><p>如果某一个单元格有第 2 个方向，那么它下方的单元格必须有第 0 个方向；</p>
+</li>
+<li><p>如果某一个单元格有第 3 个方向，那么它左侧的单元格必须有第 1 个方向。</p>
+</li>
+</ul>
+<p>发现了什么规律？</p>
+<blockquote>
+<p>如果某一个单元格有第 i 个方向，那么它在第 i 个方向相邻的单元格必须有第 (i + 2) % 4 个方向。</p>
+</blockquote>
+<p>因此，我们遍历整个网格，对于其中的每一个单元格 (x, y)，我们枚举它的四个相邻的单元格，对于第 i 个方向的相邻单元格，它和 (x, y) 相连当且仅当 (x, y) 对应的二进制数的第 i 位和相邻单元格对应的二进制数的第 (i + 2) % 4 位均为 1。在遍历结束之后，我们判断左上角和右下角在并查集中是否属于同一集合即可。</p>
+<div class="highlight-container" data-rel="C++"><figure class="iseeu highlight c++"><figcaption><span>[sol2-C++]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="type">static</span> <span class="keyword">constexpr</span> <span class="type">int</span> MAX_N = <span class="number">300</span> * <span class="number">300</span> + <span class="number">5</span>;</span><br><span class="line">    <span class="type">static</span> <span class="keyword">constexpr</span> <span class="type">int</span> patterns[<span class="number">7</span>] = &#123;<span class="number">0</span>, <span class="number">0b1010</span>, <span class="number">0b0101</span>, <span class="number">0b1100</span>, <span class="number">0b0110</span>, <span class="number">0b1001</span>, <span class="number">0b0011</span>&#125;;</span><br><span class="line">    <span class="type">static</span> <span class="keyword">constexpr</span> <span class="type">int</span> dirs[<span class="number">4</span>][<span class="number">2</span>] = &#123; &#123;<span class="number">-1</span>, <span class="number">0</span>&#125;, &#123;<span class="number">0</span>, <span class="number">1</span>&#125;, &#123;<span class="number">1</span>, <span class="number">0</span>&#125;, &#123;<span class="number">0</span>, <span class="number">-1</span>&#125; &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">struct</span> <span class="title class_">DisjointSet</span> &#123;</span><br><span class="line">        <span class="type">int</span> f[MAX_N];</span><br><span class="line">        </span><br><span class="line">        <span class="built_in">DisjointSet</span>() &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; MAX_N; ++i) f[i] = i;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="function"><span class="type">int</span> <span class="title">find</span><span class="params">(<span class="type">int</span> x)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> x == f[x] ? x : f[x] = <span class="built_in">find</span>(f[x]);</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="function"><span class="type">void</span> <span class="title">merge</span><span class="params">(<span class="type">int</span> x, <span class="type">int</span> y)</span> </span>&#123;</span><br><span class="line">            f[<span class="built_in">find</span>(x)] = <span class="built_in">find</span>(y);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; ds;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="type">bool</span> <span class="title">hasValidPath</span><span class="params">(vector&lt;vector&lt;<span class="type">int</span>&gt;&gt;&amp; grid)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> m = grid.<span class="built_in">size</span>(), n = grid[<span class="number">0</span>].<span class="built_in">size</span>();</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">auto</span> getId = [&amp;] (<span class="type">int</span> x, <span class="type">int</span> y) &#123;</span><br><span class="line">            <span class="keyword">return</span> x * n + y;</span><br><span class="line">        &#125;;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">auto</span> handler = [&amp;] (<span class="type">int</span> x, <span class="type">int</span> y) &#123;</span><br><span class="line">            <span class="type">int</span> pattern = patterns[grid[x][y]];</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">4</span>; ++i) &#123;</span><br><span class="line">                <span class="keyword">if</span> (pattern &amp; (<span class="number">1</span> &lt;&lt; i)) &#123;</span><br><span class="line">                    <span class="type">int</span> sx = x + dirs[i][<span class="number">0</span>];</span><br><span class="line">                    <span class="type">int</span> sy = y + dirs[i][<span class="number">1</span>];</span><br><span class="line">                    <span class="keyword">if</span> (sx &gt;= <span class="number">0</span> &amp;&amp; sx &lt; m &amp;&amp; sy &gt;= <span class="number">0</span> &amp;&amp; sy &lt; n <span class="built_in">and</span> (patterns[grid[sx][sy]] &amp; (<span class="number">1</span> &lt;&lt; ((i + <span class="number">2</span>) % <span class="number">4</span>)))) &#123;</span><br><span class="line">                        ds.<span class="built_in">merge</span>(<span class="built_in">getId</span>(x, y), <span class="built_in">getId</span>(sx, sy));</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; m; ++i) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt; n; ++j) &#123;</span><br><span class="line">                <span class="built_in">handler</span>(i, j);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> ds.<span class="built_in">find</span>(<span class="built_in">getId</span>(<span class="number">0</span>, <span class="number">0</span>)) == ds.<span class="built_in">find</span>(<span class="built_in">getId</span>(m - <span class="number">1</span>, n - <span class="number">1</span>));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><figcaption><span>[sol2-Java]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">class</span> <span class="title class_">DisjointSet</span> &#123;</span><br><span class="line">        <span class="type">int</span>[] f;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">public</span> <span class="title function_">DisjointSet</span><span class="params">(<span class="type">int</span> m, <span class="type">int</span> n)</span> &#123;</span><br><span class="line">            f = <span class="keyword">new</span> <span class="title class_">int</span>[m * n];</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; m * n; ++i) &#123;</span><br><span class="line">                f[i] = i;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">find</span><span class="params">(<span class="type">int</span> x)</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> x == f[x] ? x : (f[x] = find(f[x]));</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">merge</span><span class="params">(<span class="type">int</span> x, <span class="type">int</span> y)</span> &#123;</span><br><span class="line">            f[find(x)] = find(y);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="type">int</span>[] patterns = &#123;<span class="number">0</span>, <span class="number">0b1010</span>, <span class="number">0b0101</span>, <span class="number">0b1100</span>, <span class="number">0b0110</span>, <span class="number">0b1001</span>, <span class="number">0b0011</span>&#125;;</span><br><span class="line">    <span class="type">int</span>[][] dirs = &#123; &#123;-<span class="number">1</span>, <span class="number">0</span>&#125;, &#123;<span class="number">0</span>, <span class="number">1</span>&#125;, &#123;<span class="number">1</span>, <span class="number">0</span>&#125;, &#123;<span class="number">0</span>, -<span class="number">1</span>&#125; &#125;;</span><br><span class="line">    <span class="type">int</span>[][] grid;</span><br><span class="line">    <span class="type">int</span> m, n;</span><br><span class="line">    DisjointSet ds;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">hasValidPath</span><span class="params">(<span class="type">int</span>[][] grid)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.grid = grid;</span><br><span class="line">        m = grid.length;</span><br><span class="line">        n = grid[<span class="number">0</span>].length;</span><br><span class="line">        ds = <span class="keyword">new</span> <span class="title class_">DisjointSet</span>(m, n);</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; m; ++i) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">j</span> <span class="operator">=</span> <span class="number">0</span>; j &lt; n; ++j) &#123;</span><br><span class="line">                handler(i, j);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ds.find(getId(<span class="number">0</span>, <span class="number">0</span>)) == ds.find(getId(m - <span class="number">1</span>, n - <span class="number">1</span>));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">getId</span><span class="params">(<span class="type">int</span> x, <span class="type">int</span> y)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> x * n + y;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">handler</span><span class="params">(<span class="type">int</span> x, <span class="type">int</span> y)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">pattern</span> <span class="operator">=</span> patterns[grid[x][y]];</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; <span class="number">4</span>; ++i) &#123;</span><br><span class="line">            <span class="keyword">if</span> ((pattern &amp; (<span class="number">1</span> &lt;&lt; i)) != <span class="number">0</span>) &#123;</span><br><span class="line">                <span class="type">int</span> <span class="variable">sx</span> <span class="operator">=</span> x + dirs[i][<span class="number">0</span>];</span><br><span class="line">                <span class="type">int</span> <span class="variable">sy</span> <span class="operator">=</span> y + dirs[i][<span class="number">1</span>];</span><br><span class="line">                <span class="keyword">if</span> (sx &gt;= <span class="number">0</span> &amp;&amp; sx &lt; m &amp;&amp; sy &gt;= <span class="number">0</span> &amp;&amp; sy &lt; n &amp;&amp; (patterns[grid[sx][sy]] &amp; (<span class="number">1</span> &lt;&lt; ((i + <span class="number">2</span>) % <span class="number">4</span>))) != <span class="number">0</span>) &#123;</span><br><span class="line">                    ds.merge(getId(x, y), getId(sx, sy));</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><figcaption><span>[sol2-Python3]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">class</span> <span class="title class_">DisjointSet</span>:</span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, n</span>):</span><br><span class="line">            self.f = <span class="built_in">list</span>(<span class="built_in">range</span>(n))</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">find</span>(<span class="params">self, x</span>):</span><br><span class="line">            <span class="keyword">if</span> x == self.f[x]:</span><br><span class="line">                <span class="keyword">return</span> x</span><br><span class="line">            self.f[x] = self.find(self.f[x])</span><br><span class="line">            <span class="keyword">return</span> self.f[x]</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">merge</span>(<span class="params">self, x, y</span>):</span><br><span class="line">            self.f[self.find(x)] = self.find(y)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">hasValidPath</span>(<span class="params">self, grid: <span class="type">List</span>[<span class="type">List</span>[<span class="built_in">int</span>]]</span>) -&gt; <span class="built_in">bool</span>:</span><br><span class="line">        m, n = <span class="built_in">len</span>(grid), <span class="built_in">len</span>(grid[<span class="number">0</span>])</span><br><span class="line">        patterns = [<span class="number">0</span>, <span class="number">0b1010</span>, <span class="number">0b0101</span>, <span class="number">0b1100</span>, <span class="number">0b0110</span>, <span class="number">0b1001</span>, <span class="number">0b0011</span>]</span><br><span class="line">        dirs = [(-<span class="number">1</span>, <span class="number">0</span>), (<span class="number">0</span>, <span class="number">1</span>), (<span class="number">1</span>, <span class="number">0</span>), (<span class="number">0</span>, -<span class="number">1</span>)]</span><br><span class="line">        ds = Solution.DisjointSet(m * n)</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">getId</span>(<span class="params">x, y</span>):</span><br><span class="line">            <span class="keyword">return</span> x * n + y</span><br><span class="line"></span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">handler</span>(<span class="params">x, y</span>):</span><br><span class="line">            pattern = patterns[grid[x][y]]</span><br><span class="line">            <span class="keyword">for</span> i, (dx, dy) <span class="keyword">in</span> <span class="built_in">enumerate</span>(dirs):</span><br><span class="line">                <span class="keyword">if</span> (pattern &amp; (<span class="number">1</span> &lt;&lt; i)) &gt; <span class="number">0</span>:</span><br><span class="line">                    sx, sy = x + dx, y + dy</span><br><span class="line">                    <span class="keyword">if</span> <span class="number">0</span> &lt;= sx &lt; m <span class="keyword">and</span> <span class="number">0</span> &lt;= sy &lt; n <span class="keyword">and</span> (patterns[grid[sx][sy]] &amp; (<span class="number">1</span> &lt;&lt; ((i + <span class="number">2</span>) % <span class="number">4</span>))) &gt; <span class="number">0</span>:</span><br><span class="line">                        ds.merge(getId(x, y), getId(sx, sy))</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(m):</span><br><span class="line">            <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(n):</span><br><span class="line">                handler(i, j)</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> ds.find(getId(<span class="number">0</span>, <span class="number">0</span>)) == ds.find(getId(m - <span class="number">1</span>, n - <span class="number">1</span>))</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>复杂度分析</strong></p>
+<p>方法二相较于方法一只在建图时的判断方法有差异，由于两种判断方法的时间复杂度均为 O(1)，因此时空复杂度均与方法一一致。</p>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <!--<div class="article-copyright-info-container">-->
+    <!--&lt;!&ndash;<ul>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><strong>Title:</strong> 1391-检查网格中是否存在有效路径</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><strong>Author:</strong> Raphael Liu</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><strong>Created at&ndash;&gt;-->
+                <!--&lt;!&ndash;:</strong> 2023-09-13 00:47:26</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;&ndash;&gt;-->
+            <!--&lt;!&ndash;<li>&ndash;&gt;-->
+                <!--&lt;!&ndash;<strong>Updated at&ndash;&gt;-->
+                    <!--&lt;!&ndash;:</strong> 2023-09-13 17:01:06&ndash;&gt;-->
+            <!--&lt;!&ndash;</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;<li>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;<strong>Link:</strong> https://fida.ltd/2023/09/13/1391-检查网格中是否存在有效路径/&ndash;&gt;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;</li>&ndash;&gt;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;<li>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;<strong>&ndash;&gt;&ndash;&gt;-->
+                <!--&lt;!&ndash;&lt;!&ndash;License:&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;</strong>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0</a>.&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;&ndash;&gt;&ndash;&gt;-->
+
+        <!--&lt;!&ndash;&lt;!&ndash;</li>&ndash;&gt;&ndash;&gt;-->
+    <!--&lt;!&ndash;</ul>&ndash;&gt;-->
+<!--</div>-->
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box">
+                
+                    <li class="tag-item">
+                        <a href="/tags/algorithm/">#algorithm</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item">
+                        <a href="/tags/MEDIUM/">#MEDIUM</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                        rel="prev"
+                        href="/2023/09/13/1390-%E5%9B%9B%E5%9B%A0%E6%95%B0/"
+                        >
+                            <span class="left arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">1390-四因数</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                        rel="next"
+                        href="/2023/09/13/1392-%E6%9C%80%E9%95%BF%E5%BF%AB%E4%B9%90%E5%89%8D%E7%BC%80/"
+                        >
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">1392-最长快乐前缀</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+
+        
+            <div class="comment-container">
+                <div class="comments-container pjax">
+    <div id="comment-anchor"></div>
+    <div class="comment-area-title">
+        <i class="fa-solid fa-comments"></i>&nbsp;Comments
+    </div>
+    
+
+        
+            
+ 
+    <div id="waline"></div>
+    <script type="module"  data-swup-reload-script>
+        import { init } from 'https://evan.beee.top/js/waline.mjs';
+
+        function loadWaline() {
+            init({
+                el: '#waline',
+                serverURL: 'https://example.example.com',
+                lang: 'zh-CN',
+                dark: 'body[class~="dark-mode"]',
+                requiredMeta: ['nick','mail'], // cannot customize by theme config, change it yourself
+            });
+        }
+
+        if ('true') {
+            const loadWalineTimeout = setTimeout(() => {
+                loadWaline();
+                clearTimeout(loadWalineTimeout);
+            }, 1000);
+        } else {
+            window.addEventListener('DOMContentLoaded', loadWaline);
+        }
+        
+    </script>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+
+    
+        <div class="toc-content-container">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">On this page</div>
+        <div class="page-title">1391-检查网格中是否存在有效路径</div>
+        
+
+    </div>
+</div>
+        </div>
+    
+</div>
+
+
+
+                
+
+            </div>
+
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2022</span>
+              -
+            
+            2023&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">Raphael Liu</a>
+        </div>
+        
+            <script data-swup-reload-script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">UV:</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">PV:</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <!--<div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">-->
+            <!--<span class="lg:block text-sm">powered_by</span>-->
+            <!--&lt;!&ndash;<span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.4.4</a></span>&ndash;&gt;-->
+        <!--</div>-->
+        
+        <!---->
+            <!--<div>-->
+                <!--runtime <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hours <span class="odometer" id="runtime_minutes"></span> minutes <span class="odometer" id="runtime_seconds"></span> seconds-->
+            <!--</div>-->
+        <!---->
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fa-regular fa-comments"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-expand-width flex justify-center items-center">
+            <i class="fa-regular fa-expand"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fa-solid fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa-solid fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa-solid fa-spinner fa-spin-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+    
+<script src="/js/libs/Swup.min.js"></script>
+
+<script src="/js/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/libs/SwupScrollPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+        ],
+        containers: ["#swup"],
+    });
+
+    swup.hooks.on("page:view", () => {
+        Global.refresh();
+    });
+
+    // if (document.readyState === "complete") {
+    //
+    // } else {
+    //     document.addEventListener("DOMContentLoaded", () => init());
+    // }
+</script>
+
+
+
+
+
+
+<script src="/js/utils.js" type="module"></script>
+
+<script src="/js/main.js" type="module"></script>
+
+<script src="/js/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/layouts/categoryList.js" type="module"></script>
+
+
+
+    
+<script src="/js/tools/localSearch.js"></script>
+
+
+
+
+    
+<script src="/js/tools/codeBlock.js"></script>
+
+
+
+
+    
+<script src="/js/layouts/lazyload.js"></script>
+
+
+
+
+    
+<script src="/js/tools/runtime.js"></script>
+
+    
+<script src="/js/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/libs/Typed.min.js"></script>
+
+  
+<script src="/js/plugins/typed.js"></script>
+
+
+
+
+
+
+
+<div class="post-scripts" data-swup-reload-script>
+    
+        
+<script src="/js/libs/anime.min.js"></script>
+
+        
+<script src="/js/tools/tocToggle.js" type="module"></script>
+
+<script src="/js/layouts/toc.js" type="module"></script>
+
+<script src="/js/plugins/tabs.js" type="module"></script>
+
+    
+</div>
+
+
+</body>
+</html>

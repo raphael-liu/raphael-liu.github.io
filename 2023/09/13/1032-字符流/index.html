@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="Raphael Liu">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/2023/09/13/1032-字符流/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="设计一个算法：接收一个字符流，并检查这些字符的后缀是否是字符串数组 words 中的一个字符串。 例如，words &#x3D; [&quot;abc&quot;, &quot;xyz&quot;] 且字符流中逐个依次加入 4 个字符 &#39;a&#39;、&#39;x&#39;、&#39;y&#39; 和 &#39;z&#39;，你所设计的算法应当可以检测到 &quot;axyz&quot; 的后缀 &amp;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="1032-字符流">
+<meta property="og:url" content="http://example.com/2023/09/13/1032-%E5%AD%97%E7%AC%A6%E6%B5%81/index.html">
+<meta property="og:site_name" content="Raphael&#39;s Blog">
+<meta property="og:description" content="设计一个算法：接收一个字符流，并检查这些字符的后缀是否是字符串数组 words 中的一个字符串。 例如，words &#x3D; [&quot;abc&quot;, &quot;xyz&quot;] 且字符流中逐个依次加入 4 个字符 &#39;a&#39;、&#39;x&#39;、&#39;y&#39; 和 &#39;z&#39;，你所设计的算法应当可以检测到 &quot;axyz&quot; 的后缀 &amp;">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-09-12T16:47:26.000Z">
+<meta property="article:modified_time" content="2023-09-13T08:06:29.691Z">
+<meta property="article:author" content="Raphael Liu">
+<meta property="article:tag" content="algorithm">
+<meta property="article:tag" content="HARD">
+<meta name="twitter:card" content="summary">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/redefine-favicon.svg" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/redefine-favicon.svg">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/redefine-favicon.svg">
+    <!--- Page Info-->
+    
+    <title>
+        
+            1032-字符流 -
+        
+        Raphael&#39;s Blog
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/css/build/styles.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/fonts.css">
+
+    
+<link rel="stylesheet" href="/fonts/Satoshi/satoshi.css">
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+
+    <!--- Inject Part-->
+    
+    <script id="hexo-configurations">
+    let Global = window.Global || {};
+    Global.hexo_config = {"hostname":"example.com","root":"/","language":"zh_CN"};
+    Global.theme_config = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":true,"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"open_graph":true,"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-wqery6-light.webp","dark":"/images/wallhaven-wqery6-dark.webp"},"title":"Raphael's Blog","subtitle":{"text":["格物致知","坚持做正确的事情"],"hitokoto":{"enable":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":false,"links":{"github":"https://github.com/raphael-liu","email":"raphael@buaa.edu.cn# your email"},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.4.4","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"links":{"首页":{"path":"/","icon":"fa-regular fa-house"},"文章":{"path":"/archives","icon":"fa-regular fa-archive"},"关于":{"icon":"fa-regular fa-user","submenus":{"我":"/about/me","Github":"https://github.com/raphael-liu"}}},"search":{"enable":true,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"links":null},"article_date_format":"auto","categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}},"footerStart":"2022/8/17 11:45:14"};
+    Global.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    Global.data_config = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="swup-progress-icon">
+            <i class="fa-solid fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container" id="swup">
+
+    
+
+    <div class="main-content-container">
+
+
+        <div class="main-content-header">
+            <header class="navbar-container">
+    
+    <div class="navbar-content">
+        <div class="left">
+            
+            <a class="logo-title" href="http://example.com/">
+                
+                Raphael&#39;s Blog
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/"  >
+                                    
+                                        
+                                            <i class="fa-regular fa-house"></i>
+                                        
+                                        首页
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/archives"  >
+                                    
+                                        
+                                            <i class="fa-regular fa-archive"></i>
+                                        
+                                        文章
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="has-dropdown" 
+                                    href="#" onClick="return false;">
+                                    
+                                        
+                                            <i class="fa-regular fa-user"></i>
+                                        
+                                        关于&nbsp;<i class="fa-solid fa-chevron-down"></i>
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                                    <ul class="sub-menu">
+                                    
+                                        <li>
+                                        <a href="/about/me">我
+                                        </a>
+                                        </li>
+                                    
+                                        <li>
+                                        <a target="_blank" rel="noopener" href="https://github.com/raphael-liu">GITHUB
+                                        </a>
+                                        </li>
+                                    
+                                    </ul>
+                                
+                            </li>
+                    
+                    
+                        <li class="navbar-item search search-popup-trigger">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fa-solid fa-magnifying-glass"></i></div>
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile drawer -->
+    <div class="navbar-drawer w-full absolute top-0 left-0 bg-background-color">
+        <ul class="drawer-navbar-list flex flex-col justify-start items-center">
+            
+                
+                    <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group " 
+                        href="/"  >
+                             
+                                
+                                    <i class="fa-regular fa-house"></i>
+                                
+                                首页
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+                
+                    <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group " 
+                        href="/archives"  >
+                             
+                                
+                                    <i class="fa-regular fa-archive"></i>
+                                
+                                文章
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+                
+                    <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group has-dropdown" 
+                        href="#" onClick="return false;">
+                            
+                                
+                                    <i class="fa-regular fa-user"></i>
+                                
+                                关于&nbsp;<i class="group-hover:rotate-180 transition-transform fa-solid fa-chevron-down"></i>
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                              
+                        
+                            <li class="text-base flex justify-center items-center hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                <a class="py-0.5" href="/about/me">我</a>
+                            </li>
+                        
+                            <li class="text-base flex justify-center items-center hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                <a class="py-0.5" target="_blank" rel="noopener" href="https://github.com/raphael-liu">GITHUB</a>
+                            </li>
+                        
+                    
+            
+
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="post-page-container">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            
+                <h1 class="article-title-regular">1032-字符流</h1>
+            
+            </div>
+            
+                    
+        
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">Raphael Liu</span>
+                        
+                            <span class="author-label">Lv10</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2023-09-13 00:47:26</span>
+        <span class="mobile">2023-09-13 00:47:26</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2023-09-13 16:06:29</span>
+            <span class="mobile">2023-09-13 16:06:29</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/algorithm/">algorithm</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/HARD/">HARD</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        
+
+
+        <div class="article-content markdown-body">
+            <p>设计一个算法：接收一个字符流，并检查这些字符的后缀是否是字符串数组 <code>words</code> 中的一个字符串。</p>
+<p>例如，<code>words = [&quot;abc&quot;, &quot;xyz&quot;]</code> 且字符流中逐个依次加入 4 个字符 <code>&#39;a&#39;</code>、<code>&#39;x&#39;</code>、<code>&#39;y&#39;</code> 和 <code>&#39;z&#39;</code><br>，你所设计的算法应当可以检测到 <code>&quot;axyz&quot;</code> 的后缀 <code>&quot;xyz&quot;</code> 与 <code>words</code> 中的字符串 <code>&quot;xyz&quot;</code> 匹配。</p>
+<p>按下述要求实现 <code>StreamChecker</code> 类：</p>
+<ul>
+<li><code>StreamChecker(String[] words)</code> ：构造函数，用字符串数组 <code>words</code> 初始化数据结构。</li>
+<li><code>boolean query(char letter)</code>：从字符流中接收一个新字符，如果字符流中的任一非空后缀能匹配 <code>words</code> 中的某一字符串，返回 <code>true</code> ；否则，返回 <code>false</code>。</li>
+</ul>
+<p><strong>示例：</strong></p>
+<pre><code>**输入：**
+[&quot;StreamChecker&quot;, &quot;query&quot;, &quot;query&quot;, &quot;query&quot;, &quot;query&quot;, &quot;query&quot;, &quot;query&quot;, &quot;query&quot;, &quot;query&quot;, &quot;query&quot;, &quot;query&quot;, &quot;query&quot;, &quot;query&quot;]
+[[[&quot;cd&quot;, &quot;f&quot;, &quot;kl&quot;]], [&quot;a&quot;], [&quot;b&quot;], [&quot;c&quot;], [&quot;d&quot;], [&quot;e&quot;], [&quot;f&quot;], [&quot;g&quot;], [&quot;h&quot;], [&quot;i&quot;], [&quot;j&quot;], [&quot;k&quot;], [&quot;l&quot;]]
+**输出：**
+[null, false, false, false, true, false, true, false, false, false, false, false, true]
+
+**解释：**
+StreamChecker streamChecker = new StreamChecker([&quot;cd&quot;, &quot;f&quot;, &quot;kl&quot;]);
+streamChecker.query(&quot;a&quot;); // 返回 False
+streamChecker.query(&quot;b&quot;); // 返回 False
+streamChecker.query(&quot;c&quot;); // 返回n False
+streamChecker.query(&quot;d&quot;); // 返回 True ，因为 &#39;cd&#39; 在 words 中
+streamChecker.query(&quot;e&quot;); // 返回 False
+streamChecker.query(&quot;f&quot;); // 返回 True ，因为 &#39;f&#39; 在 words 中
+streamChecker.query(&quot;g&quot;); // 返回 False
+streamChecker.query(&quot;h&quot;); // 返回 False
+streamChecker.query(&quot;i&quot;); // 返回 False
+streamChecker.query(&quot;j&quot;); // 返回 False
+streamChecker.query(&quot;k&quot;); // 返回 False
+streamChecker.query(&quot;l&quot;); // 返回 True ，因为 &#39;kl&#39; 在 words 中
+</code></pre>
+<p><strong>提示：</strong></p>
+<ul>
+<li><code>1 &lt;= words.length &lt;= 2000</code></li>
+<li><code>1 &lt;= words[i].length &lt;= 200</code></li>
+<li><code>words[i]</code> 由小写英文字母组成</li>
+<li><code>letter</code> 是一个小写英文字母</li>
+<li>最多调用查询 <code>4 * 104</code> 次</li>
+</ul>
+<h4 id="方法一：AC-自动机"><a href="#方法一：AC-自动机" class="headerlink" title="方法一：AC 自动机"></a>方法一：AC 自动机</h4><p><strong>思路</strong></p>
+<p>这题需要用到 AC 自动机的数据结构，概念可以参照「<a class="link"   target="_blank" rel="noopener" href="https://oi-wiki.org/string/ac-automaton/" >AC 自动机 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>」。</p>
+<p>首先需要将字符串数组 words 中的单词构建一棵字典树。字典树的节点 TrieNode 有三个元素：</p>
+<ol>
+<li>children，长度为 26 的数组，元素均为 TrieNode；</li>
+<li>isEnd，布尔值，表示当前节点是否为一个单词的结尾；</li>
+<li>fail，失配指针，后文会继续提到。</li>
+</ol>
+<p>构建字典树的步骤比较常规，将 word 一一插入字典树，并给结尾节点的 isEnd 赋为 true。这里需要记住的是，此时字典树中的每一个非空节点，都表示字符串数组 words 的某个前缀，且节点的深度就是该前缀的长度。</p>
+<p>接下来需要更新每个非空节点的失配指针。失配指针的定义是，可以表示当前节点的最长后缀的节点，具体解释如下：当前节点能表示字符串数组 words 的某个前缀 pre}_1，我们需要找到字典树中的另一个节点，且该节点表示的前缀 pre}_2，是 pre}_1 的一个后缀，并且是能在字典树中找到的最长的后缀。那么如何更新所有节点的失配指针呢？首先，特殊地，我们将根节点和所有根节点的非空子节点的失配指针指向根节点，然后思考如何计算其他非空节点的失配指针。</p>
+<p>当我们要计算某个节点 u 的失配指针时，假设所有比 u 浅的节点的失配指针已经计算完毕，设 u 的父节点为 p，节点 p 依靠字符 c 指向节点 u（即节点 u 代表的前缀 pre}_u 比节点 p 代表的前缀 pre}_p 多一个字符 c）。我们需要考察 p.\textit{fail 依靠字符 c 指向的节点是否非空，如果非空，我们就找到 u 的失配节点，如果为空，我们需要继续考察 p.\textit{fail}.\textit{fail，直到在这条失配链上找到一个节点，它依靠字符 c 指向的子节点非空；或者我们在失配链上不断考察的过程中，最终考察到了根节点，此时我们将 u 的失配节点指向根节点。这样一来，我们可以根据广度优先搜索的过程，计算出所有非空节点的失配节点。</p>
+<p>如此，我们就可以用这棵字典树来匹配后缀数据流了。初始化时，设置一个指针 temp 指向根节点，每接收一个字符 c，temp 先试图依靠字符 c 移动到子节点，如果子节点为空，则在失配链上不停移动，直到找到一个节点，它依靠字符 c 指向的子节点非空，这时该子节点表示的前缀，是可以匹配到的数据流里的最长后缀。注意此时，并不能立刻返回结果，需要遍历该子节点的失配链上的所有节点，如果有节点的 isEnd 值为 true，则返回 true，否则返回 false。</p>
+<p>注意到此时已经可以解决这道题了，但是计算每个节点的失配节点和单次 query 的时间复杂度仍然较大，最差情况下，需要遍历整条失配链路才能得到结果，因此，我们在广度优先搜索时引入以下两个优化：</p>
+<ol>
+<li>当节点 p 的依靠字符 c 指向的子节点 u 为空时，将其指向 p.\textit{fail 依靠字符 c 指向的子节点 v，这种类似于路径压缩的思路，使得每个空子节点最终都会指向一个非空节点，从而省去了在失配链路上不停考察的过程。</li>
+<li>广度优先搜索过程中，节点 u 出队列时，将 u.\textit{isEnd 更新为 u.\textit{isEnd} | u.\textit{fail}.\textit{isEnd，这样每个节点的 isEnd 参数的定义就变为：当自己或者自己的某一后缀能匹配字符串数组的某个字符串时为 true。这样一来，query 时也不需要遍历失配链路了。</li>
+</ol>
+<p><strong>代码</strong></p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><figcaption><span>[sol1-Python3]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">StreamChecker</span>:</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, words: <span class="type">List</span>[<span class="built_in">str</span>]</span>):</span><br><span class="line">        self.root = TrieNode()</span><br><span class="line">        <span class="keyword">for</span> word <span class="keyword">in</span> words:</span><br><span class="line">            cur = self.root</span><br><span class="line">            <span class="keyword">for</span> char <span class="keyword">in</span> word:</span><br><span class="line">                idx = <span class="built_in">ord</span>(char) - <span class="built_in">ord</span>(<span class="string">&#x27;a&#x27;</span>)</span><br><span class="line">                <span class="keyword">if</span> <span class="keyword">not</span> cur.children[idx]:</span><br><span class="line">                    cur.children[idx] = TrieNode()</span><br><span class="line">                cur = cur.children[idx]</span><br><span class="line">            cur.isEnd = <span class="literal">True</span></span><br><span class="line">        </span><br><span class="line">        self.root.fail = self.root</span><br><span class="line">        q = deque()</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">26</span>):</span><br><span class="line">            <span class="keyword">if</span> self.root.children[i]:</span><br><span class="line">                self.root.children[i].fail = self.root</span><br><span class="line">                q.append(self.root.children[i])</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                self.root.children[i] = self.root</span><br><span class="line">        <span class="keyword">while</span> q:</span><br><span class="line">            node = q.popleft()</span><br><span class="line">            node.isEnd = node.isEnd <span class="keyword">or</span> node.fail.isEnd</span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">26</span>):</span><br><span class="line">                <span class="keyword">if</span> node.children[i]:</span><br><span class="line">                    node.children[i].fail = node.fail.children[i]</span><br><span class="line">                    q.append(node.children[i])</span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    node.children[i] = node.fail.children[i]</span><br><span class="line"></span><br><span class="line">        self.temp = self.root</span><br><span class="line">            </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">query</span>(<span class="params">self, letter: <span class="built_in">str</span></span>) -&gt; <span class="built_in">bool</span>:</span><br><span class="line">        self.temp = self.temp.children[<span class="built_in">ord</span>(letter) - <span class="built_in">ord</span>(<span class="string">&#x27;a&#x27;</span>)]</span><br><span class="line">        <span class="keyword">return</span> self.temp.isEnd</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">TrieNode</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">        self.children = [<span class="literal">None</span>] * <span class="number">26</span></span><br><span class="line">        self.isEnd = <span class="literal">False</span></span><br><span class="line">        self.fail = <span class="literal">None</span></span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><figcaption><span>[sol1-Java]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">StreamChecker</span> &#123;</span><br><span class="line">    TrieNode root;</span><br><span class="line">    TrieNode temp;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">StreamChecker</span><span class="params">(String[] words)</span> &#123;</span><br><span class="line">        root = <span class="keyword">new</span> <span class="title class_">TrieNode</span>();</span><br><span class="line">        <span class="keyword">for</span> (String word : words) &#123;</span><br><span class="line">            <span class="type">TrieNode</span> <span class="variable">cur</span> <span class="operator">=</span> root;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; word.length(); i++) &#123;</span><br><span class="line">                <span class="type">int</span> <span class="variable">index</span> <span class="operator">=</span> word.charAt(i) - <span class="string">&#x27;a&#x27;</span>;</span><br><span class="line">                <span class="keyword">if</span> (cur.getChild(index) == <span class="literal">null</span>) &#123;</span><br><span class="line">                    cur.setChild(index, <span class="keyword">new</span> <span class="title class_">TrieNode</span>());</span><br><span class="line">                &#125;</span><br><span class="line">                cur = cur.getChild(index);</span><br><span class="line">            &#125;</span><br><span class="line">            cur.setIsEnd(<span class="literal">true</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        root.setFail(root);</span><br><span class="line">        Queue&lt;TrieNode&gt; q = <span class="keyword">new</span> <span class="title class_">LinkedList</span>&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; <span class="number">26</span>; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span>(root.getChild(i) != <span class="literal">null</span>) &#123;</span><br><span class="line">                root.getChild(i).setFail(root);</span><br><span class="line">                q.add(root.getChild(i));</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                root.setChild(i, root);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">while</span> (!q.isEmpty()) &#123;</span><br><span class="line">            <span class="type">TrieNode</span> <span class="variable">node</span> <span class="operator">=</span> q.poll();</span><br><span class="line">            node.setIsEnd(node.getIsEnd() || node.getFail().getIsEnd());</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; <span class="number">26</span>; i++) &#123;</span><br><span class="line">                <span class="keyword">if</span>(node.getChild(i) != <span class="literal">null</span>) &#123;</span><br><span class="line">                    node.getChild(i).setFail(node.getFail().getChild(i));</span><br><span class="line">                    q.offer(node.getChild(i));</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    node.setChild(i, node.getFail().getChild(i));</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        temp = root;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">query</span><span class="params">(<span class="type">char</span> letter)</span> &#123;</span><br><span class="line">        temp = temp.getChild(letter - <span class="string">&#x27;a&#x27;</span>);</span><br><span class="line">        <span class="keyword">return</span> temp.getIsEnd();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">TrieNode</span> &#123;</span><br><span class="line">    TrieNode[] children;</span><br><span class="line">    <span class="type">boolean</span> isEnd;</span><br><span class="line">    TrieNode fail;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">TrieNode</span><span class="params">()</span> &#123;</span><br><span class="line">        children = <span class="keyword">new</span> <span class="title class_">TrieNode</span>[<span class="number">26</span>];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> TrieNode <span class="title function_">getChild</span><span class="params">(<span class="type">int</span> index)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> children[index];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setChild</span><span class="params">(<span class="type">int</span> index, TrieNode node)</span> &#123;</span><br><span class="line">        children[index] = node;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">getIsEnd</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> isEnd;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setIsEnd</span><span class="params">(<span class="type">boolean</span> b)</span> &#123;</span><br><span class="line">        isEnd = b;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> TrieNode <span class="title function_">getFail</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> fail;</span><br><span class="line">    &#125; </span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setFail</span><span class="params">(TrieNode node)</span> &#123;</span><br><span class="line">        fail = node;</span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="C#"><figure class="iseeu highlight c#"><figcaption><span>[sol1-C#]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">StreamChecker</span> &#123;</span><br><span class="line"></span><br><span class="line">    TrieNode root;</span><br><span class="line">    TrieNode temp;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">StreamChecker</span>(<span class="params">String[] words</span>)</span> &#123;</span><br><span class="line">        root = <span class="keyword">new</span> TrieNode();</span><br><span class="line">        <span class="keyword">foreach</span> (String word <span class="keyword">in</span> words) &#123;</span><br><span class="line">            TrieNode cur = root;</span><br><span class="line">            <span class="keyword">foreach</span> (<span class="built_in">char</span> ch <span class="keyword">in</span> word) &#123;</span><br><span class="line">                <span class="built_in">int</span> index = ch - <span class="string">&#x27;a&#x27;</span>;</span><br><span class="line">                <span class="keyword">if</span> (cur.getChild(index) == <span class="literal">null</span>) &#123;</span><br><span class="line">                    cur.setChild(index, <span class="keyword">new</span> TrieNode());</span><br><span class="line">                &#125;</span><br><span class="line">                cur = cur.getChild(index);</span><br><span class="line">            &#125;</span><br><span class="line">            cur.setIsEnd(<span class="literal">true</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        root.setFail(root);</span><br><span class="line">        Queue&lt;TrieNode&gt; q = <span class="keyword">new</span> Queue&lt;TrieNode&gt;();</span><br><span class="line">        <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; <span class="number">26</span>; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span>(root.getChild(i) != <span class="literal">null</span>) &#123;</span><br><span class="line">                root.getChild(i).setFail(root);</span><br><span class="line">                q.Enqueue(root.getChild(i));</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                root.setChild(i, root);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">while</span> (q.Count &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            TrieNode node = q.Dequeue();</span><br><span class="line">            node.setIsEnd(node.getIsEnd() || node.getFail().getIsEnd());</span><br><span class="line">            <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i&lt;<span class="number">26</span>; i++) &#123;</span><br><span class="line">                <span class="keyword">if</span>(node.getChild(i) != <span class="literal">null</span>) &#123;</span><br><span class="line">                    node.getChild(i).setFail(node.getFail().getChild(i));</span><br><span class="line">                    q.Enqueue(node.getChild(i));</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    node.setChild(i, node.getFail().getChild(i));</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        temp = root;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="built_in">bool</span> <span class="title">Query</span>(<span class="params"><span class="built_in">char</span> letter</span>)</span> &#123;</span><br><span class="line">        temp = temp.getChild(letter - <span class="string">&#x27;a&#x27;</span>);</span><br><span class="line">        <span class="keyword">return</span> temp.getIsEnd();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title">TrieNode</span> &#123;</span><br><span class="line">    TrieNode[] children;</span><br><span class="line">    <span class="built_in">bool</span> isEnd;</span><br><span class="line">    TrieNode fail;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">TrieNode</span>()</span> &#123;</span><br><span class="line">        children = <span class="keyword">new</span> TrieNode[<span class="number">26</span>];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> TrieNode <span class="title">getChild</span>(<span class="params"><span class="built_in">int</span> index</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> children[index];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setChild</span>(<span class="params"><span class="built_in">int</span> index, TrieNode node</span>)</span> &#123;</span><br><span class="line">        children[index] = node;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="built_in">bool</span> <span class="title">getIsEnd</span>()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> isEnd;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setIsEnd</span>(<span class="params"><span class="built_in">bool</span> b</span>)</span> &#123;</span><br><span class="line">        isEnd = b;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> TrieNode <span class="title">getFail</span>()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> fail;</span><br><span class="line">    &#125; </span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setFail</span>(<span class="params">TrieNode node</span>)</span> &#123;</span><br><span class="line">        fail = node;</span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="C++"><figure class="iseeu highlight c++"><figcaption><span>[sol1-C++]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> <span class="title class_">TrieNode</span> &#123;</span><br><span class="line">    vector&lt;TrieNode *&gt; children;</span><br><span class="line">    <span class="type">bool</span> isEnd;</span><br><span class="line">    TrieNode *fail;</span><br><span class="line">    <span class="built_in">TrieNode</span>() &#123;</span><br><span class="line">        <span class="keyword">this</span>-&gt;children = <span class="built_in">vector</span>&lt;TrieNode *&gt;(<span class="number">26</span>, <span class="literal">nullptr</span>);</span><br><span class="line">        <span class="keyword">this</span>-&gt;isEnd = <span class="literal">false</span>;</span><br><span class="line">        <span class="keyword">this</span>-&gt;fail = <span class="literal">nullptr</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">StreamChecker</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    TrieNode *root;</span><br><span class="line">    TrieNode *temp;</span><br><span class="line">    <span class="built_in">StreamChecker</span>(vector&lt;string&gt;&amp; words) &#123;</span><br><span class="line">        root = <span class="keyword">new</span> <span class="built_in">TrieNode</span>();</span><br><span class="line">        <span class="keyword">for</span> (string &amp;word : words) &#123;</span><br><span class="line">            TrieNode *cur = root;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; word.<span class="built_in">size</span>(); i++) &#123;</span><br><span class="line">                <span class="type">int</span> index = word[i] - <span class="string">&#x27;a&#x27;</span>;</span><br><span class="line">                <span class="keyword">if</span> (cur-&gt;children[index] == <span class="literal">nullptr</span>) &#123;</span><br><span class="line">                    cur-&gt;children[index] = <span class="keyword">new</span> <span class="built_in">TrieNode</span>();</span><br><span class="line">                &#125;</span><br><span class="line">                cur = cur-&gt;children[index];</span><br><span class="line">            &#125;</span><br><span class="line">            cur-&gt;isEnd = <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        root-&gt;fail = root;</span><br><span class="line">        queue&lt;TrieNode *&gt; q;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">26</span>; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span>(root-&gt;children[i] != <span class="literal">nullptr</span>) &#123;</span><br><span class="line">                root-&gt;children[i]-&gt;fail = root;</span><br><span class="line">                q.<span class="built_in">emplace</span>(root-&gt;children[i]);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                root-&gt;children[i] = root;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">while</span> (!q.<span class="built_in">empty</span>()) &#123;</span><br><span class="line">            TrieNode *node = q.<span class="built_in">front</span>();</span><br><span class="line">            q.<span class="built_in">pop</span>();</span><br><span class="line">            node-&gt;isEnd = node-&gt;isEnd || node-&gt;fail-&gt;isEnd;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">26</span>; i++) &#123;</span><br><span class="line">                <span class="keyword">if</span>(node-&gt;children[i] != <span class="literal">nullptr</span>) &#123;</span><br><span class="line">                    node-&gt;children[i]-&gt;fail = node-&gt;fail-&gt;children[i];</span><br><span class="line">                    q.<span class="built_in">emplace</span>(node-&gt;children[i]);</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    node-&gt;children[i] = node-&gt;fail-&gt;children[i];</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        temp = root;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="type">bool</span> <span class="title">query</span><span class="params">(<span class="type">char</span> letter)</span> </span>&#123;</span><br><span class="line">        temp = temp-&gt;children[letter - <span class="string">&#x27;a&#x27;</span>];</span><br><span class="line">        <span class="keyword">return</span> temp-&gt;isEnd;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="C"><figure class="iseeu highlight c"><figcaption><span>[sol1-C]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> MAX_QUEUE_SIZE 81920</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">TrieNode</span> &#123;</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">TrieNode</span> *<span class="title">children</span>[26];</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">TrieNode</span> *<span class="title">fail</span>;</span></span><br><span class="line">    <span class="type">bool</span> isEnd;</span><br><span class="line">&#125; TrieNode;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> &#123;</span></span><br><span class="line">    TrieNode *root;</span><br><span class="line">    TrieNode *temp;</span><br><span class="line">&#125; StreamChecker;</span><br><span class="line"></span><br><span class="line">TrieNode* <span class="title function_">trieNodeCreate</span><span class="params">()</span> &#123;</span><br><span class="line">    TrieNode *obj = (TrieNode *)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(TrieNode));</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">26</span>; i++) &#123;</span><br><span class="line">        obj-&gt;children[i] = <span class="literal">NULL</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    obj-&gt;isEnd = <span class="literal">false</span>;</span><br><span class="line">    obj-&gt;fail = <span class="literal">NULL</span>;</span><br><span class="line">    <span class="keyword">return</span> obj;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">freeTrieNode</span><span class="params">(TrieNode* root)</span> &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">26</span>; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (root-&gt;children[i]) &#123;</span><br><span class="line">            freeTrieNode(root-&gt;children[i]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">free</span>(root);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">StreamChecker* <span class="title function_">streamCheckerCreate</span><span class="params">(<span class="type">char</span> ** words, <span class="type">int</span> wordsSize)</span> &#123;</span><br><span class="line">    StreamChecker *obj = (StreamChecker *)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(StreamChecker));</span><br><span class="line">    obj-&gt;root = trieNodeCreate();</span><br><span class="line">    obj-&gt;temp = obj-&gt;root;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; wordsSize; i++) &#123;</span><br><span class="line">        TrieNode *cur = obj-&gt;root;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; words[i][j] != <span class="string">&#x27;\0&#x27;</span>; j++) &#123;</span><br><span class="line">            <span class="type">int</span> index = words[i][j] - <span class="string">&#x27;a&#x27;</span>;</span><br><span class="line">            <span class="keyword">if</span> (cur-&gt;children[index] == <span class="literal">NULL</span>) &#123;</span><br><span class="line">                cur-&gt;children[index] = trieNodeCreate();</span><br><span class="line">            &#125;</span><br><span class="line">            cur = cur-&gt;children[index];</span><br><span class="line">        &#125;</span><br><span class="line">        cur-&gt;isEnd = <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    obj-&gt;root-&gt;fail = obj-&gt;root;</span><br><span class="line">    TrieNode *<span class="built_in">queue</span>[MAX_QUEUE_SIZE];</span><br><span class="line">    <span class="type">int</span> head = <span class="number">0</span>;</span><br><span class="line">    <span class="type">int</span> tail = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">26</span>; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span>(obj-&gt;root-&gt;children[i] != <span class="literal">NULL</span>) &#123;</span><br><span class="line">            obj-&gt;root-&gt;children[i]-&gt;fail = obj-&gt;root;</span><br><span class="line">            <span class="built_in">queue</span>[tail++] = obj-&gt;root-&gt;children[i];</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            obj-&gt;root-&gt;children[i] = obj-&gt;root;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span> (head != tail) &#123;</span><br><span class="line">        TrieNode *node = <span class="built_in">queue</span>[head++];</span><br><span class="line">        node-&gt;isEnd = node-&gt;isEnd || node-&gt;fail-&gt;isEnd;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">26</span>; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span>(node-&gt;children[i] != <span class="literal">NULL</span>) &#123;</span><br><span class="line">                node-&gt;children[i]-&gt;fail = node-&gt;fail-&gt;children[i];</span><br><span class="line">                <span class="built_in">queue</span>[tail++] = node-&gt;children[i];</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                node-&gt;children[i] = node-&gt;fail-&gt;children[i];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> obj;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">bool</span> <span class="title function_">streamCheckerQuery</span><span class="params">(StreamChecker* obj, <span class="type">char</span> letter)</span> &#123;</span><br><span class="line">    obj-&gt;temp = obj-&gt;temp-&gt;children[letter - <span class="string">&#x27;a&#x27;</span>];</span><br><span class="line">    <span class="keyword">return</span> obj-&gt;temp-&gt;isEnd;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">streamCheckerFree</span><span class="params">(StreamChecker* obj)</span> &#123;</span><br><span class="line">    <span class="built_in">free</span>(obj);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><figcaption><span>[sol1-JavaScript]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> <span class="title class_">StreamChecker</span> = <span class="keyword">function</span>(<span class="params">words</span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> root = <span class="keyword">new</span> <span class="title class_">TrieNode</span>();</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">const</span> word <span class="keyword">of</span> words) &#123;</span><br><span class="line">        <span class="keyword">let</span> cur = root;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; word.<span class="property">length</span>; i++) &#123;</span><br><span class="line">            <span class="keyword">const</span> index = word[i].<span class="title function_">charCodeAt</span>() - <span class="string">&#x27;a&#x27;</span>.<span class="title function_">charCodeAt</span>();</span><br><span class="line">            <span class="keyword">if</span> (cur.<span class="title function_">getChild</span>(index) === <span class="number">0</span>) &#123;</span><br><span class="line">                cur.<span class="title function_">setChild</span>(index, <span class="keyword">new</span> <span class="title class_">TrieNode</span>());</span><br><span class="line">            &#125;</span><br><span class="line">            cur = cur.<span class="title function_">getChild</span>(index);</span><br><span class="line">        &#125;</span><br><span class="line">        cur.<span class="title function_">setIsEnd</span>(<span class="literal">true</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    root.<span class="title function_">setFail</span>(root);</span><br><span class="line">    <span class="keyword">const</span> q = [];</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="number">26</span>; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span>(root.<span class="title function_">getChild</span>(i) != <span class="number">0</span>) &#123;</span><br><span class="line">            root.<span class="title function_">getChild</span>(i).<span class="title function_">setFail</span>(root);</span><br><span class="line">            q.<span class="title function_">push</span>(root.<span class="title function_">getChild</span>(i));</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            root.<span class="title function_">setChild</span>(i, root);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span> (q.<span class="property">length</span>) &#123;</span><br><span class="line">        <span class="keyword">const</span> node = q.<span class="title function_">shift</span>();</span><br><span class="line">        node.<span class="title function_">setIsEnd</span>(node.<span class="title function_">getIsEnd</span>() || node.<span class="title function_">getFail</span>().<span class="title function_">getIsEnd</span>());</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="number">26</span>; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span>(node.<span class="title function_">getChild</span>(i) != <span class="number">0</span>) &#123;</span><br><span class="line">                node.<span class="title function_">getChild</span>(i).<span class="title function_">setFail</span>(node.<span class="title function_">getFail</span>().<span class="title function_">getChild</span>(i));</span><br><span class="line">                q.<span class="title function_">push</span>(node.<span class="title function_">getChild</span>(i));</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                node.<span class="title function_">setChild</span>(i, node.<span class="title function_">getFail</span>().<span class="title function_">getChild</span>(i));</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">temp</span> = root;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="title class_">StreamChecker</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">query</span> = <span class="keyword">function</span>(<span class="params">letter</span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">temp</span> = <span class="variable language_">this</span>.<span class="property">temp</span>.<span class="title function_">getChild</span>(letter.<span class="title function_">charCodeAt</span>() - <span class="string">&#x27;a&#x27;</span>.<span class="title function_">charCodeAt</span>());</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">temp</span>.<span class="title function_">getIsEnd</span>();</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">TrieNode</span> &#123;</span><br><span class="line">    <span class="title function_">constructor</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">children</span> = <span class="keyword">new</span> <span class="title class_">Array</span>(<span class="number">26</span>).<span class="title function_">fill</span>(<span class="number">0</span>);</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">isEnd</span> = <span class="literal">false</span>;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">fail</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="title function_">getChild</span>(<span class="params">index</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">children</span>[index];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="title function_">setChild</span>(<span class="params">index, node</span>) &#123;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">children</span>[index] = node;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="title function_">getIsEnd</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">isEnd</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="title function_">setIsEnd</span>(<span class="params">b</span>) &#123;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">isEnd</span> = b;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="title function_">getFail</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">fail</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="title function_">setFail</span>(<span class="params">node</span>) &#123;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">fail</span> = node;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>复杂度分析</strong></p>
+<ul>
+<li><p>时间复杂度：O(L+q)，其中 L 是字符串数组总的字符数，q 是查询次数。构建字典树需要消耗 O(L) 的时间，单次查询的时间复杂度为 O(1)。</p>
+</li>
+<li><p>空间复杂度：O(L)。构建字典树需要消耗 O(L) 的空间。</p>
+</li>
+</ul>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <!--<div class="article-copyright-info-container">-->
+    <!--&lt;!&ndash;<ul>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><strong>Title:</strong> 1032-字符流</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><strong>Author:</strong> Raphael Liu</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><strong>Created at&ndash;&gt;-->
+                <!--&lt;!&ndash;:</strong> 2023-09-13 00:47:26</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;&ndash;&gt;-->
+            <!--&lt;!&ndash;<li>&ndash;&gt;-->
+                <!--&lt;!&ndash;<strong>Updated at&ndash;&gt;-->
+                    <!--&lt;!&ndash;:</strong> 2023-09-13 16:06:29&ndash;&gt;-->
+            <!--&lt;!&ndash;</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;<li>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;<strong>Link:</strong> https://fida.ltd/2023/09/13/1032-字符流/&ndash;&gt;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;</li>&ndash;&gt;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;<li>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;<strong>&ndash;&gt;&ndash;&gt;-->
+                <!--&lt;!&ndash;&lt;!&ndash;License:&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;</strong>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0</a>.&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;&ndash;&gt;&ndash;&gt;-->
+
+        <!--&lt;!&ndash;&lt;!&ndash;</li>&ndash;&gt;&ndash;&gt;-->
+    <!--&lt;!&ndash;</ul>&ndash;&gt;-->
+<!--</div>-->
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box">
+                
+                    <li class="tag-item">
+                        <a href="/tags/algorithm/">#algorithm</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item">
+                        <a href="/tags/HARD/">#HARD</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                        rel="prev"
+                        href="/2023/09/13/1031-%E4%B8%A4%E4%B8%AA%E9%9D%9E%E9%87%8D%E5%8F%A0%E5%AD%90%E6%95%B0%E7%BB%84%E7%9A%84%E6%9C%80%E5%A4%A7%E5%92%8C/"
+                        >
+                            <span class="left arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">1031-两个非重叠子数组的最大和</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                        rel="next"
+                        href="/2023/09/13/1033-%E7%A7%BB%E5%8A%A8%E7%9F%B3%E5%AD%90%E7%9B%B4%E5%88%B0%E8%BF%9E%E7%BB%AD/"
+                        >
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">1033-移动石子直到连续</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+
+        
+            <div class="comment-container">
+                <div class="comments-container pjax">
+    <div id="comment-anchor"></div>
+    <div class="comment-area-title">
+        <i class="fa-solid fa-comments"></i>&nbsp;Comments
+    </div>
+    
+
+        
+            
+ 
+    <div id="waline"></div>
+    <script type="module"  data-swup-reload-script>
+        import { init } from 'https://evan.beee.top/js/waline.mjs';
+
+        function loadWaline() {
+            init({
+                el: '#waline',
+                serverURL: 'https://example.example.com',
+                lang: 'zh-CN',
+                dark: 'body[class~="dark-mode"]',
+                requiredMeta: ['nick','mail'], // cannot customize by theme config, change it yourself
+            });
+        }
+
+        if ('true') {
+            const loadWalineTimeout = setTimeout(() => {
+                loadWaline();
+                clearTimeout(loadWalineTimeout);
+            }, 1000);
+        } else {
+            window.addEventListener('DOMContentLoaded', loadWaline);
+        }
+        
+    </script>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+
+    
+        <div class="toc-content-container">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">On this page</div>
+        <div class="page-title">1032-字符流</div>
+        
+
+    </div>
+</div>
+        </div>
+    
+</div>
+
+
+
+                
+
+            </div>
+
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2022</span>
+              -
+            
+            2023&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">Raphael Liu</a>
+        </div>
+        
+            <script data-swup-reload-script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">UV:</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">PV:</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <!--<div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">-->
+            <!--<span class="lg:block text-sm">powered_by</span>-->
+            <!--&lt;!&ndash;<span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.4.4</a></span>&ndash;&gt;-->
+        <!--</div>-->
+        
+        <!---->
+            <!--<div>-->
+                <!--runtime <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hours <span class="odometer" id="runtime_minutes"></span> minutes <span class="odometer" id="runtime_seconds"></span> seconds-->
+            <!--</div>-->
+        <!---->
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fa-regular fa-comments"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-expand-width flex justify-center items-center">
+            <i class="fa-regular fa-expand"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fa-solid fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa-solid fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa-solid fa-spinner fa-spin-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+    
+<script src="/js/libs/Swup.min.js"></script>
+
+<script src="/js/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/libs/SwupScrollPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+        ],
+        containers: ["#swup"],
+    });
+
+    swup.hooks.on("page:view", () => {
+        Global.refresh();
+    });
+
+    // if (document.readyState === "complete") {
+    //
+    // } else {
+    //     document.addEventListener("DOMContentLoaded", () => init());
+    // }
+</script>
+
+
+
+
+
+
+<script src="/js/utils.js" type="module"></script>
+
+<script src="/js/main.js" type="module"></script>
+
+<script src="/js/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/layouts/categoryList.js" type="module"></script>
+
+
+
+    
+<script src="/js/tools/localSearch.js"></script>
+
+
+
+
+    
+<script src="/js/tools/codeBlock.js"></script>
+
+
+
+
+    
+<script src="/js/layouts/lazyload.js"></script>
+
+
+
+
+    
+<script src="/js/tools/runtime.js"></script>
+
+    
+<script src="/js/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/libs/Typed.min.js"></script>
+
+  
+<script src="/js/plugins/typed.js"></script>
+
+
+
+
+
+
+
+<div class="post-scripts" data-swup-reload-script>
+    
+        
+<script src="/js/libs/anime.min.js"></script>
+
+        
+<script src="/js/tools/tocToggle.js" type="module"></script>
+
+<script src="/js/layouts/toc.js" type="module"></script>
+
+<script src="/js/plugins/tabs.js" type="module"></script>
+
+    
+</div>
+
+
+</body>
+</html>

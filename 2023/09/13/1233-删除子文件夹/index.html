@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="Raphael Liu">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/2023/09/13/1233-删除子文件夹/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="你是一位系统管理员，手里有一份文件夹列表 folder，你的任务是要删除该列表中的所有 子文件夹 ，并以 任意顺序 返回剩下的文件夹。 如果文件夹 folder[i] 位于另一个文件夹 folder[j] 下，那么 folder[i] 就是 folder[j] 的子文件夹 。 文件夹的「路径」是由一个或多个按以下格式串联形成的字符串：’&#x2F;‘ 后跟一个或者多个小写英文字母。  例如，&amp;qu">
+<meta property="og:type" content="article">
+<meta property="og:title" content="1233-删除子文件夹">
+<meta property="og:url" content="http://example.com/2023/09/13/1233-%E5%88%A0%E9%99%A4%E5%AD%90%E6%96%87%E4%BB%B6%E5%A4%B9/index.html">
+<meta property="og:site_name" content="Raphael&#39;s Blog">
+<meta property="og:description" content="你是一位系统管理员，手里有一份文件夹列表 folder，你的任务是要删除该列表中的所有 子文件夹 ，并以 任意顺序 返回剩下的文件夹。 如果文件夹 folder[i] 位于另一个文件夹 folder[j] 下，那么 folder[i] 就是 folder[j] 的子文件夹 。 文件夹的「路径」是由一个或多个按以下格式串联形成的字符串：’&#x2F;‘ 后跟一个或者多个小写英文字母。  例如，&amp;qu">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-09-12T16:47:26.000Z">
+<meta property="article:modified_time" content="2023-09-13T08:06:32.646Z">
+<meta property="article:author" content="Raphael Liu">
+<meta property="article:tag" content="algorithm">
+<meta property="article:tag" content="MEDIUM">
+<meta name="twitter:card" content="summary">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/redefine-favicon.svg" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/redefine-favicon.svg">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/redefine-favicon.svg">
+    <!--- Page Info-->
+    
+    <title>
+        
+            1233-删除子文件夹 -
+        
+        Raphael&#39;s Blog
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/css/build/styles.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/fonts.css">
+
+    
+<link rel="stylesheet" href="/fonts/Satoshi/satoshi.css">
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+
+    <!--- Inject Part-->
+    
+    <script id="hexo-configurations">
+    let Global = window.Global || {};
+    Global.hexo_config = {"hostname":"example.com","root":"/","language":"zh_CN"};
+    Global.theme_config = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":true,"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"open_graph":true,"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-wqery6-light.webp","dark":"/images/wallhaven-wqery6-dark.webp"},"title":"Raphael's Blog","subtitle":{"text":["格物致知","坚持做正确的事情"],"hitokoto":{"enable":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":false,"links":{"github":"https://github.com/raphael-liu","email":"raphael@buaa.edu.cn# your email"},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.4.4","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"links":{"首页":{"path":"/","icon":"fa-regular fa-house"},"文章":{"path":"/archives","icon":"fa-regular fa-archive"},"关于":{"icon":"fa-regular fa-user","submenus":{"我":"/about/me","Github":"https://github.com/raphael-liu"}}},"search":{"enable":true,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"links":null},"article_date_format":"auto","categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}},"footerStart":"2022/8/17 11:45:14"};
+    Global.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    Global.data_config = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="swup-progress-icon">
+            <i class="fa-solid fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container" id="swup">
+
+    
+
+    <div class="main-content-container">
+
+
+        <div class="main-content-header">
+            <header class="navbar-container">
+    
+    <div class="navbar-content">
+        <div class="left">
+            
+            <a class="logo-title" href="http://example.com/">
+                
+                Raphael&#39;s Blog
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/"  >
+                                    
+                                        
+                                            <i class="fa-regular fa-house"></i>
+                                        
+                                        首页
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/archives"  >
+                                    
+                                        
+                                            <i class="fa-regular fa-archive"></i>
+                                        
+                                        文章
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="has-dropdown" 
+                                    href="#" onClick="return false;">
+                                    
+                                        
+                                            <i class="fa-regular fa-user"></i>
+                                        
+                                        关于&nbsp;<i class="fa-solid fa-chevron-down"></i>
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                                    <ul class="sub-menu">
+                                    
+                                        <li>
+                                        <a href="/about/me">我
+                                        </a>
+                                        </li>
+                                    
+                                        <li>
+                                        <a target="_blank" rel="noopener" href="https://github.com/raphael-liu">GITHUB
+                                        </a>
+                                        </li>
+                                    
+                                    </ul>
+                                
+                            </li>
+                    
+                    
+                        <li class="navbar-item search search-popup-trigger">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fa-solid fa-magnifying-glass"></i></div>
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile drawer -->
+    <div class="navbar-drawer w-full absolute top-0 left-0 bg-background-color">
+        <ul class="drawer-navbar-list flex flex-col justify-start items-center">
+            
+                
+                    <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group " 
+                        href="/"  >
+                             
+                                
+                                    <i class="fa-regular fa-house"></i>
+                                
+                                首页
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+                
+                    <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group " 
+                        href="/archives"  >
+                             
+                                
+                                    <i class="fa-regular fa-archive"></i>
+                                
+                                文章
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+                
+                    <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group has-dropdown" 
+                        href="#" onClick="return false;">
+                            
+                                
+                                    <i class="fa-regular fa-user"></i>
+                                
+                                关于&nbsp;<i class="group-hover:rotate-180 transition-transform fa-solid fa-chevron-down"></i>
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                              
+                        
+                            <li class="text-base flex justify-center items-center hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                <a class="py-0.5" href="/about/me">我</a>
+                            </li>
+                        
+                            <li class="text-base flex justify-center items-center hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                <a class="py-0.5" target="_blank" rel="noopener" href="https://github.com/raphael-liu">GITHUB</a>
+                            </li>
+                        
+                    
+            
+
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="post-page-container">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            
+                <h1 class="article-title-regular">1233-删除子文件夹</h1>
+            
+            </div>
+            
+                    
+        
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">Raphael Liu</span>
+                        
+                            <span class="author-label">Lv10</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2023-09-13 00:47:26</span>
+        <span class="mobile">2023-09-13 00:47:26</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2023-09-13 16:06:32</span>
+            <span class="mobile">2023-09-13 16:06:32</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/algorithm/">algorithm</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/MEDIUM/">MEDIUM</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        
+
+
+        <div class="article-content markdown-body">
+            <p>你是一位系统管理员，手里有一份文件夹列表 <code>folder</code>，你的任务是要删除该列表中的所有 <strong>子文件夹</strong> ，并以 <strong>任意顺序</strong> 返回剩下的文件夹。</p>
+<p>如果文件夹 <code>folder[i]</code> 位于另一个文件夹 <code>folder[j]</code> 下，那么 <code>folder[i]</code> 就是 <code>folder[j]</code> 的<br><strong>子文件夹</strong> 。</p>
+<p>文件夹的「路径」是由一个或多个按以下格式串联形成的字符串：’&#x2F;‘ 后跟一个或者多个小写英文字母。</p>
+<ul>
+<li>例如，<code>&quot;/leetcode&quot;</code> 和 <code>&quot;/leetcode/problems&quot;</code> 都是有效的路径，而空字符串和 <code>&quot;/&quot;</code> 不是。</li>
+</ul>
+<p><strong>示例 1：</strong></p>
+<pre><code>**输入：** folder = [&quot;/a&quot;,&quot;/a/b&quot;,&quot;/c/d&quot;,&quot;/c/d/e&quot;,&quot;/c/f&quot;]
+**输出：** [&quot;/a&quot;,&quot;/c/d&quot;,&quot;/c/f&quot;]
+**解释：** &quot;/a/b&quot; 是 &quot;/a&quot; 的子文件夹，而 &quot;/c/d/e&quot; 是 &quot;/c/d&quot; 的子文件夹。
+</code></pre>
+<p><strong>示例 2：</strong></p>
+<pre><code>**输入：** folder = [&quot;/a&quot;,&quot;/a/b/c&quot;,&quot;/a/b/d&quot;]
+**输出：** [&quot;/a&quot;]
+**解释：** 文件夹 &quot;/a/b/c&quot; 和 &quot;/a/b/d&quot; 都会被删除，因为它们都是 &quot;/a&quot; 的子文件夹。
+</code></pre>
+<p><strong>示例 3：</strong></p>
+<pre><code>**输入:** folder = [&quot;/a/b/c&quot;,&quot;/a/b/ca&quot;,&quot;/a/b/d&quot;]
+**输出:** [&quot;/a/b/c&quot;,&quot;/a/b/ca&quot;,&quot;/a/b/d&quot;]
+</code></pre>
+<p><strong>提示：</strong></p>
+<ul>
+<li><code>1 &lt;= folder.length &lt;= 4 * 104</code></li>
+<li><code>2 &lt;= folder[i].length &lt;= 100</code></li>
+<li><code>folder[i]</code> 只包含小写字母和 <code>&#39;/&#39;</code></li>
+<li><code>folder[i]</code> 总是以字符 <code>&#39;/&#39;</code> 起始</li>
+<li><code>folder</code> 每个元素都是 <strong>唯一</strong> 的</li>
+</ul>
+<h4 id="方法一：排序"><a href="#方法一：排序" class="headerlink" title="方法一：排序"></a>方法一：排序</h4><p><strong>思路与算法</strong></p>
+<p>我们可以将字符串数组 folder 按照字典序进行排序。在排序完成后，对于每一个 folder}[i]，如果 folder}[i-1] 恰好是它的前缀，并且 folder}[i] 第一个多出的字符是 &#x2F;，那么我们就可以把 folder}[i] 删除。</p>
+<blockquote>
+<p>注意当 folder}[i] 被删除后，后续的所有字符串都需要向前移动一个位置。例如 [<code>/a&#39;&#39;,</code>&#x2F;a&#x2F;b’’,<code>/a/c&#39;&#39;] 中，</code>&#x2F;a&#x2F;b’’ 被删除后，数组会变为 [<code>/a&#39;&#39;,</code>&#x2F;a&#x2F;c’’]，&#96;&#96;&#x2F;a&#x2F;c’’ 也会被删除。</p>
+</blockquote>
+<p>这样做的必要性是显然的，因为如果上述条件满足，就说明 folder}[i] 是 folder}[i-1] 的子文件夹。对于充分性，我们可以使用反证法：</p>
+<blockquote>
+<p>假设 folder}[i] 是某个 folder}[j]~(j \neq i-1) 的子文件夹但不是 folder}[i-1] 的子文件夹，那么在排序后，folder}[j] 一定出现在 folder}[i] 的前面，也就是有 j &lt; i。如果有多个满足要求的 j，我们选择最早出现的那个。这样就保证了 folder}[j] 本身不会是其它文件夹的子文件夹。</p>
+<p>由于 <code>/&#39;&#39; 的字典序小于所有的小写字母，并且 folder&#125;[i] 是由 folder&#125;[j] 加上 </code>&#x2F;‘’ 再加上后续字符组成，因此在 folder}[i] 和 folder}[j] 之间的所有字符串也都一定是由 folder}[j] 加上 &#96;&#96;&#x2F;‘’ 再加上后续字符组成。这些字符串都是 folder}[i] 的子文件夹，它们会依次被删除。当遍历到 folder}[i] 时，它的上一个元素恰好是 folder}[j]，因此它一定会被删除。</p>
+</blockquote>
+<p><strong>代码</strong></p>
+<div class="highlight-container" data-rel="C++"><figure class="iseeu highlight c++"><figcaption><span>[sol1-C++]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">vector&lt;string&gt; <span class="title">removeSubfolders</span><span class="params">(vector&lt;string&gt;&amp; folder)</span> </span>&#123;</span><br><span class="line">        <span class="built_in">sort</span>(folder.<span class="built_in">begin</span>(), folder.<span class="built_in">end</span>());</span><br><span class="line">        vector&lt;string&gt; ans = &#123;folder[<span class="number">0</span>]&#125;;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt; folder.<span class="built_in">size</span>(); ++i) &#123;</span><br><span class="line">            <span class="keyword">if</span> (<span class="type">int</span> pre = ans.<span class="built_in">end</span>()[<span class="number">-1</span>].<span class="built_in">size</span>(); !(pre &lt; folder[i].<span class="built_in">size</span>() &amp;&amp; ans.<span class="built_in">end</span>()[<span class="number">-1</span>] == folder[i].<span class="built_in">substr</span>(<span class="number">0</span>, pre) &amp;&amp; folder[i][pre] == <span class="string">&#x27;/&#x27;</span>)) &#123;</span><br><span class="line">                ans.<span class="built_in">push_back</span>(folder[i]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><figcaption><span>[sol1-Java]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> List&lt;String&gt; <span class="title function_">removeSubfolders</span><span class="params">(String[] folder)</span> &#123;</span><br><span class="line">        Arrays.sort(folder);</span><br><span class="line">        List&lt;String&gt; ans = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;String&gt;();</span><br><span class="line">        ans.add(folder[<span class="number">0</span>]);</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">1</span>; i &lt; folder.length; ++i) &#123;</span><br><span class="line">            <span class="type">int</span> <span class="variable">pre</span> <span class="operator">=</span> ans.get(ans.size() - <span class="number">1</span>).length();</span><br><span class="line">            <span class="keyword">if</span> (!(pre &lt; folder[i].length() &amp;&amp; ans.get(ans.size() - <span class="number">1</span>).equals(folder[i].substring(<span class="number">0</span>, pre)) &amp;&amp; folder[i].charAt(pre) == <span class="string">&#x27;/&#x27;</span>)) &#123;</span><br><span class="line">                ans.add(folder[i]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="C#"><figure class="iseeu highlight c#"><figcaption><span>[sol1-C#]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Solution</span> &#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> IList&lt;<span class="built_in">string</span>&gt; <span class="title">RemoveSubfolders</span>(<span class="params"><span class="built_in">string</span>[] folder</span>)</span> &#123;</span><br><span class="line">        Array.Sort(folder);</span><br><span class="line">        IList&lt;<span class="built_in">string</span>&gt; ans = <span class="keyword">new</span> List&lt;<span class="built_in">string</span>&gt;();</span><br><span class="line">        ans.Add(folder[<span class="number">0</span>]);</span><br><span class="line">        <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">1</span>; i &lt; folder.Length; ++i) &#123;</span><br><span class="line">            <span class="built_in">int</span> pre = ans[ans.Count - <span class="number">1</span>].Length;</span><br><span class="line">            <span class="keyword">if</span> (!(pre &lt; folder[i].Length &amp;&amp; ans[ans.Count - <span class="number">1</span>].Equals(folder[i].Substring(<span class="number">0</span>, pre)) &amp;&amp; folder[i][pre] == <span class="string">&#x27;/&#x27;</span>)) &#123;</span><br><span class="line">                ans.Add(folder[i]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><figcaption><span>[sol1-Python3]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">removeSubfolders</span>(<span class="params">self, folder: <span class="type">List</span>[<span class="built_in">str</span>]</span>) -&gt; <span class="type">List</span>[<span class="built_in">str</span>]:</span><br><span class="line">        folder.sort()</span><br><span class="line">        ans = [folder[<span class="number">0</span>]]</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, <span class="built_in">len</span>(folder)):</span><br><span class="line">            <span class="keyword">if</span> <span class="keyword">not</span> ((pre := <span class="built_in">len</span>(ans[-<span class="number">1</span>])) &lt; <span class="built_in">len</span>(folder[i]) <span class="keyword">and</span> ans[-<span class="number">1</span>] == folder[i][:pre] <span class="keyword">and</span> folder[i][pre] == <span class="string">&quot;/&quot;</span>):</span><br><span class="line">                ans.append(folder[i])</span><br><span class="line">        <span class="keyword">return</span> ans</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="C"><figure class="iseeu highlight c"><figcaption><span>[sol1-C]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">static</span> <span class="type">int</span> <span class="title function_">cmp</span><span class="params">(<span class="type">const</span> <span class="type">int</span> *pa, <span class="type">const</span> <span class="type">int</span> *pb)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">strcmp</span>(*(<span class="type">char</span> **)pa, *(<span class="type">char</span> **)pb);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">char</span> ** <span class="title function_">removeSubfolders</span><span class="params">(<span class="type">char</span> ** folder, <span class="type">int</span> folderSize, <span class="type">int</span>* returnSize)</span> &#123;</span><br><span class="line">    qsort(folder, folderSize, <span class="keyword">sizeof</span>(<span class="type">char</span> *), cmp);</span><br><span class="line">    <span class="type">char</span> **ans = (<span class="type">char</span> **)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="type">char</span> *) * folderSize);</span><br><span class="line">    <span class="type">int</span> pos = <span class="number">0</span>;</span><br><span class="line">    ans[pos++] = folder[<span class="number">0</span>];</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt; folderSize; ++i) &#123;</span><br><span class="line">        <span class="type">int</span> pre = <span class="built_in">strlen</span>(ans[pos - <span class="number">1</span>]);</span><br><span class="line">        <span class="keyword">if</span> (!(pre &lt; <span class="built_in">strlen</span>(folder[i]) &amp;&amp; !<span class="built_in">strncmp</span>(ans[pos - <span class="number">1</span>], folder[i], pre) &amp;&amp; folder[i][pre] == <span class="string">&#x27;/&#x27;</span>)) &#123;</span><br><span class="line">            ans[pos++] = folder[i];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    *returnSize = pos;</span><br><span class="line">    <span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Go"><figure class="iseeu highlight go"><figcaption><span>[sol1-Golang]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">removeSubfolders</span><span class="params">(folder []<span class="type">string</span>)</span></span> (ans []<span class="type">string</span>) &#123;</span><br><span class="line">    sort.Strings(folder)</span><br><span class="line">    ans = <span class="built_in">append</span>(ans, folder[<span class="number">0</span>])</span><br><span class="line">    <span class="keyword">for</span> _, f := <span class="keyword">range</span> folder[<span class="number">1</span>:] &#123;</span><br><span class="line">        last := ans[<span class="built_in">len</span>(ans)<span class="number">-1</span>]</span><br><span class="line">        <span class="keyword">if</span> !strings.HasPrefix(f, last) || f[<span class="built_in">len</span>(last)] != <span class="string">&#x27;/&#x27;</span> &#123;</span><br><span class="line">            ans = <span class="built_in">append</span>(ans, f)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><figcaption><span>[sol1-JavaScript]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> removeSubfolders = <span class="keyword">function</span>(<span class="params">folder</span>) &#123;</span><br><span class="line">    folder.<span class="title function_">sort</span>();</span><br><span class="line">    <span class="keyword">const</span> ans = [folder[<span class="number">0</span>]];</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">1</span>; i &lt; folder.<span class="property">length</span>; ++i) &#123;</span><br><span class="line">        <span class="keyword">const</span> pre = ans[ans.<span class="property">length</span> - <span class="number">1</span>].<span class="property">length</span>;</span><br><span class="line">        <span class="keyword">if</span> (!(pre &lt; folder[i].<span class="property">length</span> &amp;&amp; ans[ans.<span class="property">length</span> - <span class="number">1</span>] === (folder[i].<span class="title function_">substring</span>(<span class="number">0</span>, pre)) &amp;&amp; folder[i].<span class="title function_">charAt</span>(pre) === <span class="string">&#x27;/&#x27;</span>)) &#123;</span><br><span class="line">            ans.<span class="title function_">push</span>(folder[i]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ans;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>复杂度分析</strong></p>
+<ul>
+<li><p>时间复杂度：O(nl \cdot \log n)，其中 n 和 l 分别是数组 folder 的长度和文件夹的平均长度。O(nl \cdot \log n) 为排序需要的时间，后续构造答案需要的时间为 O(nl)，在渐进意义下小于前者。</p>
+</li>
+<li><p>空间复杂度：O(l)。在构造答案比较前缀时，我们使用了字符串的截取子串操作，因此需要 O(l) 的临时空间。我们也可以使用一个递增的指针依次对两个字符串的每个相同位置进行比较，省去这一部分的空间，使得空间复杂度降低至排序需要的栈空间 O(\log n)。但空间优化并不是本题的重点，因此上述的代码中仍然采用空间复杂度为 O(l) 的写法。注意这里不计入返回值占用的空间。</p>
+</li>
+</ul>
+<h4 id="方法二：字典树"><a href="#方法二：字典树" class="headerlink" title="方法二：字典树"></a>方法二：字典树</h4><p><strong>思路与算法</strong></p>
+<p>我们也可以使用字典树来解决本题。文件夹的拓扑结构正好是树形结构，即字典树上的每一个节点就是一个文件夹。</p>
+<p>对于字典树中的每一个节点，我们仅需要存储一个变量 ref，如果 ref} \geq 0，说明该节点对应着 folder}[\textit{ref}~]，否则（ref} &#x3D; -1）说明该节点只是一个中间节点。</p>
+<p>我们首先将每一个文件夹按照 &#96;&#96;&#x2F;‘’ 进行分割，作为一条路径加入字典树中。随后我们对字典树进行一次深度优先搜索，搜索的过程中，如果我们走到了一个 ref} \geq 0 的节点，就将其加入答案，并且可以直接回溯，因为后续（更深的）所有节点都是该节点的子文件夹。</p>
+<p><strong>代码</strong></p>
+<div class="highlight-container" data-rel="C++"><figure class="iseeu highlight c++"><figcaption><span>[sol2-C++]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">Trie</span> &#123;</span><br><span class="line">    <span class="built_in">Trie</span>(): <span class="built_in">ref</span>(<span class="number">-1</span>) &#123;&#125;</span><br><span class="line"></span><br><span class="line">    unordered_map&lt;string, Trie*&gt; children;</span><br><span class="line">    <span class="type">int</span> ref;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">vector&lt;string&gt; <span class="title">removeSubfolders</span><span class="params">(vector&lt;string&gt;&amp; folder)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">auto</span> split = [](<span class="type">const</span> string&amp; s) -&gt; vector&lt;string&gt; &#123;</span><br><span class="line">            vector&lt;string&gt; ret;</span><br><span class="line">            string cur;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">char</span> ch: s) &#123;</span><br><span class="line">                <span class="keyword">if</span> (ch == <span class="string">&#x27;/&#x27;</span>) &#123;</span><br><span class="line">                    ret.<span class="built_in">push_back</span>(<span class="built_in">move</span>(cur));</span><br><span class="line">                    cur.<span class="built_in">clear</span>();</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">else</span> &#123;</span><br><span class="line">                    cur.<span class="built_in">push_back</span>(ch);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            ret.<span class="built_in">push_back</span>(<span class="built_in">move</span>(cur));</span><br><span class="line">            <span class="keyword">return</span> ret;</span><br><span class="line">        &#125;;</span><br><span class="line"></span><br><span class="line">        Trie* root = <span class="keyword">new</span> <span class="built_in">Trie</span>();</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; folder.<span class="built_in">size</span>(); ++i) &#123;</span><br><span class="line">            vector&lt;string&gt; path = <span class="built_in">split</span>(folder[i]);</span><br><span class="line">            Trie* cur = root;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">const</span> string&amp; name: path) &#123;</span><br><span class="line">                <span class="keyword">if</span> (!cur-&gt;children.<span class="built_in">count</span>(name)) &#123;</span><br><span class="line">                    cur-&gt;children[name] = <span class="keyword">new</span> <span class="built_in">Trie</span>();</span><br><span class="line">                &#125;</span><br><span class="line">                cur = cur-&gt;children[name];</span><br><span class="line">            &#125;</span><br><span class="line">            cur-&gt;ref = i;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        vector&lt;string&gt; ans;</span><br><span class="line"></span><br><span class="line">        function&lt;<span class="type">void</span>(Trie*)&gt; dfs = [&amp;](Trie* cur) &#123;</span><br><span class="line">            <span class="keyword">if</span> (cur-&gt;ref != <span class="number">-1</span>) &#123;</span><br><span class="line">                ans.<span class="built_in">push_back</span>(folder[cur-&gt;ref]);</span><br><span class="line">                <span class="keyword">return</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">auto</span>&amp;&amp; [_, child]: cur-&gt;children) &#123;</span><br><span class="line">                <span class="built_in">dfs</span>(child);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line"></span><br><span class="line">        <span class="built_in">dfs</span>(root);</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><figcaption><span>[sol2-Java]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> List&lt;String&gt; <span class="title function_">removeSubfolders</span><span class="params">(String[] folder)</span> &#123;</span><br><span class="line">        <span class="type">Trie</span> <span class="variable">root</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Trie</span>();</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; folder.length; ++i) &#123;</span><br><span class="line">            List&lt;String&gt; path = split(folder[i]);</span><br><span class="line">            <span class="type">Trie</span> <span class="variable">cur</span> <span class="operator">=</span> root;</span><br><span class="line">            <span class="keyword">for</span> (String name : path) &#123;</span><br><span class="line">                cur.children.putIfAbsent(name, <span class="keyword">new</span> <span class="title class_">Trie</span>());</span><br><span class="line">                cur = cur.children.get(name);</span><br><span class="line">            &#125;</span><br><span class="line">            cur.ref = i;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        List&lt;String&gt; ans = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;String&gt;();</span><br><span class="line">        dfs(folder, ans, root);</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> List&lt;String&gt; <span class="title function_">split</span><span class="params">(String s)</span> &#123;</span><br><span class="line">        List&lt;String&gt; ret = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;String&gt;();</span><br><span class="line">        <span class="type">StringBuilder</span> <span class="variable">cur</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringBuilder</span>();</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; s.length(); ++i) &#123;</span><br><span class="line">            <span class="type">char</span> <span class="variable">ch</span> <span class="operator">=</span> s.charAt(i);</span><br><span class="line">            <span class="keyword">if</span> (ch == <span class="string">&#x27;/&#x27;</span>) &#123;</span><br><span class="line">                ret.add(cur.toString());</span><br><span class="line">                cur.setLength(<span class="number">0</span>);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                cur.append(ch);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        ret.add(cur.toString());</span><br><span class="line">        <span class="keyword">return</span> ret;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">dfs</span><span class="params">(String[] folder, List&lt;String&gt; ans, Trie cur)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (cur.ref != -<span class="number">1</span>) &#123;</span><br><span class="line">            ans.add(folder[cur.ref]);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (Trie child : cur.children.values()) &#123;</span><br><span class="line">            dfs(folder, ans, child);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Trie</span> &#123;</span><br><span class="line">    <span class="type">int</span> ref;</span><br><span class="line">    Map&lt;String, Trie&gt; children;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">Trie</span><span class="params">()</span> &#123;</span><br><span class="line">        ref = -<span class="number">1</span>;</span><br><span class="line">        children = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;String, Trie&gt;();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="C#"><figure class="iseeu highlight c#"><figcaption><span>[sol2-C#]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Solution</span> &#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> IList&lt;<span class="built_in">string</span>&gt; <span class="title">RemoveSubfolders</span>(<span class="params"><span class="built_in">string</span>[] folder</span>)</span> &#123;</span><br><span class="line">        Trie root = <span class="keyword">new</span> Trie();</span><br><span class="line">        <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; folder.Length; ++i) &#123;</span><br><span class="line">            IList&lt;<span class="built_in">string</span>&gt; path = Split(folder[i]);</span><br><span class="line">            Trie cur = root;</span><br><span class="line">            <span class="keyword">foreach</span> (<span class="built_in">string</span> name <span class="keyword">in</span> path) &#123;</span><br><span class="line">                cur.children.TryAdd(name, <span class="keyword">new</span> Trie());</span><br><span class="line">                cur = cur.children[name];</span><br><span class="line">            &#125;</span><br><span class="line">            cur.reference = i;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        IList&lt;<span class="built_in">string</span>&gt; ans = <span class="keyword">new</span> List&lt;<span class="built_in">string</span>&gt;();</span><br><span class="line">        DFS(folder, ans, root);</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> IList&lt;<span class="built_in">string</span>&gt; <span class="title">Split</span>(<span class="params"><span class="built_in">string</span> s</span>)</span> &#123;</span><br><span class="line">        IList&lt;<span class="built_in">string</span>&gt; ret = <span class="keyword">new</span> List&lt;<span class="built_in">string</span>&gt;();</span><br><span class="line">        StringBuilder cur = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">        <span class="keyword">foreach</span> (<span class="built_in">char</span> ch <span class="keyword">in</span> s) &#123;</span><br><span class="line">            <span class="keyword">if</span> (ch == <span class="string">&#x27;/&#x27;</span>) &#123;</span><br><span class="line">                ret.Add(cur.ToString());</span><br><span class="line">                cur.Length = <span class="number">0</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                cur.Append(ch);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        ret.Add(cur.ToString());</span><br><span class="line">        <span class="keyword">return</span> ret;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">DFS</span>(<span class="params"><span class="built_in">string</span>[] folder, IList&lt;<span class="built_in">string</span>&gt; ans, Trie cur</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (cur.reference != <span class="number">-1</span>) &#123;</span><br><span class="line">            ans.Add(folder[cur.reference]);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">foreach</span> (Trie child <span class="keyword">in</span> cur.children.Values) &#123;</span><br><span class="line">            DFS(folder, ans, child);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Trie</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">int</span> reference;</span><br><span class="line">    <span class="keyword">public</span> IDictionary&lt;<span class="built_in">string</span>, Trie&gt; children;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Trie</span>()</span> &#123;</span><br><span class="line">        reference = <span class="number">-1</span>;</span><br><span class="line">        children = <span class="keyword">new</span> Dictionary&lt;<span class="built_in">string</span>, Trie&gt;();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><figcaption><span>[sol2-Python3]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Trie</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">        self.children = <span class="built_in">dict</span>()</span><br><span class="line">        self.ref = -<span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">removeSubfolders</span>(<span class="params">self, folder: <span class="type">List</span>[<span class="built_in">str</span>]</span>) -&gt; <span class="type">List</span>[<span class="built_in">str</span>]:</span><br><span class="line">        root = Trie()</span><br><span class="line">        <span class="keyword">for</span> i, path <span class="keyword">in</span> <span class="built_in">enumerate</span>(folder):</span><br><span class="line">            path = path.split(<span class="string">&quot;/&quot;</span>)</span><br><span class="line">            cur = root</span><br><span class="line">            <span class="keyword">for</span> name <span class="keyword">in</span> path:</span><br><span class="line">                <span class="keyword">if</span> name <span class="keyword">not</span> <span class="keyword">in</span> cur.children:</span><br><span class="line">                    cur.children[name] = Trie()</span><br><span class="line">                cur = cur.children[name]</span><br><span class="line">            cur.ref = i</span><br><span class="line">        </span><br><span class="line">        ans = <span class="built_in">list</span>()</span><br><span class="line"></span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">dfs</span>(<span class="params">cur: Trie</span>):</span><br><span class="line">            <span class="keyword">if</span> cur.ref != -<span class="number">1</span>:</span><br><span class="line">                ans.append(folder[cur.ref])</span><br><span class="line">                <span class="keyword">return</span></span><br><span class="line">            <span class="keyword">for</span> child <span class="keyword">in</span> cur.children.values():</span><br><span class="line">                dfs(child)</span><br><span class="line"></span><br><span class="line">        dfs(root)</span><br><span class="line">        <span class="keyword">return</span> ans</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="C"><figure class="iseeu highlight c"><figcaption><span>[sol2-C]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> &#123;</span></span><br><span class="line">    <span class="type">char</span> *key;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">Trie</span> *<span class="title">val</span>;</span></span><br><span class="line">    UT_hash_handle hh;</span><br><span class="line">&#125; HashItem; </span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">Trie</span> &#123;</span></span><br><span class="line">    HashItem *children;</span><br><span class="line">    <span class="type">int</span> ref;</span><br><span class="line">&#125; Trie;</span><br><span class="line"></span><br><span class="line">Trie *<span class="title function_">creatTrie</span><span class="params">()</span> &#123;</span><br><span class="line">    Trie *obj = (Trie *)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(Trie));</span><br><span class="line">    obj-&gt;children = <span class="literal">NULL</span>;</span><br><span class="line">    obj-&gt;ref = <span class="number">-1</span>;</span><br><span class="line">    <span class="keyword">return</span> obj;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">HashItem *<span class="title function_">hashFindItem</span><span class="params">(HashItem **obj, <span class="type">char</span> *key)</span> &#123;</span><br><span class="line">    HashItem *pEntry = <span class="literal">NULL</span>;</span><br><span class="line">    HASH_FIND_STR(*obj, key, pEntry);</span><br><span class="line">    <span class="keyword">return</span> pEntry;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">bool</span> <span class="title function_">hashAddItem</span><span class="params">(HashItem **obj, <span class="type">char</span> *key, Trie *val)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (hashFindItem(obj, key)) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    HashItem *pEntry = (HashItem *)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(HashItem));</span><br><span class="line">    pEntry-&gt;key = key;</span><br><span class="line">    pEntry-&gt;val = val;</span><br><span class="line">    HASH_ADD_STR(*obj, key, pEntry);</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">hashFree</span><span class="params">(HashItem **obj)</span> &#123;</span><br><span class="line">    HashItem *curr = <span class="literal">NULL</span>, *tmp = <span class="literal">NULL</span>;</span><br><span class="line">    HASH_ITER(hh, *obj, curr, tmp) &#123;</span><br><span class="line">        HASH_DEL(*obj, curr);  </span><br><span class="line">        <span class="built_in">free</span>(curr);             </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">char</span> **<span class="title function_">split</span><span class="params">(<span class="type">char</span> *str, <span class="type">int</span> *returnSize)</span> &#123;</span><br><span class="line">    <span class="type">int</span> len = <span class="built_in">strlen</span>(str);</span><br><span class="line">    <span class="type">char</span> **ret = (<span class="type">char</span> *)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="type">char</span> *) * len);</span><br><span class="line">    <span class="type">char</span> *p = strtok(str, <span class="string">&quot;/&quot;</span>);</span><br><span class="line">    <span class="type">int</span> pos = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span> (p != <span class="literal">NULL</span>) &#123;</span><br><span class="line">        ret[pos++] = p;</span><br><span class="line">        p = strtok(<span class="literal">NULL</span>, <span class="string">&quot;/&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    *returnSize = pos;</span><br><span class="line">    <span class="keyword">return</span> ret;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">dfs</span><span class="params">(Trie* cur, <span class="type">char</span> **res, <span class="type">int</span> *pos, <span class="type">char</span> **folder)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (cur-&gt;ref != <span class="number">-1</span>) &#123;</span><br><span class="line">        res[(*pos)++] = folder[cur-&gt;ref];</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (HashItem *pEntry = cur-&gt;children; pEntry != <span class="literal">NULL</span>; pEntry = pEntry-&gt;hh.next) &#123;</span><br><span class="line">        dfs(pEntry-&gt;val, res, pos, folder);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">freeTrie</span><span class="params">(Trie* root)</span> &#123;</span><br><span class="line">    <span class="keyword">for</span> (HashItem *pEntry = root-&gt;children; pEntry != <span class="literal">NULL</span>; pEntry = pEntry-&gt;hh.next) &#123;</span><br><span class="line">        freeTrie(pEntry-&gt;val);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">char</span> ** <span class="title function_">removeSubfolders</span><span class="params">(<span class="type">char</span> ** folder, <span class="type">int</span> folderSize, <span class="type">int</span>* returnSize)</span> &#123;</span><br><span class="line">    Trie *root = creatTrie();</span><br><span class="line">    <span class="type">char</span> **copy = (<span class="type">char</span> **)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="type">char</span> *) * folderSize); </span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; folderSize; ++i) &#123;</span><br><span class="line">        copy[i] = (<span class="type">char</span> *)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="type">char</span>) * (<span class="built_in">strlen</span>(folder[i]) + <span class="number">1</span>));</span><br><span class="line">        <span class="built_in">strcpy</span>(copy[i], folder[i]);</span><br><span class="line">        <span class="type">int</span> pathSize = <span class="number">0</span>;</span><br><span class="line">        <span class="type">char</span> **path = split(copy[i], &amp;pathSize);</span><br><span class="line">        Trie *cur = root;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt; pathSize; j++) &#123;</span><br><span class="line">            <span class="type">char</span> *name = path[j];</span><br><span class="line">            HashItem *pEntry = hashFindItem(&amp;cur-&gt;children, name);</span><br><span class="line">            Trie *node = <span class="literal">NULL</span>;</span><br><span class="line">            <span class="keyword">if</span> (pEntry == <span class="literal">NULL</span>) &#123;</span><br><span class="line">                node = creatTrie();</span><br><span class="line">                hashAddItem(&amp;cur-&gt;children, name, node);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                node = pEntry-&gt;val;</span><br><span class="line">            &#125;</span><br><span class="line">            cur = node;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">free</span>(path);</span><br><span class="line">        cur-&gt;ref = i;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="type">char</span> **ans = (<span class="type">char</span> **)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="type">char</span> *) * folderSize);</span><br><span class="line">    <span class="type">int</span> pos = <span class="number">0</span>;</span><br><span class="line">    dfs(root, ans, &amp;pos, folder);</span><br><span class="line">    freeTrie(root);</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; folderSize; i++) &#123;</span><br><span class="line">        <span class="built_in">free</span>(copy[i]);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">free</span>(copy);</span><br><span class="line">    *returnSize = pos;</span><br><span class="line">    <span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><figcaption><span>[sol2-JavaScript]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> removeSubfolders = <span class="keyword">function</span>(<span class="params">folder</span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> root = <span class="keyword">new</span> <span class="title class_">Trie</span>();</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; folder.<span class="property">length</span>; ++i) &#123;</span><br><span class="line">        <span class="keyword">const</span> path = <span class="title function_">split</span>(folder[i]);</span><br><span class="line">        <span class="keyword">let</span> cur = root;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">const</span> name <span class="keyword">of</span> path) &#123;</span><br><span class="line">            <span class="keyword">if</span> (!cur.<span class="property">children</span>.<span class="title function_">has</span>(name)) &#123;</span><br><span class="line">                cur.<span class="property">children</span>.<span class="title function_">set</span>(name, <span class="keyword">new</span> <span class="title class_">Trie</span>());</span><br><span class="line">            &#125;</span><br><span class="line">            cur = cur.<span class="property">children</span>.<span class="title function_">get</span>(name);</span><br><span class="line">        &#125;</span><br><span class="line">        cur.<span class="property">ref</span> = i;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> ans = [];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> <span class="title function_">dfs</span> = (<span class="params">folder, ans, cur</span>) =&gt; &#123;</span><br><span class="line">        <span class="keyword">if</span> (cur.<span class="property">ref</span> !== -<span class="number">1</span>) &#123;</span><br><span class="line">            ans.<span class="title function_">push</span>(folder[cur.<span class="property">ref</span>]);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">const</span> child <span class="keyword">of</span> cur.<span class="property">children</span>.<span class="title function_">values</span>()) &#123;</span><br><span class="line">            <span class="title function_">dfs</span>(folder, ans, child);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="title function_">dfs</span>(folder, ans, root);</span><br><span class="line">    <span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">split</span> = (<span class="params">s</span>) =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> ret = [];</span><br><span class="line">    <span class="keyword">let</span> cur = <span class="string">&#x27;&#x27;</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; s.<span class="property">length</span>; ++i) &#123;</span><br><span class="line">        <span class="keyword">const</span> ch = s[i];</span><br><span class="line">        <span class="keyword">if</span> (ch === <span class="string">&#x27;/&#x27;</span>) &#123;</span><br><span class="line">            ret.<span class="title function_">push</span>(cur);</span><br><span class="line">            cur = <span class="string">&#x27;&#x27;</span></span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            cur += ch;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    ret.<span class="title function_">push</span>(cur);</span><br><span class="line">    <span class="keyword">return</span> ret;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Trie</span> &#123;</span><br><span class="line">    <span class="title function_">constructor</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">ref</span> = -<span class="number">1</span>;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">children</span> = <span class="keyword">new</span> <span class="title class_">Map</span>();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>复杂度分析</strong></p>
+<ul>
+<li><p>时间复杂度：O(nl)，其中 n 和 l 分别是数组 folder 的长度和文件夹的平均长度。即为构造字典树和答案需要的时间。</p>
+</li>
+<li><p>空间复杂度：O(nl)，即为字典树需要使用的空间。注意这里不计入返回值占用的空间。</p>
+</li>
+</ul>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <!--<div class="article-copyright-info-container">-->
+    <!--&lt;!&ndash;<ul>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><strong>Title:</strong> 1233-删除子文件夹</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><strong>Author:</strong> Raphael Liu</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><strong>Created at&ndash;&gt;-->
+                <!--&lt;!&ndash;:</strong> 2023-09-13 00:47:26</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;&ndash;&gt;-->
+            <!--&lt;!&ndash;<li>&ndash;&gt;-->
+                <!--&lt;!&ndash;<strong>Updated at&ndash;&gt;-->
+                    <!--&lt;!&ndash;:</strong> 2023-09-13 16:06:32&ndash;&gt;-->
+            <!--&lt;!&ndash;</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;<li>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;<strong>Link:</strong> https://fida.ltd/2023/09/13/1233-删除子文件夹/&ndash;&gt;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;</li>&ndash;&gt;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;<li>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;<strong>&ndash;&gt;&ndash;&gt;-->
+                <!--&lt;!&ndash;&lt;!&ndash;License:&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;</strong>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0</a>.&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;&ndash;&gt;&ndash;&gt;-->
+
+        <!--&lt;!&ndash;&lt;!&ndash;</li>&ndash;&gt;&ndash;&gt;-->
+    <!--&lt;!&ndash;</ul>&ndash;&gt;-->
+<!--</div>-->
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box">
+                
+                    <li class="tag-item">
+                        <a href="/tags/algorithm/">#algorithm</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item">
+                        <a href="/tags/MEDIUM/">#MEDIUM</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                        rel="prev"
+                        href="/2023/09/13/1232-%E7%BC%80%E7%82%B9%E6%88%90%E7%BA%BF/"
+                        >
+                            <span class="left arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">1232-缀点成线</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                        rel="next"
+                        href="/2023/09/13/1234-%E6%9B%BF%E6%8D%A2%E5%AD%90%E4%B8%B2%E5%BE%97%E5%88%B0%E5%B9%B3%E8%A1%A1%E5%AD%97%E7%AC%A6%E4%B8%B2/"
+                        >
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">1234-替换子串得到平衡字符串</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+
+        
+            <div class="comment-container">
+                <div class="comments-container pjax">
+    <div id="comment-anchor"></div>
+    <div class="comment-area-title">
+        <i class="fa-solid fa-comments"></i>&nbsp;Comments
+    </div>
+    
+
+        
+            
+ 
+    <div id="waline"></div>
+    <script type="module"  data-swup-reload-script>
+        import { init } from 'https://evan.beee.top/js/waline.mjs';
+
+        function loadWaline() {
+            init({
+                el: '#waline',
+                serverURL: 'https://example.example.com',
+                lang: 'zh-CN',
+                dark: 'body[class~="dark-mode"]',
+                requiredMeta: ['nick','mail'], // cannot customize by theme config, change it yourself
+            });
+        }
+
+        if ('true') {
+            const loadWalineTimeout = setTimeout(() => {
+                loadWaline();
+                clearTimeout(loadWalineTimeout);
+            }, 1000);
+        } else {
+            window.addEventListener('DOMContentLoaded', loadWaline);
+        }
+        
+    </script>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+
+    
+        <div class="toc-content-container">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">On this page</div>
+        <div class="page-title">1233-删除子文件夹</div>
+        
+
+    </div>
+</div>
+        </div>
+    
+</div>
+
+
+
+                
+
+            </div>
+
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2022</span>
+              -
+            
+            2023&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">Raphael Liu</a>
+        </div>
+        
+            <script data-swup-reload-script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">UV:</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">PV:</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <!--<div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">-->
+            <!--<span class="lg:block text-sm">powered_by</span>-->
+            <!--&lt;!&ndash;<span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.4.4</a></span>&ndash;&gt;-->
+        <!--</div>-->
+        
+        <!---->
+            <!--<div>-->
+                <!--runtime <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hours <span class="odometer" id="runtime_minutes"></span> minutes <span class="odometer" id="runtime_seconds"></span> seconds-->
+            <!--</div>-->
+        <!---->
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fa-regular fa-comments"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-expand-width flex justify-center items-center">
+            <i class="fa-regular fa-expand"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fa-solid fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa-solid fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa-solid fa-spinner fa-spin-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+    
+<script src="/js/libs/Swup.min.js"></script>
+
+<script src="/js/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/libs/SwupScrollPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+        ],
+        containers: ["#swup"],
+    });
+
+    swup.hooks.on("page:view", () => {
+        Global.refresh();
+    });
+
+    // if (document.readyState === "complete") {
+    //
+    // } else {
+    //     document.addEventListener("DOMContentLoaded", () => init());
+    // }
+</script>
+
+
+
+
+
+
+<script src="/js/utils.js" type="module"></script>
+
+<script src="/js/main.js" type="module"></script>
+
+<script src="/js/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/layouts/categoryList.js" type="module"></script>
+
+
+
+    
+<script src="/js/tools/localSearch.js"></script>
+
+
+
+
+    
+<script src="/js/tools/codeBlock.js"></script>
+
+
+
+
+    
+<script src="/js/layouts/lazyload.js"></script>
+
+
+
+
+    
+<script src="/js/tools/runtime.js"></script>
+
+    
+<script src="/js/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/libs/Typed.min.js"></script>
+
+  
+<script src="/js/plugins/typed.js"></script>
+
+
+
+
+
+
+
+<div class="post-scripts" data-swup-reload-script>
+    
+        
+<script src="/js/libs/anime.min.js"></script>
+
+        
+<script src="/js/tools/tocToggle.js" type="module"></script>
+
+<script src="/js/layouts/toc.js" type="module"></script>
+
+<script src="/js/plugins/tabs.js" type="module"></script>
+
+    
+</div>
+
+
+</body>
+</html>

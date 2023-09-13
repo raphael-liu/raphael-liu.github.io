@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="Raphael Liu">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/2023/09/13/0803-打砖块/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="有一个 m x n 的二元网格 grid ，其中 1 表示砖块，0 表示空白。砖块 稳定 （不会掉落）的前提是：  一块砖直接连接到网格的顶部，或者 至少有一块相邻（4 个方向之一）砖块 稳定 不会掉落时  给你一个数组 hits ，这是需要依次消除砖块的位置。每当消除 hits[i] &#x3D; (rowi, coli)位置上的砖块时，对应位置的砖块（若存在）会消失，然后其他的砖块可能因为这一消除操作而">
+<meta property="og:type" content="article">
+<meta property="og:title" content="0803-打砖块">
+<meta property="og:url" content="http://example.com/2023/09/13/0803-%E6%89%93%E7%A0%96%E5%9D%97/index.html">
+<meta property="og:site_name" content="Raphael&#39;s Blog">
+<meta property="og:description" content="有一个 m x n 的二元网格 grid ，其中 1 表示砖块，0 表示空白。砖块 稳定 （不会掉落）的前提是：  一块砖直接连接到网格的顶部，或者 至少有一块相邻（4 个方向之一）砖块 稳定 不会掉落时  给你一个数组 hits ，这是需要依次消除砖块的位置。每当消除 hits[i] &#x3D; (rowi, coli)位置上的砖块时，对应位置的砖块（若存在）会消失，然后其他的砖块可能因为这一消除操作而">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/06a3b0a5-af61-4ba4-88be-d8bbf2a0d9cc">
+<meta property="og:image" content="https://pic.leetcode-cn.com/1610722042-PlKrZg-image.png">
+<meta property="og:image" content="https://pic.leetcode-cn.com/1610757201-RgraKJ-image.png">
+<meta property="og:image" content="https://pic.leetcode-cn.com/1610723629-wPuwFr-image.png">
+<meta property="og:image" content="https://pic.leetcode-cn.com/1610723863-KLANYF-image.png">
+<meta property="article:published_time" content="2023-09-12T16:47:26.000Z">
+<meta property="article:modified_time" content="2023-09-13T08:06:30.099Z">
+<meta property="article:author" content="Raphael Liu">
+<meta property="article:tag" content="algorithm">
+<meta property="article:tag" content="HARD">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/06a3b0a5-af61-4ba4-88be-d8bbf2a0d9cc">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/redefine-favicon.svg" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/redefine-favicon.svg">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/redefine-favicon.svg">
+    <!--- Page Info-->
+    
+    <title>
+        
+            0803-打砖块 -
+        
+        Raphael&#39;s Blog
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/css/build/styles.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/fonts.css">
+
+    
+<link rel="stylesheet" href="/fonts/Satoshi/satoshi.css">
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+
+    <!--- Inject Part-->
+    
+    <script id="hexo-configurations">
+    let Global = window.Global || {};
+    Global.hexo_config = {"hostname":"example.com","root":"/","language":"zh_CN"};
+    Global.theme_config = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":true,"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"open_graph":true,"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-wqery6-light.webp","dark":"/images/wallhaven-wqery6-dark.webp"},"title":"Raphael's Blog","subtitle":{"text":["格物致知","坚持做正确的事情"],"hitokoto":{"enable":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":false,"links":{"github":"https://github.com/raphael-liu","email":"raphael@buaa.edu.cn# your email"},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.4.4","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"links":{"首页":{"path":"/","icon":"fa-regular fa-house"},"文章":{"path":"/archives","icon":"fa-regular fa-archive"},"关于":{"icon":"fa-regular fa-user","submenus":{"我":"/about/me","Github":"https://github.com/raphael-liu"}}},"search":{"enable":true,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"links":null},"article_date_format":"auto","categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}},"footerStart":"2022/8/17 11:45:14"};
+    Global.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    Global.data_config = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="swup-progress-icon">
+            <i class="fa-solid fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container" id="swup">
+
+    
+
+    <div class="main-content-container">
+
+
+        <div class="main-content-header">
+            <header class="navbar-container">
+    
+    <div class="navbar-content">
+        <div class="left">
+            
+            <a class="logo-title" href="http://example.com/">
+                
+                Raphael&#39;s Blog
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/"  >
+                                    
+                                        
+                                            <i class="fa-regular fa-house"></i>
+                                        
+                                        首页
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/archives"  >
+                                    
+                                        
+                                            <i class="fa-regular fa-archive"></i>
+                                        
+                                        文章
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="has-dropdown" 
+                                    href="#" onClick="return false;">
+                                    
+                                        
+                                            <i class="fa-regular fa-user"></i>
+                                        
+                                        关于&nbsp;<i class="fa-solid fa-chevron-down"></i>
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                                    <ul class="sub-menu">
+                                    
+                                        <li>
+                                        <a href="/about/me">我
+                                        </a>
+                                        </li>
+                                    
+                                        <li>
+                                        <a target="_blank" rel="noopener" href="https://github.com/raphael-liu">GITHUB
+                                        </a>
+                                        </li>
+                                    
+                                    </ul>
+                                
+                            </li>
+                    
+                    
+                        <li class="navbar-item search search-popup-trigger">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fa-solid fa-magnifying-glass"></i></div>
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile drawer -->
+    <div class="navbar-drawer w-full absolute top-0 left-0 bg-background-color">
+        <ul class="drawer-navbar-list flex flex-col justify-start items-center">
+            
+                
+                    <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group " 
+                        href="/"  >
+                             
+                                
+                                    <i class="fa-regular fa-house"></i>
+                                
+                                首页
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+                
+                    <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group " 
+                        href="/archives"  >
+                             
+                                
+                                    <i class="fa-regular fa-archive"></i>
+                                
+                                文章
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+                
+                    <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group has-dropdown" 
+                        href="#" onClick="return false;">
+                            
+                                
+                                    <i class="fa-regular fa-user"></i>
+                                
+                                关于&nbsp;<i class="group-hover:rotate-180 transition-transform fa-solid fa-chevron-down"></i>
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                              
+                        
+                            <li class="text-base flex justify-center items-center hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                <a class="py-0.5" href="/about/me">我</a>
+                            </li>
+                        
+                            <li class="text-base flex justify-center items-center hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                <a class="py-0.5" target="_blank" rel="noopener" href="https://github.com/raphael-liu">GITHUB</a>
+                            </li>
+                        
+                    
+            
+
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="post-page-container">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            
+                <h1 class="article-title-regular">0803-打砖块</h1>
+            
+            </div>
+            
+                    
+        
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">Raphael Liu</span>
+                        
+                            <span class="author-label">Lv10</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2023-09-13 00:47:26</span>
+        <span class="mobile">2023-09-13 00:47:26</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2023-09-13 16:06:30</span>
+            <span class="mobile">2023-09-13 16:06:30</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/algorithm/">algorithm</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/HARD/">HARD</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        
+
+
+        <div class="article-content markdown-body">
+            <p>有一个 <code>m x n</code> 的二元网格 <code>grid</code> ，其中 <code>1</code> 表示砖块，<code>0</code> 表示空白。砖块 <strong>稳定</strong> （不会掉落）的前提是：</p>
+<ul>
+<li>一块砖直接连接到网格的顶部，或者</li>
+<li>至少有一块相邻（4 个方向之一）砖块 <strong>稳定</strong> 不会掉落时</li>
+</ul>
+<p>给你一个数组 <code>hits</code> ，这是需要依次消除砖块的位置。每当消除 <code>hits[i] = (rowi, coli)</code><br>位置上的砖块时，对应位置的砖块（若存在）会消失，然后其他的砖块可能因为这一消除操作而 <strong>掉落</strong> 。一旦砖块掉落，它会 <strong>立即</strong> 从网格 <code>grid</code><br>中消失（即，它不会落在其他稳定的砖块上）。</p>
+<p>返回一个数组 <code>result</code> ，其中 <code>result[i]</code> 表示第 <code>i</code> 次消除操作对应掉落的砖块数目。</p>
+<p><strong>注意</strong> ，消除可能指向是没有砖块的空白位置，如果发生这种情况，则没有砖块掉落。</p>
+<p><strong>示例 1：</strong></p>
+<pre><code>**输入：** grid = [[1,0,0,0],[1,1,1,0]], hits = [[1,0]]
+**输出：** [2]
+**解释：** 网格开始为：
+[[1,0,0,0]，
+ [ **1** ,1,1,0]]
+消除 (1,0) 处加粗的砖块，得到网格：
+[[1,0,0,0]
+ [0, **1** , **1** ,0]]
+两个加粗的砖不再稳定，因为它们不再与顶部相连，也不再与另一个稳定的砖相邻，因此它们将掉落。得到网格：
+[[1,0,0,0],
+ [0,0,0,0]]
+因此，结果为 [2] 。
+</code></pre>
+<p><strong>示例 2：</strong></p>
+<pre><code>**输入：** grid = [[1,0,0,0],[1,1,0,0]], hits = [[1,1],[1,0]]
+**输出：** [0,0]
+**解释：** 网格开始为：
+[[1,0,0,0],
+ [1, **1** ,0,0]]
+消除 (1,1) 处加粗的砖块，得到网格：
+[[1,0,0,0],
+ [1,0,0,0]]
+剩下的砖都很稳定，所以不会掉落。网格保持不变：
+[[1,0,0,0], 
+ [ **1** ,0,0,0]]
+接下来消除 (1,0) 处加粗的砖块，得到网格：
+[[1,0,0,0],
+ [0,0,0,0]]
+剩下的砖块仍然是稳定的，所以不会有砖块掉落。
+因此，结果为 [0,0] 。
+</code></pre>
+<p><strong>提示：</strong></p>
+<ul>
+<li><code>m == grid.length</code></li>
+<li><code>n == grid[i].length</code></li>
+<li><code>1 &lt;= m, n &lt;= 200</code></li>
+<li><code>grid[i][j]</code> 为 <code>0</code> 或 <code>1</code></li>
+<li><code>1 &lt;= hits.length &lt;= 4 * 104</code></li>
+<li><code>hits[i].length == 2</code></li>
+<li><code>0 &lt;= xi &lt;= m - 1</code></li>
+<li><code>0 &lt;= yi &lt;= n - 1</code></li>
+<li>所有 <code>(xi, yi)</code> 互不相同</li>
+</ul>
+<h3 id="📺-视频讲解"><a href="#📺-视频讲解" class="headerlink" title="📺 视频讲解"></a>📺 视频讲解</h3><blockquote>
+<p>力扣君温馨小贴士：觉得视频时间长的扣友，可以在视频右下角的「设置」按钮处选择 1.5 倍速或者 2 倍速观看。</p>
+</blockquote>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/06a3b0a5-af61-4ba4-88be-d8bbf2a0d9cc"
+                      alt="803.打砖块.mp4"
+                ></p>
+<h3 id="📖-文字解析"><a href="#📖-文字解析" class="headerlink" title="📖 文字解析"></a>📖 文字解析</h3><blockquote>
+<p><strong>阅读提示</strong>：我们在文字描述中给出的 4 个图，覆盖了这个问题的几种特殊情况，包括了一般情况和特殊情况，还有不可能出现的情况。</p>
+</blockquote>
+<h4 id="1-解释题意"><a href="#1-解释题意" class="headerlink" title="1. 解释题意"></a>1. 解释题意</h4><p>首先，<strong>题解题意很重要</strong>。不会掉落的「砖块」需要满足两个条件：</p>
+<ul>
+<li>「砖块」位于下标为 0 的行；</li>
+<li>与下标为 0 的行的砖块在上、下、左、右 4 个方向上相连。</li>
+</ul>
+<p>题目问按照数组 <code>hits</code> 中击落砖块的顺序，每一次有多少个砖块因为这个被击碎的砖块而消失。解题的时候须要注意以下两个条件（原因最后说）：</p>
+<ul>
+<li>一旦砖块掉落，它会立即从网格中消失（它不会落在其他稳定的砖块上）；</li>
+<li>所有的 (x_i, y_i) 互不相同。</li>
+</ul>
+<h4 id="2-如何计算每次击碎砖块而消失的砖块的数量（关注「与屋顶相连的砖块的总数变化」）"><a href="#2-如何计算每次击碎砖块而消失的砖块的数量（关注「与屋顶相连的砖块的总数变化」）" class="headerlink" title="2. 如何计算每次击碎砖块而消失的砖块的数量（关注「与屋顶相连的砖块的总数变化」）"></a>2. 如何计算每次击碎砖块而消失的砖块的数量（关注「与屋顶相连的砖块的总数变化」）</h4><p>和顶部相连的砖块不会掉落，击碎了一个砖块以后，可能会使得其它与 <strong>被击碎砖块</strong> 连接的砖块不再与顶部相连，然后它们消失。</p>
+<p>「击碎砖块之前」与「击碎砖块之后」与 <strong>屋顶</strong> 相连的砖块数的差值，再减 1 就是因为这一次操作而消失的砖块数。如下图所示：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://pic.leetcode-cn.com/1610722042-PlKrZg-image.png"
+                      alt="image.png"
+                ></p>
+<h4 id="3-如何想到并查集"><a href="#3-如何想到并查集" class="headerlink" title="3. 如何想到并查集"></a>3. 如何想到并查集</h4><ul>
+<li>当前问题是一个图的连通性问题，砖块和砖块如果在 4 个方向上相邻，表示这两个砖块上有一条边。砖块的相邻关系而产生的连接关系具有传递性；</li>
+<li>第 0 行的砖块连接着「屋顶」；</li>
+<li>击碎了一个砖块以后，可能会使得其它与「被击碎砖块」 <strong>连接</strong> 的砖块不再与顶部相连，然后它们消失；</li>
+<li>题目只问结果，没有问具体连接的情况；</li>
+<li>连通的砖块个数是我们所关心的，「并查集」内部可以维护「以当前结点为根结点的子树的结点总数」。</li>
+</ul>
+<h4 id="4-如何使用并查集"><a href="#4-如何使用并查集" class="headerlink" title="4. 如何使用并查集"></a>4. 如何使用并查集</h4><ul>
+<li>消除一个砖块的效果是：一个连通分量被分成了两个连通分量；</li>
+<li>并查集的作用是：把两个连通分量合并成一个连通分量。</li>
+</ul>
+<p>提示我们这个问题需要 <strong>反向</strong> 思考。即考虑：<strong>补上被击碎的砖块以后，有多少个砖块因为这个补上的这个砖块而与屋顶的砖块相连</strong>。每一次击碎一个砖块，<strong>因击碎砖块而消失的砖块只会越来越少</strong>。因此可以按照数组 <code>hits</code> 的顺序 <strong>逆序地</strong> 把这些砖块依次补上。如图所示：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://pic.leetcode-cn.com/1610757201-RgraKJ-image.png"
+                      alt="image.png"
+                ></p>
+<p><strong>当最后一块砖块补上的时候，就恰好可以恢复成刚开始的时候整个二维表格的样子</strong>。</p>
+<h4 id="5-解题步骤"><a href="#5-解题步骤" class="headerlink" title="5. 解题步骤"></a>5. 解题步骤</h4><ul>
+<li>根据数组 <code>hits</code>，将输入的表格 <code>grid</code> 里的对应位置全部设置为 0 ，这是因为我们要逆序补全出整个初始化的时候二维表格的砖块；</li>
+<li>从最后一个击碎的砖块开始，计算补上这个被击碎的砖块的时候，有多少个砖块因为这个补上的砖块而与屋顶相连，这个数目就是按照题目中的描述，击碎砖块以后掉落的砖块的数量。</li>
+</ul>
+<p>下面我们介绍实现细节。</p>
+<h4 id="6-实现细节"><a href="#6-实现细节" class="headerlink" title="6. 实现细节"></a>6. 实现细节</h4><ul>
+<li>在并查集中设置一个特殊的结点，表示「屋顶」；</li>
+<li>逆序补回的时候，由于补回，增加的连接到「屋顶」的砖块数应该这样算：<code>res[i] = Math.max(0, current - origin - 1);</code> （<code>current</code> 和 <code>origin</code> 的含义请见代码）。因为有可能补回一个砖块前后，连接到「屋顶」的砖块总数没有变化，如下图所示：</li>
+</ul>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://pic.leetcode-cn.com/1610723629-wPuwFr-image.png"
+                      alt="image.png"
+                >{:width&#x3D;500}</p>
+<p><strong>参考代码</strong>：</p>
+<blockquote>
+<p>力扣君温馨小贴士：为了保证语义和层次清晰，我们加入了注释和空行，所以代码看起来有点长，但主要的逻辑就 3 步。我们建议大家先理解逻辑的先后顺序，尝试自己实现，然后再看代码的细节。</p>
+</blockquote>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><figcaption><span>[]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> rows;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> cols;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span>[][] DIRECTIONS = &#123;&#123;<span class="number">0</span>, <span class="number">1</span>&#125;, &#123;<span class="number">1</span>, <span class="number">0</span>&#125;, &#123;-<span class="number">1</span>, <span class="number">0</span>&#125;, &#123;<span class="number">0</span>, -<span class="number">1</span>&#125;&#125;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span>[] hitBricks(<span class="type">int</span>[][] grid, <span class="type">int</span>[][] hits) &#123;</span><br><span class="line">        <span class="built_in">this</span>.rows = grid.length;</span><br><span class="line">        <span class="built_in">this</span>.cols = grid[<span class="number">0</span>].length;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 第 1 步：把 grid 中的砖头全部击碎，通常算法问题不能修改输入数据，这一步非必需，可以认为是一种答题规范</span></span><br><span class="line">        <span class="type">int</span>[][] copy = <span class="keyword">new</span> <span class="title class_">int</span>[rows][cols];</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; rows; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">j</span> <span class="operator">=</span> <span class="number">0</span>; j &lt; cols; j++) &#123;</span><br><span class="line">                copy[i][j] = grid[i][j];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 把 copy 中的砖头全部击碎</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span>[] hit : hits) &#123;</span><br><span class="line">            copy[hit[<span class="number">0</span>]][hit[<span class="number">1</span>]] = <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 第 2 步：建图，把砖块和砖块的连接关系输入并查集，size 表示二维网格的大小，也表示虚拟的「屋顶」在并查集中的编号</span></span><br><span class="line">        <span class="type">int</span> <span class="variable">size</span> <span class="operator">=</span> rows * cols;</span><br><span class="line">        <span class="type">UnionFind</span> <span class="variable">unionFind</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">UnionFind</span>(size + <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 将下标为 0 的这一行的砖块与「屋顶」相连</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">j</span> <span class="operator">=</span> <span class="number">0</span>; j &lt; cols; j++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (copy[<span class="number">0</span>][j] == <span class="number">1</span>) &#123;</span><br><span class="line">                unionFind.union(j, size);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 其余网格，如果是砖块向上、向左看一下，如果也是砖块，在并查集中进行合并</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">1</span>; i &lt; rows; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">j</span> <span class="operator">=</span> <span class="number">0</span>; j &lt; cols; j++) &#123;</span><br><span class="line">                <span class="keyword">if</span> (copy[i][j] == <span class="number">1</span>) &#123;</span><br><span class="line">                    <span class="comment">// 如果上方也是砖块</span></span><br><span class="line">                    <span class="keyword">if</span> (copy[i - <span class="number">1</span>][j] == <span class="number">1</span>) &#123;</span><br><span class="line">                        unionFind.union(getIndex(i - <span class="number">1</span>, j), getIndex(i, j));</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="comment">// 如果左边也是砖块</span></span><br><span class="line">                    <span class="keyword">if</span> (j &gt; <span class="number">0</span> &amp;&amp; copy[i][j - <span class="number">1</span>] == <span class="number">1</span>) &#123;</span><br><span class="line">                        unionFind.union(getIndex(i, j - <span class="number">1</span>), getIndex(i, j));</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 第 3 步：按照 hits 的逆序，在 copy 中补回砖块，把每一次因为补回砖块而与屋顶相连的砖块的增量记录到 res 数组中</span></span><br><span class="line">        <span class="type">int</span> <span class="variable">hitsLen</span> <span class="operator">=</span> hits.length;</span><br><span class="line">        <span class="type">int</span>[] res = <span class="keyword">new</span> <span class="title class_">int</span>[hitsLen];</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> hitsLen - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">            <span class="type">int</span> <span class="variable">x</span> <span class="operator">=</span> hits[i][<span class="number">0</span>];</span><br><span class="line">            <span class="type">int</span> <span class="variable">y</span> <span class="operator">=</span> hits[i][<span class="number">1</span>];</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 注意：这里不能用 copy，语义上表示，如果原来在 grid 中，这一块是空白，这一步不会产生任何砖块掉落</span></span><br><span class="line">            <span class="comment">// 逆向补回的时候，与屋顶相连的砖块数量也肯定不会增加</span></span><br><span class="line">            <span class="keyword">if</span> (grid[x][y] == <span class="number">0</span>) &#123;</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 补回之前与屋顶相连的砖块数</span></span><br><span class="line">            <span class="type">int</span> <span class="variable">origin</span> <span class="operator">=</span> unionFind.getSize(size);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 注意：如果补回的这个结点在第 1 行，要告诉并查集它与屋顶相连（逻辑同第 2 步）</span></span><br><span class="line">            <span class="keyword">if</span> (x == <span class="number">0</span>) &#123;</span><br><span class="line">                unionFind.union(y, size);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 在 4 个方向上看一下，如果相邻的 4 个方向有砖块，合并它们</span></span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span>[] direction : DIRECTIONS) &#123;</span><br><span class="line">                <span class="type">int</span> <span class="variable">newX</span> <span class="operator">=</span> x + direction[<span class="number">0</span>];</span><br><span class="line">                <span class="type">int</span> <span class="variable">newY</span> <span class="operator">=</span> y + direction[<span class="number">1</span>];</span><br><span class="line"></span><br><span class="line">                <span class="keyword">if</span> (inArea(newX, newY) &amp;&amp; copy[newX][newY] == <span class="number">1</span>) &#123;</span><br><span class="line">                    unionFind.union(getIndex(x, y), getIndex(newX, newY));</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 补回之后与屋顶相连的砖块数</span></span><br><span class="line">            <span class="type">int</span> <span class="variable">current</span> <span class="operator">=</span> unionFind.getSize(size);</span><br><span class="line">            <span class="comment">// 减去的 1 是逆向补回的砖块（正向移除的砖块），与 0 比较大小，是因为存在一种情况，添加当前砖块，不会使得与屋顶连接的砖块数更多</span></span><br><span class="line">            res[i] = Math.max(<span class="number">0</span>, current - origin - <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 真正补上这个砖块</span></span><br><span class="line">            copy[x][y] = <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 输入坐标在二维网格中是否越界</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> x</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> y</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="type">boolean</span> <span class="title function_">inArea</span><span class="params">(<span class="type">int</span> x, <span class="type">int</span> y)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> x &gt;= <span class="number">0</span> &amp;&amp; x &lt; rows &amp;&amp; y &gt;= <span class="number">0</span> &amp;&amp; y &lt; cols;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 二维坐标转换为一维坐标</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> x</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> y</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> <span class="title function_">getIndex</span><span class="params">(<span class="type">int</span> x, <span class="type">int</span> y)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> x * cols + y;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">class</span> <span class="title class_">UnionFind</span> &#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 当前结点的父亲结点</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">private</span> <span class="type">int</span>[] parent;</span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 以当前结点为根结点的子树的结点总数</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">private</span> <span class="type">int</span>[] size;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">public</span> <span class="title function_">UnionFind</span><span class="params">(<span class="type">int</span> n)</span> &#123;</span><br><span class="line">            parent = <span class="keyword">new</span> <span class="title class_">int</span>[n];</span><br><span class="line">            size = <span class="keyword">new</span> <span class="title class_">int</span>[n];</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">                parent[i] = i;</span><br><span class="line">                size[i] = <span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 路径压缩，只要求每个不相交集合的「根结点」的子树包含的结点总数数值正确即可，因此在路径压缩的过程中不用维护数组 size</span></span><br><span class="line"><span class="comment">         *</span></span><br><span class="line"><span class="comment">         * <span class="doctag">@param</span> x</span></span><br><span class="line"><span class="comment">         * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">find</span><span class="params">(<span class="type">int</span> x)</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (x != parent[x]) &#123;</span><br><span class="line">                parent[x] = find(parent[x]);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> parent[x];</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">union</span><span class="params">(<span class="type">int</span> x, <span class="type">int</span> y)</span> &#123;</span><br><span class="line">            <span class="type">int</span> <span class="variable">rootX</span> <span class="operator">=</span> find(x);</span><br><span class="line">            <span class="type">int</span> <span class="variable">rootY</span> <span class="operator">=</span> find(y);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (rootX == rootY) &#123;</span><br><span class="line">                <span class="keyword">return</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            parent[rootX] = rootY;</span><br><span class="line">            <span class="comment">// 在合并的时候维护数组 size</span></span><br><span class="line">            size[rootY] += size[rootX];</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * <span class="doctag">@param</span> x</span></span><br><span class="line"><span class="comment">         * <span class="doctag">@return</span> x 在并查集的根结点的子树包含的结点总数</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">getSize</span><span class="params">(<span class="type">int</span> x)</span> &#123;</span><br><span class="line">            <span class="type">int</span> <span class="variable">root</span> <span class="operator">=</span> find(x);</span><br><span class="line">            <span class="keyword">return</span> size[root];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+
+<p><strong>复杂度分析</strong></p>
+<ul>
+<li><p>时间复杂度：O((N + rows \cdot cols) \cdot \log(rows \cdot cols))，其中 N 为数组 hits 的长度，rows 和 cols 分别为矩阵的行数和列数，只使用了路径压缩，并查集的单次操作的时间复杂度为 O(\log(rows \cdot cols))；</p>
+</li>
+<li><p>空间复杂度：O(rows \cdot cols)。</p>
+</li>
+</ul>
+<h4 id="7-解释开篇说的两个条件"><a href="#7-解释开篇说的两个条件" class="headerlink" title="7. 解释开篇说的两个条件"></a>7. 解释开篇说的两个条件</h4><ul>
+<li>条件 1：一旦砖块掉落，它会立即从网格中消失（它不会落在其他稳定的砖块上），意思是下面的这种情况不会出现。</li>
+</ul>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://pic.leetcode-cn.com/1610723863-KLANYF-image.png"
+                      alt="image.png"
+                >{:width&#x3D;500}</p>
+<ul>
+<li>条件 2：所有的 (x_i, y_i) 互不相同。如果 <code>hits</code> 数组里有相同的结点，<strong>逆序把这些砖块补充回去以后，有可能出现以下情况</strong>：<ul>
+<li>不能拼接出初始化的时候整个二维表格；</li>
+<li>同一个位置的砖块敲击两次，逆序求解的时候，第 1 次补回去的时候，把结果记录 <code>res[i]</code>，第 2 次由于敲了同一个位置，在之前的 <code>res[i]</code> 这一步操作其实是无效的，应该恢复成 <code>0</code>。</li>
+</ul>
+</li>
+</ul>
+<p>如果没有这两个条件，求解这个问题会变得复杂。大家在做题的时候一定要注意题目中的限制，以免漏看条件或者加强了题目的条件。</p>
+<hr>
+<p>这种逆向去考虑一个问题的思路其实在「力扣」上并不少见，感兴趣的朋友可以复习一下我们在打卡题中曾经做过的：<a class="link"   target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/dungeon-game/" >174. 地下城游戏 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> 和 <a class="link"   target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/burst-balloons/" >312. 戳气球 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>。</p>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <!--<div class="article-copyright-info-container">-->
+    <!--&lt;!&ndash;<ul>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><strong>Title:</strong> 0803-打砖块</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><strong>Author:</strong> Raphael Liu</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><strong>Created at&ndash;&gt;-->
+                <!--&lt;!&ndash;:</strong> 2023-09-13 00:47:26</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;&ndash;&gt;-->
+            <!--&lt;!&ndash;<li>&ndash;&gt;-->
+                <!--&lt;!&ndash;<strong>Updated at&ndash;&gt;-->
+                    <!--&lt;!&ndash;:</strong> 2023-09-13 16:06:30&ndash;&gt;-->
+            <!--&lt;!&ndash;</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;<li>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;<strong>Link:</strong> https://fida.ltd/2023/09/13/0803-打砖块/&ndash;&gt;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;</li>&ndash;&gt;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;<li>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;<strong>&ndash;&gt;&ndash;&gt;-->
+                <!--&lt;!&ndash;&lt;!&ndash;License:&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;</strong>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0</a>.&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;&ndash;&gt;&ndash;&gt;-->
+
+        <!--&lt;!&ndash;&lt;!&ndash;</li>&ndash;&gt;&ndash;&gt;-->
+    <!--&lt;!&ndash;</ul>&ndash;&gt;-->
+<!--</div>-->
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box">
+                
+                    <li class="tag-item">
+                        <a href="/tags/algorithm/">#algorithm</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item">
+                        <a href="/tags/HARD/">#HARD</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                        rel="prev"
+                        href="/2023/09/13/0804-%E5%94%AF%E4%B8%80%E6%91%A9%E5%B0%94%E6%96%AF%E5%AF%86%E7%A0%81%E8%AF%8D/"
+                        >
+                            <span class="left arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">0804-唯一摩尔斯密码词</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                        rel="next"
+                        href="/2023/09/13/0806-%E5%86%99%E5%AD%97%E7%AC%A6%E4%B8%B2%E9%9C%80%E8%A6%81%E7%9A%84%E8%A1%8C%E6%95%B0/"
+                        >
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">0806-写字符串需要的行数</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+
+        
+            <div class="comment-container">
+                <div class="comments-container pjax">
+    <div id="comment-anchor"></div>
+    <div class="comment-area-title">
+        <i class="fa-solid fa-comments"></i>&nbsp;Comments
+    </div>
+    
+
+        
+            
+ 
+    <div id="waline"></div>
+    <script type="module"  data-swup-reload-script>
+        import { init } from 'https://evan.beee.top/js/waline.mjs';
+
+        function loadWaline() {
+            init({
+                el: '#waline',
+                serverURL: 'https://example.example.com',
+                lang: 'zh-CN',
+                dark: 'body[class~="dark-mode"]',
+                requiredMeta: ['nick','mail'], // cannot customize by theme config, change it yourself
+            });
+        }
+
+        if ('true') {
+            const loadWalineTimeout = setTimeout(() => {
+                loadWaline();
+                clearTimeout(loadWalineTimeout);
+            }, 1000);
+        } else {
+            window.addEventListener('DOMContentLoaded', loadWaline);
+        }
+        
+    </script>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+
+    
+        <div class="toc-content-container">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">On this page</div>
+        <div class="page-title">0803-打砖块</div>
+        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%F0%9F%93%BA-%E8%A7%86%E9%A2%91%E8%AE%B2%E8%A7%A3"><span class="nav-text">📺 视频讲解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%F0%9F%93%96-%E6%96%87%E5%AD%97%E8%A7%A3%E6%9E%90"><span class="nav-text">📖 文字解析</span></a></li></ol>
+
+    </div>
+</div>
+        </div>
+    
+</div>
+
+
+
+                
+
+            </div>
+
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2022</span>
+              -
+            
+            2023&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">Raphael Liu</a>
+        </div>
+        
+            <script data-swup-reload-script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">UV:</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">PV:</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <!--<div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">-->
+            <!--<span class="lg:block text-sm">powered_by</span>-->
+            <!--&lt;!&ndash;<span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.4.4</a></span>&ndash;&gt;-->
+        <!--</div>-->
+        
+        <!---->
+            <!--<div>-->
+                <!--runtime <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hours <span class="odometer" id="runtime_minutes"></span> minutes <span class="odometer" id="runtime_seconds"></span> seconds-->
+            <!--</div>-->
+        <!---->
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fa-regular fa-comments"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-expand-width flex justify-center items-center">
+            <i class="fa-regular fa-expand"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fa-solid fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa-solid fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa-solid fa-spinner fa-spin-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+    
+<script src="/js/libs/Swup.min.js"></script>
+
+<script src="/js/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/libs/SwupScrollPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+        ],
+        containers: ["#swup"],
+    });
+
+    swup.hooks.on("page:view", () => {
+        Global.refresh();
+    });
+
+    // if (document.readyState === "complete") {
+    //
+    // } else {
+    //     document.addEventListener("DOMContentLoaded", () => init());
+    // }
+</script>
+
+
+
+
+
+
+<script src="/js/utils.js" type="module"></script>
+
+<script src="/js/main.js" type="module"></script>
+
+<script src="/js/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/layouts/categoryList.js" type="module"></script>
+
+
+
+    
+<script src="/js/tools/localSearch.js"></script>
+
+
+
+
+    
+<script src="/js/tools/codeBlock.js"></script>
+
+
+
+
+    
+<script src="/js/layouts/lazyload.js"></script>
+
+
+
+
+    
+<script src="/js/tools/runtime.js"></script>
+
+    
+<script src="/js/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/libs/Typed.min.js"></script>
+
+  
+<script src="/js/plugins/typed.js"></script>
+
+
+
+
+
+
+
+<div class="post-scripts" data-swup-reload-script>
+    
+        
+<script src="/js/libs/anime.min.js"></script>
+
+        
+<script src="/js/tools/tocToggle.js" type="module"></script>
+
+<script src="/js/layouts/toc.js" type="module"></script>
+
+<script src="/js/plugins/tabs.js" type="module"></script>
+
+    
+</div>
+
+
+</body>
+</html>

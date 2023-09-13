@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="Raphael Liu">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/2023/09/13/0399-除法求值/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="给你一个变量对数组 equations 和一个实数值数组 values 作为已知条件，其中 equations[i] &#x3D; [Ai, Bi] 和values[i] 共同表示等式 Ai &#x2F; Bi &#x3D; values[i] 。每个 Ai 或 Bi 是一个表示单个变量的字符串。 另有一些以数组 queries 表示的问题，其中 queries[j] &#x3D; [Cj, Dj] 表示第 j 个问题，请你根据已知条件">
+<meta property="og:type" content="article">
+<meta property="og:title" content="0399-除法求值">
+<meta property="og:url" content="http://example.com/2023/09/13/0399-%E9%99%A4%E6%B3%95%E6%B1%82%E5%80%BC/index.html">
+<meta property="og:site_name" content="Raphael&#39;s Blog">
+<meta property="og:description" content="给你一个变量对数组 equations 和一个实数值数组 values 作为已知条件，其中 equations[i] &#x3D; [Ai, Bi] 和values[i] 共同表示等式 Ai &#x2F; Bi &#x3D; values[i] 。每个 Ai 或 Bi 是一个表示单个变量的字符串。 另有一些以数组 queries 表示的问题，其中 queries[j] &#x3D; [Cj, Dj] 表示第 j 个问题，请你根据已知条件">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/53572ecf-b4f0-44ae-b175-aec6670d918c">
+<meta property="og:image" content="https://pic.leetcode-cn.com/1609860627-dZoDYx-image.png">
+<meta property="og:image" content="https://pic.leetcode-cn.com/1609861184-fXdaCo-image.png">
+<meta property="og:image" content="https://pic.leetcode-cn.com/1609861645-DbxMDs-image.png">
+<meta property="og:image" content="https://pic.leetcode-cn.com/1609862151-XZgKGY-image.png">
+<meta property="og:image" content="https://pic.leetcode-cn.com/1609862263-LAsiiW-image.png">
+<meta property="og:image" content="https://pic.leetcode-cn.com/1609862467-jtZvlE-image.png">
+<meta property="og:image" content="https://pic.leetcode-cn.com/1609863006-GhibcH-image.png">
+<meta property="article:published_time" content="2023-09-12T16:47:26.000Z">
+<meta property="article:modified_time" content="2023-09-13T07:32:51.638Z">
+<meta property="article:author" content="Raphael Liu">
+<meta property="article:tag" content="algorithm">
+<meta property="article:tag" content="MEDIUM">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/53572ecf-b4f0-44ae-b175-aec6670d918c">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/redefine-favicon.svg" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/redefine-favicon.svg">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/redefine-favicon.svg">
+    <!--- Page Info-->
+    
+    <title>
+        
+            0399-除法求值 -
+        
+        Raphael&#39;s Blog
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/css/build/styles.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/fonts.css">
+
+    
+<link rel="stylesheet" href="/fonts/Satoshi/satoshi.css">
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+
+    <!--- Inject Part-->
+    
+    <script id="hexo-configurations">
+    let Global = window.Global || {};
+    Global.hexo_config = {"hostname":"example.com","root":"/","language":"zh_CN"};
+    Global.theme_config = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":true,"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"open_graph":true,"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-wqery6-light.webp","dark":"/images/wallhaven-wqery6-dark.webp"},"title":"Raphael's Blog","subtitle":{"text":["格物致知","坚持做正确的事情"],"hitokoto":{"enable":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":false,"links":{"github":"https://github.com/raphael-liu","email":"raphael@buaa.edu.cn# your email"},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.4.4","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"links":{"首页":{"path":"/","icon":"fa-regular fa-house"},"文章":{"path":"/archives","icon":"fa-regular fa-archive"},"关于":{"icon":"fa-regular fa-user","submenus":{"我":"/about/me","Github":"https://github.com/raphael-liu"}}},"search":{"enable":true,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"links":null},"article_date_format":"auto","categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}},"footerStart":"2022/8/17 11:45:14"};
+    Global.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    Global.data_config = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="swup-progress-icon">
+            <i class="fa-solid fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container" id="swup">
+
+    
+
+    <div class="main-content-container">
+
+
+        <div class="main-content-header">
+            <header class="navbar-container">
+    
+    <div class="navbar-content">
+        <div class="left">
+            
+            <a class="logo-title" href="http://example.com/">
+                
+                Raphael&#39;s Blog
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/"  >
+                                    
+                                        
+                                            <i class="fa-regular fa-house"></i>
+                                        
+                                        首页
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/archives"  >
+                                    
+                                        
+                                            <i class="fa-regular fa-archive"></i>
+                                        
+                                        文章
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="has-dropdown" 
+                                    href="#" onClick="return false;">
+                                    
+                                        
+                                            <i class="fa-regular fa-user"></i>
+                                        
+                                        关于&nbsp;<i class="fa-solid fa-chevron-down"></i>
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                                    <ul class="sub-menu">
+                                    
+                                        <li>
+                                        <a href="/about/me">我
+                                        </a>
+                                        </li>
+                                    
+                                        <li>
+                                        <a target="_blank" rel="noopener" href="https://github.com/raphael-liu">GITHUB
+                                        </a>
+                                        </li>
+                                    
+                                    </ul>
+                                
+                            </li>
+                    
+                    
+                        <li class="navbar-item search search-popup-trigger">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fa-solid fa-magnifying-glass"></i></div>
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile drawer -->
+    <div class="navbar-drawer w-full absolute top-0 left-0 bg-background-color">
+        <ul class="drawer-navbar-list flex flex-col justify-start items-center">
+            
+                
+                    <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group " 
+                        href="/"  >
+                             
+                                
+                                    <i class="fa-regular fa-house"></i>
+                                
+                                首页
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+                
+                    <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group " 
+                        href="/archives"  >
+                             
+                                
+                                    <i class="fa-regular fa-archive"></i>
+                                
+                                文章
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+                
+                    <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group has-dropdown" 
+                        href="#" onClick="return false;">
+                            
+                                
+                                    <i class="fa-regular fa-user"></i>
+                                
+                                关于&nbsp;<i class="group-hover:rotate-180 transition-transform fa-solid fa-chevron-down"></i>
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                              
+                        
+                            <li class="text-base flex justify-center items-center hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                <a class="py-0.5" href="/about/me">我</a>
+                            </li>
+                        
+                            <li class="text-base flex justify-center items-center hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                <a class="py-0.5" target="_blank" rel="noopener" href="https://github.com/raphael-liu">GITHUB</a>
+                            </li>
+                        
+                    
+            
+
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="post-page-container">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            
+                <h1 class="article-title-regular">0399-除法求值</h1>
+            
+            </div>
+            
+                    
+        
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">Raphael Liu</span>
+                        
+                            <span class="author-label">Lv10</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2023-09-13 00:47:26</span>
+        <span class="mobile">2023-09-13 00:47:26</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2023-09-13 15:32:51</span>
+            <span class="mobile">2023-09-13 15:32:51</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/algorithm/">algorithm</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/MEDIUM/">MEDIUM</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        
+
+
+        <div class="article-content markdown-body">
+            <p>给你一个变量对数组 <code>equations</code> 和一个实数值数组 <code>values</code> 作为已知条件，其中 <code>equations[i] = [Ai, Bi]</code> 和<br><code>values[i]</code> 共同表示等式 <code>Ai / Bi = values[i]</code> 。每个 <code>Ai</code> 或 <code>Bi</code> 是一个表示单个变量的字符串。</p>
+<p>另有一些以数组 <code>queries</code> 表示的问题，其中 <code>queries[j] = [Cj, Dj]</code> 表示第 <code>j</code> 个问题，请你根据已知条件找出 <code>Cj / Dj = ?</code> 的结果作为答案。</p>
+<p>返回 <strong>所有问题的答案</strong> 。如果存在某个无法确定的答案，则用 <code>-1.0</code> 替代这个答案。如果问题中出现了给定的已知条件中没有出现的字符串，也需要用<br><code>-1.0</code> 替代这个答案。</p>
+<p><strong>注意：</strong> 输入总是有效的。你可以假设除法运算中不会出现除数为 0 的情况，且不存在任何矛盾的结果。</p>
+<p><strong>注意：</strong> 未在等式列表中出现的变量是未定义的，因此无法确定它们的答案。</p>
+<p><strong>示例 1：</strong></p>
+<pre><code>**输入：** equations = [[&quot;a&quot;,&quot;b&quot;],[&quot;b&quot;,&quot;c&quot;]], values = [2.0,3.0], queries = [[&quot;a&quot;,&quot;c&quot;],[&quot;b&quot;,&quot;a&quot;],[&quot;a&quot;,&quot;e&quot;],[&quot;a&quot;,&quot;a&quot;],[&quot;x&quot;,&quot;x&quot;]]
+**输出：** [6.00000,0.50000,-1.00000,1.00000,-1.00000]
+**解释：**
+条件： _a / b = 2.0_ , _b / c = 3.0_
+问题： _a / c = ?_ , _b / a = ?_ , _a / e = ?_ , _a / a = ?_ , _x / x = ?_
+结果：[6.0, 0.5, -1.0, 1.0, -1.0 ]
+注意：x 是未定义的 =&gt; -1.0
+</code></pre>
+<p><strong>示例 2：</strong></p>
+<pre><code>**输入：** equations = [[&quot;a&quot;,&quot;b&quot;],[&quot;b&quot;,&quot;c&quot;],[&quot;bc&quot;,&quot;cd&quot;]], values = [1.5,2.5,5.0], queries = [[&quot;a&quot;,&quot;c&quot;],[&quot;c&quot;,&quot;b&quot;],[&quot;bc&quot;,&quot;cd&quot;],[&quot;cd&quot;,&quot;bc&quot;]]
+**输出：** [3.75000,0.40000,5.00000,0.20000]
+</code></pre>
+<p><strong>示例 3：</strong></p>
+<pre><code>**输入：** equations = [[&quot;a&quot;,&quot;b&quot;]], values = [0.5], queries = [[&quot;a&quot;,&quot;b&quot;],[&quot;b&quot;,&quot;a&quot;],[&quot;a&quot;,&quot;c&quot;],[&quot;x&quot;,&quot;y&quot;]]
+**输出：** [0.50000,2.00000,-1.00000,-1.00000]
+</code></pre>
+<p><strong>提示：</strong></p>
+<ul>
+<li><code>1 &lt;= equations.length &lt;= 20</code></li>
+<li><code>equations[i].length == 2</code></li>
+<li><code>1 &lt;= Ai.length, Bi.length &lt;= 5</code></li>
+<li><code>values.length == equations.length</code></li>
+<li><code>0.0 &lt; values[i] &lt;= 20.0</code></li>
+<li><code>1 &lt;= queries.length &lt;= 20</code></li>
+<li><code>queries[i].length == 2</code></li>
+<li><code>1 &lt;= Cj.length, Dj.length &lt;= 5</code></li>
+<li><code>Ai, Bi, Cj, Dj</code> 由小写英文字母与数字组成</li>
+</ul>
+<h3 id="📺-视频讲解"><a href="#📺-视频讲解" class="headerlink" title="📺 视频讲解"></a>📺 视频讲解</h3><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/53572ecf-b4f0-44ae-b175-aec6670d918c"
+                      alt="399-除法求值 (1).mp4"
+                ></p>
+<h3 id="📖-文字解析"><a href="#📖-文字解析" class="headerlink" title="📖 文字解析"></a>📖 文字解析</h3><p>这道题是在「力扣」第 990 题（<a class="link"   target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/satisfiability-of-equality-equations" >等式方程的可满足性 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>）的基础上，在变量和变量之间有了倍数关系。由于 <strong>变量之间的倍数关系具有传递性</strong>，处理有传递性关系的问题，可以使用「并查集」，我们需要在并查集的「合并」与「查询」操作中 <strong>维护这些变量之间的倍数关系</strong>。</p>
+<p><strong>说明</strong>：请大家注意看一下题目中的「注意」和「数据范围」，例如：每个 <code>Ai</code> 或 <code>Bi</code> 是一个表示单个变量的字符串。所以用例 <code>equation = [&quot;ab&quot;, &quot;cd&quot;]</code> ，这里的 <code>ab</code> 视为一个变量，不表示 <code>a * b</code>。如果面试中遇到这样的问题，一定要和面试官确认清楚题目的条件。还有 <code>1 &lt;= equations.length &lt;= 20</code> 和 <code>values[i] &gt; 0.0</code> 可以避免一些特殊情况的讨论。</p>
+<h3 id="方法：并查集"><a href="#方法：并查集" class="headerlink" title="方法：并查集"></a>方法：并查集</h3><p>分析示例 1：</p>
+<ul>
+<li><p><code>a / b = 2.0</code> 说明 $a &#x3D; 2b$， <code>a</code> 和 <code>b</code> 在同一个集合中；</p>
+</li>
+<li><p><code>b / c = 3.0</code> 说明 $b &#x3D; 3c$ ，<code>b</code> 和 <code>c</code> 在同一个集合中。</p>
+</li>
+</ul>
+<p>求 $\cfrac{a}{c ，可以把 $a &#x3D; 2b$，$b &#x3D; 3c$ 依次代入，得到 $\cfrac{a}{c} &#x3D; \cfrac{2b} {c} &#x3D; \cfrac{2 \cdot 3c} {c} &#x3D; 6.0$；</p>
+<p>求 $\cfrac{b}{a ，很显然根据 $a &#x3D; 2b$，知道 $\cfrac{b}{a} &#x3D; 0.5$，也可以把 $b$ 和 $a$ 都转换成为 $c$ 的倍数，$\cfrac{b}{a} &#x3D; \cfrac{b} {2b} &#x3D; \cfrac{3c} {6c} &#x3D; \cfrac{1}{2} &#x3D; 0.5$；</p>
+<p>我们计算了两个结果，不难知道：可以将题目给出的 <code>equation</code> 中的两个变量所在的集合进行「合并」，<strong>同在一个集合中的两个变量就可以通过某种方式计算出它们的比值</strong>。具体来说，可以把 <strong>不同的变量的比值转换成为相同的变量的比值</strong>，这样在做除法的时候就可以消去相同的变量，然后再计算转换成相同变量以后的系数的比值，就是题目要求的结果。<strong>统一了比较的标准</strong>，可以以 $O(1)$ 的时间复杂度完成计算。</p>
+<p>如果两个变量不在同一个集合中， 返回 $-1.0$。并且根据题目的意思，如果两个变量中 <strong>至少有一个</strong> 变量没有出现在所有 <code>equations</code> 出现的字符集合中，也返回 $-1.0$。</p>
+<h4 id="构建有向图"><a href="#构建有向图" class="headerlink" title="构建有向图"></a>构建有向图</h4><p>通过例 1 的分析，我们就知道了，题目给出的 <code>equations</code> 和 <code>values</code> 可以表示成一个图，<code>equations</code> 中出现的变量就是图的顶点，「分子」于「分母」的比值可以表示成一个有向关系（因为「分子」和「分母」是有序的，不可以对换），并且这个图是一个带权图，<code>values</code> 就是对应的有向边的权值。例 1 中给出的 <code>equations</code> 和 <code>values</code>  表示的「图形表示」、「数学表示」和「代码表示」如下表所示。其中 <code>parent[a] = b</code> 表示：结点 <code>a</code> 的（直接）父亲结点是 <code>b</code>，与之对应的有向边的权重，记为 <code>weight[a] = 2.0</code>，即 <code>weight[a]</code> 表示结点 <code>a</code> 到它的 <strong>直接父亲结点</strong> 的有向边的权重。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://pic.leetcode-cn.com/1609860627-dZoDYx-image.png"
+                     
+                >{:width&#x3D;400}</p>
+<h4 id="「统一变量」与「路径压缩」的关系"><a href="#「统一变量」与「路径压缩」的关系" class="headerlink" title="「统一变量」与「路径压缩」的关系"></a>「统一变量」与「路径压缩」的关系</h4><p>刚刚在分析例 1 的过程中，提到了：可以把一个一个 <code>query</code> 中的不同变量转换成 <strong>同一个变量</strong>，这样在计算 <code>query</code> 的时候就可以以 $O(1)$ 的时间复杂度计算出结果，在「并查集」的一个优化技巧中，「路径压缩」就恰好符合了这样的应用场景。</p>
+<p>为了避免并查集所表示的树形结构高度过高，影响查询性能。「路径压缩」就是针对树的高度的优化。「路径压缩」的效果是：在查询一个结点 <code>a</code> 的根结点同时，把结点 <code>a</code> 到根结点的沿途所有结点的父亲结点都指向根结点。如下图所示，除了根结点以外，所有的结点的父亲结点都指向了根结点。特别地，也可以认为根结点的父亲结点就是根结点自己。如下国所示：路径压缩前后，并查集所表示的两棵树形结构等价，路径压缩以后的树的高度为 $2$，查询性能最好。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://pic.leetcode-cn.com/1609861184-fXdaCo-image.png"
+                      alt="image.png"
+                >{:width&#x3D;400}</p>
+<p>由于有「路径压缩」的优化，两个同在一个连通分量中的不同的变量，它们分别到根结点（父亲结点）的权值的比值，就是题目的要求的结果。</p>
+<h4 id="如何在「查询」操作的「路径压缩」优化中维护权值变化"><a href="#如何在「查询」操作的「路径压缩」优化中维护权值变化" class="headerlink" title="如何在「查询」操作的「路径压缩」优化中维护权值变化"></a>如何在「查询」操作的「路径压缩」优化中维护权值变化</h4><p>如下图所示，我们在结点 <code>a</code> 执行一次「查询」操作。路径压缩会先一层一层向上先找到根结点 <code>d</code>，然后依次把 <code>c</code>、<code>b</code> 、<code>a</code> 的父亲结点指向根结点 <code>d</code>。</p>
+<ul>
+<li><code>c</code> 的父亲结点已经是根结点了，它的权值不用更改；</li>
+<li><code>b</code> 的父亲结点要修改成根结点，它的权值就是从当前结点到根结点经过的所有有向边的权值的乘积，因此是 $3.0$ 乘以 $4.0$ 也就是 $12.0$；</li>
+<li><code>a</code> 的父亲结点要修改成根结点，它的权值就是依然是从当前结点到根结点经过的所有有向边的权值的乘积，但是我们 <strong>没有必要把这三条有向边的权值乘起来</strong>，这是因为 <code>b</code> 到 <code>c</code>，<code>c</code> 到 <code>d</code> 这两条有向边的权值的乘积，我们在把 <code>b</code>  指向 <code>d</code> 的时候已经计算出来了。因此，<code>a</code> 到根结点的权值就等于 <code>b</code> 到根结点 <code>d</code> 的新的权值乘以 <code>a</code> 到 <code>b</code> 的原来的有向边的权值。</li>
+</ul>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://pic.leetcode-cn.com/1609861645-DbxMDs-image.png"
+                      alt="image.png"
+                ></p>
+<h4 id="如何在「合并」操作中维护权值的变化"><a href="#如何在「合并」操作中维护权值的变化" class="headerlink" title="如何在「合并」操作中维护权值的变化"></a>如何在「合并」操作中维护权值的变化</h4><p>「合并」操作基于这样一个 <strong>很重要的前提</strong>：我们将要合并的两棵树的高度最多为 $2$，换句话说两棵树都必需是「路径压缩」以后的效果，两棵树的叶子结点到根结点最多只需要经过一条有向边。</p>
+<p>例如已知 $\cfrac{a}{b} &#x3D; 3.0$，$\cfrac{d}{c} &#x3D; 4.0$ ，又已知 $\cfrac{a}{d} &#x3D; 6.0$ ，现在合并结点 <code>a</code> 和 <code>d</code> 所在的集合，其实就是把 <code>a</code> 的根结点 <code>b</code> 指向 <code>d</code> 的根结 <code>c</code>，那么如何计算 b 指向 c 的这条有向边的权重呢？</p>
+<p>根据 <code>a</code> 经过 <code>b</code> 可以到达 <code>c</code>，<code>a</code> 经过 <code>d</code> 也可以到达 <code>c</code>，因此 <strong>两条路径上的有向边的权值的乘积是一定相等的</strong>。设 <code>b</code> 到 <code>c</code> 的权值为 $x$，那么 $3.0 \cdot x &#x3D; 6.0 \cdot 4.0$ ，得 $x &#x3D; 8.0$。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://pic.leetcode-cn.com/1609862151-XZgKGY-image.png"
+                      alt="image.png"
+                >{:width&#x3D;400}</p>
+<h3 id="一个容易忽略的细节"><a href="#一个容易忽略的细节" class="headerlink" title="一个容易忽略的细节"></a>一个容易忽略的细节</h3><p>接下来还有一个小的细节问题：在合并以后，产生了一棵高度为 $3$ 的树，那么我们在执行查询的时候，例如下图展示的绿色结点和黄色结点，绿色结点并不直接指向根结点，在计算这两个变量的比值的时候，计算边的权值的比值得到的结果是不对的。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://pic.leetcode-cn.com/1609862263-LAsiiW-image.png"
+                      alt="image.png"
+                >{:width&#x3D;400}</p>
+<p>但其实不用担心这个问题，<strong>并查集的「查询」操作会执行「路径压缩」</strong>，所以真正在计算两个变量的权值的时候，绿色结点已经指向了根结点，和黄色结点的根结点相同。因此可以用它们指向根结点的有向边的权值的比值作为两个变量的比值。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://pic.leetcode-cn.com/1609862467-jtZvlE-image.png"
+                      alt="image.png"
+                >{:width&#x3D;400}</p>
+<p>我们通过这个细节向大家强调：一边查询一边修改结点指向是并查集的特色。</p>
+<p><strong>参考代码</strong>：</p>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><figcaption><span>[]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.HashMap;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"><span class="keyword">import</span> java.util.Map;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">double</span>[] calcEquation(List&lt;List&lt;String&gt;&gt; equations, <span class="type">double</span>[] values, List&lt;List&lt;String&gt;&gt; queries) &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">equationsSize</span> <span class="operator">=</span> equations.size();</span><br><span class="line"></span><br><span class="line">        <span class="type">UnionFind</span> <span class="variable">unionFind</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">UnionFind</span>(<span class="number">2</span> * equationsSize);</span><br><span class="line">        <span class="comment">// 第 1 步：预处理，将变量的值与 id 进行映射，使得并查集的底层使用数组实现，方便编码</span></span><br><span class="line">        Map&lt;String, Integer&gt; hashMap = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;&gt;(<span class="number">2</span> * equationsSize);</span><br><span class="line">        <span class="type">int</span> <span class="variable">id</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; equationsSize; i++) &#123;</span><br><span class="line">            List&lt;String&gt; equation = equations.get(i);</span><br><span class="line">            <span class="type">String</span> <span class="variable">var1</span> <span class="operator">=</span> equation.get(<span class="number">0</span>);</span><br><span class="line">            <span class="type">String</span> <span class="variable">var2</span> <span class="operator">=</span> equation.get(<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (!hashMap.containsKey(var1)) &#123;</span><br><span class="line">                hashMap.put(var1, id);</span><br><span class="line">                id++;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (!hashMap.containsKey(var2)) &#123;</span><br><span class="line">                hashMap.put(var2, id);</span><br><span class="line">                id++;</span><br><span class="line">            &#125;</span><br><span class="line">            unionFind.union(hashMap.get(var1), hashMap.get(var2), values[i]);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 第 2 步：做查询</span></span><br><span class="line">        <span class="type">int</span> <span class="variable">queriesSize</span> <span class="operator">=</span> queries.size();</span><br><span class="line">        <span class="type">double</span>[] res = <span class="keyword">new</span> <span class="title class_">double</span>[queriesSize];</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; queriesSize; i++) &#123;</span><br><span class="line">            <span class="type">String</span> <span class="variable">var1</span> <span class="operator">=</span> queries.get(i).get(<span class="number">0</span>);</span><br><span class="line">            <span class="type">String</span> <span class="variable">var2</span> <span class="operator">=</span> queries.get(i).get(<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">            <span class="type">Integer</span> <span class="variable">id1</span> <span class="operator">=</span> hashMap.get(var1);</span><br><span class="line">            <span class="type">Integer</span> <span class="variable">id2</span> <span class="operator">=</span> hashMap.get(var2);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (id1 == <span class="literal">null</span> || id2 == <span class="literal">null</span>) &#123;</span><br><span class="line">                res[i] = -<span class="number">1.0d</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                res[i] = unionFind.isConnected(id1, id2);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">class</span> <span class="title class_">UnionFind</span> &#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">private</span> <span class="type">int</span>[] parent;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 指向的父结点的权值</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">private</span> <span class="type">double</span>[] weight;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="keyword">public</span> <span class="title function_">UnionFind</span><span class="params">(<span class="type">int</span> n)</span> &#123;</span><br><span class="line">            <span class="built_in">this</span>.parent = <span class="keyword">new</span> <span class="title class_">int</span>[n];</span><br><span class="line">            <span class="built_in">this</span>.weight = <span class="keyword">new</span> <span class="title class_">double</span>[n];</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">                parent[i] = i;</span><br><span class="line">                weight[i] = <span class="number">1.0d</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">union</span><span class="params">(<span class="type">int</span> x, <span class="type">int</span> y, <span class="type">double</span> value)</span> &#123;</span><br><span class="line">            <span class="type">int</span> <span class="variable">rootX</span> <span class="operator">=</span> find(x);</span><br><span class="line">            <span class="type">int</span> <span class="variable">rootY</span> <span class="operator">=</span> find(y);</span><br><span class="line">            <span class="keyword">if</span> (rootX == rootY) &#123;</span><br><span class="line">                <span class="keyword">return</span>;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            parent[rootX] = rootY;</span><br><span class="line">          	<span class="comment">// 关系式的推导请见「参考代码」下方的示意图</span></span><br><span class="line">            weight[rootX] = weight[y] * value / weight[x];</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 路径压缩</span></span><br><span class="line"><span class="comment">         *</span></span><br><span class="line"><span class="comment">         * <span class="doctag">@param</span> x</span></span><br><span class="line"><span class="comment">         * <span class="doctag">@return</span> 根结点的 id</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">find</span><span class="params">(<span class="type">int</span> x)</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (x != parent[x]) &#123;</span><br><span class="line">                <span class="type">int</span> <span class="variable">origin</span> <span class="operator">=</span> parent[x];</span><br><span class="line">                parent[x] = find(parent[x]);</span><br><span class="line">                weight[x] *= weight[origin];</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> parent[x];</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">public</span> <span class="type">double</span> <span class="title function_">isConnected</span><span class="params">(<span class="type">int</span> x, <span class="type">int</span> y)</span> &#123;</span><br><span class="line">            <span class="type">int</span> <span class="variable">rootX</span> <span class="operator">=</span> find(x);</span><br><span class="line">            <span class="type">int</span> <span class="variable">rootY</span> <span class="operator">=</span> find(y);</span><br><span class="line">            <span class="keyword">if</span> (rootX == rootY) &#123;</span><br><span class="line">                <span class="keyword">return</span> weight[x] / weight[y];</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">return</span> -<span class="number">1.0d</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>说明</strong>：代码 <code>weight[rootX] = weight[y] * value / weight[x];</code> 的推导过程，主要需要明白各个变量的含义，由两条路径有向边的权值乘积相等得到相等关系，然后做等价变换即可。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://pic.leetcode-cn.com/1609863006-GhibcH-image.png"
+                      alt="image.png"
+                >{:width&#x3D;500}</p>
+<p><strong>复杂度分析</strong>：</p>
+<ul>
+<li><p>时间复杂度：$O((N + Q)\log A)$，</p>
+<ul>
+<li>构建并查集 $O(N \log A)$ ，这里 $N$ 为输入方程 <code>equations</code> 的长度，每一次执行合并操作的时间复杂度是 $O(\log A)$，这里 $A$ 是 <code>equations</code> 里不同字符的个数；</li>
+<li>查询并查集 $O(Q \log A)$，这里 $Q$ 为查询数组 <code>queries</code> 的长度，每一次查询时执行「路径压缩」的时间复杂度是 $O(\log A)$。</li>
+</ul>
+</li>
+<li><p>空间复杂度：$O(A)$：创建字符与 <code>id</code> 的对应关系 <code>hashMap</code> 长度为 $A$，并查集底层使用的两个数组 <code>parent</code> 和 <code>weight</code> 存储每个变量的连通分量信息，<code>parent</code> 和 <code>weight</code> 的长度均为 $A$。</p>
+</li>
+</ul>
+<h3 id="练习"><a href="#练习" class="headerlink" title="练习"></a>练习</h3><ul>
+<li>「力扣」第 547 题：<a class="link"   target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/number-of-provinces" >省份数量 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>（中等）；</li>
+<li>「力扣」第 684 题：<a class="link"   target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/redundant-connection" >冗余连接 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>（中等）；</li>
+<li>「力扣」第 1319 题：<a class="link"   target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/number-of-operations-to-make-network-connected" >连通网络的操作次数 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>（中等）；</li>
+<li>「力扣」第 1631 题：<a class="link"   target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/path-with-minimum-effort" >最小体力消耗路径 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>（中等）；</li>
+<li>「力扣」第 959 题：<a class="link"   target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/regions-cut-by-slashes" >由斜杠划分区域 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>（中等）；</li>
+<li>「力扣」第 1202 题：<a class="link"   target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/smallest-string-with-swaps" >交换字符串中的元素 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>（中等）；</li>
+<li>「力扣」第 947 题：<a class="link"   target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/most-stones-removed-with-same-row-or-column" >移除最多的同行或同列石头 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>（中等）；</li>
+<li>「力扣」第 721 题：<a class="link"   target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/accounts-merge" >账户合并 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>（中等）；</li>
+<li>「力扣」第 803 题：<a class="link"   target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/bricks-falling-when-hit" >打砖块 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>（困难）；</li>
+<li>「力扣」第 1579 题：<a class="link"   target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/remove-max-number-of-edges-to-keep-graph-fully-traversable" >保证图可完全遍历 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>（困难）;</li>
+<li>「力扣」第 778 题：<a class="link"   target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/swim-in-rising-water" >水位上升的泳池中游泳 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>（困难）。</li>
+</ul>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <!--<div class="article-copyright-info-container">-->
+    <!--&lt;!&ndash;<ul>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><strong>Title:</strong> 0399-除法求值</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><strong>Author:</strong> Raphael Liu</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><strong>Created at&ndash;&gt;-->
+                <!--&lt;!&ndash;:</strong> 2023-09-13 00:47:26</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;&ndash;&gt;-->
+            <!--&lt;!&ndash;<li>&ndash;&gt;-->
+                <!--&lt;!&ndash;<strong>Updated at&ndash;&gt;-->
+                    <!--&lt;!&ndash;:</strong> 2023-09-13 15:32:51&ndash;&gt;-->
+            <!--&lt;!&ndash;</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;<li>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;<strong>Link:</strong> https://fida.ltd/2023/09/13/0399-除法求值/&ndash;&gt;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;</li>&ndash;&gt;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;<li>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;<strong>&ndash;&gt;&ndash;&gt;-->
+                <!--&lt;!&ndash;&lt;!&ndash;License:&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;</strong>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0</a>.&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;&ndash;&gt;&ndash;&gt;-->
+
+        <!--&lt;!&ndash;&lt;!&ndash;</li>&ndash;&gt;&ndash;&gt;-->
+    <!--&lt;!&ndash;</ul>&ndash;&gt;-->
+<!--</div>-->
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box">
+                
+                    <li class="tag-item">
+                        <a href="/tags/algorithm/">#algorithm</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item">
+                        <a href="/tags/MEDIUM/">#MEDIUM</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                        rel="prev"
+                        href="/2023/09/13/0398-%E9%9A%8F%E6%9C%BA%E6%95%B0%E7%B4%A2%E5%BC%95/"
+                        >
+                            <span class="left arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">0398-随机数索引</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                        rel="next"
+                        href="/2023/09/13/0400-%E7%AC%AC%20N%20%E4%BD%8D%E6%95%B0%E5%AD%97/"
+                        >
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">0400-第 N 位数字</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+
+        
+            <div class="comment-container">
+                <div class="comments-container pjax">
+    <div id="comment-anchor"></div>
+    <div class="comment-area-title">
+        <i class="fa-solid fa-comments"></i>&nbsp;Comments
+    </div>
+    
+
+        
+            
+ 
+    <div id="waline"></div>
+    <script type="module"  data-swup-reload-script>
+        import { init } from 'https://evan.beee.top/js/waline.mjs';
+
+        function loadWaline() {
+            init({
+                el: '#waline',
+                serverURL: 'https://example.example.com',
+                lang: 'zh-CN',
+                dark: 'body[class~="dark-mode"]',
+                requiredMeta: ['nick','mail'], // cannot customize by theme config, change it yourself
+            });
+        }
+
+        if ('true') {
+            const loadWalineTimeout = setTimeout(() => {
+                loadWaline();
+                clearTimeout(loadWalineTimeout);
+            }, 1000);
+        } else {
+            window.addEventListener('DOMContentLoaded', loadWaline);
+        }
+        
+    </script>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+
+    
+        <div class="toc-content-container">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">On this page</div>
+        <div class="page-title">0399-除法求值</div>
+        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%F0%9F%93%BA-%E8%A7%86%E9%A2%91%E8%AE%B2%E8%A7%A3"><span class="nav-text">📺 视频讲解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%F0%9F%93%96-%E6%96%87%E5%AD%97%E8%A7%A3%E6%9E%90"><span class="nav-text">📖 文字解析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E6%B3%95%EF%BC%9A%E5%B9%B6%E6%9F%A5%E9%9B%86"><span class="nav-text">方法：并查集</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E4%B8%AA%E5%AE%B9%E6%98%93%E5%BF%BD%E7%95%A5%E7%9A%84%E7%BB%86%E8%8A%82"><span class="nav-text">一个容易忽略的细节</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%83%E4%B9%A0"><span class="nav-text">练习</span></a></li></ol>
+
+    </div>
+</div>
+        </div>
+    
+</div>
+
+
+
+                
+
+            </div>
+
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2022</span>
+              -
+            
+            2023&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">Raphael Liu</a>
+        </div>
+        
+            <script data-swup-reload-script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">UV:</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">PV:</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <!--<div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">-->
+            <!--<span class="lg:block text-sm">powered_by</span>-->
+            <!--&lt;!&ndash;<span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.4.4</a></span>&ndash;&gt;-->
+        <!--</div>-->
+        
+        <!---->
+            <!--<div>-->
+                <!--runtime <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hours <span class="odometer" id="runtime_minutes"></span> minutes <span class="odometer" id="runtime_seconds"></span> seconds-->
+            <!--</div>-->
+        <!---->
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fa-regular fa-comments"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-expand-width flex justify-center items-center">
+            <i class="fa-regular fa-expand"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fa-solid fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa-solid fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa-solid fa-spinner fa-spin-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+    
+<script src="/js/libs/Swup.min.js"></script>
+
+<script src="/js/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/libs/SwupScrollPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+        ],
+        containers: ["#swup"],
+    });
+
+    swup.hooks.on("page:view", () => {
+        Global.refresh();
+    });
+
+    // if (document.readyState === "complete") {
+    //
+    // } else {
+    //     document.addEventListener("DOMContentLoaded", () => init());
+    // }
+</script>
+
+
+
+
+
+
+<script src="/js/utils.js" type="module"></script>
+
+<script src="/js/main.js" type="module"></script>
+
+<script src="/js/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/layouts/categoryList.js" type="module"></script>
+
+
+
+    
+<script src="/js/tools/localSearch.js"></script>
+
+
+
+
+    
+<script src="/js/tools/codeBlock.js"></script>
+
+
+
+
+    
+<script src="/js/layouts/lazyload.js"></script>
+
+
+
+
+    
+<script src="/js/tools/runtime.js"></script>
+
+    
+<script src="/js/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/libs/Typed.min.js"></script>
+
+  
+<script src="/js/plugins/typed.js"></script>
+
+
+
+
+
+
+
+<div class="post-scripts" data-swup-reload-script>
+    
+        
+<script src="/js/libs/anime.min.js"></script>
+
+        
+<script src="/js/tools/tocToggle.js" type="module"></script>
+
+<script src="/js/layouts/toc.js" type="module"></script>
+
+<script src="/js/plugins/tabs.js" type="module"></script>
+
+    
+</div>
+
+
+</body>
+</html>

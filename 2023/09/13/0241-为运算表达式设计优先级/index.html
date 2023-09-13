@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="Raphael Liu">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/2023/09/13/0241-为运算表达式设计优先级/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="给你一个由数字和运算符组成的字符串 expression ，按不同优先级组合数字和运算符，计算并返回所有可能组合的结果。你可以 按任意顺序返回答案。 生成的测试用例满足其对应输出值符合 32 位整数范围，不同结果的数量不超过 104 。 示例 1： **输入：** expression &#x3D; &quot;2-1-1&quot; **输出：** [0,2] **解释：** ((2-1)-1) &#x3D; 0">
+<meta property="og:type" content="article">
+<meta property="og:title" content="0241-为运算表达式设计优先级">
+<meta property="og:url" content="http://example.com/2023/09/13/0241-%E4%B8%BA%E8%BF%90%E7%AE%97%E8%A1%A8%E8%BE%BE%E5%BC%8F%E8%AE%BE%E8%AE%A1%E4%BC%98%E5%85%88%E7%BA%A7/index.html">
+<meta property="og:site_name" content="Raphael&#39;s Blog">
+<meta property="og:description" content="给你一个由数字和运算符组成的字符串 expression ，按不同优先级组合数字和运算符，计算并返回所有可能组合的结果。你可以 按任意顺序返回答案。 生成的测试用例满足其对应输出值符合 32 位整数范围，不同结果的数量不超过 104 。 示例 1： **输入：** expression &#x3D; &quot;2-1-1&quot; **输出：** [0,2] **解释：** ((2-1)-1) &#x3D; 0">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-09-12T16:47:26.000Z">
+<meta property="article:modified_time" content="2023-09-13T02:44:31.204Z">
+<meta property="article:author" content="Raphael Liu">
+<meta property="article:tag" content="algorithm">
+<meta property="article:tag" content="MEDIUM">
+<meta name="twitter:card" content="summary">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/redefine-favicon.svg" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/redefine-favicon.svg">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/redefine-favicon.svg">
+    <!--- Page Info-->
+    
+    <title>
+        
+            0241-为运算表达式设计优先级 -
+        
+        Raphael&#39;s Blog
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/css/build/styles.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/fonts.css">
+
+    
+<link rel="stylesheet" href="/fonts/Satoshi/satoshi.css">
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+
+    <!--- Inject Part-->
+    
+    <script id="hexo-configurations">
+    let Global = window.Global || {};
+    Global.hexo_config = {"hostname":"example.com","root":"/","language":"zh_CN"};
+    Global.theme_config = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":true,"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"open_graph":true,"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-wqery6-light.webp","dark":"/images/wallhaven-wqery6-dark.webp"},"title":"Raphael's Blog","subtitle":{"text":["格物致知","坚持做正确的事情"],"hitokoto":{"enable":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":false,"links":{"github":"https://github.com/raphael-liu","email":"raphael@buaa.edu.cn# your email"},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.4.4","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"links":{"首页":{"path":"/","icon":"fa-regular fa-house"},"文章":{"path":"/archives","icon":"fa-regular fa-archive"},"关于":{"icon":"fa-regular fa-user","submenus":{"我":"/about/me","Github":"https://github.com/raphael-liu"}}},"search":{"enable":true,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"links":null},"article_date_format":"auto","categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}},"footerStart":"2022/8/17 11:45:14"};
+    Global.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    Global.data_config = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="swup-progress-icon">
+            <i class="fa-solid fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container" id="swup">
+
+    
+
+    <div class="main-content-container">
+
+
+        <div class="main-content-header">
+            <header class="navbar-container">
+    
+    <div class="navbar-content">
+        <div class="left">
+            
+            <a class="logo-title" href="http://example.com/">
+                
+                Raphael&#39;s Blog
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/"  >
+                                    
+                                        
+                                            <i class="fa-regular fa-house"></i>
+                                        
+                                        首页
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/archives"  >
+                                    
+                                        
+                                            <i class="fa-regular fa-archive"></i>
+                                        
+                                        文章
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="has-dropdown" 
+                                    href="#" onClick="return false;">
+                                    
+                                        
+                                            <i class="fa-regular fa-user"></i>
+                                        
+                                        关于&nbsp;<i class="fa-solid fa-chevron-down"></i>
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                                    <ul class="sub-menu">
+                                    
+                                        <li>
+                                        <a href="/about/me">我
+                                        </a>
+                                        </li>
+                                    
+                                        <li>
+                                        <a target="_blank" rel="noopener" href="https://github.com/raphael-liu">GITHUB
+                                        </a>
+                                        </li>
+                                    
+                                    </ul>
+                                
+                            </li>
+                    
+                    
+                        <li class="navbar-item search search-popup-trigger">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fa-solid fa-magnifying-glass"></i></div>
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile drawer -->
+    <div class="navbar-drawer w-full absolute top-0 left-0 bg-background-color">
+        <ul class="drawer-navbar-list flex flex-col justify-start items-center">
+            
+                
+                    <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group " 
+                        href="/"  >
+                             
+                                
+                                    <i class="fa-regular fa-house"></i>
+                                
+                                首页
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+                
+                    <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group " 
+                        href="/archives"  >
+                             
+                                
+                                    <i class="fa-regular fa-archive"></i>
+                                
+                                文章
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+                
+                    <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group has-dropdown" 
+                        href="#" onClick="return false;">
+                            
+                                
+                                    <i class="fa-regular fa-user"></i>
+                                
+                                关于&nbsp;<i class="group-hover:rotate-180 transition-transform fa-solid fa-chevron-down"></i>
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                              
+                        
+                            <li class="text-base flex justify-center items-center hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                <a class="py-0.5" href="/about/me">我</a>
+                            </li>
+                        
+                            <li class="text-base flex justify-center items-center hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                <a class="py-0.5" target="_blank" rel="noopener" href="https://github.com/raphael-liu">GITHUB</a>
+                            </li>
+                        
+                    
+            
+
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="post-page-container">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            
+                <h1 class="article-title-regular">0241-为运算表达式设计优先级</h1>
+            
+            </div>
+            
+                    
+        
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">Raphael Liu</span>
+                        
+                            <span class="author-label">Lv10</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2023-09-13 00:47:26</span>
+        <span class="mobile">2023-09-13 00:47:26</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2023-09-13 10:44:31</span>
+            <span class="mobile">2023-09-13 10:44:31</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/algorithm/">algorithm</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/MEDIUM/">MEDIUM</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        
+
+
+        <div class="article-content markdown-body">
+            <p>给你一个由数字和运算符组成的字符串 <code>expression</code> ，按不同优先级组合数字和运算符，计算并返回所有可能组合的结果。你可以 <strong>按任意顺序</strong><br>返回答案。</p>
+<p>生成的测试用例满足其对应输出值符合 32 位整数范围，不同结果的数量不超过 <code>104</code> 。</p>
+<p><strong>示例 1：</strong></p>
+<pre><code>**输入：** expression = &quot;2-1-1&quot;
+**输出：** [0,2]
+**解释：**
+((2-1)-1) = 0 
+(2-(1-1)) = 2
+</code></pre>
+<p><strong>示例 2：</strong></p>
+<pre><code>**输入：** expression = &quot;2*3-4*5&quot;
+**输出：** [-34,-14,-10,-10,10]
+**解释：**
+(2*(3-(4*5))) = -34 
+((2*3)-(4*5)) = -14 
+((2*(3-4))*5) = -10 
+(2*((3-4)*5)) = -10 
+(((2*3)-4)*5) = 10
+</code></pre>
+<p><strong>提示：</strong></p>
+<ul>
+<li><code>1 &lt;= expression.length &lt;= 20</code></li>
+<li><code>expression</code> 由数字和算符 <code>&#39;+&#39;</code>、<code>&#39;-&#39;</code> 和 <code>&#39;*&#39;</code> 组成。</li>
+<li>输入表达式中的所有整数值在范围 <code>[0, 99]</code></li>
+</ul>
+<h4 id="方法一：记忆化搜索"><a href="#方法一：记忆化搜索" class="headerlink" title="方法一：记忆化搜索"></a>方法一：记忆化搜索</h4><p><strong>思路与算法</strong></p>
+<p>我们首先对 $\textit{expression}$ 做一个预处理，把全部的操作数（包括数字和算符）都放到 $\textit{ops}$ 数组中，因为题目数据满足每一个数字都是 $[0,99]$ 的范围中，且算符总共有 $3$ 个，所以我们分别用 $-1$，$-2$，$-3$ 来表示算符 $+$，$-$，$*$。因为对于表达式中的某一个算符 $\textit{op}$，我们将其左部可能的计算结果用 $\textit{left}$ 集合来表示，其右部可能的计算结果用 $\textit{right}$ 集合来表示。那么以该算符为该表达式的最后一步操作的情况的全部可能结果就是对应集合 $\textit{left}$ 和集合 $\textit{right}$ 中元素对应该算符操作的组合数。那么我们枚举表达式中的全部算符来作为 $\textit{left}$ 和 $\textit{right}$ 的分隔符来求得对应的集合，那么该表达式最终的可能结果就是这些集合的并集。</p>
+<p>为了避免相同区间的重复计算，我们用 $\textit{dp}[l][r] &#x3D; {v_0,v_1,\ldots}$ 来表示对应表达式 $\textit{ops}[l:r]$ 在按不同优先级组合数字和运算符的操作下能产生的全部可能结果。这样我们就可以通过记忆化搜索这种「自顶向下」的方式来进行求解原始的表达式的全部可能计算结果。而上面讨论的条件是需要计算的表达式中存在算符的情况，所以还需要讨论搜索结束的条件：当表达式不存在任何算符时，即 $l &#x3D; r$ 时，对应的结果集合中就只有该一个数字。</p>
+<p>$$\textit{dp}[l][r] &#x3D; {\textit{ops}[l]} , l &#x3D; r \And \textit{ops}[l] \ge 0$$</p>
+<p><strong>代码</strong></p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><figcaption><span>[sol1-Python3]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">ADDITION = -<span class="number">1</span></span><br><span class="line">SUBTRACTION = -<span class="number">2</span></span><br><span class="line">MULTIPLICATION = -<span class="number">3</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">diffWaysToCompute</span>(<span class="params">self, expression: <span class="built_in">str</span></span>) -&gt; <span class="type">List</span>[<span class="built_in">int</span>]:</span><br><span class="line">        ops = []</span><br><span class="line">        i, n = <span class="number">0</span>, <span class="built_in">len</span>(expression)</span><br><span class="line">        <span class="keyword">while</span> i &lt; n:</span><br><span class="line">            <span class="keyword">if</span> expression[i].isdigit():</span><br><span class="line">                x = <span class="number">0</span></span><br><span class="line">                <span class="keyword">while</span> i &lt; n <span class="keyword">and</span> expression[i].isdigit():</span><br><span class="line">                    x = x * <span class="number">10</span> + <span class="built_in">int</span>(expression[i])</span><br><span class="line">                    i += <span class="number">1</span></span><br><span class="line">                ops.append(x)</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="keyword">if</span> expression[i] == <span class="string">&#x27;+&#x27;</span>:</span><br><span class="line">                    ops.append(ADDITION)</span><br><span class="line">                <span class="keyword">elif</span> expression[i] == <span class="string">&#x27;-&#x27;</span>:</span><br><span class="line">                    ops.append(SUBTRACTION)</span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    ops.append(MULTIPLICATION)</span><br><span class="line">                i += <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="meta">        @cache</span></span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">dfs</span>(<span class="params">l: <span class="built_in">int</span>, r: <span class="built_in">int</span></span>) -&gt; <span class="type">List</span>[<span class="built_in">int</span>]:</span><br><span class="line">            <span class="keyword">if</span> l == r:</span><br><span class="line">                <span class="keyword">return</span> [ops[l]]</span><br><span class="line">            res = []</span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(l, r, <span class="number">2</span>):</span><br><span class="line">                left = dfs(l, i)</span><br><span class="line">                right = dfs(i + <span class="number">2</span>, r)</span><br><span class="line">                <span class="keyword">for</span> x <span class="keyword">in</span> left:</span><br><span class="line">                    <span class="keyword">for</span> y <span class="keyword">in</span> right:</span><br><span class="line">                        <span class="keyword">if</span> ops[i + <span class="number">1</span>] == ADDITION:</span><br><span class="line">                            res.append(x + y)</span><br><span class="line">                        <span class="keyword">elif</span> ops[i + <span class="number">1</span>] == SUBTRACTION:</span><br><span class="line">                            res.append(x - y)</span><br><span class="line">                        <span class="keyword">else</span>:</span><br><span class="line">                            res.append(x * y)</span><br><span class="line">            <span class="keyword">return</span> res</span><br><span class="line">        <span class="keyword">return</span> dfs(<span class="number">0</span>, <span class="built_in">len</span>(ops) - <span class="number">1</span>)</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="C++"><figure class="iseeu highlight c++"><figcaption><span>[sol1-C++]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="type">const</span> <span class="type">int</span> ADDITION = <span class="number">-1</span>;</span><br><span class="line">    <span class="type">const</span> <span class="type">int</span> SUBTRACTION = <span class="number">-2</span>;</span><br><span class="line">    <span class="type">const</span> <span class="type">int</span> MULTIPLICATION = <span class="number">-3</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">dfs</span><span class="params">(vector&lt;vector&lt;vector&lt;<span class="type">int</span>&gt;&gt;&gt;&amp; dp, <span class="type">int</span> l, <span class="type">int</span> r, <span class="type">const</span> vector&lt;<span class="type">int</span>&gt;&amp; ops)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (dp[l][r].<span class="built_in">empty</span>()) &#123;</span><br><span class="line">            <span class="keyword">if</span> (l == r) &#123;</span><br><span class="line">                dp[l][r].<span class="built_in">push_back</span>(ops[l]);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">for</span> (<span class="type">int</span> i = l; i &lt; r; i += <span class="number">2</span>) &#123;</span><br><span class="line">                    <span class="keyword">auto</span> left = <span class="built_in">dfs</span>(dp, l, i, ops);</span><br><span class="line">                    <span class="keyword">auto</span> right = <span class="built_in">dfs</span>(dp, i + <span class="number">2</span>, r, ops);</span><br><span class="line">                    <span class="keyword">for</span> (<span class="keyword">auto</span>&amp; lv : left) &#123;</span><br><span class="line">                        <span class="keyword">for</span> (<span class="keyword">auto</span>&amp; rv : right) &#123;</span><br><span class="line">                            <span class="keyword">if</span> (ops[i + <span class="number">1</span>] == ADDITION) &#123;</span><br><span class="line">                                dp[l][r].<span class="built_in">push_back</span>(lv + rv);</span><br><span class="line">                            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (ops[i + <span class="number">1</span>] == SUBTRACTION) &#123;</span><br><span class="line">                                dp[l][r].<span class="built_in">push_back</span>(lv - rv);</span><br><span class="line">                            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                                dp[l][r].<span class="built_in">push_back</span>(lv * rv);</span><br><span class="line">                            &#125;</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> dp[l][r];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">diffWaysToCompute</span><span class="params">(string expression)</span> </span>&#123;</span><br><span class="line">        vector&lt;<span class="type">int</span>&gt; ops;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; expression.<span class="built_in">size</span>();) &#123;</span><br><span class="line">            <span class="keyword">if</span> (!<span class="built_in">isdigit</span>(expression[i])) &#123;</span><br><span class="line">                <span class="keyword">if</span> (expression[i] == <span class="string">&#x27;+&#x27;</span>) &#123;</span><br><span class="line">                    ops.<span class="built_in">push_back</span>(ADDITION);</span><br><span class="line">                &#125; <span class="keyword">else</span> <span class="keyword">if</span> (expression[i] == <span class="string">&#x27;-&#x27;</span>) &#123;</span><br><span class="line">                    ops.<span class="built_in">push_back</span>(SUBTRACTION);</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    ops.<span class="built_in">push_back</span>(MULTIPLICATION);</span><br><span class="line">                &#125;</span><br><span class="line">                i++;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="type">int</span> t = <span class="number">0</span>;</span><br><span class="line">                <span class="keyword">while</span> (i &lt; expression.<span class="built_in">size</span>() &amp;&amp; <span class="built_in">isdigit</span>(expression[i])) &#123;</span><br><span class="line">                    t = t * <span class="number">10</span> + expression[i] - <span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">                    i++;</span><br><span class="line">                &#125;</span><br><span class="line">                ops.<span class="built_in">push_back</span>(t);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        vector&lt;vector&lt;vector&lt;<span class="type">int</span>&gt;&gt;&gt; <span class="built_in">dp</span>((<span class="type">int</span>) ops.<span class="built_in">size</span>(), vector&lt;vector&lt;<span class="type">int</span>&gt;&gt;((<span class="type">int</span>) ops.<span class="built_in">size</span>()));</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">dfs</span>(dp, <span class="number">0</span>, ops.<span class="built_in">size</span>() - <span class="number">1</span>, ops);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><figcaption><span>[sol1-Java]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="variable">ADDITION</span> <span class="operator">=</span> -<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="variable">SUBTRACTION</span> <span class="operator">=</span> -<span class="number">2</span>;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="variable">MULTIPLICATION</span> <span class="operator">=</span> -<span class="number">3</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> List&lt;Integer&gt; <span class="title function_">diffWaysToCompute</span><span class="params">(String expression)</span> &#123;</span><br><span class="line">        List&lt;Integer&gt; ops = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;Integer&gt;();</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; expression.length();) &#123;</span><br><span class="line">            <span class="keyword">if</span> (!Character.isDigit(expression.charAt(i))) &#123;</span><br><span class="line">                <span class="keyword">if</span> (expression.charAt(i) == <span class="string">&#x27;+&#x27;</span>) &#123;</span><br><span class="line">                    ops.add(ADDITION);</span><br><span class="line">                &#125; <span class="keyword">else</span> <span class="keyword">if</span> (expression.charAt(i) == <span class="string">&#x27;-&#x27;</span>) &#123;</span><br><span class="line">                    ops.add(SUBTRACTION);</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    ops.add(MULTIPLICATION);</span><br><span class="line">                &#125;</span><br><span class="line">                i++;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="type">int</span> <span class="variable">t</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">                <span class="keyword">while</span> (i &lt; expression.length() &amp;&amp; Character.isDigit(expression.charAt(i))) &#123;</span><br><span class="line">                    t = t * <span class="number">10</span> + expression.charAt(i) - <span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">                    i++;</span><br><span class="line">                &#125;</span><br><span class="line">                ops.add(t);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        List&lt;Integer&gt;[][] dp = <span class="keyword">new</span> <span class="title class_">List</span>[ops.size()][ops.size()];</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; ops.size(); i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">j</span> <span class="operator">=</span> <span class="number">0</span>; j &lt; ops.size(); j++) &#123;</span><br><span class="line">                dp[i][j] = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;Integer&gt;();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> dfs(dp, <span class="number">0</span>, ops.size() - <span class="number">1</span>, ops);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> List&lt;Integer&gt; <span class="title function_">dfs</span><span class="params">(List&lt;Integer&gt;[][] dp, <span class="type">int</span> l, <span class="type">int</span> r, List&lt;Integer&gt; ops)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (dp[l][r].isEmpty()) &#123;</span><br><span class="line">            <span class="keyword">if</span> (l == r) &#123;</span><br><span class="line">                dp[l][r].add(ops.get(l));</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> l; i &lt; r; i += <span class="number">2</span>) &#123;</span><br><span class="line">                    List&lt;Integer&gt; left = dfs(dp, l, i, ops);</span><br><span class="line">                    List&lt;Integer&gt; right = dfs(dp, i + <span class="number">2</span>, r, ops);</span><br><span class="line">                    <span class="keyword">for</span> (<span class="type">int</span> lv : left) &#123;</span><br><span class="line">                        <span class="keyword">for</span> (<span class="type">int</span> rv : right) &#123;</span><br><span class="line">                            <span class="keyword">if</span> (ops.get(i + <span class="number">1</span>) == ADDITION) &#123;</span><br><span class="line">                                dp[l][r].add(lv + rv);</span><br><span class="line">                            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (ops.get(i + <span class="number">1</span>) == SUBTRACTION) &#123;</span><br><span class="line">                                dp[l][r].add(lv - rv);</span><br><span class="line">                            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                                dp[l][r].add(lv * rv);</span><br><span class="line">                            &#125;</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> dp[l][r];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="C#"><figure class="iseeu highlight c#"><figcaption><span>[sol1-C#]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> <span class="built_in">int</span> ADDITION = <span class="number">-1</span>;</span><br><span class="line">    <span class="keyword">const</span> <span class="built_in">int</span> SUBTRACTION = <span class="number">-2</span>;</span><br><span class="line">    <span class="keyword">const</span> <span class="built_in">int</span> MULTIPLICATION = <span class="number">-3</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> IList&lt;<span class="built_in">int</span>&gt; <span class="title">DiffWaysToCompute</span>(<span class="params"><span class="built_in">string</span> expression</span>)</span> &#123;</span><br><span class="line">        IList&lt;<span class="built_in">int</span>&gt; ops = <span class="keyword">new</span> List&lt;<span class="built_in">int</span>&gt;();</span><br><span class="line">        <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; expression.Length;) &#123;</span><br><span class="line">            <span class="keyword">if</span> (!<span class="built_in">char</span>.IsDigit(expression[i])) &#123;</span><br><span class="line">                <span class="keyword">if</span> (expression[i] == <span class="string">&#x27;+&#x27;</span>) &#123;</span><br><span class="line">                    ops.Add(ADDITION);</span><br><span class="line">                &#125; <span class="keyword">else</span> <span class="keyword">if</span> (expression[i] == <span class="string">&#x27;-&#x27;</span>) &#123;</span><br><span class="line">                    ops.Add(SUBTRACTION);</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    ops.Add(MULTIPLICATION);</span><br><span class="line">                &#125;</span><br><span class="line">                i++;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="built_in">int</span> t = <span class="number">0</span>;</span><br><span class="line">                <span class="keyword">while</span> (i &lt; expression.Length &amp;&amp; <span class="built_in">char</span>.IsDigit(expression[i])) &#123;</span><br><span class="line">                    t = t * <span class="number">10</span> + expression[i] - <span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">                    i++;</span><br><span class="line">                &#125;</span><br><span class="line">                ops.Add(t);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        IList&lt;<span class="built_in">int</span>&gt;[][] dp = <span class="keyword">new</span> IList&lt;<span class="built_in">int</span>&gt;[ops.Count][];</span><br><span class="line">        <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; ops.Count; i++) &#123;</span><br><span class="line">            dp[i] = <span class="keyword">new</span> IList&lt;<span class="built_in">int</span>&gt;[ops.Count];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; ops.Count; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="built_in">int</span> j = <span class="number">0</span>; j &lt; ops.Count; j++) &#123;</span><br><span class="line">                dp[i][j] = <span class="keyword">new</span> List&lt;<span class="built_in">int</span>&gt;();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> DFS(dp, <span class="number">0</span>, ops.Count - <span class="number">1</span>, ops);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> IList&lt;<span class="built_in">int</span>&gt; <span class="title">DFS</span>(<span class="params">IList&lt;<span class="built_in">int</span>&gt;[][] dp, <span class="built_in">int</span> l, <span class="built_in">int</span> r, IList&lt;<span class="built_in">int</span>&gt; ops</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (dp[l][r].Count == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (l == r) &#123;</span><br><span class="line">                dp[l][r].Add(ops[l]);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">for</span> (<span class="built_in">int</span> i = l; i &lt; r; i += <span class="number">2</span>) &#123;</span><br><span class="line">                    IList&lt;<span class="built_in">int</span>&gt; left = DFS(dp, l, i, ops);</span><br><span class="line">                    IList&lt;<span class="built_in">int</span>&gt; right = DFS(dp, i + <span class="number">2</span>, r, ops);</span><br><span class="line">                    <span class="keyword">foreach</span> (<span class="built_in">int</span> lv <span class="keyword">in</span> left) &#123;</span><br><span class="line">                        <span class="keyword">foreach</span> (<span class="built_in">int</span> rv <span class="keyword">in</span> right) &#123;</span><br><span class="line">                            <span class="keyword">if</span> (ops[i + <span class="number">1</span>] == ADDITION) &#123;</span><br><span class="line">                                dp[l][r].Add(lv + rv);</span><br><span class="line">                            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (ops[i + <span class="number">1</span>] == SUBTRACTION) &#123;</span><br><span class="line">                                dp[l][r].Add(lv - rv);</span><br><span class="line">                            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                                dp[l][r].Add(lv * rv);</span><br><span class="line">                            &#125;</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> dp[l][r];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="C"><figure class="iseeu highlight c"><figcaption><span>[sol1-C]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> ADDITION -1</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> SUBTRACTION -2</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> MULTIPLICATION -3</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> ListNode * <span class="title function_">dfs</span><span class="params">(<span class="keyword">struct</span> ListNode ***dp, <span class="type">int</span> l, <span class="type">int</span> r, <span class="type">const</span> <span class="type">int</span> *ops)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (!dp[l][r]) &#123;</span><br><span class="line">        <span class="keyword">if</span> (l == r) &#123;</span><br><span class="line">            <span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span> *<span class="title">node</span> =</span> (<span class="keyword">struct</span> ListNode *)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">struct</span> ListNode));</span><br><span class="line">            node-&gt;val = ops[l];</span><br><span class="line">            node-&gt;next = dp[l][r];</span><br><span class="line">            dp[l][r] = node;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> i = l; i &lt; r; i += <span class="number">2</span>) &#123;</span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">struct</span> ListNode *left = dfs(dp, l, i, ops); left; left = left-&gt;next) &#123;</span><br><span class="line">                    <span class="keyword">for</span> (<span class="keyword">struct</span> ListNode *right = dfs(dp, i + <span class="number">2</span>, r, ops); right; right = right-&gt;next) &#123;</span><br><span class="line">                        <span class="keyword">struct</span> ListNode *node = (<span class="keyword">struct</span> ListNode *)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">struct</span> ListNode));</span><br><span class="line">                        <span class="keyword">if</span> (ops[i + <span class="number">1</span>] == ADDITION) &#123;</span><br><span class="line">                            node-&gt;val = left-&gt;val + right-&gt;val;</span><br><span class="line">                        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (ops[i + <span class="number">1</span>] == SUBTRACTION) &#123;</span><br><span class="line">                            node-&gt;val = left-&gt;val - right-&gt;val;</span><br><span class="line">                        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                            node-&gt;val = left-&gt;val * right-&gt;val;</span><br><span class="line">                        &#125;</span><br><span class="line">                        node-&gt;next = dp[l][r];</span><br><span class="line">                        dp[l][r] = node;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> dp[l][r];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span>* <span class="title function_">diffWaysToCompute</span><span class="params">(<span class="type">char</span> * expression, <span class="type">int</span>* returnSize)</span> &#123;</span><br><span class="line">    <span class="type">int</span> len = <span class="built_in">strlen</span>(expression);</span><br><span class="line">    <span class="type">int</span> *ops = (<span class="type">int</span> *)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="type">int</span>) * len);</span><br><span class="line">    <span class="type">int</span> opsSize = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; len;) &#123;</span><br><span class="line">        <span class="keyword">if</span> (!<span class="built_in">isdigit</span>(expression[i])) &#123;</span><br><span class="line">            <span class="keyword">if</span> (expression[i] == <span class="string">&#x27;+&#x27;</span>) &#123;</span><br><span class="line">                ops[opsSize++] = ADDITION;</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (expression[i] == <span class="string">&#x27;-&#x27;</span>) &#123;</span><br><span class="line">                ops[opsSize++] = SUBTRACTION;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                ops[opsSize++] = MULTIPLICATION;</span><br><span class="line">            &#125;</span><br><span class="line">            i++;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="type">int</span> t = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">while</span> (i &lt; len &amp;&amp; <span class="built_in">isdigit</span>(expression[i])) &#123;</span><br><span class="line">                t = t * <span class="number">10</span> + expression[i] - <span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">                i++;</span><br><span class="line">            &#125;</span><br><span class="line">            ops[opsSize++] = t;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span> ***<span class="title">dp</span> =</span> <span class="literal">NULL</span>;</span><br><span class="line">    dp = (<span class="keyword">struct</span> ListNode ***)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">struct</span> ListNode **) * opsSize);</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; opsSize; i++) &#123;</span><br><span class="line">        dp[i] = (<span class="keyword">struct</span> ListNode **)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">struct</span> ListNode *) * opsSize);</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt; opsSize; j++) &#123;</span><br><span class="line">            dp[i][j] = <span class="literal">NULL</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="type">int</span> *ans = (<span class="type">int</span> *)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="type">int</span>) * (<span class="number">1</span> &lt;&lt; opsSize));</span><br><span class="line">    <span class="type">int</span> pos = <span class="number">0</span>;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span> *<span class="title">node</span> =</span> dfs(dp, <span class="number">0</span>, opsSize - <span class="number">1</span>, ops);</span><br><span class="line">    <span class="keyword">while</span> (node) &#123;</span><br><span class="line">        ans[pos++] = node-&gt;val;</span><br><span class="line">        node = node-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line">    *returnSize = pos;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; opsSize; i++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt; opsSize; j++) &#123;</span><br><span class="line">            <span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span> *<span class="title">curr</span>, *<span class="title">tmp</span>;</span></span><br><span class="line">            curr = dp[i][j];</span><br><span class="line">            <span class="keyword">while</span> (curr) &#123;</span><br><span class="line">                tmp = curr;</span><br><span class="line">                curr = curr-&gt;next;</span><br><span class="line">                <span class="built_in">free</span>(tmp);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">free</span>(dp[i]);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">free</span>(dp);</span><br><span class="line">    <span class="built_in">free</span>(ops);</span><br><span class="line">    <span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Go"><figure class="iseeu highlight go"><figcaption><span>[sol1-Golang]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> addition, subtraction, multiplication = <span class="number">-1</span>, <span class="number">-2</span>, <span class="number">-3</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">diffWaysToCompute</span><span class="params">(expression <span class="type">string</span>)</span></span> []<span class="type">int</span> &#123;</span><br><span class="line">    ops := []<span class="type">int</span>&#123;&#125;</span><br><span class="line">    <span class="keyword">for</span> i, n := <span class="number">0</span>, <span class="built_in">len</span>(expression); i &lt; n; &#123;</span><br><span class="line">        <span class="keyword">if</span> unicode.IsDigit(<span class="type">rune</span>(expression[i])) &#123;</span><br><span class="line">            x := <span class="number">0</span></span><br><span class="line">            <span class="keyword">for</span> ; i &lt; n &amp;&amp; unicode.IsDigit(<span class="type">rune</span>(expression[i])); i++ &#123;</span><br><span class="line">                x = x*<span class="number">10</span> + <span class="type">int</span>(expression[i]-<span class="string">&#x27;0&#x27;</span>)</span><br><span class="line">            &#125;</span><br><span class="line">            ops = <span class="built_in">append</span>(ops, x)</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> expression[i] == <span class="string">&#x27;+&#x27;</span> &#123;</span><br><span class="line">                ops = <span class="built_in">append</span>(ops, addition)</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> expression[i] == <span class="string">&#x27;-&#x27;</span> &#123;</span><br><span class="line">                ops = <span class="built_in">append</span>(ops, subtraction)</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                ops = <span class="built_in">append</span>(ops, multiplication)</span><br><span class="line">            &#125;</span><br><span class="line">            i++</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    n := <span class="built_in">len</span>(ops)</span><br><span class="line">    dp := <span class="built_in">make</span>([][][]<span class="type">int</span>, n)</span><br><span class="line">    <span class="keyword">for</span> i := <span class="keyword">range</span> dp &#123;</span><br><span class="line">        dp[i] = <span class="built_in">make</span>([][]<span class="type">int</span>, n)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">var</span> dfs <span class="function"><span class="keyword">func</span><span class="params">(<span class="type">int</span>, <span class="type">int</span>)</span></span> []<span class="type">int</span></span><br><span class="line">    dfs = <span class="function"><span class="keyword">func</span><span class="params">(l, r <span class="type">int</span>)</span></span> []<span class="type">int</span> &#123;</span><br><span class="line">        res := dp[l][r]</span><br><span class="line">        <span class="keyword">if</span> res != <span class="literal">nil</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> res</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> l == r &#123;</span><br><span class="line">            dp[l][r] = []<span class="type">int</span>&#123;ops[l]&#125;</span><br><span class="line">            <span class="keyword">return</span> dp[l][r]</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> i := l; i &lt; r; i += <span class="number">2</span> &#123;</span><br><span class="line">            left := dfs(l, i)</span><br><span class="line">            right := dfs(i+<span class="number">2</span>, r)</span><br><span class="line">            <span class="keyword">for</span> _, x := <span class="keyword">range</span> left &#123;</span><br><span class="line">                <span class="keyword">for</span> _, y := <span class="keyword">range</span> right &#123;</span><br><span class="line">                    <span class="keyword">if</span> ops[i+<span class="number">1</span>] == addition &#123;</span><br><span class="line">                        dp[l][r] = <span class="built_in">append</span>(dp[l][r], x+y)</span><br><span class="line">                    &#125; <span class="keyword">else</span> <span class="keyword">if</span> ops[i+<span class="number">1</span>] == subtraction &#123;</span><br><span class="line">                        dp[l][r] = <span class="built_in">append</span>(dp[l][r], x-y)</span><br><span class="line">                    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                        dp[l][r] = <span class="built_in">append</span>(dp[l][r], x*y)</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> dp[l][r]</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> dfs(<span class="number">0</span>, n<span class="number">-1</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><figcaption><span>[sol1-JavaScript]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="variable constant_">ADDITION</span> = -<span class="number">1</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="variable constant_">SUBTRACTION</span> = -<span class="number">2</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="variable constant_">MULTIPLICATION</span> = -<span class="number">3</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> diffWaysToCompute = <span class="keyword">function</span>(<span class="params">expression</span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> ops = [];</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; expression.<span class="property">length</span>;) &#123;</span><br><span class="line">        <span class="keyword">if</span> (!<span class="title function_">isDigit</span>(expression[i])) &#123;</span><br><span class="line">            <span class="keyword">if</span> (expression[i] === <span class="string">&#x27;+&#x27;</span>) &#123;</span><br><span class="line">                ops.<span class="title function_">push</span>(<span class="variable constant_">ADDITION</span>);</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (expression[i] === <span class="string">&#x27;-&#x27;</span>) &#123;</span><br><span class="line">                ops.<span class="title function_">push</span>(<span class="variable constant_">SUBTRACTION</span>);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                ops.<span class="title function_">push</span>(<span class="variable constant_">MULTIPLICATION</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            i++;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">let</span> t = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">while</span> (i &lt; expression.<span class="property">length</span> &amp;&amp; <span class="title function_">isDigit</span>(expression[i])) &#123;</span><br><span class="line">                t = t * <span class="number">10</span> + expression[i].<span class="title function_">charCodeAt</span>() - <span class="string">&#x27;0&#x27;</span>.<span class="title function_">charCodeAt</span>();</span><br><span class="line">                i++;</span><br><span class="line">            &#125;</span><br><span class="line">            ops.<span class="title function_">push</span>(t);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">const</span> dp = <span class="keyword">new</span> <span class="title class_">Array</span>(ops.<span class="property">length</span>).<span class="title function_">fill</span>(<span class="number">0</span>).<span class="title function_">map</span>(<span class="function">() =&gt;</span> <span class="keyword">new</span> <span class="title class_">Array</span>(ops.<span class="property">length</span>).<span class="title function_">fill</span>(<span class="number">0</span>));</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; ops.<span class="property">length</span>; i++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">let</span> j = <span class="number">0</span>; j &lt; ops.<span class="property">length</span>; j++) &#123;</span><br><span class="line">            dp[i][j] = [];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="title function_">dfs</span>(dp, <span class="number">0</span>, ops.<span class="property">length</span> - <span class="number">1</span>, ops);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">dfs</span> = (<span class="params">dp, l, r, ops</span>) =&gt; &#123;</span><br><span class="line">    <span class="keyword">if</span> (dp[l][r].<span class="property">length</span> === <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (l == r) &#123;</span><br><span class="line">            dp[l][r].<span class="title function_">push</span>(ops[l]);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">let</span> i = l; i &lt; r; i += <span class="number">2</span>) &#123;</span><br><span class="line">                <span class="keyword">const</span> left = <span class="title function_">dfs</span>(dp, l, i, ops);</span><br><span class="line">                <span class="keyword">const</span> right = <span class="title function_">dfs</span>(dp, i + <span class="number">2</span>, r, ops);</span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">const</span> lv <span class="keyword">of</span> left) &#123;</span><br><span class="line">                    <span class="keyword">for</span> (<span class="keyword">const</span> rv <span class="keyword">of</span> right) &#123;</span><br><span class="line">                        <span class="keyword">if</span> (ops[i + <span class="number">1</span>] === <span class="variable constant_">ADDITION</span>) &#123;</span><br><span class="line">                            dp[l][r].<span class="title function_">push</span>(lv + rv);</span><br><span class="line">                        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (ops[i + <span class="number">1</span>] === <span class="variable constant_">SUBTRACTION</span>) &#123;</span><br><span class="line">                            dp[l][r].<span class="title function_">push</span>(lv - rv);</span><br><span class="line">                        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                            dp[l][r].<span class="title function_">push</span>(lv * rv);</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> dp[l][r];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">isDigit</span> = (<span class="params">ch</span>) =&gt; &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">parseFloat</span>(ch).<span class="title function_">toString</span>() === <span class="string">&quot;NaN&quot;</span> ? <span class="literal">false</span> : <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>复杂度分析</strong></p>
+<ul>
+<li><p>时间复杂度：$O(2^n)$，其中 $n$ 为 $\textit{ops}$ 的大小。可以分析得到 $n$ 一定是奇数，令 $n &#x3D; 2k+1$，最后的答案集合大小等于 $C_k$，第 $k$ 个<a class="link"   target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E5%8D%A1%E7%89%B9%E5%85%B0%E6%95%B0/6125746" >卡特兰数（Catalan Number） <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>；以及 $\sum_{k&lt;\frac{n}{2}}C_k$（计算中间结果所涉及的复杂度）限制在 $O(2^n)$。这里不具体证明，感兴趣的读者可以自行研究。</p>
+</li>
+<li><p>空间复杂度：$O(2^n)$，其中 $n$ 为 $\textit{ops}$ 的大小。</p>
+</li>
+</ul>
+<h4 id="方法二：动态规划"><a href="#方法二：动态规划" class="headerlink" title="方法二：动态规划"></a>方法二：动态规划</h4><p><strong>思路与算法</strong></p>
+<p>我们同样可以用「动态规划」这种「自底向上」的方法来求解原始的表达式的全部可能计算结果。同样我们用 $\textit{dp}[l][r] &#x3D; {v_0,v_1,\ldots}$ 来表示对应表达式 $\textit{ops}[l:r]$ 在按不同优先级组合数字和运算符的操作下能产生的全部可能结果。此时边界情况就是当表达式不存在任何算符时，即 $l &#x3D; r$ 时，对应的结果集合中就只有一个数字。</p>
+<p>$$\textit{dp}[l][r] &#x3D; {\textit{ops}[l]} , l &#x3D; r \And \textit{ops}[l] \ge 0$$</p>
+<p><strong>代码</strong></p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><figcaption><span>[sol2-Python3]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">ADDITION = -<span class="number">1</span></span><br><span class="line">SUBTRACTION = -<span class="number">2</span></span><br><span class="line">MULTIPLICATION = -<span class="number">3</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">diffWaysToCompute</span>(<span class="params">self, expression: <span class="built_in">str</span></span>) -&gt; <span class="type">List</span>[<span class="built_in">int</span>]:</span><br><span class="line">        ops = []</span><br><span class="line">        i, n = <span class="number">0</span>, <span class="built_in">len</span>(expression)</span><br><span class="line">        <span class="keyword">while</span> i &lt; n:</span><br><span class="line">            <span class="keyword">if</span> expression[i].isdigit():</span><br><span class="line">                x = <span class="number">0</span></span><br><span class="line">                <span class="keyword">while</span> i &lt; n <span class="keyword">and</span> expression[i].isdigit():</span><br><span class="line">                    x = x * <span class="number">10</span> + <span class="built_in">int</span>(expression[i])</span><br><span class="line">                    i += <span class="number">1</span></span><br><span class="line">                ops.append(x)</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="keyword">if</span> expression[i] == <span class="string">&#x27;+&#x27;</span>:</span><br><span class="line">                    ops.append(ADDITION)</span><br><span class="line">                <span class="keyword">elif</span> expression[i] == <span class="string">&#x27;-&#x27;</span>:</span><br><span class="line">                    ops.append(SUBTRACTION)</span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    ops.append(MULTIPLICATION)</span><br><span class="line">                i += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">        n = <span class="built_in">len</span>(ops)</span><br><span class="line">        dp = [[[] <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(n)] <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(n)]</span><br><span class="line">        <span class="keyword">for</span> i, x <span class="keyword">in</span> <span class="built_in">enumerate</span>(ops):</span><br><span class="line">            dp[i][i] = [x]</span><br><span class="line">        <span class="keyword">for</span> sz <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">3</span>, n + <span class="number">1</span>):</span><br><span class="line">            <span class="keyword">for</span> r <span class="keyword">in</span> <span class="built_in">range</span>(sz - <span class="number">1</span>, n, <span class="number">2</span>):</span><br><span class="line">                l = r - sz + <span class="number">1</span></span><br><span class="line">                <span class="keyword">for</span> k <span class="keyword">in</span> <span class="built_in">range</span>(l + <span class="number">1</span>, r, <span class="number">2</span>):</span><br><span class="line">                    <span class="keyword">for</span> x <span class="keyword">in</span> dp[l][k - <span class="number">1</span>]:</span><br><span class="line">                        <span class="keyword">for</span> y <span class="keyword">in</span> dp[k + <span class="number">1</span>][r]:</span><br><span class="line">                            <span class="keyword">if</span> ops[k] == ADDITION:</span><br><span class="line">                                dp[l][r].append(x + y)</span><br><span class="line">                            <span class="keyword">elif</span> ops[k] == SUBTRACTION:</span><br><span class="line">                                dp[l][r].append(x - y)</span><br><span class="line">                            <span class="keyword">else</span>:</span><br><span class="line">                                dp[l][r].append(x * y)</span><br><span class="line">        <span class="keyword">return</span> dp[<span class="number">0</span>][-<span class="number">1</span>]</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="C++"><figure class="iseeu highlight c++"><figcaption><span>[sol2-C++]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="type">const</span> <span class="type">int</span> ADDITION = <span class="number">-1</span>;</span><br><span class="line">    <span class="type">const</span> <span class="type">int</span> SUBTRACTION = <span class="number">-2</span>;</span><br><span class="line">    <span class="type">const</span> <span class="type">int</span> MULTIPLICATION = <span class="number">-3</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">diffWaysToCompute</span><span class="params">(string expression)</span> </span>&#123;</span><br><span class="line">        vector&lt;<span class="type">int</span>&gt; ops;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; expression.<span class="built_in">size</span>();) &#123;</span><br><span class="line">            <span class="keyword">if</span> (!<span class="built_in">isdigit</span>(expression[i])) &#123;</span><br><span class="line">                <span class="keyword">if</span> (expression[i] == <span class="string">&#x27;+&#x27;</span>) &#123;</span><br><span class="line">                    ops.<span class="built_in">push_back</span>(ADDITION);</span><br><span class="line">                &#125; <span class="keyword">else</span> <span class="keyword">if</span> (expression[i] == <span class="string">&#x27;-&#x27;</span>) &#123;</span><br><span class="line">                    ops.<span class="built_in">push_back</span>(SUBTRACTION);</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    ops.<span class="built_in">push_back</span>(MULTIPLICATION);</span><br><span class="line">                &#125;</span><br><span class="line">                i++;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="type">int</span> t = <span class="number">0</span>;</span><br><span class="line">                <span class="keyword">while</span> (i &lt; expression.<span class="built_in">size</span>() &amp;&amp; <span class="built_in">isdigit</span>(expression[i])) &#123;</span><br><span class="line">                    t = t * <span class="number">10</span> + expression[i] - <span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">                    i++;</span><br><span class="line">                &#125;</span><br><span class="line">                ops.<span class="built_in">push_back</span>(t);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        vector&lt;vector&lt;vector&lt;<span class="type">int</span>&gt;&gt;&gt; <span class="built_in">dp</span>((<span class="type">int</span>) ops.<span class="built_in">size</span>(), vector&lt;vector&lt;<span class="type">int</span>&gt;&gt;((<span class="type">int</span>) ops.<span class="built_in">size</span>()));</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; ops.<span class="built_in">size</span>(); i += <span class="number">2</span>) &#123;</span><br><span class="line">            dp[i][i] = &#123;ops[i]&#125;;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">3</span>; i &lt;= ops.<span class="built_in">size</span>(); i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j + i &lt;= ops.<span class="built_in">size</span>(); j += <span class="number">2</span>) &#123;</span><br><span class="line">                <span class="type">int</span> l = j;</span><br><span class="line">                <span class="type">int</span> r = j + i - <span class="number">1</span>;</span><br><span class="line">                <span class="keyword">for</span> (<span class="type">int</span> k = j + <span class="number">1</span>; k &lt; r; k += <span class="number">2</span>) &#123;</span><br><span class="line">                    <span class="keyword">auto</span>&amp; left = dp[l][k - <span class="number">1</span>];</span><br><span class="line">                    <span class="keyword">auto</span>&amp; right = dp[k + <span class="number">1</span>][r];</span><br><span class="line">                    <span class="keyword">for</span> (<span class="keyword">auto</span>&amp; num1 : left) &#123;</span><br><span class="line">                        <span class="keyword">for</span> (<span class="keyword">auto</span>&amp; num2 : right) &#123;</span><br><span class="line">                            <span class="keyword">if</span> (ops[k] == ADDITION) &#123;</span><br><span class="line">                                dp[l][r].<span class="built_in">push_back</span>(num1 + num2);</span><br><span class="line">                            &#125;</span><br><span class="line">                            <span class="keyword">else</span> <span class="keyword">if</span> (ops[k] == SUBTRACTION) &#123;</span><br><span class="line">                                dp[l][r].<span class="built_in">push_back</span>(num1 - num2);</span><br><span class="line">                            &#125;</span><br><span class="line">                            <span class="keyword">else</span> <span class="keyword">if</span> (ops[k] == MULTIPLICATION) &#123;</span><br><span class="line">                                dp[l][r].<span class="built_in">push_back</span>(num1 * num2);</span><br><span class="line">                            &#125;</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> dp[<span class="number">0</span>][(<span class="type">int</span>) ops.<span class="built_in">size</span>() - <span class="number">1</span>];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><figcaption><span>[sol2-Java]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="variable">ADDITION</span> <span class="operator">=</span> -<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="variable">SUBTRACTION</span> <span class="operator">=</span> -<span class="number">2</span>;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="variable">MULTIPLICATION</span> <span class="operator">=</span> -<span class="number">3</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> List&lt;Integer&gt; <span class="title function_">diffWaysToCompute</span><span class="params">(String expression)</span> &#123;</span><br><span class="line">        List&lt;Integer&gt; ops = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;Integer&gt;();</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; expression.length();) &#123;</span><br><span class="line">            <span class="keyword">if</span> (!Character.isDigit(expression.charAt(i))) &#123;</span><br><span class="line">                <span class="keyword">if</span> (expression.charAt(i) == <span class="string">&#x27;+&#x27;</span>) &#123;</span><br><span class="line">                    ops.add(ADDITION);</span><br><span class="line">                &#125; <span class="keyword">else</span> <span class="keyword">if</span> (expression.charAt(i) == <span class="string">&#x27;-&#x27;</span>) &#123;</span><br><span class="line">                    ops.add(SUBTRACTION);</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    ops.add(MULTIPLICATION);</span><br><span class="line">                &#125;</span><br><span class="line">                i++;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="type">int</span> <span class="variable">t</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">                <span class="keyword">while</span> (i &lt; expression.length() &amp;&amp; Character.isDigit(expression.charAt(i))) &#123;</span><br><span class="line">                    t = t * <span class="number">10</span> + expression.charAt(i) - <span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">                    i++;</span><br><span class="line">                &#125;</span><br><span class="line">                ops.add(t);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        List&lt;Integer&gt;[][] dp = <span class="keyword">new</span> <span class="title class_">List</span>[ops.size()][ops.size()];</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; ops.size(); i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">j</span> <span class="operator">=</span> <span class="number">0</span>; j &lt; ops.size(); j++) &#123;</span><br><span class="line">                dp[i][j] = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;Integer&gt;();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; ops.size(); i += <span class="number">2</span>) &#123;</span><br><span class="line">            dp[i][i].add(ops.get(i));</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">3</span>; i &lt;= ops.size(); i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">j</span> <span class="operator">=</span> <span class="number">0</span>; j + i &lt;= ops.size(); j += <span class="number">2</span>) &#123;</span><br><span class="line">                <span class="type">int</span> <span class="variable">l</span> <span class="operator">=</span> j;</span><br><span class="line">                <span class="type">int</span> <span class="variable">r</span> <span class="operator">=</span> j + i - <span class="number">1</span>;</span><br><span class="line">                <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">k</span> <span class="operator">=</span> j + <span class="number">1</span>; k &lt; r; k += <span class="number">2</span>) &#123;</span><br><span class="line">                    List&lt;Integer&gt; left = dp[l][k - <span class="number">1</span>];</span><br><span class="line">                    List&lt;Integer&gt; right = dp[k + <span class="number">1</span>][r];</span><br><span class="line">                    <span class="keyword">for</span> (<span class="type">int</span> num1 : left) &#123;</span><br><span class="line">                        <span class="keyword">for</span> (<span class="type">int</span> num2 : right) &#123;</span><br><span class="line">                            <span class="keyword">if</span> (ops.get(k) == ADDITION) &#123;</span><br><span class="line">                                dp[l][r].add(num1 + num2);</span><br><span class="line">                            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (ops.get(k) == SUBTRACTION) &#123;</span><br><span class="line">                                dp[l][r].add(num1 - num2);</span><br><span class="line">                            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (ops.get(k) == MULTIPLICATION) &#123;</span><br><span class="line">                                dp[l][r].add(num1 * num2);</span><br><span class="line">                            &#125;</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> dp[<span class="number">0</span>][ops.size() - <span class="number">1</span>];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="C#"><figure class="iseeu highlight c#"><figcaption><span>[sol2-C#]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> <span class="built_in">int</span> ADDITION = <span class="number">-1</span>;</span><br><span class="line">    <span class="keyword">const</span> <span class="built_in">int</span> SUBTRACTION = <span class="number">-2</span>;</span><br><span class="line">    <span class="keyword">const</span> <span class="built_in">int</span> MULTIPLICATION = <span class="number">-3</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> IList&lt;<span class="built_in">int</span>&gt; <span class="title">DiffWaysToCompute</span>(<span class="params"><span class="built_in">string</span> expression</span>)</span> &#123;</span><br><span class="line">        IList&lt;<span class="built_in">int</span>&gt; ops = <span class="keyword">new</span> List&lt;<span class="built_in">int</span>&gt;();</span><br><span class="line">        <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; expression.Length;) &#123;</span><br><span class="line">            <span class="keyword">if</span> (!<span class="built_in">char</span>.IsDigit(expression[i])) &#123;</span><br><span class="line">                <span class="keyword">if</span> (expression[i] == <span class="string">&#x27;+&#x27;</span>) &#123;</span><br><span class="line">                    ops.Add(ADDITION);</span><br><span class="line">                &#125; <span class="keyword">else</span> <span class="keyword">if</span> (expression[i] == <span class="string">&#x27;-&#x27;</span>) &#123;</span><br><span class="line">                    ops.Add(SUBTRACTION);</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    ops.Add(MULTIPLICATION);</span><br><span class="line">                &#125;</span><br><span class="line">                i++;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="built_in">int</span> t = <span class="number">0</span>;</span><br><span class="line">                <span class="keyword">while</span> (i &lt; expression.Length &amp;&amp; <span class="built_in">char</span>.IsDigit(expression[i])) &#123;</span><br><span class="line">                    t = t * <span class="number">10</span> + expression[i] - <span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">                    i++;</span><br><span class="line">                &#125;</span><br><span class="line">                ops.Add(t);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        IList&lt;<span class="built_in">int</span>&gt;[][] dp = <span class="keyword">new</span> IList&lt;<span class="built_in">int</span>&gt;[ops.Count][];</span><br><span class="line">        <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; ops.Count; i++) &#123;</span><br><span class="line">            dp[i] = <span class="keyword">new</span> IList&lt;<span class="built_in">int</span>&gt;[ops.Count];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; ops.Count; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="built_in">int</span> j = <span class="number">0</span>; j &lt; ops.Count; j++) &#123;</span><br><span class="line">                dp[i][j] = <span class="keyword">new</span> List&lt;<span class="built_in">int</span>&gt;();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; ops.Count; i += <span class="number">2</span>) &#123;</span><br><span class="line">            dp[i][i].Add(ops[i]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">3</span>; i &lt;= ops.Count; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="built_in">int</span> j = <span class="number">0</span>; j + i &lt;= ops.Count; j += <span class="number">2</span>) &#123;</span><br><span class="line">                <span class="built_in">int</span> l = j;</span><br><span class="line">                <span class="built_in">int</span> r = j + i - <span class="number">1</span>;</span><br><span class="line">                <span class="keyword">for</span> (<span class="built_in">int</span> k = j + <span class="number">1</span>; k &lt; r; k += <span class="number">2</span>) &#123;</span><br><span class="line">                    IList&lt;<span class="built_in">int</span>&gt; left = dp[l][k - <span class="number">1</span>];</span><br><span class="line">                    IList&lt;<span class="built_in">int</span>&gt; right = dp[k + <span class="number">1</span>][r];</span><br><span class="line">                    <span class="keyword">foreach</span> (<span class="built_in">int</span> num1 <span class="keyword">in</span> left) &#123;</span><br><span class="line">                        <span class="keyword">foreach</span> (<span class="built_in">int</span> num2 <span class="keyword">in</span> right) &#123;</span><br><span class="line">                            <span class="keyword">if</span> (ops[k] == ADDITION) &#123;</span><br><span class="line">                                dp[l][r].Add(num1 + num2);</span><br><span class="line">                            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (ops[k] == SUBTRACTION) &#123;</span><br><span class="line">                                dp[l][r].Add(num1 - num2);</span><br><span class="line">                            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (ops[k] == MULTIPLICATION) &#123;</span><br><span class="line">                                dp[l][r].Add(num1 * num2);</span><br><span class="line">                            &#125;</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> dp[<span class="number">0</span>][ops.Count - <span class="number">1</span>];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="C"><figure class="iseeu highlight c"><figcaption><span>[sol2-C]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> ADDITION -1</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> SUBTRACTION -2</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> MULTIPLICATION -3</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span>* <span class="title function_">diffWaysToCompute</span><span class="params">(<span class="type">char</span> * expression, <span class="type">int</span>* returnSize)</span> &#123;</span><br><span class="line">    <span class="type">int</span> len = <span class="built_in">strlen</span>(expression);</span><br><span class="line">    <span class="type">int</span> *ops = (<span class="type">int</span> *)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="type">int</span>) * len);</span><br><span class="line">    <span class="type">int</span> opsSize = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; len;) &#123;</span><br><span class="line">        <span class="keyword">if</span> (!<span class="built_in">isdigit</span>(expression[i])) &#123;</span><br><span class="line">            <span class="keyword">if</span> (expression[i] == <span class="string">&#x27;+&#x27;</span>) &#123;</span><br><span class="line">                ops[opsSize++] = ADDITION;</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (expression[i] == <span class="string">&#x27;-&#x27;</span>) &#123;</span><br><span class="line">                ops[opsSize++] = SUBTRACTION;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                ops[opsSize++] = MULTIPLICATION;</span><br><span class="line">            &#125;</span><br><span class="line">            i++;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="type">int</span> t = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">while</span> (i &lt; len &amp;&amp; <span class="built_in">isdigit</span>(expression[i])) &#123;</span><br><span class="line">                t = t * <span class="number">10</span> + expression[i] - <span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">                i++;</span><br><span class="line">            &#125;</span><br><span class="line">            ops[opsSize++] = t;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span> ***<span class="title">dp</span> =</span> <span class="literal">NULL</span>;</span><br><span class="line">    dp = (<span class="keyword">struct</span> ListNode ***)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">struct</span> ListNode **) * opsSize);</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; opsSize; i++) &#123;</span><br><span class="line">        dp[i] = (<span class="keyword">struct</span> ListNode **)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">struct</span> ListNode *) * opsSize);</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt; opsSize; j++) &#123;</span><br><span class="line">            dp[i][j] = <span class="literal">NULL</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; opsSize; i += <span class="number">2</span>) &#123;</span><br><span class="line">        <span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span> *<span class="title">node</span> =</span> (<span class="keyword">struct</span> ListNode*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">struct</span> ListNode));</span><br><span class="line">        node-&gt;val = ops[i];</span><br><span class="line">        node-&gt;next = <span class="literal">NULL</span>;</span><br><span class="line">        dp[i][i] = node;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">3</span>; i &lt;= opsSize; i++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j + i &lt;= opsSize; j += <span class="number">2</span>) &#123;</span><br><span class="line">            <span class="type">int</span> l = j;</span><br><span class="line">            <span class="type">int</span> r = j + i - <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> k = j + <span class="number">1</span>; k &lt; r; k += <span class="number">2</span>) &#123;</span><br><span class="line">                <span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span> *<span class="title">left</span> =</span> dp[l][k - <span class="number">1</span>];</span><br><span class="line">                <span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span> *<span class="title">right</span> =</span> dp[k + <span class="number">1</span>][r];</span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">struct</span> ListNode *left = dp[l][k - <span class="number">1</span>]; left; left = left-&gt;next) &#123;</span><br><span class="line">                    <span class="keyword">for</span> (<span class="keyword">struct</span> ListNode *right = dp[k + <span class="number">1</span>][r]; right; right = right-&gt;next) &#123;</span><br><span class="line">                        <span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span> *<span class="title">node</span> =</span> (<span class="keyword">struct</span> ListNode *)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">struct</span> ListNode));</span><br><span class="line">                        <span class="keyword">if</span> (ops[k] == ADDITION) &#123;</span><br><span class="line">                            node-&gt;val = left-&gt;val + right-&gt;val;</span><br><span class="line">                        &#125;</span><br><span class="line">                        <span class="keyword">else</span> <span class="keyword">if</span> (ops[k] == SUBTRACTION) &#123;</span><br><span class="line">                            node-&gt;val = left-&gt;val - right-&gt;val;</span><br><span class="line">                        &#125;</span><br><span class="line">                        <span class="keyword">else</span> <span class="keyword">if</span> (ops[k] == MULTIPLICATION) &#123;</span><br><span class="line">                            node-&gt;val = left-&gt;val * right-&gt;val;</span><br><span class="line">                        &#125;</span><br><span class="line">                        node-&gt;next = dp[l][r];</span><br><span class="line">                        dp[l][r] = node;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="type">int</span> *ans = (<span class="type">int</span> *)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="type">int</span>) * (<span class="number">1</span> &lt;&lt; opsSize));</span><br><span class="line">    <span class="type">int</span> pos = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">struct</span> ListNode *node = dp[<span class="number">0</span>][opsSize - <span class="number">1</span>]; node; node = node-&gt;next) &#123;</span><br><span class="line">        ans[pos++] = node-&gt;val;</span><br><span class="line">    &#125;</span><br><span class="line">    *returnSize = pos;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; opsSize; i++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt; opsSize; j++) &#123;</span><br><span class="line">            <span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span> *<span class="title">curr</span>, *<span class="title">tmp</span>;</span></span><br><span class="line">            curr = dp[i][j];</span><br><span class="line">            <span class="keyword">while</span> (curr) &#123;</span><br><span class="line">                tmp = curr;</span><br><span class="line">                curr = curr-&gt;next;</span><br><span class="line">                <span class="built_in">free</span>(tmp);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">free</span>(dp[i]);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">free</span>(dp);</span><br><span class="line">    <span class="built_in">free</span>(ops);</span><br><span class="line">    <span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Go"><figure class="iseeu highlight go"><figcaption><span>[sol2-Golang]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> addition, subtraction, multiplication = <span class="number">-1</span>, <span class="number">-2</span>, <span class="number">-3</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">diffWaysToCompute</span><span class="params">(expression <span class="type">string</span>)</span></span> []<span class="type">int</span> &#123;</span><br><span class="line">    ops := []<span class="type">int</span>&#123;&#125;</span><br><span class="line">    <span class="keyword">for</span> i, n := <span class="number">0</span>, <span class="built_in">len</span>(expression); i &lt; n; &#123;</span><br><span class="line">        <span class="keyword">if</span> unicode.IsDigit(<span class="type">rune</span>(expression[i])) &#123;</span><br><span class="line">            x := <span class="number">0</span></span><br><span class="line">            <span class="keyword">for</span> ; i &lt; n &amp;&amp; unicode.IsDigit(<span class="type">rune</span>(expression[i])); i++ &#123;</span><br><span class="line">                x = x*<span class="number">10</span> + <span class="type">int</span>(expression[i]-<span class="string">&#x27;0&#x27;</span>)</span><br><span class="line">            &#125;</span><br><span class="line">            ops = <span class="built_in">append</span>(ops, x)</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> expression[i] == <span class="string">&#x27;+&#x27;</span> &#123;</span><br><span class="line">                ops = <span class="built_in">append</span>(ops, addition)</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> expression[i] == <span class="string">&#x27;-&#x27;</span> &#123;</span><br><span class="line">                ops = <span class="built_in">append</span>(ops, subtraction)</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                ops = <span class="built_in">append</span>(ops, multiplication)</span><br><span class="line">            &#125;</span><br><span class="line">            i++</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    n := <span class="built_in">len</span>(ops)</span><br><span class="line">    dp := <span class="built_in">make</span>([][][]<span class="type">int</span>, n)</span><br><span class="line">    <span class="keyword">for</span> i, x := <span class="keyword">range</span> ops &#123;</span><br><span class="line">        dp[i] = <span class="built_in">make</span>([][]<span class="type">int</span>, n)</span><br><span class="line">        dp[i][i] = []<span class="type">int</span>&#123;x&#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> sz := <span class="number">3</span>; sz &lt;= n; sz++ &#123;</span><br><span class="line">        <span class="keyword">for</span> l, r := <span class="number">0</span>, sz<span class="number">-1</span>; r &lt; n; l += <span class="number">2</span> &#123;</span><br><span class="line">            <span class="keyword">for</span> k := l + <span class="number">1</span>; k &lt; r; k += <span class="number">2</span> &#123;</span><br><span class="line">                <span class="keyword">for</span> _, x := <span class="keyword">range</span> dp[l][k<span class="number">-1</span>] &#123;</span><br><span class="line">                    <span class="keyword">for</span> _, y := <span class="keyword">range</span> dp[k+<span class="number">1</span>][r] &#123;</span><br><span class="line">                        <span class="keyword">if</span> ops[k] == addition &#123;</span><br><span class="line">                            dp[l][r] = <span class="built_in">append</span>(dp[l][r], x+y)</span><br><span class="line">                        &#125; <span class="keyword">else</span> <span class="keyword">if</span> ops[k] == subtraction &#123;</span><br><span class="line">                            dp[l][r] = <span class="built_in">append</span>(dp[l][r], x-y)</span><br><span class="line">                        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                            dp[l][r] = <span class="built_in">append</span>(dp[l][r], x*y)</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            r += <span class="number">2</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> dp[<span class="number">0</span>][n<span class="number">-1</span>]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><figcaption><span>[sol2-JavaScript]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> diffWaysToCompute = <span class="keyword">function</span>(<span class="params">expression</span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> <span class="variable constant_">ADDITION</span> = -<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">const</span> <span class="variable constant_">SUBTRACTION</span> = -<span class="number">2</span>;</span><br><span class="line">    <span class="keyword">const</span> <span class="variable constant_">MULTIPLICATION</span> = -<span class="number">3</span>;</span><br><span class="line">    <span class="keyword">const</span> ops = [];</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; expression.<span class="property">length</span>;) &#123;</span><br><span class="line">        <span class="keyword">if</span> (!<span class="title function_">isDigit</span>(expression[i])) &#123;</span><br><span class="line">            <span class="keyword">if</span> (expression[i] === <span class="string">&#x27;+&#x27;</span>) &#123;</span><br><span class="line">                ops.<span class="title function_">push</span>(<span class="variable constant_">ADDITION</span>);</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (expression[i] === <span class="string">&#x27;-&#x27;</span>) &#123;</span><br><span class="line">                ops.<span class="title function_">push</span>(<span class="variable constant_">SUBTRACTION</span>);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                ops.<span class="title function_">push</span>(<span class="variable constant_">MULTIPLICATION</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            i++;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">let</span> t = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">while</span> (i &lt; expression.<span class="property">length</span> &amp;&amp; <span class="title function_">isDigit</span>(expression[i])) &#123;</span><br><span class="line">                t = t * <span class="number">10</span> + expression[i].<span class="title function_">charCodeAt</span>() - <span class="string">&#x27;0&#x27;</span>.<span class="title function_">charCodeAt</span>();</span><br><span class="line">                i++;</span><br><span class="line">            &#125;</span><br><span class="line">            ops.<span class="title function_">push</span>(t);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">const</span> dp = <span class="keyword">new</span> <span class="title class_">Array</span>(ops.<span class="property">length</span>).<span class="title function_">fill</span>(<span class="number">0</span>).<span class="title function_">map</span>(<span class="function">() =&gt;</span> <span class="keyword">new</span> <span class="title class_">Array</span>(ops.<span class="property">length</span>).<span class="title function_">fill</span>(<span class="number">0</span>));</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; ops.<span class="property">length</span>; i++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">let</span> j = <span class="number">0</span>; j &lt; ops.<span class="property">length</span>; j++) &#123;</span><br><span class="line">            dp[i][j] = [];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; ops.<span class="property">length</span>; i += <span class="number">2</span>) &#123;</span><br><span class="line">        dp[i][i].<span class="title function_">push</span>(ops[i]);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">3</span>; i &lt;= ops.<span class="property">length</span>; i++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">let</span> j = <span class="number">0</span>; j + i &lt;= ops.<span class="property">length</span>; j += <span class="number">2</span>) &#123;</span><br><span class="line">            <span class="keyword">let</span> l = j;</span><br><span class="line">            <span class="keyword">let</span> r = j + i - <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">let</span> k = j + <span class="number">1</span>; k &lt; r; k += <span class="number">2</span>) &#123;</span><br><span class="line">                <span class="keyword">const</span> left = dp[l][k - <span class="number">1</span>];</span><br><span class="line">                <span class="keyword">const</span> right = dp[k + <span class="number">1</span>][r];</span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">const</span> num1 <span class="keyword">of</span> left) &#123;</span><br><span class="line">                    <span class="keyword">for</span> (<span class="keyword">const</span> num2 <span class="keyword">of</span> right) &#123;</span><br><span class="line">                        <span class="keyword">if</span> (ops[k] === <span class="variable constant_">ADDITION</span>) &#123;</span><br><span class="line">                            dp[l][r].<span class="title function_">push</span>(num1 + num2);</span><br><span class="line">                        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (ops[k] === <span class="variable constant_">SUBTRACTION</span>) &#123;</span><br><span class="line">                            dp[l][r].<span class="title function_">push</span>(num1 - num2);</span><br><span class="line">                        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (ops[k] === <span class="variable constant_">MULTIPLICATION</span>) &#123;</span><br><span class="line">                            dp[l][r].<span class="title function_">push</span>(num1 * num2);</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> dp[<span class="number">0</span>][ops.<span class="property">length</span> - <span class="number">1</span>];</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">isDigit</span> = (<span class="params">ch</span>) =&gt; &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">parseFloat</span>(ch).<span class="title function_">toString</span>() === <span class="string">&quot;NaN&quot;</span> ? <span class="literal">false</span> : <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>复杂度分析</strong></p>
+<ul>
+<li><p>时间复杂度：$O(2^n)$，其中 $n$ 为 $\textit{ops}$ 的大小。分析同方法一的「记忆化搜索」。</p>
+</li>
+<li><p>空间复杂度：$O(2^n)$，其中 $n$ 为 $\textit{ops}$ 的大小。</p>
+</li>
+</ul>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <!--<div class="article-copyright-info-container">-->
+    <!--&lt;!&ndash;<ul>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><strong>Title:</strong> 0241-为运算表达式设计优先级</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><strong>Author:</strong> Raphael Liu</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><strong>Created at&ndash;&gt;-->
+                <!--&lt;!&ndash;:</strong> 2023-09-13 00:47:26</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;&ndash;&gt;-->
+            <!--&lt;!&ndash;<li>&ndash;&gt;-->
+                <!--&lt;!&ndash;<strong>Updated at&ndash;&gt;-->
+                    <!--&lt;!&ndash;:</strong> 2023-09-13 10:44:31&ndash;&gt;-->
+            <!--&lt;!&ndash;</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;<li>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;<strong>Link:</strong> https://fida.ltd/2023/09/13/0241-为运算表达式设计优先级/&ndash;&gt;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;</li>&ndash;&gt;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;<li>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;<strong>&ndash;&gt;&ndash;&gt;-->
+                <!--&lt;!&ndash;&lt;!&ndash;License:&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;</strong>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0</a>.&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;&ndash;&gt;&ndash;&gt;-->
+
+        <!--&lt;!&ndash;&lt;!&ndash;</li>&ndash;&gt;&ndash;&gt;-->
+    <!--&lt;!&ndash;</ul>&ndash;&gt;-->
+<!--</div>-->
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box">
+                
+                    <li class="tag-item">
+                        <a href="/tags/algorithm/">#algorithm</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item">
+                        <a href="/tags/MEDIUM/">#MEDIUM</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                        rel="prev"
+                        href="/2023/09/13/0240-%E6%90%9C%E7%B4%A2%E4%BA%8C%E7%BB%B4%E7%9F%A9%E9%98%B5%20II/"
+                        >
+                            <span class="left arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">0240-搜索二维矩阵 II</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                        rel="next"
+                        href="/2023/09/13/0242-%E6%9C%89%E6%95%88%E7%9A%84%E5%AD%97%E6%AF%8D%E5%BC%82%E4%BD%8D%E8%AF%8D/"
+                        >
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">0242-有效的字母异位词</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+
+        
+            <div class="comment-container">
+                <div class="comments-container pjax">
+    <div id="comment-anchor"></div>
+    <div class="comment-area-title">
+        <i class="fa-solid fa-comments"></i>&nbsp;Comments
+    </div>
+    
+
+        
+            
+ 
+    <div id="waline"></div>
+    <script type="module"  data-swup-reload-script>
+        import { init } from 'https://evan.beee.top/js/waline.mjs';
+
+        function loadWaline() {
+            init({
+                el: '#waline',
+                serverURL: 'https://example.example.com',
+                lang: 'zh-CN',
+                dark: 'body[class~="dark-mode"]',
+                requiredMeta: ['nick','mail'], // cannot customize by theme config, change it yourself
+            });
+        }
+
+        if ('true') {
+            const loadWalineTimeout = setTimeout(() => {
+                loadWaline();
+                clearTimeout(loadWalineTimeout);
+            }, 1000);
+        } else {
+            window.addEventListener('DOMContentLoaded', loadWaline);
+        }
+        
+    </script>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+
+    
+        <div class="toc-content-container">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">On this page</div>
+        <div class="page-title">0241-为运算表达式设计优先级</div>
+        
+
+    </div>
+</div>
+        </div>
+    
+</div>
+
+
+
+                
+
+            </div>
+
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2022</span>
+              -
+            
+            2023&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">Raphael Liu</a>
+        </div>
+        
+            <script data-swup-reload-script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">UV:</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">PV:</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <!--<div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">-->
+            <!--<span class="lg:block text-sm">powered_by</span>-->
+            <!--&lt;!&ndash;<span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.4.4</a></span>&ndash;&gt;-->
+        <!--</div>-->
+        
+        <!---->
+            <!--<div>-->
+                <!--runtime <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hours <span class="odometer" id="runtime_minutes"></span> minutes <span class="odometer" id="runtime_seconds"></span> seconds-->
+            <!--</div>-->
+        <!---->
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fa-regular fa-comments"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-expand-width flex justify-center items-center">
+            <i class="fa-regular fa-expand"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fa-solid fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa-solid fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa-solid fa-spinner fa-spin-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+    
+<script src="/js/libs/Swup.min.js"></script>
+
+<script src="/js/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/libs/SwupScrollPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+        ],
+        containers: ["#swup"],
+    });
+
+    swup.hooks.on("page:view", () => {
+        Global.refresh();
+    });
+
+    // if (document.readyState === "complete") {
+    //
+    // } else {
+    //     document.addEventListener("DOMContentLoaded", () => init());
+    // }
+</script>
+
+
+
+
+
+
+<script src="/js/utils.js" type="module"></script>
+
+<script src="/js/main.js" type="module"></script>
+
+<script src="/js/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/layouts/categoryList.js" type="module"></script>
+
+
+
+    
+<script src="/js/tools/localSearch.js"></script>
+
+
+
+
+    
+<script src="/js/tools/codeBlock.js"></script>
+
+
+
+
+    
+<script src="/js/layouts/lazyload.js"></script>
+
+
+
+
+    
+<script src="/js/tools/runtime.js"></script>
+
+    
+<script src="/js/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/libs/Typed.min.js"></script>
+
+  
+<script src="/js/plugins/typed.js"></script>
+
+
+
+
+
+
+
+<div class="post-scripts" data-swup-reload-script>
+    
+        
+<script src="/js/libs/anime.min.js"></script>
+
+        
+<script src="/js/tools/tocToggle.js" type="module"></script>
+
+<script src="/js/layouts/toc.js" type="module"></script>
+
+<script src="/js/plugins/tabs.js" type="module"></script>
+
+    
+</div>
+
+
+</body>
+</html>

@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="Raphael Liu">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/2023/09/13/2577-在网格图中访问一个格子的最少时间/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="给你一个 m x n 的矩阵 grid ，每个元素都为 非负  整数，其中 grid[row][col] 表示可以访问格子 (row, col) 的  最早  时间。也就是说当你访问格子 (row, col) 时，最少已经经过的时间为 grid[row][col] 。 你从 最左上角  出发，出发时刻为 0 ，你必须一直移动到上下左右相邻四个格子中的 任意一个格子（即不能停留在格子上）。每次移动都">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2577-在网格图中访问一个格子的最少时间">
+<meta property="og:url" content="http://example.com/2023/09/13/2577-%E5%9C%A8%E7%BD%91%E6%A0%BC%E5%9B%BE%E4%B8%AD%E8%AE%BF%E9%97%AE%E4%B8%80%E4%B8%AA%E6%A0%BC%E5%AD%90%E7%9A%84%E6%9C%80%E5%B0%91%E6%97%B6%E9%97%B4/index.html">
+<meta property="og:site_name" content="Raphael&#39;s Blog">
+<meta property="og:description" content="给你一个 m x n 的矩阵 grid ，每个元素都为 非负  整数，其中 grid[row][col] 表示可以访问格子 (row, col) 的  最早  时间。也就是说当你访问格子 (row, col) 时，最少已经经过的时间为 grid[row][col] 。 你从 最左上角  出发，出发时刻为 0 ，你必须一直移动到上下左右相邻四个格子中的 任意一个格子（即不能停留在格子上）。每次移动都">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://assets.leetcode.com/uploads/2023/02/14/yetgriddrawio-8.png">
+<meta property="og:image" content="https://assets.leetcode.com/uploads/2023/02/14/yetgriddrawio-9.png">
+<meta property="article:published_time" content="2023-09-12T16:47:26.000Z">
+<meta property="article:modified_time" content="2023-09-13T09:01:06.474Z">
+<meta property="article:author" content="Raphael Liu">
+<meta property="article:tag" content="algorithm">
+<meta property="article:tag" content="HARD">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://assets.leetcode.com/uploads/2023/02/14/yetgriddrawio-8.png">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/redefine-favicon.svg" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/redefine-favicon.svg">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/redefine-favicon.svg">
+    <!--- Page Info-->
+    
+    <title>
+        
+            2577-在网格图中访问一个格子的最少时间 -
+        
+        Raphael&#39;s Blog
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/css/build/styles.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/fonts.css">
+
+    
+<link rel="stylesheet" href="/fonts/Satoshi/satoshi.css">
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+
+    <!--- Inject Part-->
+    
+    <script id="hexo-configurations">
+    let Global = window.Global || {};
+    Global.hexo_config = {"hostname":"example.com","root":"/","language":"zh_CN"};
+    Global.theme_config = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":true,"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"open_graph":true,"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-wqery6-light.webp","dark":"/images/wallhaven-wqery6-dark.webp"},"title":"Raphael's Blog","subtitle":{"text":["格物致知","坚持做正确的事情"],"hitokoto":{"enable":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":false,"links":{"github":"https://github.com/raphael-liu","email":"raphael@buaa.edu.cn# your email"},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.4.4","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"links":{"首页":{"path":"/","icon":"fa-regular fa-house"},"文章":{"path":"/archives","icon":"fa-regular fa-archive"},"关于":{"icon":"fa-regular fa-user","submenus":{"我":"/about/me","Github":"https://github.com/raphael-liu"}}},"search":{"enable":true,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"links":null},"article_date_format":"auto","categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}},"footerStart":"2022/8/17 11:45:14"};
+    Global.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    Global.data_config = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="swup-progress-icon">
+            <i class="fa-solid fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container" id="swup">
+
+    
+
+    <div class="main-content-container">
+
+
+        <div class="main-content-header">
+            <header class="navbar-container">
+    
+    <div class="navbar-content">
+        <div class="left">
+            
+            <a class="logo-title" href="http://example.com/">
+                
+                Raphael&#39;s Blog
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/"  >
+                                    
+                                        
+                                            <i class="fa-regular fa-house"></i>
+                                        
+                                        首页
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/archives"  >
+                                    
+                                        
+                                            <i class="fa-regular fa-archive"></i>
+                                        
+                                        文章
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="has-dropdown" 
+                                    href="#" onClick="return false;">
+                                    
+                                        
+                                            <i class="fa-regular fa-user"></i>
+                                        
+                                        关于&nbsp;<i class="fa-solid fa-chevron-down"></i>
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                                    <ul class="sub-menu">
+                                    
+                                        <li>
+                                        <a href="/about/me">我
+                                        </a>
+                                        </li>
+                                    
+                                        <li>
+                                        <a target="_blank" rel="noopener" href="https://github.com/raphael-liu">GITHUB
+                                        </a>
+                                        </li>
+                                    
+                                    </ul>
+                                
+                            </li>
+                    
+                    
+                        <li class="navbar-item search search-popup-trigger">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fa-solid fa-magnifying-glass"></i></div>
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile drawer -->
+    <div class="navbar-drawer w-full absolute top-0 left-0 bg-background-color">
+        <ul class="drawer-navbar-list flex flex-col justify-start items-center">
+            
+                
+                    <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group " 
+                        href="/"  >
+                             
+                                
+                                    <i class="fa-regular fa-house"></i>
+                                
+                                首页
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+                
+                    <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group " 
+                        href="/archives"  >
+                             
+                                
+                                    <i class="fa-regular fa-archive"></i>
+                                
+                                文章
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+                
+                    <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group has-dropdown" 
+                        href="#" onClick="return false;">
+                            
+                                
+                                    <i class="fa-regular fa-user"></i>
+                                
+                                关于&nbsp;<i class="group-hover:rotate-180 transition-transform fa-solid fa-chevron-down"></i>
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                              
+                        
+                            <li class="text-base flex justify-center items-center hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                <a class="py-0.5" href="/about/me">我</a>
+                            </li>
+                        
+                            <li class="text-base flex justify-center items-center hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                <a class="py-0.5" target="_blank" rel="noopener" href="https://github.com/raphael-liu">GITHUB</a>
+                            </li>
+                        
+                    
+            
+
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="post-page-container">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            
+                <h1 class="article-title-regular">2577-在网格图中访问一个格子的最少时间</h1>
+            
+            </div>
+            
+                    
+        
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">Raphael Liu</span>
+                        
+                            <span class="author-label">Lv10</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2023-09-13 00:47:26</span>
+        <span class="mobile">2023-09-13 00:47:26</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2023-09-13 17:01:06</span>
+            <span class="mobile">2023-09-13 17:01:06</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/algorithm/">algorithm</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/HARD/">HARD</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        
+
+
+        <div class="article-content markdown-body">
+            <p>给你一个 <code>m x n</code> 的矩阵 <code>grid</code> ，每个元素都为 <strong>非负</strong>  整数，其中 <code>grid[row][col]</code> 表示可以访问格子 <code>(row, col)</code> 的  <strong>最早</strong>  时间。也就是说当你访问格子 <code>(row, col)</code> 时，最少已经经过的时间为 <code>grid[row][col]</code> 。</p>
+<p>你从 <strong>最左上角</strong>  出发，出发时刻为 <code>0</code> ，你必须一直移动到上下左右相邻四个格子中的 <strong>任意</strong><br>一个格子（即不能停留在格子上）。每次移动都需要花费 1 单位时间。</p>
+<p>请你返回 <strong>最早</strong>  到达右下角格子的时间，如果你无法到达右下角的格子，请你返回 <code>-1</code> 。</p>
+<p><strong>示例 1：</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://assets.leetcode.com/uploads/2023/02/14/yetgriddrawio-8.png"
+                     
+                ></p>
+<pre><code>**输入：** grid = [[0,1,3,2],[5,1,2,5],[4,3,8,6]]
+**输出：** 7
+**解释：** 一条可行的路径为：
+- 时刻 t = 0 ，我们在格子 (0,0) 。
+- 时刻 t = 1 ，我们移动到格子 (0,1) ，可以移动的原因是 grid[0][1] &lt;= 1 。
+- 时刻 t = 2 ，我们移动到格子 (1,1) ，可以移动的原因是 grid[1][1] &lt;= 2 。
+- 时刻 t = 3 ，我们移动到格子 (1,2) ，可以移动的原因是 grid[1][2] &lt;= 3 。
+- 时刻 t = 4 ，我们移动到格子 (1,1) ，可以移动的原因是 grid[1][1] &lt;= 4 。
+- 时刻 t = 5 ，我们移动到格子 (1,2) ，可以移动的原因是 grid[1][2] &lt;= 5 。
+- 时刻 t = 6 ，我们移动到格子 (1,3) ，可以移动的原因是 grid[1][3] &lt;= 6 。
+- 时刻 t = 7 ，我们移动到格子 (2,3) ，可以移动的原因是 grid[2][3] &lt;= 7 。
+最终到达时刻为 7 。这是最早可以到达的时间。
+</code></pre>
+<p><strong>示例 2：</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://assets.leetcode.com/uploads/2023/02/14/yetgriddrawio-9.png"
+                     
+                ></p>
+<pre><code>**输入：** grid = [[0,2,4],[3,2,1],[1,0,4]]
+**输出：** -1
+**解释：** 没法从左上角按题目规定走到右下角。
+</code></pre>
+<p><strong>提示：</strong></p>
+<ul>
+<li><code>m == grid.length</code></li>
+<li><code>n == grid[i].length</code></li>
+<li><code>2 &lt;= m, n &lt;= 1000</code></li>
+<li><code>4 &lt;= m * n &lt;= 105</code></li>
+<li><code>0 &lt;= grid[i][j] &lt;= 105</code></li>
+<li><code>grid[0][0] == 0</code></li>
+</ul>
+<h1 id="方法一：Dijkstra-算法"><a href="#方法一：Dijkstra-算法" class="headerlink" title="方法一：Dijkstra 算法"></a>方法一：Dijkstra 算法</h1><h3 id="前置知识：Dijkstra-算法"><a href="#前置知识：Dijkstra-算法" class="headerlink" title="前置知识：Dijkstra 算法"></a>前置知识：Dijkstra 算法</h3><p>见本题 <a class="link"   target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1wj411G7sH/" >视频讲解 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>。</p>
+<h3 id="提示-1"><a href="#提示-1" class="headerlink" title="提示 1"></a>提示 1</h3><p>如果 grid}[0][1]\le 1 或者 grid}[1][0]\le 1，那么可以通过「反复横跳」来「等待」。否则根本就无法移动到这两个格子，也就无法到达终点，返回 -1。</p>
+<p>通过反复横跳，出发时间可以为 0,2,4,\cdots 这些偶数。</p>
+<h3 id="提示-2"><a href="#提示-2" class="headerlink" title="提示 2"></a>提示 2</h3><p>定义 dis}[i][j] 为到达 (i,j) 的最小时间，那么 dis}[0][0]&#x3D;0，答案为 dis}[m-1][n-1]。</p>
+<p>如果没有别的约束，那么每条边的边权可以视作 1，跑 Dijkstra 算法就可以算出答案。</p>
+<p>根据题意，dis}[i][j] 需要至少为 grid}[i][j]；且根据网格图的性质，在可以反复横跳的情况下，到达一个格子的时间的奇偶性是不变的，那么 dis}[i][j] 应当与 i+j 的奇偶性相同。</p>
+<blockquote>
+<p>证明：想象成国际象棋的棋盘（两种颜色），每走一步，颜色一定会改变，所以走了偶数步之后一定会落在相同颜色的格子上，奇数步会落在另一个颜色的格子上。这些颜色相同的格子的奇偶性是相同的，可以用坐标之和的奇偶性表示。</p>
+</blockquote>
+<p>算上这两个约束，才能计算出正确的结果。</p>
+<div class="highlight-container" data-rel="Py"><figure class="iseeu highlight py"><figcaption><span>[sol2-Python3]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">minimumTime</span>(<span class="params">self, grid: <span class="type">List</span>[<span class="type">List</span>[<span class="built_in">int</span>]]</span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        m, n = <span class="built_in">len</span>(grid), <span class="built_in">len</span>(grid[<span class="number">0</span>])</span><br><span class="line">        <span class="keyword">if</span> grid[<span class="number">0</span>][<span class="number">1</span>] &gt; <span class="number">1</span> <span class="keyword">and</span> grid[<span class="number">1</span>][<span class="number">0</span>] &gt; <span class="number">1</span>:  <span class="comment"># 无法「等待」</span></span><br><span class="line">            <span class="keyword">return</span> -<span class="number">1</span></span><br><span class="line"></span><br><span class="line">        dis = [[inf] * n <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(m)]</span><br><span class="line">        dis[<span class="number">0</span>][<span class="number">0</span>] = <span class="number">0</span></span><br><span class="line">        h = [(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>)]</span><br><span class="line">        <span class="keyword">while</span> <span class="literal">True</span>:  <span class="comment"># 可以等待，就一定可以到达终点</span></span><br><span class="line">            d, i, j = heappop(h)</span><br><span class="line">            <span class="keyword">if</span> d &gt; dis[i][j]: <span class="keyword">continue</span></span><br><span class="line">            <span class="keyword">if</span> i == m - <span class="number">1</span> <span class="keyword">and</span> j == n - <span class="number">1</span>:  <span class="comment"># 找到终点，此时 d 一定是最短路</span></span><br><span class="line">                <span class="keyword">return</span> d</span><br><span class="line">            <span class="keyword">for</span> x, y <span class="keyword">in</span> (i + <span class="number">1</span>, j), (i - <span class="number">1</span>, j), (i, j + <span class="number">1</span>), (i, j - <span class="number">1</span>):  <span class="comment"># 枚举周围四个格子</span></span><br><span class="line">                <span class="keyword">if</span> <span class="number">0</span> &lt;= x &lt; m <span class="keyword">and</span> <span class="number">0</span> &lt;= y &lt; n:</span><br><span class="line">                    nd = <span class="built_in">max</span>(d + <span class="number">1</span>, grid[x][y])</span><br><span class="line">                    nd += (nd - x - y) % <span class="number">2</span>  <span class="comment"># nd 必须和 x+y 同奇偶</span></span><br><span class="line">                    <span class="keyword">if</span> nd &lt; dis[x][y]:</span><br><span class="line">                        dis[x][y] = nd  <span class="comment"># 更新最短路</span></span><br><span class="line">                        heappush(h, (nd, x, y))</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><figcaption><span>[sol2-Java]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">static</span> <span class="type">int</span>[][] DIRS = &#123; &#123;-<span class="number">1</span>, <span class="number">0</span>&#125;, &#123;<span class="number">1</span>, <span class="number">0</span>&#125;, &#123;<span class="number">0</span>, -<span class="number">1</span>&#125;, &#123;<span class="number">0</span>, <span class="number">1</span>&#125; &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">minimumTime</span><span class="params">(<span class="type">int</span>[][] grid)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">m</span> <span class="operator">=</span> grid.length, n = grid[<span class="number">0</span>].length;</span><br><span class="line">        <span class="keyword">if</span> (grid[<span class="number">0</span>][<span class="number">1</span>] &gt; <span class="number">1</span> &amp;&amp; grid[<span class="number">1</span>][<span class="number">0</span>] &gt; <span class="number">1</span>) <span class="comment">// 无法「等待」</span></span><br><span class="line">            <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">        <span class="type">var</span> <span class="variable">dis</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">int</span>[m][n];</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; m; ++i)</span><br><span class="line">            Arrays.fill(dis[i], Integer.MAX_VALUE);</span><br><span class="line">        dis[<span class="number">0</span>][<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">        <span class="type">var</span> <span class="variable">pq</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">PriorityQueue</span>&lt;<span class="type">int</span>[]&gt;((a, b) -&gt; a[<span class="number">0</span>] - b[<span class="number">0</span>]);</span><br><span class="line">        pq.add(<span class="keyword">new</span> <span class="title class_">int</span>[]&#123;<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>&#125;);</span><br><span class="line">        <span class="keyword">for</span> (;;) &#123; <span class="comment">// 可以等待，就一定可以到达终点</span></span><br><span class="line">            <span class="type">var</span> <span class="variable">p</span> <span class="operator">=</span> pq.poll();</span><br><span class="line">            <span class="type">int</span> <span class="variable">d</span> <span class="operator">=</span> p[<span class="number">0</span>], i = p[<span class="number">1</span>], j = p[<span class="number">2</span>];</span><br><span class="line">            <span class="keyword">if</span> (d &gt; dis[i][j]) <span class="keyword">continue</span>;</span><br><span class="line">            <span class="keyword">if</span> (i == m - <span class="number">1</span> &amp;&amp; j == n - <span class="number">1</span>) <span class="comment">// 找到终点，此时 d 一定是最短路</span></span><br><span class="line">                <span class="keyword">return</span> d;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">var</span> q : DIRS) &#123; <span class="comment">// 枚举周围四个格子</span></span><br><span class="line">                <span class="type">int</span> <span class="variable">x</span> <span class="operator">=</span> i + q[<span class="number">0</span>], y = j + q[<span class="number">1</span>];</span><br><span class="line">                <span class="keyword">if</span> (<span class="number">0</span> &lt;= x &amp;&amp; x &lt; m &amp;&amp; <span class="number">0</span> &lt;= y &amp;&amp; y &lt; n) &#123;</span><br><span class="line">                    <span class="type">int</span> <span class="variable">nd</span> <span class="operator">=</span> Math.max(d + <span class="number">1</span>, grid[x][y]);</span><br><span class="line">                    nd += (nd - x - y) % <span class="number">2</span>; <span class="comment">// nd 必须和 x+y 同奇偶</span></span><br><span class="line">                    <span class="keyword">if</span> (nd &lt; dis[x][y]) &#123;</span><br><span class="line">                        dis[x][y] = nd; <span class="comment">// 更新最短路</span></span><br><span class="line">                        pq.add(<span class="keyword">new</span> <span class="title class_">int</span>[]&#123;nd, x, y&#125;);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Cpp"><figure class="iseeu highlight cpp"><figcaption><span>[sol2-C++]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="type">static</span> <span class="keyword">constexpr</span> <span class="type">int</span> dirs[<span class="number">4</span>][<span class="number">2</span>] = &#123; &#123;<span class="number">-1</span>, <span class="number">0</span>&#125;, &#123;<span class="number">1</span>, <span class="number">0</span>&#125;, &#123;<span class="number">0</span>, <span class="number">-1</span>&#125;, &#123;<span class="number">0</span>, <span class="number">1</span>&#125; &#125;;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">minimumTime</span><span class="params">(vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; &amp;grid)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> m = grid.<span class="built_in">size</span>(), n = grid[<span class="number">0</span>].<span class="built_in">size</span>();</span><br><span class="line">        <span class="keyword">if</span> (grid[<span class="number">0</span>][<span class="number">1</span>] &gt; <span class="number">1</span> &amp;&amp; grid[<span class="number">1</span>][<span class="number">0</span>] &gt; <span class="number">1</span>) <span class="comment">// 无法「等待」</span></span><br><span class="line">            <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line"></span><br><span class="line">        <span class="type">int</span> dis[m][n];</span><br><span class="line">        <span class="built_in">memset</span>(dis, <span class="number">0x3f</span>, <span class="built_in">sizeof</span>(dis));</span><br><span class="line">        dis[<span class="number">0</span>][<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">        priority_queue&lt;tuple&lt;<span class="type">int</span>, <span class="type">int</span>, <span class="type">int</span>&gt;, vector&lt;tuple&lt;<span class="type">int</span>, <span class="type">int</span>, <span class="type">int</span>&gt;&gt;, greater&lt;&gt;&gt; pq;</span><br><span class="line">        pq.<span class="built_in">emplace</span>(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">        <span class="keyword">for</span> (;;) &#123; <span class="comment">// 可以等待，就一定可以到达终点</span></span><br><span class="line">            <span class="keyword">auto</span>[d, i, j] = pq.<span class="built_in">top</span>();</span><br><span class="line">            pq.<span class="built_in">pop</span>();</span><br><span class="line">            <span class="keyword">if</span> (d &gt; dis[i][j]) <span class="keyword">continue</span>;</span><br><span class="line">            <span class="keyword">if</span> (i == m - <span class="number">1</span> &amp;&amp; j == n - <span class="number">1</span>) <span class="comment">// 找到终点，此时 d 一定是最短路</span></span><br><span class="line">                <span class="keyword">return</span> d;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">auto</span> &amp;q : dirs) &#123; <span class="comment">// 枚举周围四个格子</span></span><br><span class="line">                <span class="type">int</span> x = i + q[<span class="number">0</span>], y = j + q[<span class="number">1</span>];</span><br><span class="line">                <span class="keyword">if</span> (<span class="number">0</span> &lt;= x &amp;&amp; x &lt; m &amp;&amp; <span class="number">0</span> &lt;= y &amp;&amp; y &lt; n) &#123;</span><br><span class="line">                    <span class="type">int</span> nd = <span class="built_in">max</span>(d + <span class="number">1</span>, grid[x][y]);</span><br><span class="line">                    nd += (nd - x - y) % <span class="number">2</span>; <span class="comment">// nd 必须和 x+y 同奇偶</span></span><br><span class="line">                    <span class="keyword">if</span> (nd &lt; dis[x][y]) &#123;</span><br><span class="line">                        dis[x][y] = nd; <span class="comment">// 更新最短路</span></span><br><span class="line">                        pq.<span class="built_in">emplace</span>(nd, x, y);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Go"><figure class="iseeu highlight go"><figcaption><span>[sol2-Go]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> dirs = []<span class="keyword">struct</span>&#123; x, y <span class="type">int</span> &#125;&#123; &#123;<span class="number">-1</span>, <span class="number">0</span>&#125;, &#123;<span class="number">1</span>, <span class="number">0</span>&#125;, &#123;<span class="number">0</span>, <span class="number">-1</span>&#125;, &#123;<span class="number">0</span>, <span class="number">1</span>&#125; &#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">minimumTime</span><span class="params">(grid [][]<span class="type">int</span>)</span></span> <span class="type">int</span> &#123;</span><br><span class="line">	m, n := <span class="built_in">len</span>(grid), <span class="built_in">len</span>(grid[<span class="number">0</span>])</span><br><span class="line">	<span class="keyword">if</span> grid[<span class="number">0</span>][<span class="number">1</span>] &gt; <span class="number">1</span> &amp;&amp; grid[<span class="number">1</span>][<span class="number">0</span>] &gt; <span class="number">1</span> &#123; <span class="comment">// 无法「等待」</span></span><br><span class="line">		<span class="keyword">return</span> <span class="number">-1</span></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	dis := <span class="built_in">make</span>([][]<span class="type">int</span>, m)</span><br><span class="line">	<span class="keyword">for</span> i := <span class="keyword">range</span> dis &#123;</span><br><span class="line">		dis[i] = <span class="built_in">make</span>([]<span class="type">int</span>, n)</span><br><span class="line">		<span class="keyword">for</span> j := <span class="keyword">range</span> dis[i] &#123;</span><br><span class="line">			dis[i][j] = math.MaxInt</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	dis[<span class="number">0</span>][<span class="number">0</span>] = <span class="number">0</span></span><br><span class="line">	h := &amp;hp&#123; &#123;&#125; &#125;</span><br><span class="line">	<span class="keyword">for</span> &#123; <span class="comment">// 可以等待，就一定可以到达终点</span></span><br><span class="line">		p := heap.Pop(h).(tuple)</span><br><span class="line">		d, i, j := p.d, p.i, p.j</span><br><span class="line">		<span class="keyword">if</span> d &gt; dis[i][j] &#123;</span><br><span class="line">			<span class="keyword">continue</span></span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span> i == m<span class="number">-1</span> &amp;&amp; j == n<span class="number">-1</span> &#123; <span class="comment">// 找到终点，此时 d 一定是最短路</span></span><br><span class="line">			<span class="keyword">return</span> d</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">for</span> _, q := <span class="keyword">range</span> dirs &#123; <span class="comment">// 枚举周围四个格子</span></span><br><span class="line">			x, y := i+q.x, j+q.y</span><br><span class="line">			<span class="keyword">if</span> <span class="number">0</span> &lt;= x &amp;&amp; x &lt; m &amp;&amp; <span class="number">0</span> &lt;= y &amp;&amp; y &lt; n &#123;</span><br><span class="line">				nd := max(d+<span class="number">1</span>, grid[x][y])</span><br><span class="line">				nd += (nd - x - y) % <span class="number">2</span> <span class="comment">// nd 必须和 x+y 同奇偶</span></span><br><span class="line">				<span class="keyword">if</span> nd &lt; dis[x][y] &#123;</span><br><span class="line">					dis[x][y] = nd <span class="comment">// 更新最短路</span></span><br><span class="line">					heap.Push(h, tuple&#123;nd, x, y&#125;)</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> tuple <span class="keyword">struct</span>&#123; d, i, j <span class="type">int</span> &#125;</span><br><span class="line"><span class="keyword">type</span> hp []tuple</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(h hp)</span></span> Len() <span class="type">int</span>              &#123; <span class="keyword">return</span> <span class="built_in">len</span>(h) &#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(h hp)</span></span> Less(i, j <span class="type">int</span>) <span class="type">bool</span>    &#123; <span class="keyword">return</span> h[i].d &lt; h[j].d &#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(h hp)</span></span> Swap(i, j <span class="type">int</span>)         &#123; h[i], h[j] = h[j], h[i] &#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(h *hp)</span></span> Push(v <span class="keyword">interface</span>&#123;&#125;)   &#123; *h = <span class="built_in">append</span>(*h, v.(tuple)) &#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(h *hp)</span></span> Pop() (v <span class="keyword">interface</span>&#123;&#125;) &#123; a := *h; *h, v = a[:<span class="built_in">len</span>(a)<span class="number">-1</span>], a[<span class="built_in">len</span>(a)<span class="number">-1</span>]; <span class="keyword">return</span> &#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">max</span><span class="params">(a, b <span class="type">int</span>)</span></span> <span class="type">int</span> &#123; <span class="keyword">if</span> a &lt; b &#123; <span class="keyword">return</span> b &#125;; <span class="keyword">return</span> a &#125;</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="复杂度分析"><a href="#复杂度分析" class="headerlink" title="复杂度分析"></a>复杂度分析</h3><ul>
+<li>时间复杂度：O(mn\log mn)，其中 m 和 n 分别为 grid 的行数和列数。</li>
+<li>空间复杂度：O(mn)。</li>
+</ul>
+<h1 id="方法二：二分答案-BFS"><a href="#方法二：二分答案-BFS" class="headerlink" title="方法二：二分答案 + BFS"></a>方法二：二分答案 + BFS</h1><h3 id="前置知识：二分"><a href="#前置知识：二分" class="headerlink" title="前置知识：二分"></a>前置知识：二分</h3><p>见<a class="link"   target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1AP41137w7/" >【基础算法精讲 04】 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>。</p>
+<h3 id="提示-1-1"><a href="#提示-1-1" class="headerlink" title="提示 1"></a>提示 1</h3><p>先不管「反复横跳」的事，假设在时刻 endTime 到达终点，那么我们从终点出发，一刻不停地反向到达起点。</p>
+<p>如果可以从终点到达起点，说明可以在大于 endTime 的时刻到达终点；反之，如果无法从终点到达起点，说明无法在小于 endTime 的时刻到达终点。</p>
+<p>有单调性，可以二分到达终点的时间。</p>
+<h3 id="提示-2-1"><a href="#提示-2-1" class="headerlink" title="提示 2"></a>提示 2</h3><p>根据方法一中的思路，如果最后答案与 m+n 的奇偶性不同，则加一调整一下。</p>
+<div class="highlight-container" data-rel="Py"><figure class="iseeu highlight py"><figcaption><span>[sol1-Python3]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">minimumTime</span>(<span class="params">self, grid: <span class="type">List</span>[<span class="type">List</span>[<span class="built_in">int</span>]]</span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        m, n = <span class="built_in">len</span>(grid), <span class="built_in">len</span>(grid[<span class="number">0</span>])</span><br><span class="line">        <span class="keyword">if</span> grid[<span class="number">0</span>][<span class="number">1</span>] &gt; <span class="number">1</span> <span class="keyword">and</span> grid[<span class="number">1</span>][<span class="number">0</span>] &gt; <span class="number">1</span>:  <span class="comment"># 无法「等待」</span></span><br><span class="line">            <span class="keyword">return</span> -<span class="number">1</span></span><br><span class="line"></span><br><span class="line">        vis = [[-inf] * n <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(m)]</span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">check</span>(<span class="params">end_time: <span class="built_in">int</span></span>) -&gt; <span class="built_in">bool</span>:</span><br><span class="line">            vis[-<span class="number">1</span>][-<span class="number">1</span>] = end_time</span><br><span class="line">            q = [(m - <span class="number">1</span>, n - <span class="number">1</span>)]</span><br><span class="line">            t = end_time - <span class="number">1</span></span><br><span class="line">            <span class="keyword">while</span> q:</span><br><span class="line">                tmp = q</span><br><span class="line">                q = []</span><br><span class="line">                <span class="keyword">for</span> i, j <span class="keyword">in</span> tmp:</span><br><span class="line">                    <span class="keyword">for</span> x, y <span class="keyword">in</span> (i + <span class="number">1</span>, j), (i - <span class="number">1</span>, j), (i, j + <span class="number">1</span>), (i, j - <span class="number">1</span>):  <span class="comment"># 枚举周围四个格子</span></span><br><span class="line">                        <span class="keyword">if</span> <span class="number">0</span> &lt;= x &lt; m <span class="keyword">and</span> <span class="number">0</span> &lt;= y &lt; n <span class="keyword">and</span> vis[x][y] != end_time <span class="keyword">and</span> grid[x][y] &lt;= t:</span><br><span class="line">                            <span class="keyword">if</span> x == <span class="number">0</span> <span class="keyword">and</span> y == <span class="number">0</span>: <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line">                            vis[x][y] = end_time  <span class="comment"># 用二分的值来标记，避免重复创建 vis 数组</span></span><br><span class="line">                            q.append((x, y))</span><br><span class="line">                t -= <span class="number">1</span></span><br><span class="line">            <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line"></span><br><span class="line">        left = <span class="built_in">max</span>(grid[-<span class="number">1</span>][-<span class="number">1</span>], m + n - <span class="number">2</span>) - <span class="number">1</span></span><br><span class="line">        right = <span class="built_in">max</span>(<span class="built_in">map</span>(<span class="built_in">max</span>, grid)) + m + n  <span class="comment"># 开区间</span></span><br><span class="line">        <span class="keyword">while</span> left + <span class="number">1</span> &lt; right:</span><br><span class="line">            mid = (left + right) // <span class="number">2</span></span><br><span class="line">            <span class="keyword">if</span> check(mid): right = mid</span><br><span class="line">            <span class="keyword">else</span>: left = mid</span><br><span class="line">        <span class="keyword">return</span> right + (right - m - n) % <span class="number">2</span></span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><figcaption><span>[sol1-Java]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">static</span> <span class="type">int</span>[][] DIRS = &#123; &#123;-<span class="number">1</span>, <span class="number">0</span>&#125;, &#123;<span class="number">1</span>, <span class="number">0</span>&#125;, &#123;<span class="number">0</span>, -<span class="number">1</span>&#125;, &#123;<span class="number">0</span>, <span class="number">1</span>&#125; &#125;;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span>[][] grid, vis;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">minimumTime</span><span class="params">(<span class="type">int</span>[][] grid)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">m</span> <span class="operator">=</span> grid.length, n = grid[<span class="number">0</span>].length;</span><br><span class="line">        <span class="keyword">if</span> (grid[<span class="number">0</span>][<span class="number">1</span>] &gt; <span class="number">1</span> &amp;&amp; grid[<span class="number">1</span>][<span class="number">0</span>] &gt; <span class="number">1</span>) <span class="comment">// 无法「等待」</span></span><br><span class="line">            <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">        <span class="built_in">this</span>.grid = grid;</span><br><span class="line">        vis = <span class="keyword">new</span> <span class="title class_">int</span>[m][n];</span><br><span class="line">        <span class="type">int</span> <span class="variable">left</span> <span class="operator">=</span> Math.max(grid[m - <span class="number">1</span>][n - <span class="number">1</span>], m + n - <span class="number">2</span>) - <span class="number">1</span>;</span><br><span class="line">        <span class="type">int</span> <span class="variable">right</span> <span class="operator">=</span> (<span class="type">int</span>) <span class="number">1e5</span> + m + n; <span class="comment">// 开区间</span></span><br><span class="line">        <span class="keyword">while</span> (left + <span class="number">1</span> &lt; right) &#123;</span><br><span class="line">            <span class="type">int</span> <span class="variable">mid</span> <span class="operator">=</span> (left + right) &gt;&gt;&gt; <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">if</span> (check(mid)) right = mid;</span><br><span class="line">            <span class="keyword">else</span> left = mid;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> right + (right + m + n) % <span class="number">2</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="type">boolean</span> <span class="title function_">check</span><span class="params">(<span class="type">int</span> endTime)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">m</span> <span class="operator">=</span> grid.length, n = grid[<span class="number">0</span>].length;</span><br><span class="line">        vis[m - <span class="number">1</span>][n - <span class="number">1</span>] = endTime;</span><br><span class="line">        <span class="type">var</span> <span class="variable">q</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;<span class="type">int</span>[]&gt;();</span><br><span class="line">        q.add(<span class="keyword">new</span> <span class="title class_">int</span>[]&#123;m - <span class="number">1</span>, n - <span class="number">1</span>&#125;);</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">t</span> <span class="operator">=</span> endTime - <span class="number">1</span>; !q.isEmpty(); --t) &#123;</span><br><span class="line">            <span class="type">var</span> <span class="variable">tmp</span> <span class="operator">=</span> q;</span><br><span class="line">            q = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">var</span> p : tmp) &#123;</span><br><span class="line">                <span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> p[<span class="number">0</span>], j = p[<span class="number">1</span>];</span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">var</span> d : DIRS) &#123; <span class="comment">// 枚举周围四个格子</span></span><br><span class="line">                    <span class="type">int</span> <span class="variable">x</span> <span class="operator">=</span> i + d[<span class="number">0</span>], y = j + d[<span class="number">1</span>];</span><br><span class="line">                    <span class="keyword">if</span> (<span class="number">0</span> &lt;= x &amp;&amp; x &lt; m &amp;&amp; <span class="number">0</span> &lt;= y &amp;&amp; y &lt; n &amp;&amp; vis[x][y] != endTime &amp;&amp; grid[x][y] &lt;= t) &#123;</span><br><span class="line">                        <span class="keyword">if</span> (x == <span class="number">0</span> &amp;&amp; y == <span class="number">0</span>) <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">                        vis[x][y] = endTime; <span class="comment">// 用二分的值来标记，避免重复创建 vis 数组</span></span><br><span class="line">                        q.add(<span class="keyword">new</span> <span class="title class_">int</span>[]&#123;x, y&#125;);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Cpp"><figure class="iseeu highlight cpp"><figcaption><span>[sol1-C++]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="type">static</span> <span class="keyword">constexpr</span> <span class="type">int</span> dirs[<span class="number">4</span>][<span class="number">2</span>] = &#123; &#123;<span class="number">-1</span>, <span class="number">0</span>&#125;, &#123;<span class="number">1</span>, <span class="number">0</span>&#125;, &#123;<span class="number">0</span>, <span class="number">-1</span>&#125;, &#123;<span class="number">0</span>, <span class="number">1</span>&#125; &#125;;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">minimumTime</span><span class="params">(vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; &amp;grid)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> m = grid.<span class="built_in">size</span>(), n = grid[<span class="number">0</span>].<span class="built_in">size</span>();</span><br><span class="line">        <span class="keyword">if</span> (grid[<span class="number">0</span>][<span class="number">1</span>] &gt; <span class="number">1</span> &amp;&amp; grid[<span class="number">1</span>][<span class="number">0</span>] &gt; <span class="number">1</span>) <span class="comment">// 无法「等待」</span></span><br><span class="line">            <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line"></span><br><span class="line">        <span class="type">int</span> vis[m][n]; <span class="built_in">memset</span>(vis, <span class="number">-1</span>, <span class="built_in">sizeof</span>(vis));</span><br><span class="line">        <span class="keyword">auto</span> check = [&amp;](<span class="type">int</span> end_time) -&gt; <span class="type">bool</span> &#123;</span><br><span class="line">            vis[m - <span class="number">1</span>][n - <span class="number">1</span>] = end_time;</span><br><span class="line">            vector&lt;pair&lt;<span class="type">int</span>, <span class="type">int</span>&gt;&gt; q = &#123; &#123;m - <span class="number">1</span>, n - <span class="number">1</span>&#125; &#125;;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> t = end_time - <span class="number">1</span>; !q.<span class="built_in">empty</span>(); --t) &#123;</span><br><span class="line">                vector&lt;pair&lt;<span class="type">int</span>, <span class="type">int</span>&gt;&gt; nxt;</span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">auto</span> &amp;[i, j] : q) &#123;</span><br><span class="line">                    <span class="keyword">for</span> (<span class="keyword">auto</span> &amp;d : dirs) &#123; <span class="comment">// 枚举周围四个格子</span></span><br><span class="line">                        <span class="type">int</span> x = i + d[<span class="number">0</span>], y = j + d[<span class="number">1</span>];</span><br><span class="line">                        <span class="keyword">if</span> (<span class="number">0</span> &lt;= x &amp;&amp; x &lt; m &amp;&amp; <span class="number">0</span> &lt;= y &amp;&amp; y &lt; n &amp;&amp; vis[x][y] != end_time &amp;&amp; grid[x][y] &lt;= t) &#123;</span><br><span class="line">                            <span class="keyword">if</span> (x == <span class="number">0</span> &amp;&amp; y == <span class="number">0</span>) <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">                            vis[x][y] = end_time; <span class="comment">// 用二分的值来标记，避免重复创建 vis 数组</span></span><br><span class="line">                            nxt.<span class="built_in">emplace_back</span>(x, y);</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                q = <span class="built_in">move</span>(nxt);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;;</span><br><span class="line"></span><br><span class="line">        <span class="type">int</span> left = <span class="built_in">max</span>(grid.<span class="built_in">back</span>().<span class="built_in">back</span>(), m + n - <span class="number">2</span>) - <span class="number">1</span>, right = <span class="number">1e5</span> + m + n; <span class="comment">// 开区间</span></span><br><span class="line">        <span class="keyword">while</span> (left + <span class="number">1</span> &lt; right) &#123;</span><br><span class="line">            <span class="type">int</span> mid = left + (right - left) / <span class="number">2</span>;</span><br><span class="line">            (<span class="built_in">check</span>(mid) ? right : left) = mid;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> right + (right + m + n) % <span class="number">2</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Go"><figure class="iseeu highlight go"><figcaption><span>[sol1-Go]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> pair <span class="keyword">struct</span>&#123; x, y <span class="type">int</span> &#125;</span><br><span class="line"><span class="keyword">var</span> dirs = []pair&#123; &#123;<span class="number">-1</span>, <span class="number">0</span>&#125;, &#123;<span class="number">1</span>, <span class="number">0</span>&#125;, &#123;<span class="number">0</span>, <span class="number">-1</span>&#125;, &#123;<span class="number">0</span>, <span class="number">1</span>&#125; &#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">minimumTime</span><span class="params">(grid [][]<span class="type">int</span>)</span></span> <span class="type">int</span> &#123;</span><br><span class="line">	m, n := <span class="built_in">len</span>(grid), <span class="built_in">len</span>(grid[<span class="number">0</span>])</span><br><span class="line">	<span class="keyword">if</span> grid[<span class="number">0</span>][<span class="number">1</span>] &gt; <span class="number">1</span> &amp;&amp; grid[<span class="number">1</span>][<span class="number">0</span>] &gt; <span class="number">1</span> &#123; <span class="comment">// 无法「等待」</span></span><br><span class="line">		<span class="keyword">return</span> <span class="number">-1</span></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	vis := <span class="built_in">make</span>([][]<span class="type">int</span>, m)</span><br><span class="line">	<span class="keyword">for</span> i := <span class="keyword">range</span> vis &#123;</span><br><span class="line">		vis[i] = <span class="built_in">make</span>([]<span class="type">int</span>, n)</span><br><span class="line">	&#125;</span><br><span class="line">	endTime := sort.Search(<span class="number">1e5</span>+m+n, <span class="function"><span class="keyword">func</span><span class="params">(endTime <span class="type">int</span>)</span></span> <span class="type">bool</span> &#123;</span><br><span class="line">		<span class="keyword">if</span> endTime &lt; grid[m<span class="number">-1</span>][n<span class="number">-1</span>] || endTime &lt; m+n<span class="number">-2</span> &#123;</span><br><span class="line">			<span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">		&#125;</span><br><span class="line">		vis[m<span class="number">-1</span>][n<span class="number">-1</span>] = endTime</span><br><span class="line">		q := []pair&#123; &#123;m - <span class="number">1</span>, n - <span class="number">1</span>&#125; &#125;</span><br><span class="line">		<span class="keyword">for</span> t := endTime - <span class="number">1</span>; <span class="built_in">len</span>(q) &gt; <span class="number">0</span>; t-- &#123;</span><br><span class="line">			tmp := q</span><br><span class="line">			q = <span class="literal">nil</span></span><br><span class="line">			<span class="keyword">for</span> _, p := <span class="keyword">range</span> tmp &#123;</span><br><span class="line">				<span class="keyword">for</span> _, d := <span class="keyword">range</span> dirs &#123; <span class="comment">// 枚举周围四个格子</span></span><br><span class="line">					x, y := p.x+d.x, p.y+d.y</span><br><span class="line">					<span class="keyword">if</span> <span class="number">0</span> &lt;= x &amp;&amp; x &lt; m &amp;&amp; <span class="number">0</span> &lt;= y &amp;&amp; y &lt; n &amp;&amp; vis[x][y] != endTime &amp;&amp; grid[x][y] &lt;= t &#123;</span><br><span class="line">						<span class="keyword">if</span> x == <span class="number">0</span> &amp;&amp; y == <span class="number">0</span> &#123;</span><br><span class="line">							<span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">						&#125;</span><br><span class="line">						vis[x][y] = endTime <span class="comment">// 用二分的值来标记，避免重复创建 vis 数组</span></span><br><span class="line">						q = <span class="built_in">append</span>(q, pair&#123;x, y&#125;)</span><br><span class="line">					&#125;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">	&#125;)</span><br><span class="line">	<span class="keyword">return</span> endTime + (endTime+m+n)%<span class="number">2</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">min</span><span class="params">(a, b <span class="type">int</span>)</span></span> <span class="type">int</span> &#123; <span class="keyword">if</span> a &gt; b &#123; <span class="keyword">return</span> b &#125;; <span class="keyword">return</span> a &#125;</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="复杂度分析-1"><a href="#复杂度分析-1" class="headerlink" title="复杂度分析"></a>复杂度分析</h3><ul>
+<li>时间复杂度：O(mn\log U)，其中 m 和 n 分别为 grid 的行数和列数，U 为 grid}[i][j] 的最大值。</li>
+<li>空间复杂度：O(mn)。</li>
+</ul>
+<h3 id="相似题目"><a href="#相似题目" class="headerlink" title="相似题目"></a>相似题目</h3><ul>
+<li><a class="link"   target="_blank" rel="noopener" href="https://leetcode.cn/problems/swim-in-rising-water/" >778. 水位上升的泳池中游泳 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></li>
+</ul>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <!--<div class="article-copyright-info-container">-->
+    <!--&lt;!&ndash;<ul>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><strong>Title:</strong> 2577-在网格图中访问一个格子的最少时间</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><strong>Author:</strong> Raphael Liu</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><strong>Created at&ndash;&gt;-->
+                <!--&lt;!&ndash;:</strong> 2023-09-13 00:47:26</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;&ndash;&gt;-->
+            <!--&lt;!&ndash;<li>&ndash;&gt;-->
+                <!--&lt;!&ndash;<strong>Updated at&ndash;&gt;-->
+                    <!--&lt;!&ndash;:</strong> 2023-09-13 17:01:06&ndash;&gt;-->
+            <!--&lt;!&ndash;</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;<li>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;<strong>Link:</strong> https://fida.ltd/2023/09/13/2577-在网格图中访问一个格子的最少时间/&ndash;&gt;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;</li>&ndash;&gt;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;<li>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;<strong>&ndash;&gt;&ndash;&gt;-->
+                <!--&lt;!&ndash;&lt;!&ndash;License:&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;</strong>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0</a>.&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;&ndash;&gt;&ndash;&gt;-->
+
+        <!--&lt;!&ndash;&lt;!&ndash;</li>&ndash;&gt;&ndash;&gt;-->
+    <!--&lt;!&ndash;</ul>&ndash;&gt;-->
+<!--</div>-->
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box">
+                
+                    <li class="tag-item">
+                        <a href="/tags/algorithm/">#algorithm</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item">
+                        <a href="/tags/HARD/">#HARD</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                        rel="prev"
+                        href="/2023/09/13/2576-%E6%B1%82%E5%87%BA%E6%9C%80%E5%A4%9A%E6%A0%87%E8%AE%B0%E4%B8%8B%E6%A0%87/"
+                        >
+                            <span class="left arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">2576-求出最多标记下标</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                        rel="next"
+                        href="/2023/09/13/2578-%E6%9C%80%E5%B0%8F%E5%92%8C%E5%88%86%E5%89%B2/"
+                        >
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">2578-最小和分割</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+
+        
+            <div class="comment-container">
+                <div class="comments-container pjax">
+    <div id="comment-anchor"></div>
+    <div class="comment-area-title">
+        <i class="fa-solid fa-comments"></i>&nbsp;Comments
+    </div>
+    
+
+        
+            
+ 
+    <div id="waline"></div>
+    <script type="module"  data-swup-reload-script>
+        import { init } from 'https://evan.beee.top/js/waline.mjs';
+
+        function loadWaline() {
+            init({
+                el: '#waline',
+                serverURL: 'https://example.example.com',
+                lang: 'zh-CN',
+                dark: 'body[class~="dark-mode"]',
+                requiredMeta: ['nick','mail'], // cannot customize by theme config, change it yourself
+            });
+        }
+
+        if ('true') {
+            const loadWalineTimeout = setTimeout(() => {
+                loadWaline();
+                clearTimeout(loadWalineTimeout);
+            }, 1000);
+        } else {
+            window.addEventListener('DOMContentLoaded', loadWaline);
+        }
+        
+    </script>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+
+    
+        <div class="toc-content-container">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">On this page</div>
+        <div class="page-title">2577-在网格图中访问一个格子的最少时间</div>
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%96%B9%E6%B3%95%E4%B8%80%EF%BC%9ADijkstra-%E7%AE%97%E6%B3%95"><span class="nav-text">方法一：Dijkstra 算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E7%BD%AE%E7%9F%A5%E8%AF%86%EF%BC%9ADijkstra-%E7%AE%97%E6%B3%95"><span class="nav-text">前置知识：Dijkstra 算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8F%90%E7%A4%BA-1"><span class="nav-text">提示 1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8F%90%E7%A4%BA-2"><span class="nav-text">提示 2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%8D%E6%9D%82%E5%BA%A6%E5%88%86%E6%9E%90"><span class="nav-text">复杂度分析</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%96%B9%E6%B3%95%E4%BA%8C%EF%BC%9A%E4%BA%8C%E5%88%86%E7%AD%94%E6%A1%88-BFS"><span class="nav-text">方法二：二分答案 + BFS</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E7%BD%AE%E7%9F%A5%E8%AF%86%EF%BC%9A%E4%BA%8C%E5%88%86"><span class="nav-text">前置知识：二分</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8F%90%E7%A4%BA-1-1"><span class="nav-text">提示 1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8F%90%E7%A4%BA-2-1"><span class="nav-text">提示 2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%8D%E6%9D%82%E5%BA%A6%E5%88%86%E6%9E%90-1"><span class="nav-text">复杂度分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%B8%E4%BC%BC%E9%A2%98%E7%9B%AE"><span class="nav-text">相似题目</span></a></li></ol></li></ol></li></ol>
+
+    </div>
+</div>
+        </div>
+    
+</div>
+
+
+
+                
+
+            </div>
+
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2022</span>
+              -
+            
+            2023&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">Raphael Liu</a>
+        </div>
+        
+            <script data-swup-reload-script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">UV:</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">PV:</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <!--<div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">-->
+            <!--<span class="lg:block text-sm">powered_by</span>-->
+            <!--&lt;!&ndash;<span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.4.4</a></span>&ndash;&gt;-->
+        <!--</div>-->
+        
+        <!---->
+            <!--<div>-->
+                <!--runtime <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hours <span class="odometer" id="runtime_minutes"></span> minutes <span class="odometer" id="runtime_seconds"></span> seconds-->
+            <!--</div>-->
+        <!---->
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fa-regular fa-comments"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-expand-width flex justify-center items-center">
+            <i class="fa-regular fa-expand"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fa-solid fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa-solid fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa-solid fa-spinner fa-spin-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+    
+<script src="/js/libs/Swup.min.js"></script>
+
+<script src="/js/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/libs/SwupScrollPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+        ],
+        containers: ["#swup"],
+    });
+
+    swup.hooks.on("page:view", () => {
+        Global.refresh();
+    });
+
+    // if (document.readyState === "complete") {
+    //
+    // } else {
+    //     document.addEventListener("DOMContentLoaded", () => init());
+    // }
+</script>
+
+
+
+
+
+
+<script src="/js/utils.js" type="module"></script>
+
+<script src="/js/main.js" type="module"></script>
+
+<script src="/js/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/layouts/categoryList.js" type="module"></script>
+
+
+
+    
+<script src="/js/tools/localSearch.js"></script>
+
+
+
+
+    
+<script src="/js/tools/codeBlock.js"></script>
+
+
+
+
+    
+<script src="/js/layouts/lazyload.js"></script>
+
+
+
+
+    
+<script src="/js/tools/runtime.js"></script>
+
+    
+<script src="/js/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/libs/Typed.min.js"></script>
+
+  
+<script src="/js/plugins/typed.js"></script>
+
+
+
+
+
+
+
+<div class="post-scripts" data-swup-reload-script>
+    
+        
+<script src="/js/libs/anime.min.js"></script>
+
+        
+<script src="/js/tools/tocToggle.js" type="module"></script>
+
+<script src="/js/layouts/toc.js" type="module"></script>
+
+<script src="/js/plugins/tabs.js" type="module"></script>
+
+    
+</div>
+
+
+</body>
+</html>

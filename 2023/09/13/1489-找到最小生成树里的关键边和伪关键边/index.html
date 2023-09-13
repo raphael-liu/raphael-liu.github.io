@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="Raphael Liu">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/2023/09/13/1489-找到最小生成树里的关键边和伪关键边/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="给你一个 n 个点的带权无向连通图，节点编号为 0 到 n-1 ，同时还有一个数组 edges ，其中 edges[i] &#x3D; [from&#96;&#96;i, toi, weighti] 表示在 fromi 和 toi 节点之间有一条带权无向边。最小生成树 (MST)是给定图中边的一个子集，它连接了所有节点且没有环，而且这些边的权值和最小。 请你找到给定图中最小生成树的所有关键边和伪关键边。如果从图中删去某条边">
+<meta property="og:type" content="article">
+<meta property="og:title" content="1489-找到最小生成树里的关键边和伪关键边">
+<meta property="og:url" content="http://example.com/2023/09/13/1489-%E6%89%BE%E5%88%B0%E6%9C%80%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91%E9%87%8C%E7%9A%84%E5%85%B3%E9%94%AE%E8%BE%B9%E5%92%8C%E4%BC%AA%E5%85%B3%E9%94%AE%E8%BE%B9/index.html">
+<meta property="og:site_name" content="Raphael&#39;s Blog">
+<meta property="og:description" content="给你一个 n 个点的带权无向连通图，节点编号为 0 到 n-1 ，同时还有一个数组 edges ，其中 edges[i] &#x3D; [from&#96;&#96;i, toi, weighti] 表示在 fromi 和 toi 节点之间有一条带权无向边。最小生成树 (MST)是给定图中边的一个子集，它连接了所有节点且没有环，而且这些边的权值和最小。 请你找到给定图中最小生成树的所有关键边和伪关键边。如果从图中删去某条边">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-09-12T16:47:26.000Z">
+<meta property="article:modified_time" content="2023-09-13T08:06:23.703Z">
+<meta property="article:author" content="Raphael Liu">
+<meta property="article:tag" content="algorithm">
+<meta property="article:tag" content="HARD">
+<meta name="twitter:card" content="summary">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/redefine-favicon.svg" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/redefine-favicon.svg">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/redefine-favicon.svg">
+    <!--- Page Info-->
+    
+    <title>
+        
+            1489-找到最小生成树里的关键边和伪关键边 -
+        
+        Raphael&#39;s Blog
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/css/build/styles.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/fonts.css">
+
+    
+<link rel="stylesheet" href="/fonts/Satoshi/satoshi.css">
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+
+    <!--- Inject Part-->
+    
+    <script id="hexo-configurations">
+    let Global = window.Global || {};
+    Global.hexo_config = {"hostname":"example.com","root":"/","language":"zh_CN"};
+    Global.theme_config = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":true,"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"open_graph":true,"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-wqery6-light.webp","dark":"/images/wallhaven-wqery6-dark.webp"},"title":"Raphael's Blog","subtitle":{"text":["格物致知","坚持做正确的事情"],"hitokoto":{"enable":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":false,"links":{"github":"https://github.com/raphael-liu","email":"raphael@buaa.edu.cn# your email"},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.4.4","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"links":{"首页":{"path":"/","icon":"fa-regular fa-house"},"文章":{"path":"/archives","icon":"fa-regular fa-archive"},"关于":{"icon":"fa-regular fa-user","submenus":{"我":"/about/me","Github":"https://github.com/raphael-liu"}}},"search":{"enable":true,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"links":null},"article_date_format":"auto","categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}},"footerStart":"2022/8/17 11:45:14"};
+    Global.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    Global.data_config = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="swup-progress-icon">
+            <i class="fa-solid fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container" id="swup">
+
+    
+
+    <div class="main-content-container">
+
+
+        <div class="main-content-header">
+            <header class="navbar-container">
+    
+    <div class="navbar-content">
+        <div class="left">
+            
+            <a class="logo-title" href="http://example.com/">
+                
+                Raphael&#39;s Blog
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/"  >
+                                    
+                                        
+                                            <i class="fa-regular fa-house"></i>
+                                        
+                                        首页
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/archives"  >
+                                    
+                                        
+                                            <i class="fa-regular fa-archive"></i>
+                                        
+                                        文章
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="has-dropdown" 
+                                    href="#" onClick="return false;">
+                                    
+                                        
+                                            <i class="fa-regular fa-user"></i>
+                                        
+                                        关于&nbsp;<i class="fa-solid fa-chevron-down"></i>
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                                    <ul class="sub-menu">
+                                    
+                                        <li>
+                                        <a href="/about/me">我
+                                        </a>
+                                        </li>
+                                    
+                                        <li>
+                                        <a target="_blank" rel="noopener" href="https://github.com/raphael-liu">GITHUB
+                                        </a>
+                                        </li>
+                                    
+                                    </ul>
+                                
+                            </li>
+                    
+                    
+                        <li class="navbar-item search search-popup-trigger">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fa-solid fa-magnifying-glass"></i></div>
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile drawer -->
+    <div class="navbar-drawer w-full absolute top-0 left-0 bg-background-color">
+        <ul class="drawer-navbar-list flex flex-col justify-start items-center">
+            
+                
+                    <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group " 
+                        href="/"  >
+                             
+                                
+                                    <i class="fa-regular fa-house"></i>
+                                
+                                首页
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+                
+                    <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group " 
+                        href="/archives"  >
+                             
+                                
+                                    <i class="fa-regular fa-archive"></i>
+                                
+                                文章
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+                
+                    <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group has-dropdown" 
+                        href="#" onClick="return false;">
+                            
+                                
+                                    <i class="fa-regular fa-user"></i>
+                                
+                                关于&nbsp;<i class="group-hover:rotate-180 transition-transform fa-solid fa-chevron-down"></i>
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                              
+                        
+                            <li class="text-base flex justify-center items-center hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                <a class="py-0.5" href="/about/me">我</a>
+                            </li>
+                        
+                            <li class="text-base flex justify-center items-center hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                <a class="py-0.5" target="_blank" rel="noopener" href="https://github.com/raphael-liu">GITHUB</a>
+                            </li>
+                        
+                    
+            
+
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="post-page-container">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            
+                <h1 class="article-title-regular">1489-找到最小生成树里的关键边和伪关键边</h1>
+            
+            </div>
+            
+                    
+        
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">Raphael Liu</span>
+                        
+                            <span class="author-label">Lv10</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2023-09-13 00:47:26</span>
+        <span class="mobile">2023-09-13 00:47:26</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2023-09-13 16:06:23</span>
+            <span class="mobile">2023-09-13 16:06:23</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/algorithm/">algorithm</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/HARD/">HARD</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        
+
+
+        <div class="article-content markdown-body">
+            <p>给你一个 <code>n</code> 个点的带权无向连通图，节点编号为 <code>0</code> 到 <code>n-1</code> ，同时还有一个数组 <code>edges</code> ，其中 <code>edges[i] = [from``i, toi, weighti]</code> 表示在 <code>fromi</code> 和 <code>toi</code> 节点之间有一条带权无向边。最小生成树 (MST)<br>是给定图中边的一个子集，它连接了所有节点且没有环，而且这些边的权值和最小。</p>
+<p>请你找到给定图中最小生成树的所有关键边和伪关键边。如果从图中删去某条边，会导致最小生成树的权值和增加，那么我们就说它是一条关键边。伪关键边则是可能会出现在某些最小生成树中但不会出现在所有最小生成树中的边。</p>
+<p>请注意，你可以分别以任意顺序返回关键边的下标和伪关键边的下标。</p>
+<p><strong>示例 1：</strong></p>
+<p>![](<a class="link"   target="_blank" rel="noopener" href="https://assets.leetcode-cn.com/aliyun-lc-" >https://assets.leetcode-cn.com/aliyun-lc- <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a><br>upload&#x2F;uploads&#x2F;2020&#x2F;06&#x2F;21&#x2F;ex1.png)</p>
+<pre><code>**输入：** n = 5, edges = [[0,1,1],[1,2,1],[2,3,2],[0,3,2],[0,4,3],[3,4,3],[1,4,6]]
+**输出：** [[0,1],[2,3,4,5]]
+**解释：** 上图描述了给定图。
+下图是所有的最小生成树。
+![](https://assets.leetcode-cn.com/aliyun-lc-upload/uploads/2020/06/21/msts.png)
+注意到第 0 条边和第 1 条边出现在了所有最小生成树中，所以它们是关键边，我们将这两个下标作为输出的第一个列表。
+边 2，3，4 和 5 是所有 MST 的剩余边，所以它们是伪关键边。我们将它们作为输出的第二个列表。
+</code></pre>
+<p><strong>示例 2 ：</strong></p>
+<p>![](<a class="link"   target="_blank" rel="noopener" href="https://assets.leetcode-cn.com/aliyun-lc-" >https://assets.leetcode-cn.com/aliyun-lc- <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a><br>upload&#x2F;uploads&#x2F;2020&#x2F;06&#x2F;21&#x2F;ex2.png)</p>
+<pre><code>**输入：** n = 4, edges = [[0,1,1],[1,2,1],[2,3,1],[0,3,1]]
+**输出：** [[],[0,1,2,3]]
+**解释：** 可以观察到 4 条边都有相同的权值，任选它们中的 3 条可以形成一棵 MST 。所以 4 条边都是伪关键边。
+</code></pre>
+<p><strong>提示：</strong></p>
+<ul>
+<li><code>2 &lt;= n &lt;= 100</code></li>
+<li><code>1 &lt;= edges.length &lt;= min(200, n * (n - 1) / 2)</code></li>
+<li><code>edges[i].length == 3</code></li>
+<li><code>0 &lt;= fromi &lt; toi &lt; n</code></li>
+<li><code>1 &lt;= weighti &lt;= 1000</code></li>
+<li>所有 <code>(fromi, toi)</code> 数对都是互不相同的。</li>
+</ul>
+<h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>要想解决本题，需要用到「<a class="link"   target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E6%9C%80%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91" >最小生成树 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>」以及对应求解最小生成树的「<a class="link"   target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E5%85%8B%E9%B2%81%E6%96%AF%E5%8D%A1%E5%B0%94%E7%AE%97%E6%B3%95" >Kruskal 算法 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>」。</p>
+<p>对上述算法和数据结构的讲解不是本篇题解的重点，因此这里希望读者在对掌握了这些知识点之后，再来尝试解决本题。</p>
+<p>本篇题解中会给出两种算法，并且每种算法都默认读者已经掌握了对应的知识点：</p>
+<ul>
+<li><p>方法一只需要枚举每一条边，并用略微修改的 Kruskal 算法判断其是否是关键边或伪关键边；</p>
+</li>
+<li><p>方法二利用了 Kruskal 算法的连通性性质，以及无向图找桥边的 Tarjan 算法，即使在竞赛中也不算容易，仅供读者挑战自我。</p>
+</li>
+</ul>
+<h4 id="方法一：枚举-最小生成树判定"><a href="#方法一：枚举-最小生成树判定" class="headerlink" title="方法一：枚举 + 最小生成树判定"></a>方法一：枚举 + 最小生成树判定</h4><p><strong>思路与算法</strong></p>
+<p>我们首先需要理解题目描述中对于「关键边」和「伪关键边」的定义：</p>
+<ul>
+<li><p>关键边：如果最小生成树中删去某条边，会导致最小生成树的权值和增加，那么我们就说它是一条关键边。也就是说，如果设原图最小生成树的权值为 value，那么去掉这条边后：</p>
+<ul>
+<li><p>要么整个图不连通，不存在最小生成树；</p>
+</li>
+<li><p>要么整个图联通，对应的最小生成树的权值为 v，其严格大于 value。</p>
+</li>
+</ul>
+</li>
+<li><p>伪关键边：可能会出现在某些最小生成树中但不会出现在所有最小生成树中的边。也就是说，我们可以在计算最小生成树的过程中，<strong>最先考虑</strong>这条边，即最先将这条边的两个端点在并查集中合并。设最终得到的最小生成树权值为 v，如果 v &#x3D; \textit{value，那么这条边就是伪关键边。</p>
+</li>
+</ul>
+<p>需要注意的是，关键边也满足伪关键边对应的性质。因此，我们首先对原图执行 Kruskal 算法，得到最小生成树的权值 value，随后我们枚举每一条边，首先根据上面的方法判断其是否是关键边，如果不是关键边，再判断其是否是伪关键边。</p>
+<p><strong>代码</strong></p>
+<div class="highlight-container" data-rel="C++"><figure class="iseeu highlight c++"><figcaption><span>[sol1-C++]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 并查集模板</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">UnionFind</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    vector&lt;<span class="type">int</span>&gt; parent;</span><br><span class="line">    vector&lt;<span class="type">int</span>&gt; size;</span><br><span class="line">    <span class="type">int</span> n;</span><br><span class="line">    <span class="comment">// 当前连通分量数目</span></span><br><span class="line">    <span class="type">int</span> setCount;</span><br><span class="line">    </span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">UnionFind</span>(<span class="type">int</span> _n): <span class="built_in">n</span>(_n), <span class="built_in">setCount</span>(_n), <span class="built_in">parent</span>(_n), <span class="built_in">size</span>(_n, <span class="number">1</span>) &#123;</span><br><span class="line">        <span class="built_in">iota</span>(parent.<span class="built_in">begin</span>(), parent.<span class="built_in">end</span>(), <span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">findset</span><span class="params">(<span class="type">int</span> x)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> parent[x] == x ? x : parent[x] = <span class="built_in">findset</span>(parent[x]);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="type">bool</span> <span class="title">unite</span><span class="params">(<span class="type">int</span> x, <span class="type">int</span> y)</span> </span>&#123;</span><br><span class="line">        x = <span class="built_in">findset</span>(x);</span><br><span class="line">        y = <span class="built_in">findset</span>(y);</span><br><span class="line">        <span class="keyword">if</span> (x == y) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (size[x] &lt; size[y]) &#123;</span><br><span class="line">            <span class="built_in">swap</span>(x, y);</span><br><span class="line">        &#125;</span><br><span class="line">        parent[y] = x;</span><br><span class="line">        size[x] += size[y];</span><br><span class="line">        --setCount;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="type">bool</span> <span class="title">connected</span><span class="params">(<span class="type">int</span> x, <span class="type">int</span> y)</span> </span>&#123;</span><br><span class="line">        x = <span class="built_in">findset</span>(x);</span><br><span class="line">        y = <span class="built_in">findset</span>(y);</span><br><span class="line">        <span class="keyword">return</span> x == y;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; <span class="built_in">findCriticalAndPseudoCriticalEdges</span>(<span class="type">int</span> n, vector&lt;vector&lt;<span class="type">int</span>&gt;&gt;&amp; edges) &#123;</span><br><span class="line">        <span class="type">int</span> m = edges.<span class="built_in">size</span>();</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; m; ++i) &#123;</span><br><span class="line">            edges[i].<span class="built_in">push_back</span>(i);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">sort</span>(edges.<span class="built_in">begin</span>(), edges.<span class="built_in">end</span>(), [](<span class="type">const</span> <span class="keyword">auto</span>&amp; u, <span class="type">const</span> <span class="keyword">auto</span>&amp; v) &#123;</span><br><span class="line">            <span class="keyword">return</span> u[<span class="number">2</span>] &lt; v[<span class="number">2</span>];</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 计算 value</span></span><br><span class="line">        <span class="function">UnionFind <span class="title">uf_std</span><span class="params">(n)</span></span>;</span><br><span class="line">        <span class="type">int</span> value = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; m; ++i) &#123;</span><br><span class="line">            <span class="keyword">if</span> (uf_std.<span class="built_in">unite</span>(edges[i][<span class="number">0</span>], edges[i][<span class="number">1</span>])) &#123;</span><br><span class="line">                value += edges[i][<span class="number">2</span>];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; <span class="built_in">ans</span>(<span class="number">2</span>);</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; m; ++i) &#123;</span><br><span class="line">            <span class="comment">// 判断是否是关键边</span></span><br><span class="line">            <span class="function">UnionFind <span class="title">uf</span><span class="params">(n)</span></span>;</span><br><span class="line">            <span class="type">int</span> v = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt; m; ++j) &#123;</span><br><span class="line">                <span class="keyword">if</span> (i != j &amp;&amp; uf.<span class="built_in">unite</span>(edges[j][<span class="number">0</span>], edges[j][<span class="number">1</span>])) &#123;</span><br><span class="line">                    v += edges[j][<span class="number">2</span>];</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (uf.setCount != <span class="number">1</span> || (uf.setCount == <span class="number">1</span> &amp;&amp; v &gt; value)) &#123;</span><br><span class="line">                ans[<span class="number">0</span>].<span class="built_in">push_back</span>(edges[i][<span class="number">3</span>]);</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 判断是否是伪关键边</span></span><br><span class="line">            uf = <span class="built_in">UnionFind</span>(n);</span><br><span class="line">            uf.<span class="built_in">unite</span>(edges[i][<span class="number">0</span>], edges[i][<span class="number">1</span>]);</span><br><span class="line">            v = edges[i][<span class="number">2</span>];</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt; m; ++j) &#123;</span><br><span class="line">                <span class="keyword">if</span> (i != j &amp;&amp; uf.<span class="built_in">unite</span>(edges[j][<span class="number">0</span>], edges[j][<span class="number">1</span>])) &#123;</span><br><span class="line">                    v += edges[j][<span class="number">2</span>];</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (v == value) &#123;</span><br><span class="line">                ans[<span class="number">1</span>].<span class="built_in">push_back</span>(edges[i][<span class="number">3</span>]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      </span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><figcaption><span>[sol1-Java]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> List&lt;List&lt;Integer&gt;&gt; <span class="title function_">findCriticalAndPseudoCriticalEdges</span><span class="params">(<span class="type">int</span> n, <span class="type">int</span>[][] edges)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">m</span> <span class="operator">=</span> edges.length;</span><br><span class="line">        <span class="type">int</span>[][] newEdges = <span class="keyword">new</span> <span class="title class_">int</span>[m][<span class="number">4</span>];</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; m; ++i) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">j</span> <span class="operator">=</span> <span class="number">0</span>; j &lt; <span class="number">3</span>; ++j) &#123;</span><br><span class="line">                newEdges[i][j] = edges[i][j];</span><br><span class="line">            &#125;</span><br><span class="line">            newEdges[i][<span class="number">3</span>] = i;</span><br><span class="line">        &#125;</span><br><span class="line">        Arrays.sort(newEdges, <span class="keyword">new</span> <span class="title class_">Comparator</span>&lt;<span class="type">int</span>[]&gt;() &#123;</span><br><span class="line">            <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">compare</span><span class="params">(<span class="type">int</span>[] u, <span class="type">int</span>[] v)</span> &#123;</span><br><span class="line">                <span class="keyword">return</span> u[<span class="number">2</span>] - v[<span class="number">2</span>];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 计算 value</span></span><br><span class="line">        <span class="type">UnionFind</span> <span class="variable">ufStd</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">UnionFind</span>(n);</span><br><span class="line">        <span class="type">int</span> <span class="variable">value</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; m; ++i) &#123;</span><br><span class="line">            <span class="keyword">if</span> (ufStd.unite(newEdges[i][<span class="number">0</span>], newEdges[i][<span class="number">1</span>])) &#123;</span><br><span class="line">                value += newEdges[i][<span class="number">2</span>];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        List&lt;List&lt;Integer&gt;&gt; ans = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;List&lt;Integer&gt;&gt;();</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; <span class="number">2</span>; ++i) &#123;</span><br><span class="line">            ans.add(<span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;Integer&gt;());</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; m; ++i) &#123;</span><br><span class="line">            <span class="comment">// 判断是否是关键边</span></span><br><span class="line">            <span class="type">UnionFind</span> <span class="variable">uf</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">UnionFind</span>(n);</span><br><span class="line">            <span class="type">int</span> <span class="variable">v</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">j</span> <span class="operator">=</span> <span class="number">0</span>; j &lt; m; ++j) &#123;</span><br><span class="line">                <span class="keyword">if</span> (i != j &amp;&amp; uf.unite(newEdges[j][<span class="number">0</span>], newEdges[j][<span class="number">1</span>])) &#123;</span><br><span class="line">                    v += newEdges[j][<span class="number">2</span>];</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (uf.setCount != <span class="number">1</span> || (uf.setCount == <span class="number">1</span> &amp;&amp; v &gt; value)) &#123;</span><br><span class="line">                ans.get(<span class="number">0</span>).add(newEdges[i][<span class="number">3</span>]);</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 判断是否是伪关键边</span></span><br><span class="line">            uf = <span class="keyword">new</span> <span class="title class_">UnionFind</span>(n);</span><br><span class="line">            uf.unite(newEdges[i][<span class="number">0</span>], newEdges[i][<span class="number">1</span>]);</span><br><span class="line">            v = newEdges[i][<span class="number">2</span>];</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">j</span> <span class="operator">=</span> <span class="number">0</span>; j &lt; m; ++j) &#123;</span><br><span class="line">                <span class="keyword">if</span> (i != j &amp;&amp; uf.unite(newEdges[j][<span class="number">0</span>], newEdges[j][<span class="number">1</span>])) &#123;</span><br><span class="line">                    v += newEdges[j][<span class="number">2</span>];</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (v == value) &#123;</span><br><span class="line">                ans.get(<span class="number">1</span>).add(newEdges[i][<span class="number">3</span>]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      </span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 并查集模板</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">UnionFind</span> &#123;</span><br><span class="line">    <span class="type">int</span>[] parent;</span><br><span class="line">    <span class="type">int</span>[] size;</span><br><span class="line">    <span class="type">int</span> n;</span><br><span class="line">    <span class="comment">// 当前连通分量数目</span></span><br><span class="line">    <span class="type">int</span> setCount;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">UnionFind</span><span class="params">(<span class="type">int</span> n)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.n = n;</span><br><span class="line">        <span class="built_in">this</span>.setCount = n;</span><br><span class="line">        <span class="built_in">this</span>.parent = <span class="keyword">new</span> <span class="title class_">int</span>[n];</span><br><span class="line">        <span class="built_in">this</span>.size = <span class="keyword">new</span> <span class="title class_">int</span>[n];</span><br><span class="line">        Arrays.fill(size, <span class="number">1</span>);</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; n; ++i) &#123;</span><br><span class="line">            parent[i] = i;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">findset</span><span class="params">(<span class="type">int</span> x)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> parent[x] == x ? x : (parent[x] = findset(parent[x]));</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">unite</span><span class="params">(<span class="type">int</span> x, <span class="type">int</span> y)</span> &#123;</span><br><span class="line">        x = findset(x);</span><br><span class="line">        y = findset(y);</span><br><span class="line">        <span class="keyword">if</span> (x == y) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (size[x] &lt; size[y]) &#123;</span><br><span class="line">            <span class="type">int</span> <span class="variable">temp</span> <span class="operator">=</span> x;</span><br><span class="line">            x = y;</span><br><span class="line">            y = temp;</span><br><span class="line">        &#125;</span><br><span class="line">        parent[y] = x;</span><br><span class="line">        size[x] += size[y];</span><br><span class="line">        --setCount;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">connected</span><span class="params">(<span class="type">int</span> x, <span class="type">int</span> y)</span> &#123;</span><br><span class="line">        x = findset(x);</span><br><span class="line">        y = findset(y);</span><br><span class="line">        <span class="keyword">return</span> x == y;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><figcaption><span>[sol1-Python3]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 并查集模板</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">UnionFind</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, n: <span class="built_in">int</span></span>):</span><br><span class="line">        self.parent = <span class="built_in">list</span>(<span class="built_in">range</span>(n))</span><br><span class="line">        self.size = [<span class="number">1</span>] * n</span><br><span class="line">        self.n = n</span><br><span class="line">        <span class="comment"># 当前连通分量数目</span></span><br><span class="line">        self.setCount = n</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">findset</span>(<span class="params">self, x: <span class="built_in">int</span></span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        <span class="keyword">if</span> self.parent[x] == x:</span><br><span class="line">            <span class="keyword">return</span> x</span><br><span class="line">        self.parent[x] = self.findset(self.parent[x])</span><br><span class="line">        <span class="keyword">return</span> self.parent[x]</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">unite</span>(<span class="params">self, x: <span class="built_in">int</span>, y: <span class="built_in">int</span></span>) -&gt; <span class="built_in">bool</span>:</span><br><span class="line">        x, y = self.findset(x), self.findset(y)</span><br><span class="line">        <span class="keyword">if</span> x == y:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">        <span class="keyword">if</span> self.size[x] &lt; self.size[y]:</span><br><span class="line">            x, y = y, x</span><br><span class="line">        self.parent[y] = x</span><br><span class="line">        self.size[x] += self.size[y]</span><br><span class="line">        self.setCount -= <span class="number">1</span></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">connected</span>(<span class="params">self, x: <span class="built_in">int</span>, y: <span class="built_in">int</span></span>) -&gt; <span class="built_in">bool</span>:</span><br><span class="line">        x, y = self.findset(x), self.findset(y)</span><br><span class="line">        <span class="keyword">return</span> x == y</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">findCriticalAndPseudoCriticalEdges</span>(<span class="params">self, n: <span class="built_in">int</span>, edges: <span class="type">List</span>[<span class="type">List</span>[<span class="built_in">int</span>]]</span>) -&gt; <span class="type">List</span>[<span class="type">List</span>[<span class="built_in">int</span>]]:</span><br><span class="line">        m = <span class="built_in">len</span>(edges)</span><br><span class="line">        <span class="keyword">for</span> i, edge <span class="keyword">in</span> <span class="built_in">enumerate</span>(edges):</span><br><span class="line">            edge.append(i)</span><br><span class="line">        edges.sort(key=<span class="keyword">lambda</span> x: x[<span class="number">2</span>])</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 计算 value</span></span><br><span class="line">        uf_std = UnionFind(n)</span><br><span class="line">        value = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(m):</span><br><span class="line">            <span class="keyword">if</span> uf_std.unite(edges[i][<span class="number">0</span>], edges[i][<span class="number">1</span>]):</span><br><span class="line">                value += edges[i][<span class="number">2</span>]</span><br><span class="line"></span><br><span class="line">        ans = [<span class="built_in">list</span>(), <span class="built_in">list</span>()]</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(m):</span><br><span class="line">            <span class="comment"># 判断是否是关键边</span></span><br><span class="line">            uf = UnionFind(n)</span><br><span class="line">            v = <span class="number">0</span></span><br><span class="line">            <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(m):</span><br><span class="line">                <span class="keyword">if</span> i != j <span class="keyword">and</span> uf.unite(edges[j][<span class="number">0</span>], edges[j][<span class="number">1</span>]):</span><br><span class="line">                    v += edges[j][<span class="number">2</span>]</span><br><span class="line">            <span class="keyword">if</span> uf.setCount != <span class="number">1</span> <span class="keyword">or</span> (uf.setCount == <span class="number">1</span> <span class="keyword">and</span> v &gt; value):</span><br><span class="line">                ans[<span class="number">0</span>].append(edges[i][<span class="number">3</span>])</span><br><span class="line">                <span class="keyword">continue</span></span><br><span class="line"></span><br><span class="line">            <span class="comment"># 判断是否是伪关键边</span></span><br><span class="line">            uf = UnionFind(n)</span><br><span class="line">            uf.unite(edges[i][<span class="number">0</span>], edges[i][<span class="number">1</span>])</span><br><span class="line">            v = edges[i][<span class="number">2</span>]</span><br><span class="line">            <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(m):</span><br><span class="line">                <span class="keyword">if</span> i != j <span class="keyword">and</span> uf.unite(edges[j][<span class="number">0</span>], edges[j][<span class="number">1</span>]):</span><br><span class="line">                    v += edges[j][<span class="number">2</span>]</span><br><span class="line">            <span class="keyword">if</span> v == value:</span><br><span class="line">                ans[<span class="number">1</span>].append(edges[i][<span class="number">3</span>])</span><br><span class="line">      </span><br><span class="line">        <span class="keyword">return</span> ans</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Go"><figure class="iseeu highlight go"><figcaption><span>[sol1-Golang]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> unionFind <span class="keyword">struct</span> &#123;</span><br><span class="line">    parent, size []<span class="type">int</span></span><br><span class="line">    setCount     <span class="type">int</span> <span class="comment">// 当前连通分量数目</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">newUnionFind</span><span class="params">(n <span class="type">int</span>)</span></span> *unionFind &#123;</span><br><span class="line">    parent := <span class="built_in">make</span>([]<span class="type">int</span>, n)</span><br><span class="line">    size := <span class="built_in">make</span>([]<span class="type">int</span>, n)</span><br><span class="line">    <span class="keyword">for</span> i := <span class="keyword">range</span> parent &#123;</span><br><span class="line">        parent[i] = i</span><br><span class="line">        size[i] = <span class="number">1</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> &amp;unionFind&#123;parent, size, n&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(uf *unionFind)</span></span> find(x <span class="type">int</span>) <span class="type">int</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> uf.parent[x] != x &#123;</span><br><span class="line">        uf.parent[x] = uf.find(uf.parent[x])</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> uf.parent[x]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(uf *unionFind)</span></span> union(x, y <span class="type">int</span>) <span class="type">bool</span> &#123;</span><br><span class="line">    fx, fy := uf.find(x), uf.find(y)</span><br><span class="line">    <span class="keyword">if</span> fx == fy &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> uf.size[fx] &lt; uf.size[fy] &#123;</span><br><span class="line">        fx, fy = fy, fx</span><br><span class="line">    &#125;</span><br><span class="line">    uf.size[fx] += uf.size[fy]</span><br><span class="line">    uf.parent[fy] = fx</span><br><span class="line">    uf.setCount--</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">findCriticalAndPseudoCriticalEdges</span><span class="params">(n <span class="type">int</span>, edges [][]<span class="type">int</span>)</span></span> [][]<span class="type">int</span> &#123;</span><br><span class="line">    <span class="keyword">for</span> i, e := <span class="keyword">range</span> edges &#123;</span><br><span class="line">        edges[i] = <span class="built_in">append</span>(e, i)</span><br><span class="line">    &#125;</span><br><span class="line">    sort.Slice(edges, <span class="function"><span class="keyword">func</span><span class="params">(i, j <span class="type">int</span>)</span></span> <span class="type">bool</span> &#123; <span class="keyword">return</span> edges[i][<span class="number">2</span>] &lt; edges[j][<span class="number">2</span>] &#125;)</span><br><span class="line"></span><br><span class="line">    calcMST := <span class="function"><span class="keyword">func</span><span class="params">(uf *unionFind, ignoreID <span class="type">int</span>)</span></span> (mstValue <span class="type">int</span>) &#123;</span><br><span class="line">        <span class="keyword">for</span> i, e := <span class="keyword">range</span> edges &#123;</span><br><span class="line">            <span class="keyword">if</span> i != ignoreID &amp;&amp; uf.union(e[<span class="number">0</span>], e[<span class="number">1</span>]) &#123;</span><br><span class="line">                mstValue += e[<span class="number">2</span>]</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> uf.setCount &gt; <span class="number">1</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> math.MaxInt64</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    mstValue := calcMST(newUnionFind(n), <span class="number">-1</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> keyEdges, pseudokeyEdges []<span class="type">int</span></span><br><span class="line">    <span class="keyword">for</span> i, e := <span class="keyword">range</span> edges &#123;</span><br><span class="line">        <span class="comment">// 是否为关键边</span></span><br><span class="line">        <span class="keyword">if</span> calcMST(newUnionFind(n), i) &gt; mstValue &#123;</span><br><span class="line">            keyEdges = <span class="built_in">append</span>(keyEdges, e[<span class="number">3</span>])</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 是否为伪关键边</span></span><br><span class="line">        uf := newUnionFind(n)</span><br><span class="line">        uf.union(e[<span class="number">0</span>], e[<span class="number">1</span>])</span><br><span class="line">        <span class="keyword">if</span> e[<span class="number">2</span>]+calcMST(uf, i) == mstValue &#123;</span><br><span class="line">            pseudokeyEdges = <span class="built_in">append</span>(pseudokeyEdges, e[<span class="number">3</span>])</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> [][]<span class="type">int</span>&#123;keyEdges, pseudokeyEdges&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><figcaption><span>[sol1-JavaScript]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> findCriticalAndPseudoCriticalEdges = <span class="keyword">function</span>(<span class="params">n, edges</span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> m = edges.<span class="property">length</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">const</span> [i, edge] <span class="keyword">of</span> edges.<span class="title function_">entries</span>()) &#123;</span><br><span class="line">        edge.<span class="title function_">push</span>(i);</span><br><span class="line">    &#125;</span><br><span class="line">    edges.<span class="title function_">sort</span>(<span class="function">(<span class="params">a, b</span>) =&gt;</span> a[<span class="number">2</span>] - b[<span class="number">2</span>]);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 计算 value</span></span><br><span class="line">    <span class="keyword">const</span> uf_std = <span class="keyword">new</span> <span class="title class_">UnionFind</span>(n);</span><br><span class="line">    <span class="keyword">let</span> value = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; m; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (uf_std.<span class="title function_">unite</span>(edges[i][<span class="number">0</span>], edges[i][<span class="number">1</span>])) &#123;</span><br><span class="line">            value += edges[i][<span class="number">2</span>];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> ans = [[], []];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; m; i++) &#123;</span><br><span class="line">        <span class="comment">// 判断是否是关键边</span></span><br><span class="line">        <span class="keyword">let</span> uf = <span class="keyword">new</span> <span class="title class_">UnionFind</span>(n);</span><br><span class="line">        <span class="keyword">let</span> v = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">let</span> j = <span class="number">0</span>; j &lt; m; j++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (i !== j &amp;&amp; uf.<span class="title function_">unite</span>(edges[j][<span class="number">0</span>], edges[j][<span class="number">1</span>])) &#123;</span><br><span class="line">                v += edges[j][<span class="number">2</span>];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (uf.<span class="property">setCount</span> !== <span class="number">1</span> || (uf.<span class="property">setCount</span> === <span class="number">1</span> &amp;&amp; v &gt; value)) &#123;</span><br><span class="line">            ans[<span class="number">0</span>].<span class="title function_">push</span>(edges[i][<span class="number">3</span>]);</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 判断是否是伪关键边</span></span><br><span class="line">        uf = <span class="keyword">new</span> <span class="title class_">UnionFind</span>(n);</span><br><span class="line">        uf.<span class="title function_">unite</span>(edges[i][<span class="number">0</span>], edges[i][<span class="number">1</span>]);</span><br><span class="line">        v = edges[i][<span class="number">2</span>];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">let</span> j = <span class="number">0</span>; j &lt; m; j++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (i !== j &amp;&amp; uf.<span class="title function_">unite</span>(edges[j][<span class="number">0</span>], edges[j][<span class="number">1</span>])) &#123;</span><br><span class="line">                v += edges[j][<span class="number">2</span>];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (v === value) &#123;</span><br><span class="line">            ans[<span class="number">1</span>].<span class="title function_">push</span>(edges[i][<span class="number">3</span>]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ans;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 并查集模板</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">UnionFind</span> &#123;</span><br><span class="line">    <span class="title function_">constructor</span> (n) &#123;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">parent</span> = <span class="keyword">new</span> <span class="title class_">Array</span>(n).<span class="title function_">fill</span>(<span class="number">0</span>).<span class="title function_">map</span>(<span class="function">(<span class="params">element, index</span>) =&gt;</span> index);</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">size</span> = <span class="keyword">new</span> <span class="title class_">Array</span>(n).<span class="title function_">fill</span>(<span class="number">1</span>);</span><br><span class="line">        <span class="comment">// 当前连通分量数目</span></span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">setCount</span> = n;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    findset (x) &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="variable language_">this</span>.<span class="property">parent</span>[x] === x) &#123;</span><br><span class="line">            <span class="keyword">return</span> x;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">parent</span>[x] = <span class="variable language_">this</span>.<span class="title function_">findset</span>(<span class="variable language_">this</span>.<span class="property">parent</span>[x]);</span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">parent</span>[x];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    unite (a, b) &#123;</span><br><span class="line">        <span class="keyword">let</span> x = <span class="variable language_">this</span>.<span class="title function_">findset</span>(a), y = <span class="variable language_">this</span>.<span class="title function_">findset</span>(b);</span><br><span class="line">        <span class="keyword">if</span> (x === y) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (<span class="variable language_">this</span>.<span class="property">size</span>[x] &lt; <span class="variable language_">this</span>.<span class="property">size</span>[y]) &#123;</span><br><span class="line">            [x, y] = [y, x];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">parent</span>[y] = x;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">size</span>[x] += <span class="variable language_">this</span>.<span class="property">size</span>[y];</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">setCount</span> -= <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    connected (a, b) &#123;</span><br><span class="line">        <span class="keyword">const</span> x = <span class="variable language_">this</span>.<span class="title function_">findset</span>(a), y = <span class="variable language_">this</span>.<span class="title function_">findset</span>(b);</span><br><span class="line">        <span class="keyword">return</span> x === y;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="C"><figure class="iseeu highlight c"><figcaption><span>[sol1-C]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">swap</span><span class="params">(<span class="type">int</span>* a, <span class="type">int</span>* b)</span> &#123;</span><br><span class="line">    <span class="type">int</span> tmp = *a;</span><br><span class="line">    *a = *b, *b = tmp;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Edge</span> &#123;</span></span><br><span class="line">    <span class="type">int</span> x, y, w, id;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">cmp</span><span class="params">(<span class="type">const</span> <span class="type">void</span>* a, <span class="type">const</span> <span class="type">void</span>* b)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> ((<span class="keyword">struct</span> Edge*)a)-&gt;w - ((<span class="keyword">struct</span> Edge*)b)-&gt;w;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">DisjointSetUnion</span> &#123;</span></span><br><span class="line">    <span class="type">int</span> *f, *size;</span><br><span class="line">    <span class="type">int</span> n, setCount;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">initDSU</span><span class="params">(<span class="keyword">struct</span> DisjointSetUnion* obj, <span class="type">int</span> n)</span> &#123;</span><br><span class="line">    obj-&gt;f = <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="type">int</span>) * n);</span><br><span class="line">    obj-&gt;size = <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="type">int</span>) * n);</span><br><span class="line">    obj-&gt;n = n;</span><br><span class="line">    obj-&gt;setCount = n;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">        obj-&gt;f[i] = i;</span><br><span class="line">        obj-&gt;size[i] = <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">freeDSU</span><span class="params">(<span class="keyword">struct</span> DisjointSetUnion* obj)</span> &#123;</span><br><span class="line">    <span class="built_in">free</span>(obj-&gt;f);</span><br><span class="line">    <span class="built_in">free</span>(obj-&gt;size);</span><br><span class="line">    <span class="built_in">free</span>(obj);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">find</span><span class="params">(<span class="keyword">struct</span> DisjointSetUnion* obj, <span class="type">int</span> x)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> obj-&gt;f[x] == x ? x : (obj-&gt;f[x] = find(obj, obj-&gt;f[x]));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">unionSet</span><span class="params">(<span class="keyword">struct</span> DisjointSetUnion* obj, <span class="type">int</span> x, <span class="type">int</span> y)</span> &#123;</span><br><span class="line">    <span class="type">int</span> fx = find(obj, x), fy = find(obj, y);</span><br><span class="line">    <span class="keyword">if</span> (fx == fy) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (obj-&gt;size[fx] &lt; obj-&gt;size[fy]) &#123;</span><br><span class="line">        swap(&amp;fx, &amp;fy);</span><br><span class="line">    &#125;</span><br><span class="line">    obj-&gt;size[fx] += obj-&gt;size[fy];</span><br><span class="line">    obj-&gt;f[fy] = fx;</span><br><span class="line">    obj-&gt;setCount--;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span>** <span class="title function_">findCriticalAndPseudoCriticalEdges</span><span class="params">(<span class="type">int</span> n, <span class="type">int</span>** edges, <span class="type">int</span> edgesSize, <span class="type">int</span>* edgesColSize, <span class="type">int</span>* returnSize, <span class="type">int</span>** returnColumnSizes)</span> &#123;</span><br><span class="line">    <span class="type">int</span> m = edgesSize;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">Edge</span> <span class="title">edgesTmp</span>[<span class="title">m</span>];</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; m; i++) &#123;</span><br><span class="line">        edgesTmp[i].x = edges[i][<span class="number">0</span>];</span><br><span class="line">        edgesTmp[i].y = edges[i][<span class="number">1</span>];</span><br><span class="line">        edgesTmp[i].w = edges[i][<span class="number">2</span>];</span><br><span class="line">        edgesTmp[i].id = i;</span><br><span class="line">    &#125;</span><br><span class="line">    qsort(edgesTmp, m, <span class="keyword">sizeof</span>(<span class="keyword">struct</span> Edge), cmp);</span><br><span class="line"></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">DisjointSetUnion</span>* <span class="title">ufStd</span> =</span> <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">struct</span> DisjointSetUnion));</span><br><span class="line">    initDSU(ufStd, n);</span><br><span class="line"></span><br><span class="line">    <span class="type">int</span> value = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; m; ++i) &#123;</span><br><span class="line">        <span class="keyword">if</span> (unionSet(ufStd, edgesTmp[i].x, edgesTmp[i].y)) &#123;</span><br><span class="line">            value += edgesTmp[i].w;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    freeDSU(ufStd);</span><br><span class="line"></span><br><span class="line">    *returnSize = <span class="number">2</span>;</span><br><span class="line">    <span class="type">int</span>** ans = <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="type">int</span>*) * <span class="number">2</span>);</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">2</span>; i++) &#123;</span><br><span class="line">        ans[i] = <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="type">int</span>) * m);</span><br><span class="line">    &#125;</span><br><span class="line">    *returnColumnSizes = <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="type">int</span>) * <span class="number">2</span>);</span><br><span class="line">    <span class="built_in">memset</span>(*returnColumnSizes, <span class="number">0</span>, <span class="keyword">sizeof</span>(<span class="type">int</span>) * <span class="number">2</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; m; ++i) &#123;</span><br><span class="line">        <span class="comment">// 判断是否是关键边</span></span><br><span class="line">        <span class="class"><span class="keyword">struct</span> <span class="title">DisjointSetUnion</span>* <span class="title">uf1</span> =</span> <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">struct</span> DisjointSetUnion));</span><br><span class="line">        initDSU(uf1, n);</span><br><span class="line"></span><br><span class="line">        <span class="type">int</span> v = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt; m; ++j) &#123;</span><br><span class="line">            <span class="keyword">if</span> (i != j &amp;&amp; unionSet(uf1, edgesTmp[j].x, edgesTmp[j].y)) &#123;</span><br><span class="line">                v += edgesTmp[j].w;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (uf1-&gt;setCount != <span class="number">1</span> || (uf1-&gt;setCount == <span class="number">1</span> &amp;&amp; v &gt; value)) &#123;</span><br><span class="line">            ans[<span class="number">0</span>][(*returnColumnSizes)[<span class="number">0</span>]++] = edgesTmp[i].id;</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        freeDSU(uf1);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 判断是否是伪关键边</span></span><br><span class="line">        <span class="class"><span class="keyword">struct</span> <span class="title">DisjointSetUnion</span>* <span class="title">uf2</span> =</span> <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">struct</span> DisjointSetUnion));</span><br><span class="line">        initDSU(uf2, n);</span><br><span class="line">        unionSet(uf2, edgesTmp[i].x, edgesTmp[i].y);</span><br><span class="line">        v = edgesTmp[i].w;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt; m; ++j) &#123;</span><br><span class="line">            <span class="keyword">if</span> (i != j &amp;&amp; unionSet(uf2, edgesTmp[j].x, edgesTmp[j].y)) &#123;</span><br><span class="line">                v += edgesTmp[j].w;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (v == value) &#123;</span><br><span class="line">            ans[<span class="number">1</span>][(*returnColumnSizes)[<span class="number">1</span>]++] = edgesTmp[i].id;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>复杂度分析</strong></p>
+<ul>
+<li><p>时间复杂度：O(m^2 \cdot \alpha(n))，其中 n 和 m 分别是图中的节点数和边数。我们首先需要对所有的边进行排序，时间复杂度为 O(m \log m)。一次 Kruskal 算法的时间复杂度为 O(m \cdot \alpha(n))，其中 \alpha 是阿克曼函数的反函数。我们最多需要执行 2m + 1 次 Kruskal 算法，时间复杂度为 O(m^2 \alpha(n))，在渐进意义下大于排序的时间复杂度，因此前者可以忽略不计，总时间复杂度为 O(m^2 \cdot \alpha(n))。</p>
+</li>
+<li><p>空间复杂度：O(m + n)。在进行排序时，我们必须要额外存储每条边原始的编号，用来返回答案，空间复杂度为 O(m)。Kruskal 算法中的并查集需要使用 O(n) 的空间，因此总空间复杂度为 O(m+n)。</p>
+</li>
+</ul>
+<h4 id="方法二：连通性-最小生成树性质"><a href="#方法二：连通性-最小生成树性质" class="headerlink" title="方法二：连通性 + 最小生成树性质"></a>方法二：连通性 + 最小生成树性质</h4><p><strong>前言</strong></p>
+<p>要理解方法二，读者必须要知道最小生成树的一个性质：</p>
+<ul>
+<li>在 Kruskal 算法中，对于任意的实数 w，只要我们将给定的边按照权值从小到大进行排序，那么当我们按照顺序处理完所有权值小于等于 w 的边之后，对应的并查集的连通性是唯一确定的，无论我们在排序时如何规定权值相同的边的顺序。</li>
+</ul>
+<p>并且读者需要掌握：</p>
+<ul>
+<li>给定一个无向图，使用 Tarjan 算法求出所有的桥边。</li>
+</ul>
+<p><strong>思路与算法</strong></p>
+<p>假设我们已经处理完了所有权值小于 w 的边，并查集的状态记为 U，该状态是唯一确定的。此时，我们同时处理所有权值等于 w 的边，记这些边的集合为 {e_w\。我们将 U 中的每一个连通分量看成一个节点，对于 {e_w\ 中的每一条无向边的两个端点，将它们在 U 中属于的连通分量对应的节点之间连接一条无向边，以此得到图 G。图 G 中会有三种类型的边：</p>
+<ul>
+<li>自环边：即从一个节点指向本身的一条边。如果 {e_w\ 中的一条边的两个端点属于同一个连通分量，那么它在图 G 中表现为一条自环边。根据 Kruskal 算法，这样的边不会被添加进最小生成树中。</li>
+</ul>
+<p>对于剩余的边，它们的两个端点属于不同的联通分量。如果我们将其作为 Kruskal 算法中第一条权值为 w 的边进行处理，那么这条边一定会被添加进最小生成树中。因此剩余的边要么是关键边，要么是伪关键边，它们在图 G 中的表现形式不同：</p>
+<ul>
+<li><p>桥边。如果 {e_w\ 中的一条边对应了图 G 中的一条桥边，那么当这条边被删去时，图 G 的连通性就会发生改变。</p>
+<blockquote>
+<p>这样的例子可能会帮助理解：如果我们将这条边作为 Kruskal 算法中最后一条权值为 w 的边进行处理，那么这条边还是会被添加进最小生成树中。</p>
+</blockquote>
+<p>也就是说，这条边对于最小生成树而言是必须的，那么它就是关键边；</p>
+</li>
+<li><p>非桥边。如果 {e_w\ 中的一条边对应了图 G 中的一条非桥边，那么当这条边被删去时，图 G 的连通性不会发生改变。</p>
+<blockquote>
+<p>这样的例子可能会帮助理解：如果我们将这条边作为 Kruskal 算法中最后一条权值为 w 的边进行处理，那么在此之前，并查集的连通性已经和（任意顺序）处理完所有权值为 w 的边之后的连通性一致，这条边就不会被添加进最小生成树中。</p>
+</blockquote>
+<p>也就是说，这条边对于最小生成树而言不是必须的，那么它就是伪关键边。</p>
+</li>
+</ul>
+<p>因此图 G 中的桥边与 {e_w\ 中的关键边一一对应，非桥边（且非自环边）与 {e_w\ 中的非关键边一一对应。</p>
+<p>我们可以使用 Tarjan 算法求出图 G 中的所有桥边，那么算法的时间复杂度是多少呢？如果图 G 中有 n_0 个节点和 m_0 条边，那么 Tarjan 算法的时间复杂度为 O(n_0 + m_0)。对于每一个 w 值对应的 {e_w\，我们并不需要将并查集中的每一个连通分量都作为一个节点放入图 G 中：即如果 {e_w\ 中包含 m_0 条边，那么它们最多会只连接了 2m_0 个连通分量，因此图 G 中最多有 2m_0 个节点和 m_0 条边（如果一条边是自环边，那么也不需要将其放入图 G 中），时间复杂度为 O(2m_0 + m_0) &#x3D; O(m_0)，与 {e_w\ 中包含的边数成正比。我们对所有的 w 值都需要进行一次 Tarjan 算法，这部分的总时间复杂度是 O(m)。对于排序的部分，时间复杂度是 O(m \log m)，对于并查集的部分，时间复杂度是 O(m \cdot \alpha(n))，其中 \alpha 是阿克曼函数的反函数。三者中排序的时间复杂度在渐进意义下最大，因此总时间复杂度为 O(m \log m)。</p>
+<p><strong>代码</strong></p>
+<div class="highlight-container" data-rel="C++"><figure class="iseeu highlight c++"><figcaption><span>[sol2-C++]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 并查集模板</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">UnionFind</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    vector&lt;<span class="type">int</span>&gt; parent;</span><br><span class="line">    vector&lt;<span class="type">int</span>&gt; size;</span><br><span class="line">    <span class="type">int</span> n;</span><br><span class="line">    <span class="comment">// 当前连通分量数目</span></span><br><span class="line">    <span class="type">int</span> setCount;</span><br><span class="line">    </span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">UnionFind</span>(<span class="type">int</span> _n): <span class="built_in">n</span>(_n), <span class="built_in">setCount</span>(_n), <span class="built_in">parent</span>(_n), <span class="built_in">size</span>(_n, <span class="number">1</span>) &#123;</span><br><span class="line">        <span class="built_in">iota</span>(parent.<span class="built_in">begin</span>(), parent.<span class="built_in">end</span>(), <span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">findset</span><span class="params">(<span class="type">int</span> x)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> parent[x] == x ? x : parent[x] = <span class="built_in">findset</span>(parent[x]);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="type">bool</span> <span class="title">unite</span><span class="params">(<span class="type">int</span> x, <span class="type">int</span> y)</span> </span>&#123;</span><br><span class="line">        x = <span class="built_in">findset</span>(x);</span><br><span class="line">        y = <span class="built_in">findset</span>(y);</span><br><span class="line">        <span class="keyword">if</span> (x == y) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (size[x] &lt; size[y]) &#123;</span><br><span class="line">            <span class="built_in">swap</span>(x, y);</span><br><span class="line">        &#125;</span><br><span class="line">        parent[y] = x;</span><br><span class="line">        size[x] += size[y];</span><br><span class="line">        --setCount;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="type">bool</span> <span class="title">connected</span><span class="params">(<span class="type">int</span> x, <span class="type">int</span> y)</span> </span>&#123;</span><br><span class="line">        x = <span class="built_in">findset</span>(x);</span><br><span class="line">        y = <span class="built_in">findset</span>(y);</span><br><span class="line">        <span class="keyword">return</span> x == y;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Tarjan 算法求桥边模版</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">TarjanSCC</span> &#123;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="type">const</span> vector&lt;vector&lt;<span class="type">int</span>&gt;&gt;&amp; edges;</span><br><span class="line">    <span class="type">const</span> vector&lt;vector&lt;<span class="type">int</span>&gt;&gt;&amp; edgesId;</span><br><span class="line">    vector&lt;<span class="type">int</span>&gt; low;</span><br><span class="line">    vector&lt;<span class="type">int</span>&gt; dfn;</span><br><span class="line">    vector&lt;<span class="type">int</span>&gt; ans;</span><br><span class="line">    <span class="type">int</span> n;</span><br><span class="line">    <span class="type">int</span> ts;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">getCuttingEdge_</span><span class="params">(<span class="type">int</span> u, <span class="type">int</span> parentEdgeId)</span> </span>&#123;</span><br><span class="line">        low[u] = dfn[u] = ++ts;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; edges[u].<span class="built_in">size</span>(); ++i) &#123;</span><br><span class="line">            <span class="type">int</span> v = edges[u][i];</span><br><span class="line">            <span class="type">int</span> id = edgesId[u][i];</span><br><span class="line">            <span class="keyword">if</span> (dfn[v] == <span class="number">-1</span>) &#123;</span><br><span class="line">                <span class="built_in">getCuttingEdge_</span>(v, id);</span><br><span class="line">                low[u] = <span class="built_in">min</span>(low[u], low[v]);</span><br><span class="line">                <span class="keyword">if</span> (low[v] &gt; dfn[u]) &#123;</span><br><span class="line">                    ans.<span class="built_in">push_back</span>(id);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span> (id != parentEdgeId) &#123;</span><br><span class="line">                low[u] = <span class="built_in">min</span>(low[u], dfn[v]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">TarjanSCC</span>(<span class="type">int</span> n_, <span class="type">const</span> vector&lt;vector&lt;<span class="type">int</span>&gt;&gt;&amp; edges_, <span class="type">const</span> vector&lt;vector&lt;<span class="type">int</span>&gt;&gt;&amp; edgesId_): \</span><br><span class="line">        <span class="built_in">edges</span>(edges_), <span class="built_in">edgesId</span>(edgesId_), <span class="built_in">low</span>(n_, <span class="number">-1</span>), <span class="built_in">dfn</span>(n_, <span class="number">-1</span>), <span class="built_in">n</span>(n_), <span class="built_in">ts</span>(<span class="number">-1</span>) &#123;&#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">getCuttingEdge</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; ++i) &#123;</span><br><span class="line">            <span class="keyword">if</span> (dfn[i] == <span class="number">-1</span>) &#123;</span><br><span class="line">                <span class="built_in">getCuttingEdge_</span>(i, <span class="number">-1</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; <span class="built_in">findCriticalAndPseudoCriticalEdges</span>(<span class="type">int</span> n, vector&lt;vector&lt;<span class="type">int</span>&gt;&gt;&amp; edges) &#123;</span><br><span class="line">        <span class="type">int</span> m = edges.<span class="built_in">size</span>();</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; m; ++i) &#123;</span><br><span class="line">            edges[i].<span class="built_in">push_back</span>(i);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">sort</span>(edges.<span class="built_in">begin</span>(), edges.<span class="built_in">end</span>(), [](<span class="type">const</span> <span class="keyword">auto</span>&amp; u, <span class="type">const</span> <span class="keyword">auto</span>&amp; v) &#123;</span><br><span class="line">            <span class="keyword">return</span> u[<span class="number">2</span>] &lt; v[<span class="number">2</span>];</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        <span class="function">UnionFind <span class="title">uf</span><span class="params">(n)</span></span>;</span><br><span class="line">        vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; <span class="built_in">ans</span>(<span class="number">2</span>);</span><br><span class="line">        <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">label</span><span class="params">(m)</span></span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; m;) &#123;</span><br><span class="line">            <span class="comment">// 找出所有权值为 w 的边，下标范围为 [i, j)</span></span><br><span class="line">            <span class="type">int</span> w = edges[i][<span class="number">2</span>];</span><br><span class="line">            <span class="type">int</span> j = i;</span><br><span class="line">            <span class="keyword">while</span> (j &lt; m &amp;&amp; edges[j][<span class="number">2</span>] == edges[i][<span class="number">2</span>]) &#123;</span><br><span class="line">                ++j;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 存储每个连通分量在图 G 中的编号</span></span><br><span class="line">            unordered_map&lt;<span class="type">int</span>, <span class="type">int</span>&gt; compToId;</span><br><span class="line">            <span class="comment">// 图 G 的节点数</span></span><br><span class="line">            <span class="type">int</span> gn = <span class="number">0</span>;</span><br><span class="line">            </span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> k = i; k &lt; j; ++k) &#123;</span><br><span class="line">                <span class="type">int</span> x = uf.<span class="built_in">findset</span>(edges[k][<span class="number">0</span>]);</span><br><span class="line">                <span class="type">int</span> y = uf.<span class="built_in">findset</span>(edges[k][<span class="number">1</span>]);</span><br><span class="line">                <span class="keyword">if</span> (x != y) &#123;</span><br><span class="line">                    <span class="keyword">if</span> (!compToId.<span class="built_in">count</span>(x)) &#123;</span><br><span class="line">                        compToId[x] = gn++;</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">if</span> (!compToId.<span class="built_in">count</span>(y)) &#123;</span><br><span class="line">                        compToId[y] = gn++;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">else</span> &#123;</span><br><span class="line">                    <span class="comment">// 将自环边标记为 -1</span></span><br><span class="line">                    label[edges[k][<span class="number">3</span>]] = <span class="number">-1</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">            <span class="comment">// 图 G 的边</span></span><br><span class="line">            vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; <span class="built_in">gm</span>(gn), <span class="built_in">gmid</span>(gn);</span><br><span class="line">            </span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> k = i; k &lt; j; ++k) &#123;</span><br><span class="line">                <span class="type">int</span> x = uf.<span class="built_in">findset</span>(edges[k][<span class="number">0</span>]);</span><br><span class="line">                <span class="type">int</span> y = uf.<span class="built_in">findset</span>(edges[k][<span class="number">1</span>]);</span><br><span class="line">                <span class="keyword">if</span> (x != y) &#123;</span><br><span class="line">                    <span class="type">int</span> idx = compToId[x], idy = compToId[y];</span><br><span class="line">                    gm[idx].<span class="built_in">push_back</span>(idy);</span><br><span class="line">                    gmid[idx].<span class="built_in">push_back</span>(edges[k][<span class="number">3</span>]);</span><br><span class="line">                    gm[idy].<span class="built_in">push_back</span>(idx);</span><br><span class="line">                    gmid[idy].<span class="built_in">push_back</span>(edges[k][<span class="number">3</span>]);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            vector&lt;<span class="type">int</span>&gt; bridges = <span class="built_in">TarjanSCC</span>(gn, gm, gmid).<span class="built_in">getCuttingEdge</span>();</span><br><span class="line">            <span class="comment">// 将桥边（关键边）标记为 1</span></span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> id: bridges) &#123;</span><br><span class="line">                ans[<span class="number">0</span>].<span class="built_in">push_back</span>(id);</span><br><span class="line">                label[id] = <span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> k = i; k &lt; j; ++k) &#123;</span><br><span class="line">                uf.<span class="built_in">unite</span>(edges[k][<span class="number">0</span>], edges[k][<span class="number">1</span>]);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            i = j;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 未标记的边即为非桥边（伪关键边）</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; m; ++i) &#123;</span><br><span class="line">            <span class="keyword">if</span> (!label[i]) &#123;</span><br><span class="line">                ans[<span class="number">1</span>].<span class="built_in">push_back</span>(i);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><figcaption><span>[sol2-Java]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> List&lt;List&lt;Integer&gt;&gt; <span class="title function_">findCriticalAndPseudoCriticalEdges</span><span class="params">(<span class="type">int</span> n, <span class="type">int</span>[][] edges)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">m</span> <span class="operator">=</span> edges.length;</span><br><span class="line">        <span class="type">int</span>[][] newEdges = <span class="keyword">new</span> <span class="title class_">int</span>[m][<span class="number">4</span>];</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; m; ++i) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">j</span> <span class="operator">=</span> <span class="number">0</span>; j &lt; <span class="number">3</span>; ++j) &#123;</span><br><span class="line">                newEdges[i][j] = edges[i][j];</span><br><span class="line">            &#125;</span><br><span class="line">            newEdges[i][<span class="number">3</span>] = i;</span><br><span class="line">        &#125;</span><br><span class="line">        Arrays.sort(newEdges, <span class="keyword">new</span> <span class="title class_">Comparator</span>&lt;<span class="type">int</span>[]&gt;() &#123;</span><br><span class="line">            <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">compare</span><span class="params">(<span class="type">int</span>[] u, <span class="type">int</span>[] v)</span> &#123;</span><br><span class="line">                <span class="keyword">return</span> u[<span class="number">2</span>] - v[<span class="number">2</span>];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        <span class="type">UnionFind</span> <span class="variable">uf</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">UnionFind</span>(n);</span><br><span class="line">        List&lt;List&lt;Integer&gt;&gt; ans = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;List&lt;Integer&gt;&gt;();</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; <span class="number">2</span>; ++i) &#123;</span><br><span class="line">            ans.add(<span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;Integer&gt;());</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">int</span>[] label = <span class="keyword">new</span> <span class="title class_">int</span>[m];</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; m;) &#123;</span><br><span class="line">            <span class="comment">// 找出所有权值为 w 的边，下标范围为 [i, j)</span></span><br><span class="line">            <span class="type">int</span> <span class="variable">w</span> <span class="operator">=</span> newEdges[i][<span class="number">2</span>];</span><br><span class="line">            <span class="type">int</span> <span class="variable">j</span> <span class="operator">=</span> i;</span><br><span class="line">            <span class="keyword">while</span> (j &lt; m &amp;&amp; newEdges[j][<span class="number">2</span>] == newEdges[i][<span class="number">2</span>]) &#123;</span><br><span class="line">                ++j;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 存储每个连通分量在图 G 中的编号</span></span><br><span class="line">            Map&lt;Integer, Integer&gt; compToId = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;Integer, Integer&gt;();</span><br><span class="line">            <span class="comment">// 图 G 的节点数</span></span><br><span class="line">            <span class="type">int</span> <span class="variable">gn</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">            </span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">k</span> <span class="operator">=</span> i; k &lt; j; ++k) &#123;</span><br><span class="line">                <span class="type">int</span> <span class="variable">x</span> <span class="operator">=</span> uf.findset(newEdges[k][<span class="number">0</span>]);</span><br><span class="line">                <span class="type">int</span> <span class="variable">y</span> <span class="operator">=</span> uf.findset(newEdges[k][<span class="number">1</span>]);</span><br><span class="line">                <span class="keyword">if</span> (x != y) &#123;</span><br><span class="line">                    <span class="keyword">if</span> (!compToId.containsKey(x)) &#123;</span><br><span class="line">                        compToId.put(x, gn++);</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">if</span> (!compToId.containsKey(y)) &#123;</span><br><span class="line">                        compToId.put(y, gn++);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    <span class="comment">// 将自环边标记为 -1</span></span><br><span class="line">                    label[newEdges[k][<span class="number">3</span>]] = -<span class="number">1</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">            <span class="comment">// 图 G 的边</span></span><br><span class="line">            List&lt;Integer&gt;[] gm = <span class="keyword">new</span> <span class="title class_">List</span>[gn];</span><br><span class="line">            List&lt;Integer&gt;[] gmid = <span class="keyword">new</span> <span class="title class_">List</span>[gn];</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">k</span> <span class="operator">=</span> <span class="number">0</span>; k &lt; gn; ++k) &#123;</span><br><span class="line">                gm[k] = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;Integer&gt;();</span><br><span class="line">                gmid[k] = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;Integer&gt;();</span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">k</span> <span class="operator">=</span> i; k &lt; j; ++k) &#123;</span><br><span class="line">                <span class="type">int</span> <span class="variable">x</span> <span class="operator">=</span> uf.findset(newEdges[k][<span class="number">0</span>]);</span><br><span class="line">                <span class="type">int</span> <span class="variable">y</span> <span class="operator">=</span> uf.findset(newEdges[k][<span class="number">1</span>]);</span><br><span class="line">                <span class="keyword">if</span> (x != y) &#123;</span><br><span class="line">                    <span class="type">int</span> <span class="variable">idx</span> <span class="operator">=</span> compToId.get(x), idy = compToId.get(y);</span><br><span class="line">                    gm[idx].add(idy);</span><br><span class="line">                    gmid[idx].add(newEdges[k][<span class="number">3</span>]);</span><br><span class="line">                    gm[idy].add(idx);</span><br><span class="line">                    gmid[idy].add(newEdges[k][<span class="number">3</span>]);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            List&lt;Integer&gt; bridges = <span class="keyword">new</span> <span class="title class_">TarjanSCC</span>(gn, gm, gmid).getCuttingEdge();</span><br><span class="line">            <span class="comment">// 将桥边（关键边）标记为 1</span></span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> id : bridges) &#123;</span><br><span class="line">                ans.get(<span class="number">0</span>).add(id);</span><br><span class="line">                label[id] = <span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">k</span> <span class="operator">=</span> i; k &lt; j; ++k) &#123;</span><br><span class="line">                uf.unite(newEdges[k][<span class="number">0</span>], newEdges[k][<span class="number">1</span>]);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            i = j;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 未标记的边即为非桥边（伪关键边）</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; m; ++i) &#123;</span><br><span class="line">            <span class="keyword">if</span> (label[i] == <span class="number">0</span>) &#123;</span><br><span class="line">                ans.get(<span class="number">1</span>).add(i);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 并查集模板</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">UnionFind</span> &#123;</span><br><span class="line">    <span class="type">int</span>[] parent;</span><br><span class="line">    <span class="type">int</span>[] size;</span><br><span class="line">    <span class="type">int</span> n;</span><br><span class="line">    <span class="comment">// 当前连通分量数目</span></span><br><span class="line">    <span class="type">int</span> setCount;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">UnionFind</span><span class="params">(<span class="type">int</span> n)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.n = n;</span><br><span class="line">        <span class="built_in">this</span>.setCount = n;</span><br><span class="line">        <span class="built_in">this</span>.parent = <span class="keyword">new</span> <span class="title class_">int</span>[n];</span><br><span class="line">        <span class="built_in">this</span>.size = <span class="keyword">new</span> <span class="title class_">int</span>[n];</span><br><span class="line">        Arrays.fill(size, <span class="number">1</span>);</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; n; ++i) &#123;</span><br><span class="line">            parent[i] = i;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">findset</span><span class="params">(<span class="type">int</span> x)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> parent[x] == x ? x : (parent[x] = findset(parent[x]));</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">unite</span><span class="params">(<span class="type">int</span> x, <span class="type">int</span> y)</span> &#123;</span><br><span class="line">        x = findset(x);</span><br><span class="line">        y = findset(y);</span><br><span class="line">        <span class="keyword">if</span> (x == y) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (size[x] &lt; size[y]) &#123;</span><br><span class="line">            <span class="type">int</span> <span class="variable">temp</span> <span class="operator">=</span> x;</span><br><span class="line">            x = y;</span><br><span class="line">            y = temp;</span><br><span class="line">        &#125;</span><br><span class="line">        parent[y] = x;</span><br><span class="line">        size[x] += size[y];</span><br><span class="line">        --setCount;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">connected</span><span class="params">(<span class="type">int</span> x, <span class="type">int</span> y)</span> &#123;</span><br><span class="line">        x = findset(x);</span><br><span class="line">        y = findset(y);</span><br><span class="line">        <span class="keyword">return</span> x == y;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">TarjanSCC</span> &#123;</span><br><span class="line">    List&lt;Integer&gt;[] edges;</span><br><span class="line">    List&lt;Integer&gt;[] edgesId;</span><br><span class="line">    <span class="type">int</span>[] low;</span><br><span class="line">    <span class="type">int</span>[] dfn;</span><br><span class="line">    List&lt;Integer&gt; ans;</span><br><span class="line">    <span class="type">int</span> n;</span><br><span class="line">    <span class="type">int</span> ts;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">TarjanSCC</span><span class="params">(<span class="type">int</span> n, List&lt;Integer&gt;[] edges, List&lt;Integer&gt;[] edgesId)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.edges = edges;</span><br><span class="line">        <span class="built_in">this</span>.edgesId = edgesId;</span><br><span class="line">        <span class="built_in">this</span>.low = <span class="keyword">new</span> <span class="title class_">int</span>[n];</span><br><span class="line">        Arrays.fill(low, -<span class="number">1</span>);</span><br><span class="line">        <span class="built_in">this</span>.dfn = <span class="keyword">new</span> <span class="title class_">int</span>[n];</span><br><span class="line">        Arrays.fill(dfn, -<span class="number">1</span>);</span><br><span class="line">        <span class="built_in">this</span>.n = n;</span><br><span class="line">        <span class="built_in">this</span>.ts = -<span class="number">1</span>;</span><br><span class="line">        <span class="built_in">this</span>.ans = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;Integer&gt;();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">public</span> List&lt;Integer&gt; <span class="title function_">getCuttingEdge</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; n; ++i) &#123;</span><br><span class="line">            <span class="keyword">if</span> (dfn[i] == -<span class="number">1</span>) &#123;</span><br><span class="line">                getCuttingEdge(i, -<span class="number">1</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">getCuttingEdge</span><span class="params">(<span class="type">int</span> u, <span class="type">int</span> parentEdgeId)</span> &#123;</span><br><span class="line">        low[u] = dfn[u] = ++ts;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; edges[u].size(); ++i) &#123;</span><br><span class="line">            <span class="type">int</span> <span class="variable">v</span> <span class="operator">=</span> edges[u].get(i);</span><br><span class="line">            <span class="type">int</span> <span class="variable">id</span> <span class="operator">=</span> edgesId[u].get(i);</span><br><span class="line">            <span class="keyword">if</span> (dfn[v] == -<span class="number">1</span>) &#123;</span><br><span class="line">                getCuttingEdge(v, id);</span><br><span class="line">                low[u] = Math.min(low[u], low[v]);</span><br><span class="line">                <span class="keyword">if</span> (low[v] &gt; dfn[u]) &#123;</span><br><span class="line">                    ans.add(id);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (id != parentEdgeId) &#123;</span><br><span class="line">                low[u] = Math.min(low[u], dfn[v]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><figcaption><span>[sol2-Python3]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 并查集模板</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">UnionFind</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, n: <span class="built_in">int</span></span>):</span><br><span class="line">        self.parent = <span class="built_in">list</span>(<span class="built_in">range</span>(n))</span><br><span class="line">        self.size = [<span class="number">1</span>] * n</span><br><span class="line">        self.n = n</span><br><span class="line">        <span class="comment"># 当前连通分量数目</span></span><br><span class="line">        self.setCount = n</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">findset</span>(<span class="params">self, x: <span class="built_in">int</span></span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        <span class="keyword">if</span> self.parent[x] == x:</span><br><span class="line">            <span class="keyword">return</span> x</span><br><span class="line">        self.parent[x] = self.findset(self.parent[x])</span><br><span class="line">        <span class="keyword">return</span> self.parent[x]</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">unite</span>(<span class="params">self, x: <span class="built_in">int</span>, y: <span class="built_in">int</span></span>) -&gt; <span class="built_in">bool</span>:</span><br><span class="line">        x, y = self.findset(x), self.findset(y)</span><br><span class="line">        <span class="keyword">if</span> x == y:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">        <span class="keyword">if</span> self.size[x] &lt; self.size[y]:</span><br><span class="line">            x, y = y, x</span><br><span class="line">        self.parent[y] = x</span><br><span class="line">        self.size[x] += self.size[y]</span><br><span class="line">        self.setCount -= <span class="number">1</span></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">connected</span>(<span class="params">self, x: <span class="built_in">int</span>, y: <span class="built_in">int</span></span>) -&gt; <span class="built_in">bool</span>:</span><br><span class="line">        x, y = self.findset(x), self.findset(y)</span><br><span class="line">        <span class="keyword">return</span> x == y</span><br><span class="line"></span><br><span class="line"><span class="comment"># Tarjan 算法求桥边模版</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">TarjanSCC</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, n: <span class="built_in">int</span>, edges: <span class="type">List</span>[<span class="type">List</span>[<span class="built_in">int</span>]], edgesId: <span class="type">List</span>[<span class="type">List</span>[<span class="built_in">int</span>]]</span>):</span><br><span class="line">        self.n = n</span><br><span class="line">        self.edges = edges</span><br><span class="line">        self.edgesId = edgesId</span><br><span class="line">        self.low = [-<span class="number">1</span>] * n</span><br><span class="line">        self.dfn = [-<span class="number">1</span>] * n</span><br><span class="line">        self.ans = <span class="built_in">list</span>()</span><br><span class="line">        self.ts = -<span class="number">1</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">getCuttingEdge</span>(<span class="params">self</span>) -&gt; <span class="type">List</span>[<span class="built_in">int</span>]:</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(self.n):</span><br><span class="line">            <span class="keyword">if</span> self.dfn[i] == -<span class="number">1</span>:</span><br><span class="line">                self.pGetCuttingEdge(i, -<span class="number">1</span>)</span><br><span class="line">        <span class="keyword">return</span> self.ans</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">pGetCuttingEdge</span>(<span class="params">self, u: <span class="built_in">int</span>, parentEdgeId: <span class="built_in">int</span></span>):</span><br><span class="line">        self.ts += <span class="number">1</span></span><br><span class="line">        self.low[u] = self.dfn[u] = self.ts</span><br><span class="line">        <span class="keyword">for</span> v, iden <span class="keyword">in</span> <span class="built_in">zip</span>(self.edges[u], self.edgesId[u]):</span><br><span class="line">            <span class="keyword">if</span> self.dfn[v] == -<span class="number">1</span>:</span><br><span class="line">                self.pGetCuttingEdge(v, iden)</span><br><span class="line">                self.low[u] = <span class="built_in">min</span>(self.low[u], self.low[v])</span><br><span class="line">                <span class="keyword">if</span> self.low[v] &gt; self.dfn[u]:</span><br><span class="line">                    self.ans.append(iden)</span><br><span class="line">            <span class="keyword">elif</span> iden != parentEdgeId:</span><br><span class="line">                self.low[u] = <span class="built_in">min</span>(self.low[u], self.dfn[v])</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">findCriticalAndPseudoCriticalEdges</span>(<span class="params">self, n: <span class="built_in">int</span>, edges: <span class="type">List</span>[<span class="type">List</span>[<span class="built_in">int</span>]]</span>) -&gt; <span class="type">List</span>[<span class="type">List</span>[<span class="built_in">int</span>]]:</span><br><span class="line">        m = <span class="built_in">len</span>(edges)</span><br><span class="line">        <span class="keyword">for</span> i, edge <span class="keyword">in</span> <span class="built_in">enumerate</span>(edges):</span><br><span class="line">            edge.append(i)</span><br><span class="line">        edges.sort(key=<span class="keyword">lambda</span> x: x[<span class="number">2</span>])</span><br><span class="line"></span><br><span class="line">        uf = UnionFind(n)</span><br><span class="line">        ans0 = <span class="built_in">list</span>()</span><br><span class="line">        label = [<span class="number">0</span>] * m</span><br><span class="line"></span><br><span class="line">        i = <span class="number">0</span></span><br><span class="line">        <span class="keyword">while</span> i &lt; m:</span><br><span class="line">            <span class="comment"># 找出所有权值为 w 的边，下标范围为 [i, j)</span></span><br><span class="line">            w = edges[i][<span class="number">2</span>]</span><br><span class="line">            j = i</span><br><span class="line">            <span class="keyword">while</span> j &lt; m <span class="keyword">and</span> edges[j][<span class="number">2</span>] == edges[i][<span class="number">2</span>]:</span><br><span class="line">                j += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">            <span class="comment"># 存储每个连通分量在图 G 中的编号</span></span><br><span class="line">            compToId = <span class="built_in">dict</span>()</span><br><span class="line">            <span class="comment"># 图 G 的节点数</span></span><br><span class="line">            gn = <span class="number">0</span></span><br><span class="line">            </span><br><span class="line">            <span class="keyword">for</span> k <span class="keyword">in</span> <span class="built_in">range</span>(i, j):</span><br><span class="line">                x = uf.findset(edges[k][<span class="number">0</span>])</span><br><span class="line">                y = uf.findset(edges[k][<span class="number">1</span>])</span><br><span class="line">                <span class="keyword">if</span> x != y:</span><br><span class="line">                    <span class="keyword">if</span> x <span class="keyword">not</span> <span class="keyword">in</span> compToId:</span><br><span class="line">                        compToId[x] = gn</span><br><span class="line">                        gn += <span class="number">1</span></span><br><span class="line">                    <span class="keyword">if</span> y <span class="keyword">not</span> <span class="keyword">in</span> compToId:</span><br><span class="line">                        compToId[y] = gn</span><br><span class="line">                        gn += <span class="number">1</span></span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    <span class="comment"># 将自环边标记为 -1</span></span><br><span class="line">                    label[edges[k][<span class="number">3</span>]] = -<span class="number">1</span></span><br><span class="line">            </span><br><span class="line">            <span class="comment"># 图 G 的边</span></span><br><span class="line">            gm = collections.defaultdict(<span class="built_in">list</span>)</span><br><span class="line">            gmid = collections.defaultdict(<span class="built_in">list</span>)</span><br><span class="line">            </span><br><span class="line">            <span class="keyword">for</span> k <span class="keyword">in</span> <span class="built_in">range</span>(i, j):</span><br><span class="line">                x = uf.findset(edges[k][<span class="number">0</span>])</span><br><span class="line">                y = uf.findset(edges[k][<span class="number">1</span>])</span><br><span class="line">                <span class="keyword">if</span> x != y:</span><br><span class="line">                    idx, idy = compToId[x], compToId[y]</span><br><span class="line">                    gm[idx].append(idy)</span><br><span class="line">                    gmid[idx].append(edges[k][<span class="number">3</span>])</span><br><span class="line">                    gm[idy].append(idx)</span><br><span class="line">                    gmid[idy].append(edges[k][<span class="number">3</span>])</span><br><span class="line"></span><br><span class="line">            bridges = TarjanSCC(gn, gm, gmid).getCuttingEdge()</span><br><span class="line">            <span class="comment"># 将桥边（关键边）标记为 1</span></span><br><span class="line">            ans0.extend(bridges)</span><br><span class="line">            <span class="keyword">for</span> iden <span class="keyword">in</span> bridges:</span><br><span class="line">                label[iden] = <span class="number">1</span></span><br><span class="line"></span><br><span class="line">            <span class="keyword">for</span> k <span class="keyword">in</span> <span class="built_in">range</span>(i, j):</span><br><span class="line">                uf.unite(edges[k][<span class="number">0</span>], edges[k][<span class="number">1</span>])</span><br><span class="line">            </span><br><span class="line">            i = j</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 未标记的边即为非桥边（伪关键边）</span></span><br><span class="line">        ans1 = [i <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(m) <span class="keyword">if</span> label[i] == <span class="number">0</span>]</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> [ans0, ans1]</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Go"><figure class="iseeu highlight go"><figcaption><span>[sol2-Golang]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> unionFind <span class="keyword">struct</span> &#123;</span><br><span class="line">    parent, size []<span class="type">int</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">newUnionFind</span><span class="params">(n <span class="type">int</span>)</span></span> *unionFind &#123;</span><br><span class="line">    parent := <span class="built_in">make</span>([]<span class="type">int</span>, n)</span><br><span class="line">    size := <span class="built_in">make</span>([]<span class="type">int</span>, n)</span><br><span class="line">    <span class="keyword">for</span> i := <span class="keyword">range</span> parent &#123;</span><br><span class="line">        parent[i] = i</span><br><span class="line">        size[i] = <span class="number">1</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> &amp;unionFind&#123;parent, size&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(uf *unionFind)</span></span> find(x <span class="type">int</span>) <span class="type">int</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> uf.parent[x] != x &#123;</span><br><span class="line">        uf.parent[x] = uf.find(uf.parent[x])</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> uf.parent[x]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(uf *unionFind)</span></span> union(x, y <span class="type">int</span>) <span class="type">bool</span> &#123;</span><br><span class="line">    fx, fy := uf.find(x), uf.find(y)</span><br><span class="line">    <span class="keyword">if</span> fx == fy &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> uf.size[fx] &lt; uf.size[fy] &#123;</span><br><span class="line">        fx, fy = fy, fx</span><br><span class="line">    &#125;</span><br><span class="line">    uf.size[fx] += uf.size[fy]</span><br><span class="line">    uf.parent[fy] = fx</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">findCriticalAndPseudoCriticalEdges</span><span class="params">(n <span class="type">int</span>, edges [][]<span class="type">int</span>)</span></span> [][]<span class="type">int</span> &#123;</span><br><span class="line">    m := <span class="built_in">len</span>(edges)</span><br><span class="line">    edgeType := <span class="built_in">make</span>([]<span class="type">int</span>, m) <span class="comment">// -1：不在最小生成树中；0：伪关键边；1：关键边</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> i, e := <span class="keyword">range</span> edges &#123;</span><br><span class="line">        edges[i] = <span class="built_in">append</span>(e, i)</span><br><span class="line">    &#125;</span><br><span class="line">    sort.Slice(edges, <span class="function"><span class="keyword">func</span><span class="params">(i, j <span class="type">int</span>)</span></span> <span class="type">bool</span> &#123; <span class="keyword">return</span> edges[i][<span class="number">2</span>] &lt; edges[j][<span class="number">2</span>] &#125;)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">type</span> neighbor <span class="keyword">struct</span>&#123; to, edgeID <span class="type">int</span> &#125;</span><br><span class="line">    graph := <span class="built_in">make</span>([][]neighbor, n)</span><br><span class="line">    dfn := <span class="built_in">make</span>([]<span class="type">int</span>, n) <span class="comment">// 遍历到该顶点时的时间戳</span></span><br><span class="line">    timestamp := <span class="number">0</span></span><br><span class="line">    <span class="keyword">var</span> tarjan <span class="function"><span class="keyword">func</span><span class="params">(<span class="type">int</span>, <span class="type">int</span>)</span></span> <span class="type">int</span></span><br><span class="line">    tarjan = <span class="function"><span class="keyword">func</span><span class="params">(v, pid <span class="type">int</span>)</span></span> <span class="type">int</span> &#123;</span><br><span class="line">        timestamp++</span><br><span class="line">        dfn[v] = timestamp</span><br><span class="line">        lowV := timestamp</span><br><span class="line">        <span class="keyword">for</span> _, e := <span class="keyword">range</span> graph[v] &#123;</span><br><span class="line">            <span class="keyword">if</span> w := e.to; dfn[w] == <span class="number">0</span> &#123;</span><br><span class="line">                lowW := tarjan(w, e.edgeID)</span><br><span class="line">                <span class="keyword">if</span> lowW &gt; dfn[v] &#123;</span><br><span class="line">                    edgeType[e.edgeID] = <span class="number">1</span></span><br><span class="line">                &#125;</span><br><span class="line">                lowV = min(lowV, lowW)</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> e.edgeID != pid &#123;</span><br><span class="line">                lowV = min(lowV, dfn[w])</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> lowV</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    uf := newUnionFind(n)</span><br><span class="line">    <span class="keyword">for</span> i := <span class="number">0</span>; i &lt; m; &#123;</span><br><span class="line">        vs := []<span class="type">int</span>&#123;&#125;</span><br><span class="line">        <span class="comment">// 将权值相同的边分为一组，建图，然后用 Tarjan 算法找桥边</span></span><br><span class="line">        <span class="keyword">for</span> weight := edges[i][<span class="number">2</span>]; i &lt; m &amp;&amp; edges[i][<span class="number">2</span>] == weight; i++ &#123;</span><br><span class="line">            e := edges[i]</span><br><span class="line">            v, w, edgeID := uf.find(e[<span class="number">0</span>]), uf.find(e[<span class="number">1</span>]), e[<span class="number">3</span>]</span><br><span class="line">            <span class="keyword">if</span> v != w &#123;</span><br><span class="line">                graph[v] = <span class="built_in">append</span>(graph[v], neighbor&#123;w, edgeID&#125;)</span><br><span class="line">                graph[w] = <span class="built_in">append</span>(graph[w], neighbor&#123;v, edgeID&#125;)</span><br><span class="line">                vs = <span class="built_in">append</span>(vs, v, w) <span class="comment">// 记录图中顶点</span></span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                edgeType[edgeID] = <span class="number">-1</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> _, v := <span class="keyword">range</span> vs &#123;</span><br><span class="line">            <span class="keyword">if</span> dfn[v] == <span class="number">0</span> &#123;</span><br><span class="line">                tarjan(v, <span class="number">-1</span>)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 合并顶点、重置数据</span></span><br><span class="line">        <span class="keyword">for</span> j := <span class="number">0</span>; j &lt; <span class="built_in">len</span>(vs); j += <span class="number">2</span> &#123;</span><br><span class="line">            v, w := vs[j], vs[j+<span class="number">1</span>]</span><br><span class="line">            uf.union(v, w)</span><br><span class="line">            graph[v] = <span class="literal">nil</span></span><br><span class="line">            graph[w] = <span class="literal">nil</span></span><br><span class="line">            dfn[v] = <span class="number">0</span></span><br><span class="line">            dfn[w] = <span class="number">0</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> keyEdges, pseudokeyEdges []<span class="type">int</span></span><br><span class="line">    <span class="keyword">for</span> i, tp := <span class="keyword">range</span> edgeType &#123;</span><br><span class="line">        <span class="keyword">if</span> tp == <span class="number">0</span> &#123;</span><br><span class="line">            pseudokeyEdges = <span class="built_in">append</span>(pseudokeyEdges, i)</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> tp == <span class="number">1</span> &#123;</span><br><span class="line">            keyEdges = <span class="built_in">append</span>(keyEdges, i)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> [][]<span class="type">int</span>&#123;keyEdges, pseudokeyEdges&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">min</span><span class="params">(a, b <span class="type">int</span>)</span></span> <span class="type">int</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> a &lt; b &#123;</span><br><span class="line">        <span class="keyword">return</span> a</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> b</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>复杂度分析</strong></p>
+<ul>
+<li><p>时间复杂度：O(m \log m)，其中 m 是图中的边数。</p>
+</li>
+<li><p>空间复杂度：O(m + n)。排序时存储每条边原始编号的空间为 O(m)，并查集使用的空间为 O(n)，Tarjan 算法使用的总空间为 O(m)。</p>
+</li>
+</ul>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <!--<div class="article-copyright-info-container">-->
+    <!--&lt;!&ndash;<ul>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><strong>Title:</strong> 1489-找到最小生成树里的关键边和伪关键边</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><strong>Author:</strong> Raphael Liu</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><strong>Created at&ndash;&gt;-->
+                <!--&lt;!&ndash;:</strong> 2023-09-13 00:47:26</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;&ndash;&gt;-->
+            <!--&lt;!&ndash;<li>&ndash;&gt;-->
+                <!--&lt;!&ndash;<strong>Updated at&ndash;&gt;-->
+                    <!--&lt;!&ndash;:</strong> 2023-09-13 16:06:23&ndash;&gt;-->
+            <!--&lt;!&ndash;</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;<li>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;<strong>Link:</strong> https://fida.ltd/2023/09/13/1489-找到最小生成树里的关键边和伪关键边/&ndash;&gt;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;</li>&ndash;&gt;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;<li>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;<strong>&ndash;&gt;&ndash;&gt;-->
+                <!--&lt;!&ndash;&lt;!&ndash;License:&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;</strong>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0</a>.&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;&ndash;&gt;&ndash;&gt;-->
+
+        <!--&lt;!&ndash;&lt;!&ndash;</li>&ndash;&gt;&ndash;&gt;-->
+    <!--&lt;!&ndash;</ul>&ndash;&gt;-->
+<!--</div>-->
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box">
+                
+                    <li class="tag-item">
+                        <a href="/tags/algorithm/">#algorithm</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item">
+                        <a href="/tags/HARD/">#HARD</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                        rel="prev"
+                        href="/2023/09/13/1491-%E5%8E%BB%E6%8E%89%E6%9C%80%E4%BD%8E%E5%B7%A5%E8%B5%84%E5%92%8C%E6%9C%80%E9%AB%98%E5%B7%A5%E8%B5%84%E5%90%8E%E7%9A%84%E5%B7%A5%E8%B5%84%E5%B9%B3%E5%9D%87%E5%80%BC/"
+                        >
+                            <span class="left arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">1491-去掉最低工资和最高工资后的工资平均值</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                        rel="next"
+                        href="/2023/09/13/1494-%E5%B9%B6%E8%A1%8C%E8%AF%BE%E7%A8%8B%20II/"
+                        >
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">1494-并行课程 II</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+
+        
+            <div class="comment-container">
+                <div class="comments-container pjax">
+    <div id="comment-anchor"></div>
+    <div class="comment-area-title">
+        <i class="fa-solid fa-comments"></i>&nbsp;Comments
+    </div>
+    
+
+        
+            
+ 
+    <div id="waline"></div>
+    <script type="module"  data-swup-reload-script>
+        import { init } from 'https://evan.beee.top/js/waline.mjs';
+
+        function loadWaline() {
+            init({
+                el: '#waline',
+                serverURL: 'https://example.example.com',
+                lang: 'zh-CN',
+                dark: 'body[class~="dark-mode"]',
+                requiredMeta: ['nick','mail'], // cannot customize by theme config, change it yourself
+            });
+        }
+
+        if ('true') {
+            const loadWalineTimeout = setTimeout(() => {
+                loadWaline();
+                clearTimeout(loadWalineTimeout);
+            }, 1000);
+        } else {
+            window.addEventListener('DOMContentLoaded', loadWaline);
+        }
+        
+    </script>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+
+    
+        <div class="toc-content-container">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">On this page</div>
+        <div class="page-title">1489-找到最小生成树里的关键边和伪关键边</div>
+        
+
+    </div>
+</div>
+        </div>
+    
+</div>
+
+
+
+                
+
+            </div>
+
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2022</span>
+              -
+            
+            2023&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">Raphael Liu</a>
+        </div>
+        
+            <script data-swup-reload-script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">UV:</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">PV:</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <!--<div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">-->
+            <!--<span class="lg:block text-sm">powered_by</span>-->
+            <!--&lt;!&ndash;<span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.4.4</a></span>&ndash;&gt;-->
+        <!--</div>-->
+        
+        <!---->
+            <!--<div>-->
+                <!--runtime <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hours <span class="odometer" id="runtime_minutes"></span> minutes <span class="odometer" id="runtime_seconds"></span> seconds-->
+            <!--</div>-->
+        <!---->
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fa-regular fa-comments"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-expand-width flex justify-center items-center">
+            <i class="fa-regular fa-expand"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fa-solid fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa-solid fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa-solid fa-spinner fa-spin-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+    
+<script src="/js/libs/Swup.min.js"></script>
+
+<script src="/js/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/libs/SwupScrollPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+        ],
+        containers: ["#swup"],
+    });
+
+    swup.hooks.on("page:view", () => {
+        Global.refresh();
+    });
+
+    // if (document.readyState === "complete") {
+    //
+    // } else {
+    //     document.addEventListener("DOMContentLoaded", () => init());
+    // }
+</script>
+
+
+
+
+
+
+<script src="/js/utils.js" type="module"></script>
+
+<script src="/js/main.js" type="module"></script>
+
+<script src="/js/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/layouts/categoryList.js" type="module"></script>
+
+
+
+    
+<script src="/js/tools/localSearch.js"></script>
+
+
+
+
+    
+<script src="/js/tools/codeBlock.js"></script>
+
+
+
+
+    
+<script src="/js/layouts/lazyload.js"></script>
+
+
+
+
+    
+<script src="/js/tools/runtime.js"></script>
+
+    
+<script src="/js/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/libs/Typed.min.js"></script>
+
+  
+<script src="/js/plugins/typed.js"></script>
+
+
+
+
+
+
+
+<div class="post-scripts" data-swup-reload-script>
+    
+        
+<script src="/js/libs/anime.min.js"></script>
+
+        
+<script src="/js/tools/tocToggle.js" type="module"></script>
+
+<script src="/js/layouts/toc.js" type="module"></script>
+
+<script src="/js/plugins/tabs.js" type="module"></script>
+
+    
+</div>
+
+
+</body>
+</html>

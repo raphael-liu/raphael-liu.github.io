@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="Raphael Liu">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/2023/09/13/1600-王位继承顺序/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="一个王国里住着国王、他的孩子们、他的孙子们等等。每一个时间点，这个家庭里有人出生也有人死亡。 这个王国有一个明确规定的王位继承顺序，第一继承人总是国王自己。我们定义递归函数 Successor(x, curOrder) ，给定一个人 x和当前的继承顺序，该函数返回 x 的下一继承人。 Successor(x, curOrder):     如果 x 没有孩子或者所有 x 的孩子都在 curOrde">
+<meta property="og:type" content="article">
+<meta property="og:title" content="1600-王位继承顺序">
+<meta property="og:url" content="http://example.com/2023/09/13/1600-%E7%8E%8B%E4%BD%8D%E7%BB%A7%E6%89%BF%E9%A1%BA%E5%BA%8F/index.html">
+<meta property="og:site_name" content="Raphael&#39;s Blog">
+<meta property="og:description" content="一个王国里住着国王、他的孩子们、他的孙子们等等。每一个时间点，这个家庭里有人出生也有人死亡。 这个王国有一个明确规定的王位继承顺序，第一继承人总是国王自己。我们定义递归函数 Successor(x, curOrder) ，给定一个人 x和当前的继承顺序，该函数返回 x 的下一继承人。 Successor(x, curOrder):     如果 x 没有孩子或者所有 x 的孩子都在 curOrde">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-09-12T16:47:26.000Z">
+<meta property="article:modified_time" content="2023-09-13T09:01:07.339Z">
+<meta property="article:author" content="Raphael Liu">
+<meta property="article:tag" content="algorithm">
+<meta property="article:tag" content="MEDIUM">
+<meta name="twitter:card" content="summary">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/redefine-favicon.svg" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/redefine-favicon.svg">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/redefine-favicon.svg">
+    <!--- Page Info-->
+    
+    <title>
+        
+            1600-王位继承顺序 -
+        
+        Raphael&#39;s Blog
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/css/build/styles.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/fonts.css">
+
+    
+<link rel="stylesheet" href="/fonts/Satoshi/satoshi.css">
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+
+    <!--- Inject Part-->
+    
+    <script id="hexo-configurations">
+    let Global = window.Global || {};
+    Global.hexo_config = {"hostname":"example.com","root":"/","language":"zh_CN"};
+    Global.theme_config = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":true,"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"open_graph":true,"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-wqery6-light.webp","dark":"/images/wallhaven-wqery6-dark.webp"},"title":"Raphael's Blog","subtitle":{"text":["格物致知","坚持做正确的事情"],"hitokoto":{"enable":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":false,"links":{"github":"https://github.com/raphael-liu","email":"raphael@buaa.edu.cn# your email"},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.4.4","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"links":{"首页":{"path":"/","icon":"fa-regular fa-house"},"文章":{"path":"/archives","icon":"fa-regular fa-archive"},"关于":{"icon":"fa-regular fa-user","submenus":{"我":"/about/me","Github":"https://github.com/raphael-liu"}}},"search":{"enable":true,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"links":null},"article_date_format":"auto","categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}},"footerStart":"2022/8/17 11:45:14"};
+    Global.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    Global.data_config = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="swup-progress-icon">
+            <i class="fa-solid fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container" id="swup">
+
+    
+
+    <div class="main-content-container">
+
+
+        <div class="main-content-header">
+            <header class="navbar-container">
+    
+    <div class="navbar-content">
+        <div class="left">
+            
+            <a class="logo-title" href="http://example.com/">
+                
+                Raphael&#39;s Blog
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/"  >
+                                    
+                                        
+                                            <i class="fa-regular fa-house"></i>
+                                        
+                                        首页
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/archives"  >
+                                    
+                                        
+                                            <i class="fa-regular fa-archive"></i>
+                                        
+                                        文章
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="has-dropdown" 
+                                    href="#" onClick="return false;">
+                                    
+                                        
+                                            <i class="fa-regular fa-user"></i>
+                                        
+                                        关于&nbsp;<i class="fa-solid fa-chevron-down"></i>
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                                    <ul class="sub-menu">
+                                    
+                                        <li>
+                                        <a href="/about/me">我
+                                        </a>
+                                        </li>
+                                    
+                                        <li>
+                                        <a target="_blank" rel="noopener" href="https://github.com/raphael-liu">GITHUB
+                                        </a>
+                                        </li>
+                                    
+                                    </ul>
+                                
+                            </li>
+                    
+                    
+                        <li class="navbar-item search search-popup-trigger">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fa-solid fa-magnifying-glass"></i></div>
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile drawer -->
+    <div class="navbar-drawer w-full absolute top-0 left-0 bg-background-color">
+        <ul class="drawer-navbar-list flex flex-col justify-start items-center">
+            
+                
+                    <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group " 
+                        href="/"  >
+                             
+                                
+                                    <i class="fa-regular fa-house"></i>
+                                
+                                首页
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+                
+                    <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group " 
+                        href="/archives"  >
+                             
+                                
+                                    <i class="fa-regular fa-archive"></i>
+                                
+                                文章
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+                
+                    <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group has-dropdown" 
+                        href="#" onClick="return false;">
+                            
+                                
+                                    <i class="fa-regular fa-user"></i>
+                                
+                                关于&nbsp;<i class="group-hover:rotate-180 transition-transform fa-solid fa-chevron-down"></i>
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                              
+                        
+                            <li class="text-base flex justify-center items-center hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                <a class="py-0.5" href="/about/me">我</a>
+                            </li>
+                        
+                            <li class="text-base flex justify-center items-center hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                <a class="py-0.5" target="_blank" rel="noopener" href="https://github.com/raphael-liu">GITHUB</a>
+                            </li>
+                        
+                    
+            
+
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="post-page-container">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            
+                <h1 class="article-title-regular">1600-王位继承顺序</h1>
+            
+            </div>
+            
+                    
+        
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">Raphael Liu</span>
+                        
+                            <span class="author-label">Lv10</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2023-09-13 00:47:26</span>
+        <span class="mobile">2023-09-13 00:47:26</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2023-09-13 17:01:07</span>
+            <span class="mobile">2023-09-13 17:01:07</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/algorithm/">algorithm</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/MEDIUM/">MEDIUM</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        
+
+
+        <div class="article-content markdown-body">
+            <p>一个王国里住着国王、他的孩子们、他的孙子们等等。每一个时间点，这个家庭里有人出生也有人死亡。</p>
+<p>这个王国有一个明确规定的王位继承顺序，第一继承人总是国王自己。我们定义递归函数 <code>Successor(x, curOrder)</code> ，给定一个人 <code>x</code><br>和当前的继承顺序，该函数返回 <code>x</code> 的下一继承人。</p>
+<pre><code>Successor(x, curOrder):
+    如果 x 没有孩子或者所有 x 的孩子都在 curOrder 中：
+        如果 x 是国王，那么返回 null
+        否则，返回 Successor(x 的父亲, curOrder)
+    否则，返回 x 不在 curOrder 中最年长的孩子
+</code></pre>
+<p>比方说，假设王国由国王，他的孩子 Alice 和 Bob （Alice 比 Bob 年长）和 Alice 的孩子 Jack 组成。</p>
+<ol>
+<li>一开始， <code>curOrder</code> 为 <code>[&quot;king&quot;]</code>.</li>
+<li>调用 <code>Successor(king, curOrder)</code> ，返回 Alice ，所以我们将 Alice 放入 <code>curOrder</code> 中，得到 <code>[&quot;king&quot;, &quot;Alice&quot;]</code> 。</li>
+<li>调用 <code>Successor(Alice, curOrder)</code> ，返回 Jack ，所以我们将 Jack 放入 <code>curOrder</code> 中，得到 <code>[&quot;king&quot;, &quot;Alice&quot;, &quot;Jack&quot;]</code> 。</li>
+<li>调用 <code>Successor(Jack, curOrder)</code> ，返回 Bob ，所以我们将 Bob 放入 <code>curOrder</code> 中，得到 <code>[&quot;king&quot;, &quot;Alice&quot;, &quot;Jack&quot;, &quot;Bob&quot;]</code> 。</li>
+<li>调用 <code>Successor(Bob, curOrder)</code> ，返回 <code>null</code> 。最终得到继承顺序为 <code>[&quot;king&quot;, &quot;Alice&quot;, &quot;Jack&quot;, &quot;Bob&quot;]</code> 。</li>
+</ol>
+<p>通过以上的函数，我们总是能得到一个唯一的继承顺序。</p>
+<p>请你实现 <code>ThroneInheritance</code> 类：</p>
+<ul>
+<li><code>ThroneInheritance(string kingName)</code> 初始化一个 <code>ThroneInheritance</code> 类的对象。国王的名字作为构造函数的参数传入。</li>
+<li><code>void birth(string parentName, string childName)</code> 表示 <code>parentName</code> 新拥有了一个名为 <code>childName</code> 的孩子。</li>
+<li><code>void death(string name)</code> 表示名为 <code>name</code> 的人死亡。一个人的死亡不会影响 <code>Successor</code> 函数，也不会影响当前的继承顺序。你可以只将这个人标记为死亡状态。</li>
+<li><code>string[] getInheritanceOrder()</code> 返回 <strong>除去</strong>  死亡人员的当前继承顺序列表。</li>
+</ul>
+<p><strong>示例：</strong></p>
+<pre><code>**输入：**
+[&quot;ThroneInheritance&quot;, &quot;birth&quot;, &quot;birth&quot;, &quot;birth&quot;, &quot;birth&quot;, &quot;birth&quot;, &quot;birth&quot;, &quot;getInheritanceOrder&quot;, &quot;death&quot;, &quot;getInheritanceOrder&quot;]
+[[&quot;king&quot;], [&quot;king&quot;, &quot;andy&quot;], [&quot;king&quot;, &quot;bob&quot;], [&quot;king&quot;, &quot;catherine&quot;], [&quot;andy&quot;, &quot;matthew&quot;], [&quot;bob&quot;, &quot;alex&quot;], [&quot;bob&quot;, &quot;asha&quot;], [null], [&quot;bob&quot;], [null]]
+**输出：**
+[null, null, null, null, null, null, null, [&quot;king&quot;, &quot;andy&quot;, &quot;matthew&quot;, &quot;bob&quot;, &quot;alex&quot;, &quot;asha&quot;, &quot;catherine&quot;], null, [&quot;king&quot;, &quot;andy&quot;, &quot;matthew&quot;, &quot;alex&quot;, &quot;asha&quot;, &quot;catherine&quot;]]
+
+**解释：**
+ThroneInheritance t= new ThroneInheritance(&quot;king&quot;); // 继承顺序： **king**
+t.birth(&quot;king&quot;, &quot;andy&quot;); // 继承顺序：king &gt; **andy**
+t.birth(&quot;king&quot;, &quot;bob&quot;); // 继承顺序：king &gt; andy &gt; **bob**
+t.birth(&quot;king&quot;, &quot;catherine&quot;); // 继承顺序：king &gt; andy &gt; bob &gt; **catherine**
+t.birth(&quot;andy&quot;, &quot;matthew&quot;); // 继承顺序：king &gt; andy &gt; **matthew** &gt; bob &gt; catherine
+t.birth(&quot;bob&quot;, &quot;alex&quot;); // 继承顺序：king &gt; andy &gt; matthew &gt; bob &gt; **alex** &gt; catherine
+t.birth(&quot;bob&quot;, &quot;asha&quot;); // 继承顺序：king &gt; andy &gt; matthew &gt; bob &gt; alex &gt; **asha** &gt; catherine
+t.getInheritanceOrder(); // 返回 [&quot;king&quot;, &quot;andy&quot;, &quot;matthew&quot;, &quot;bob&quot;, &quot;alex&quot;, &quot;asha&quot;, &quot;catherine&quot;]
+t.death(&quot;bob&quot;); // 继承顺序：king &gt; andy &gt; matthew &gt; **bob（已经去世）** &gt; alex &gt; asha &gt; catherine
+t.getInheritanceOrder(); // 返回 [&quot;king&quot;, &quot;andy&quot;, &quot;matthew&quot;, &quot;alex&quot;, &quot;asha&quot;, &quot;catherine&quot;]
+</code></pre>
+<p><strong>提示：</strong></p>
+<ul>
+<li><code>1 &lt;= kingName.length, parentName.length, childName.length, name.length &lt;= 15</code></li>
+<li><code>kingName</code>，<code>parentName</code>， <code>childName</code> 和 <code>name</code> 仅包含小写英文字母。</li>
+<li>所有的参数 <code>childName</code> 和 <code>kingName</code>  <strong>互不相同</strong> 。</li>
+<li>所有 <code>death</code> 函数中的死亡名字 <code>name</code> 要么是国王，要么是已经出生了的人员名字。</li>
+<li>每次调用 <code>birth(parentName, childName)</code> 时，测试用例都保证 <code>parentName</code> 对应的人员是活着的。</li>
+<li>最多调用 <code>105</code> 次<code>birth</code> 和 <code>death</code> 。</li>
+<li>最多调用 <code>10</code> 次 <code>getInheritanceOrder</code> 。</li>
+</ul>
+<h4 id="方法一：多叉树的前序遍历"><a href="#方法一：多叉树的前序遍历" class="headerlink" title="方法一：多叉树的前序遍历"></a>方法一：多叉树的前序遍历</h4><p><strong>思路与算法</strong></p>
+<p>我们可以发现，题目中定义的 Successor(x, curOrder) 函数，与多叉树的前序遍历过程是一致的：</p>
+<ul>
+<li><p>「返回 x 不在 curOrder 中最年长的孩子」对应着选择 x 在树中的一个子节点，递归地进行遍历操作；</p>
+</li>
+<li><p>「返回 Successor(x} ~的父亲\texttt{, curOrder)」对应着当我们将以 x 为根的子树遍历完成后，回溯到 x 的父节点继续进行遍历；</p>
+</li>
+<li><p>「返回 null」对应着我们将整棵树遍历完成。</p>
+</li>
+</ul>
+<p>因此，对于题目中需要实现的每一个函数，我们可以分别设计出如下的算法：</p>
+<ul>
+<li><p>ThroneInheritance(kingName)：我们将 kingName 作为树的根节点；</p>
+</li>
+<li><p>birth(parentName, childName)：我们在树中添加一条从 parentName 到 childName 的边，将 childName 作为 parentName 的子节点；</p>
+</li>
+<li><p>death(name)：我们使用一个哈希集合记录所有的死亡人员，将 name 加入该哈希集合中；</p>
+</li>
+<li><p>getInheritanceOrder()：我们从根节点开始对整棵树进行前序遍历。需要注意的是，<strong>如果遍历到死亡人员，那么不能将其加入继承顺序列表中</strong>。</p>
+</li>
+</ul>
+<p><strong>细节</strong></p>
+<p>那么我们如何存储这棵树呢？</p>
+<p>一种可行的方法是使用哈希映射。记哈希映射为 edges，那么对于 edges 中的每一个键值对 (k, v)，键 k 表示一个人，值 v 以列表的形式存放了这个人所有的孩子，列表可以为空。</p>
+<p>这样一来，对于 birth(parentName, childName) 操作，我们只需要将 childName 加入 parentName 在哈希映射中的列表末尾即可。</p>
+<p><strong>代码</strong></p>
+<div class="highlight-container" data-rel="C++"><figure class="iseeu highlight c++"><figcaption><span>[sol1-C++]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">ThroneInheritance</span> &#123;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    unordered_map&lt;string, vector&lt;string&gt;&gt; edges;</span><br><span class="line">    unordered_set&lt;string&gt; dead;</span><br><span class="line">    string king;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">ThroneInheritance</span>(string kingName): king&#123;<span class="built_in">move</span>(kingName)&#125; &#123;&#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">birth</span><span class="params">(string parentName, string childName)</span> </span>&#123;</span><br><span class="line">        edges[<span class="built_in">move</span>(parentName)].<span class="built_in">push_back</span>(<span class="built_in">move</span>(childName));</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">death</span><span class="params">(string name)</span> </span>&#123;</span><br><span class="line">        dead.<span class="built_in">insert</span>(<span class="built_in">move</span>(name));</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function">vector&lt;string&gt; <span class="title">getInheritanceOrder</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        vector&lt;string&gt; ans;</span><br><span class="line"></span><br><span class="line">        function&lt;<span class="type">void</span>(<span class="type">const</span> string&amp;)&gt; preorder = [&amp;](<span class="type">const</span> string&amp; name) &#123;</span><br><span class="line">            <span class="keyword">if</span> (!dead.<span class="built_in">count</span>(name)) &#123;</span><br><span class="line">                ans.<span class="built_in">push_back</span>(name);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (edges.<span class="built_in">count</span>(name)) &#123;</span><br><span class="line">                <span class="keyword">for</span> (<span class="type">const</span> string&amp; childName: edges[name]) &#123;</span><br><span class="line">                    <span class="built_in">preorder</span>(childName);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line"></span><br><span class="line">        <span class="built_in">preorder</span>(king);</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><figcaption><span>[sol1-Java]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">ThroneInheritance</span> &#123;</span><br><span class="line">    Map&lt;String, List&lt;String&gt;&gt; edges;</span><br><span class="line">    Set&lt;String&gt; dead;</span><br><span class="line">    String king;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">ThroneInheritance</span><span class="params">(String kingName)</span> &#123;</span><br><span class="line">        edges = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;String, List&lt;String&gt;&gt;();</span><br><span class="line">        dead = <span class="keyword">new</span> <span class="title class_">HashSet</span>&lt;String&gt;();</span><br><span class="line">        king = kingName;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">birth</span><span class="params">(String parentName, String childName)</span> &#123;</span><br><span class="line">        List&lt;String&gt; children = edges.getOrDefault(parentName, <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;String&gt;());</span><br><span class="line">        children.add(childName);</span><br><span class="line">        edges.put(parentName, children);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">death</span><span class="params">(String name)</span> &#123;</span><br><span class="line">        dead.add(name);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">public</span> List&lt;String&gt; <span class="title function_">getInheritanceOrder</span><span class="params">()</span> &#123;</span><br><span class="line">        List&lt;String&gt; ans = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;String&gt;();</span><br><span class="line">        preorder(ans, king);</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">preorder</span><span class="params">(List&lt;String&gt; ans, String name)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (!dead.contains(name)) &#123;</span><br><span class="line">            ans.add(name);</span><br><span class="line">        &#125;</span><br><span class="line">        List&lt;String&gt; children = edges.getOrDefault(name, <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;String&gt;());</span><br><span class="line">        <span class="keyword">for</span> (String childName : children) &#123;</span><br><span class="line">            preorder(ans, childName);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="C#"><figure class="iseeu highlight c#"><figcaption><span>[sol1-C#]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">ThroneInheritance</span> &#123;</span><br><span class="line">    Dictionary&lt;<span class="built_in">string</span>, IList&lt;<span class="built_in">string</span>&gt;&gt; edges;</span><br><span class="line">    ISet&lt;<span class="built_in">string</span>&gt; dead;</span><br><span class="line">    <span class="built_in">string</span> king;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ThroneInheritance</span>(<span class="params"><span class="built_in">string</span> kingName</span>)</span> &#123;</span><br><span class="line">        edges = <span class="keyword">new</span> Dictionary&lt;<span class="built_in">string</span>, IList&lt;<span class="built_in">string</span>&gt;&gt;();</span><br><span class="line">        dead = <span class="keyword">new</span> HashSet&lt;<span class="built_in">string</span>&gt;();</span><br><span class="line">        king = kingName;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Birth</span>(<span class="params"><span class="built_in">string</span> parentName, <span class="built_in">string</span> childName</span>)</span> &#123;</span><br><span class="line">        IList&lt;<span class="built_in">string</span>&gt; children;</span><br><span class="line">        <span class="keyword">if</span> (edges.TryGetValue(parentName, <span class="keyword">out</span> children)) &#123;</span><br><span class="line">            children.Add(childName);</span><br><span class="line">            edges[parentName] = children;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            children = <span class="keyword">new</span> List&lt;<span class="built_in">string</span>&gt;();</span><br><span class="line">            children.Add(childName);</span><br><span class="line">            edges.Add(parentName, children);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Death</span>(<span class="params"><span class="built_in">string</span> name</span>)</span> &#123;</span><br><span class="line">        dead.Add(name);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> IList&lt;<span class="built_in">string</span>&gt; <span class="title">GetInheritanceOrder</span>()</span> &#123;</span><br><span class="line">        IList&lt;<span class="built_in">string</span>&gt; ans = <span class="keyword">new</span> List&lt;<span class="built_in">string</span>&gt;();</span><br><span class="line">        Preorder(ans, king);</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Preorder</span>(<span class="params">IList&lt;<span class="built_in">string</span>&gt; ans, <span class="built_in">string</span> name</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (!dead.Contains(name)) &#123;</span><br><span class="line">            ans.Add(name);</span><br><span class="line">        &#125;</span><br><span class="line">        IList&lt;<span class="built_in">string</span>&gt; children = edges.TryGetValue(name, <span class="keyword">out</span> children) ? children : <span class="keyword">new</span> List&lt;<span class="built_in">string</span>&gt;();</span><br><span class="line">        <span class="keyword">foreach</span> (<span class="built_in">string</span> childName <span class="keyword">in</span> children) &#123;</span><br><span class="line">            Preorder(ans, childName);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><figcaption><span>[sol1-Python3]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">ThroneInheritance</span>:</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, kingName: <span class="built_in">str</span></span>):</span><br><span class="line">        self.edges = defaultdict(<span class="built_in">list</span>)</span><br><span class="line">        self.dead = <span class="built_in">set</span>()</span><br><span class="line">        self.king = kingName</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">birth</span>(<span class="params">self, parentName: <span class="built_in">str</span>, childName: <span class="built_in">str</span></span>) -&gt; <span class="literal">None</span>:</span><br><span class="line">        self.edges[parentName].append(childName)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">death</span>(<span class="params">self, name: <span class="built_in">str</span></span>) -&gt; <span class="literal">None</span>:</span><br><span class="line">        self.dead.add(name)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">getInheritanceOrder</span>(<span class="params">self</span>) -&gt; <span class="type">List</span>[<span class="built_in">str</span>]:</span><br><span class="line">        ans = <span class="built_in">list</span>()</span><br><span class="line"></span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">preorder</span>(<span class="params">name: <span class="built_in">str</span></span>) -&gt; <span class="literal">None</span>:</span><br><span class="line">            <span class="keyword">if</span> name <span class="keyword">not</span> <span class="keyword">in</span> self.dead:</span><br><span class="line">                ans.append(name)</span><br><span class="line">            <span class="keyword">if</span> name <span class="keyword">in</span> self.edges:</span><br><span class="line">                <span class="keyword">for</span> childName <span class="keyword">in</span> self.edges[name]:</span><br><span class="line">                    preorder(childName)</span><br><span class="line"></span><br><span class="line">        preorder(self.king)</span><br><span class="line">        <span class="keyword">return</span> ans</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><figcaption><span>[sol1-JavaScript]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> <span class="title class_">ThroneInheritance</span> = <span class="keyword">function</span>(<span class="params">kingName</span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">edges</span> = <span class="keyword">new</span> <span class="title class_">Map</span>();</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">dead</span> = <span class="keyword">new</span> <span class="title class_">Set</span>();</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">king</span> = kingName;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="title class_">ThroneInheritance</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">birth</span> = <span class="keyword">function</span>(<span class="params">parentName, childName</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (!<span class="variable language_">this</span>.<span class="property">edges</span>.<span class="title function_">has</span>(parentName)) &#123;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">edges</span>.<span class="title function_">set</span>(parentName, []);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">edges</span>.<span class="title function_">get</span>(parentName).<span class="title function_">push</span>(childName);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="title class_">ThroneInheritance</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">death</span> = <span class="keyword">function</span>(<span class="params">name</span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">dead</span>.<span class="title function_">add</span>(name);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="title class_">ThroneInheritance</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">getInheritanceOrder</span> = <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> ans = [];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> <span class="title function_">preorder</span> = (<span class="params">name</span>) =&gt; &#123;</span><br><span class="line">        <span class="keyword">if</span> (!<span class="variable language_">this</span>.<span class="property">dead</span>.<span class="title function_">has</span>(name)) &#123;</span><br><span class="line">            ans.<span class="title function_">push</span>(name);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (<span class="variable language_">this</span>.<span class="property">edges</span>.<span class="title function_">has</span>(name)) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">const</span> childName <span class="keyword">of</span> <span class="variable language_">this</span>.<span class="property">edges</span>.<span class="title function_">get</span>(name)) &#123;</span><br><span class="line">                <span class="title function_">preorder</span>(childName);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="title function_">preorder</span>(<span class="variable language_">this</span>.<span class="property">king</span>);</span><br><span class="line">    <span class="keyword">return</span> ans;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Go"><figure class="iseeu highlight go"><figcaption><span>[sol1-Golang]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> ThroneInheritance <span class="keyword">struct</span> &#123;</span><br><span class="line">    king  <span class="type">string</span></span><br><span class="line">    edges <span class="keyword">map</span>[<span class="type">string</span>][]<span class="type">string</span></span><br><span class="line">    dead  <span class="keyword">map</span>[<span class="type">string</span>]<span class="type">bool</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Constructor</span><span class="params">(kingName <span class="type">string</span>)</span></span> (t ThroneInheritance) &#123;</span><br><span class="line">    <span class="keyword">return</span> ThroneInheritance&#123;kingName, <span class="keyword">map</span>[<span class="type">string</span>][]<span class="type">string</span>&#123;&#125;, <span class="keyword">map</span>[<span class="type">string</span>]<span class="type">bool</span>&#123;&#125; &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(t *ThroneInheritance)</span></span> Birth(parentName, childName <span class="type">string</span>) &#123;</span><br><span class="line">    t.edges[parentName] = <span class="built_in">append</span>(t.edges[parentName], childName)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(t *ThroneInheritance)</span></span> Death(name <span class="type">string</span>) &#123;</span><br><span class="line">    t.dead[name] = <span class="literal">true</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(t *ThroneInheritance)</span></span> GetInheritanceOrder() (ans []<span class="type">string</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> preorder <span class="function"><span class="keyword">func</span><span class="params">(<span class="type">string</span>)</span></span></span><br><span class="line">    preorder = <span class="function"><span class="keyword">func</span><span class="params">(name <span class="type">string</span>)</span></span> &#123;</span><br><span class="line">        <span class="keyword">if</span> !t.dead[name] &#123;</span><br><span class="line">            ans = <span class="built_in">append</span>(ans, name)</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> _, childName := <span class="keyword">range</span> t.edges[name] &#123;</span><br><span class="line">            preorder(childName)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    preorder(t.king)</span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>复杂度分析</strong></p>
+<ul>
+<li><p>时间复杂度：</p>
+<ul>
+<li><p>ThroneInheritance(kingName)：O(1)；</p>
+</li>
+<li><p>birth(parentName, childName)：O(1)；</p>
+</li>
+<li><p>death(name)：O(1)；</p>
+</li>
+<li><p>getInheritanceOrder()：O(n)，其中 n 是当前树中的总人数。我们需要对整棵树进行一次前序遍历，时间复杂度为 O(n)。</p>
+</li>
+</ul>
+</li>
+<li><p>空间复杂度：</p>
+<ul>
+<li><p>n 个节点的树包含 n-1 条边，因此我们需要 O(n) 的空间（即哈希映射 edges）存储整棵树；</p>
+</li>
+<li><p>我们需要 O(n) 的空间（即哈希集合）存储所有的死亡人员；</p>
+</li>
+<li><p>在 getInheritanceOrder() 中前序遍历的过程中，我们使用的是递归，需要一定的栈空间，栈空间的大小与树的高度成正比。由于树的高度不会超过树中的节点个数，因此栈空间最多为 O(n)。</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>在上述的时空复杂度分析中，我们默认了所有字符串（即人名）的操作时间以及存储空间都是 O(1) 的。如果读者希望将字符串的长度也看作变量，那么只需要将除了栈空间以外的所有项由 O(1)&#x2F;O(n) 变为 O(l)&#x2F;O(nl) 即可，其中 l 是字符串的最大长度。</p>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <!--<div class="article-copyright-info-container">-->
+    <!--&lt;!&ndash;<ul>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><strong>Title:</strong> 1600-王位继承顺序</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><strong>Author:</strong> Raphael Liu</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><strong>Created at&ndash;&gt;-->
+                <!--&lt;!&ndash;:</strong> 2023-09-13 00:47:26</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;&ndash;&gt;-->
+            <!--&lt;!&ndash;<li>&ndash;&gt;-->
+                <!--&lt;!&ndash;<strong>Updated at&ndash;&gt;-->
+                    <!--&lt;!&ndash;:</strong> 2023-09-13 17:01:07&ndash;&gt;-->
+            <!--&lt;!&ndash;</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;<li>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;<strong>Link:</strong> https://fida.ltd/2023/09/13/1600-王位继承顺序/&ndash;&gt;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;</li>&ndash;&gt;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;<li>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;<strong>&ndash;&gt;&ndash;&gt;-->
+                <!--&lt;!&ndash;&lt;!&ndash;License:&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;</strong>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0</a>.&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;&ndash;&gt;&ndash;&gt;-->
+
+        <!--&lt;!&ndash;&lt;!&ndash;</li>&ndash;&gt;&ndash;&gt;-->
+    <!--&lt;!&ndash;</ul>&ndash;&gt;-->
+<!--</div>-->
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box">
+                
+                    <li class="tag-item">
+                        <a href="/tags/algorithm/">#algorithm</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item">
+                        <a href="/tags/MEDIUM/">#MEDIUM</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                        rel="prev"
+                        href="/2023/09/13/1599-%E7%BB%8F%E8%90%A5%E6%91%A9%E5%A4%A9%E8%BD%AE%E7%9A%84%E6%9C%80%E5%A4%A7%E5%88%A9%E6%B6%A6/"
+                        >
+                            <span class="left arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">1599-经营摩天轮的最大利润</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                        rel="next"
+                        href="/2023/09/13/1602-%E6%89%BE%E5%88%B0%E4%BA%8C%E5%8F%89%E6%A0%91%E4%B8%AD%E6%9C%80%E8%BF%91%E7%9A%84%E5%8F%B3%E4%BE%A7%E8%8A%82%E7%82%B9/"
+                        >
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">1602-找到二叉树中最近的右侧节点</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+
+        
+            <div class="comment-container">
+                <div class="comments-container pjax">
+    <div id="comment-anchor"></div>
+    <div class="comment-area-title">
+        <i class="fa-solid fa-comments"></i>&nbsp;Comments
+    </div>
+    
+
+        
+            
+ 
+    <div id="waline"></div>
+    <script type="module"  data-swup-reload-script>
+        import { init } from 'https://evan.beee.top/js/waline.mjs';
+
+        function loadWaline() {
+            init({
+                el: '#waline',
+                serverURL: 'https://example.example.com',
+                lang: 'zh-CN',
+                dark: 'body[class~="dark-mode"]',
+                requiredMeta: ['nick','mail'], // cannot customize by theme config, change it yourself
+            });
+        }
+
+        if ('true') {
+            const loadWalineTimeout = setTimeout(() => {
+                loadWaline();
+                clearTimeout(loadWalineTimeout);
+            }, 1000);
+        } else {
+            window.addEventListener('DOMContentLoaded', loadWaline);
+        }
+        
+    </script>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+
+    
+        <div class="toc-content-container">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">On this page</div>
+        <div class="page-title">1600-王位继承顺序</div>
+        
+
+    </div>
+</div>
+        </div>
+    
+</div>
+
+
+
+                
+
+            </div>
+
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2022</span>
+              -
+            
+            2023&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">Raphael Liu</a>
+        </div>
+        
+            <script data-swup-reload-script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">UV:</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">PV:</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <!--<div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">-->
+            <!--<span class="lg:block text-sm">powered_by</span>-->
+            <!--&lt;!&ndash;<span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.4.4</a></span>&ndash;&gt;-->
+        <!--</div>-->
+        
+        <!---->
+            <!--<div>-->
+                <!--runtime <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hours <span class="odometer" id="runtime_minutes"></span> minutes <span class="odometer" id="runtime_seconds"></span> seconds-->
+            <!--</div>-->
+        <!---->
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fa-regular fa-comments"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-expand-width flex justify-center items-center">
+            <i class="fa-regular fa-expand"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fa-solid fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa-solid fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa-solid fa-spinner fa-spin-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+    
+<script src="/js/libs/Swup.min.js"></script>
+
+<script src="/js/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/libs/SwupScrollPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+        ],
+        containers: ["#swup"],
+    });
+
+    swup.hooks.on("page:view", () => {
+        Global.refresh();
+    });
+
+    // if (document.readyState === "complete") {
+    //
+    // } else {
+    //     document.addEventListener("DOMContentLoaded", () => init());
+    // }
+</script>
+
+
+
+
+
+
+<script src="/js/utils.js" type="module"></script>
+
+<script src="/js/main.js" type="module"></script>
+
+<script src="/js/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/layouts/categoryList.js" type="module"></script>
+
+
+
+    
+<script src="/js/tools/localSearch.js"></script>
+
+
+
+
+    
+<script src="/js/tools/codeBlock.js"></script>
+
+
+
+
+    
+<script src="/js/layouts/lazyload.js"></script>
+
+
+
+
+    
+<script src="/js/tools/runtime.js"></script>
+
+    
+<script src="/js/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/libs/Typed.min.js"></script>
+
+  
+<script src="/js/plugins/typed.js"></script>
+
+
+
+
+
+
+
+<div class="post-scripts" data-swup-reload-script>
+    
+        
+<script src="/js/libs/anime.min.js"></script>
+
+        
+<script src="/js/tools/tocToggle.js" type="module"></script>
+
+<script src="/js/layouts/toc.js" type="module"></script>
+
+<script src="/js/plugins/tabs.js" type="module"></script>
+
+    
+</div>
+
+
+</body>
+</html>
